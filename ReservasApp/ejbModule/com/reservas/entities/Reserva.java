@@ -11,8 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 @Entity
+@Table(name="reservas") 
 public class Reserva {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,9 +22,9 @@ public class Reserva {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "oferta_id")
 	private Oferta oferta;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "usuario_id")
-	protected List<Usuario> usuarios;
+	protected List<Usuario> usuarios;*/
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "medio_de_pago_id")
 	private MedioPago medioPago;
@@ -37,12 +39,6 @@ public class Reserva {
 	}
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
-	}
-	public List<Usuario> getUsuarios() {
-		return usuarios;
-	}
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
 	}
 	public MedioPago getMedioPago() {
 		return medioPago;
