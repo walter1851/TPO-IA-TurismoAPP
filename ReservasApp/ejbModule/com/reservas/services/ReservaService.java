@@ -20,9 +20,10 @@ public class ReservaService implements ReservaServiceLocal {
 	public void reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre,String apellido,String dni,MedioPagoDTO medioPagoVO) {
 	
 	}
+	/*
 	private boolean validarReserva() {
 		//ofertaBloqueDAO.vare
 		return true;
-	}
+	}*/
 
 }
