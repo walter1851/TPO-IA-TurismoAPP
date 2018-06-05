@@ -21,13 +21,13 @@ public class BusinessDelegate implements BusinessDelegateInterfaceLocal{
 	ControllerBusqueda controllerBusqueda;
 	
 	public void reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion, int cantPersonas,
-			String nombre, String apellido, String dni, MedioPagoDTO medioPagoDTO) {
-		controllerReserva.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantPersonas, nombre, apellido, dni, medioPagoDTO);
+			String nombre, String apellido, String dni, String medioPago) {
+		controllerReserva.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantPersonas, nombre, apellido, dni, medioPago);
 	}
 
 	public void reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
-			String apellido, String dni, MedioPagoDTO medioPagoDTO) {
-		controllerReserva.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPagoDTO);
+			String apellido, String dni, String medioPago) {
+		controllerReserva.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPago);
 	}
 
 	public List<OfertaDTO> buscarOfertaHotelera(String destino, int cantPersonas, String fDesde, String fHasta,

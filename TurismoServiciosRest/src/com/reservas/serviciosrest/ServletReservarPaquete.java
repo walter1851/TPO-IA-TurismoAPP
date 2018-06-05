@@ -27,8 +27,6 @@ public class ServletReservarPaquete extends HttpServlet {
 		String apellido = req.getParameter("apellido").toString();
 		String dni = req.getParameter("dni").toString();
 		String medioPago= req.getParameter("medioPago").toString();
-		//Contruir el dto para pasarlo al business delegate
-		MedioPagoDTO medioPagoDTO=null;
-		bussinessDelegate.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPagoDTO);
+		bussinessDelegate.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPago);
 	}
 }

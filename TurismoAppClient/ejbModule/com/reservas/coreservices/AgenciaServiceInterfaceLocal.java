@@ -2,9 +2,9 @@ package com.reservas.coreservices;
 
 import javax.ejb.Local;
 
-import com.reservas.entities.Agencia;
+//import com.reservas.dto.AgenciaDTO;
 
 @Local
 public interface AgenciaServiceInterfaceLocal {
-	void guardarAgencia(Agencia agencia);
+	//void guardarAgencia(AgenciaDTO agencia);
 }

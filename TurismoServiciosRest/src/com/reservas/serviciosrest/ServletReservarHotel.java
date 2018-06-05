@@ -28,8 +28,6 @@ public class ServletReservarHotel extends HttpServlet {
 		String apellido = req.getParameter("apellido").toString();
 		String dni = req.getParameter("dni").toString();
 		String medioPago= req.getParameter("medioPago").toString();
-		//Contruir el dto para pasarlo al business delegate
-		MedioPagoDTO medioPagoDTO=null;
-		bussinessDelegate.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantPersonas, nombre, apellido, dni, medioPagoDTO);
+		bussinessDelegate.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantPersonas, nombre, apellido, dni, medioPago);
 	}
 }

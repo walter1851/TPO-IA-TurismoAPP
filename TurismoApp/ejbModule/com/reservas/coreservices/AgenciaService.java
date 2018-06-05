@@ -13,16 +13,16 @@ public class AgenciaService implements AgenciaServiceInterfaceLocal {
 	@EJB
 	AgenciaDAO agenciaDao;
 
-	public void guardarAgencia(Agencia agencia) {
+	/*public void guardarAgencia(AgenciaDTO agencia) {
 		if (!existeAgencia(agencia))
 			agenciaDao.nuevaAgencia(agencia);
 	}
 
-	private boolean existeAgencia(Agencia agencia) {
+	private boolean existeAgencia(AgenciaDTO agencia) {
 		Agencia agenciaFromDatabase = agenciaDao.buscarPorCodigo(agencia.getId());
 		if (agenciaFromDatabase == null)
 			return false;
 		else
 			return true;
-	}
+	}*/
 }
