@@ -23,6 +23,4 @@ public class MedioPagoDAO extends EntityManagerProvider implements MedioPagoDAOI
 	public MedioPago buscarPorId(int medio_de_pago_id) {
 		return getEntityManager().find(MedioPago.class, medio_de_pago_id);
 	}
-
-
 }

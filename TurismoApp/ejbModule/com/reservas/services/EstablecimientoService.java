@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import com.reservas.dao.impl.EstablecimientoDAO;
 import com.reservas.dto.EstablecimientoDTO;
 import com.reservas.entities.Establecimiento;
+import com.reservas.entities.Hotel;
 import com.reservas.services.EstablecimientoServiceInterfaceLocal;
 
 @Stateless
@@ -15,15 +16,15 @@ public class EstablecimientoService implements EstablecimientoServiceInterfaceLo
 	@EJB
 	EstablecimientoDAO establecimientoDAO;
 	
-public void guardarEstablecimiento(EstablecimientoDTO establecimiento) {
-	//if (!existeEstablecimiento(establecimiento))
-		////establecimientoDAO.nuevoEstablecimiento(establecimiento);
+public void guardarEstablecimiento(String nombre,String direccion,String ciudad, String estado,String descripcion,String estrellas,String mapa,String codigo_establecimiento,Hotel hotel) {
+	if (!existeEstablecimiento(codigo_establecimiento))
+		establecimientoDAO.nuevoEstablecimiento(nombre,direccion,ciudad, estado, descripcion,estrellas, mapa, codigo_establecimiento,hotel);
 }
-private boolean existeEstablecimiento(EstablecimientoDTO establecimiento) {
-	//Establecimiento establecimientoFromDatabase = establecimientoDAO.buscarPorCodigo(establecimiento.getEstablecimiento_id());
-	//if (establecimientoFromDatabase == null)
-	//	return false;
-	//else
+private boolean existeEstablecimiento(String codigo_establecimiento) {
+	Establecimiento establecimientoFromDatabase = establecimientoDAO.buscarPorCodigoEstablecimiento(codigo_establecimiento);
+	if (establecimientoFromDatabase == null)
+		return false;
+	else
 		return true;
 }
 }

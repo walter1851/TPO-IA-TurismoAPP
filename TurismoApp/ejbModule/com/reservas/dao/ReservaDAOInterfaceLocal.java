@@ -1,8 +1,6 @@
 package com.reservas.dao;
 
 import javax.ejb.Local;
-
-import com.reservas.entities.Oferta;
 import com.reservas.entities.Reserva;
 
 @Local

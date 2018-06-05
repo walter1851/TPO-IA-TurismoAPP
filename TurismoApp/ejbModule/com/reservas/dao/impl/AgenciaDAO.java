@@ -1,8 +1,7 @@
 package com.reservas.dao.impl;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
+import javax.persistence.Query;
 import com.reservas.dao.AgenciaDAOInterfaceLocal;
 import com.reservas.entities.Agencia;
 
@@ -27,7 +26,9 @@ public class AgenciaDAO extends EntityManagerProvider implements AgenciaDAOInter
 		return getEntityManager().find(Agencia.class, id);
 	}
 	public Agencia buscarPorCodigoAgencia(String codigo_agencia) {
-		return getEntityManager().find(Agencia.class, codigo_agencia);
+		Query agenciaQuery = getEntityManager()
+		.createQuery("SELECT a FROM agencias a " + "WHERE a.codigo_agencia = :codigo_agencia ");
+		agenciaQuery.setParameter("codigo_agencia", "codigo_agencia");
+		return (Agencia) agenciaQuery.getSingleResult();
 	}
-	
 }

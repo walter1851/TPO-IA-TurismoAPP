@@ -21,10 +21,4 @@ public class ReservaService implements ReservaServiceInterfaceLocal {
 	public void reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre,String apellido,String dni,String medioPago) {
 	
 	}
-	/*
-	private boolean validarReserva() {
-		//ofertaBloqueDAO.vare
-		return true;
-	}*/
-
 }

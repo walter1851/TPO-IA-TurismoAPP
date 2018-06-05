@@ -11,8 +11,6 @@ import com.reservas.entities.Oferta;
 @Stateless
 @LocalBean
 public class MapperService implements MapperServiceInterfaceLocal{
-
-	@Override
 	public List<OfertaDTO> mapEntityToDto(List<Oferta> ofertas) {
 		// TODO Auto-generated method stub
 		return null;

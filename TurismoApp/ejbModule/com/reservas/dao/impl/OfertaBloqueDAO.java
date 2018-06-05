@@ -15,9 +15,6 @@ import com.reservas.entities.OfertaBloque;
 @Stateless
 @LocalBean
 public class OfertaBloqueDAO extends EntityManagerProvider implements OfertaBloqueDAOInterfaceLocal{
-	public OfertaBloque buscarPorCodigo(int codigo) {
-		return getEntityManager().find(OfertaBloque.class, codigo);
-	}
 	public void nuevoBloque(Oferta oferta, Date fecha, int cupo) {
 		OfertaBloque ofertaBloque=new OfertaBloque();
 		ofertaBloque.setOferta(oferta);
@@ -31,5 +28,8 @@ public class OfertaBloqueDAO extends EntityManagerProvider implements OfertaBloq
 		ofertaBloque.setFecha_Bloque(fecha);
 		ofertaBloque.setCupo(cupo);
 		getEntityManager().merge(ofertaBloque);
+	}
+	public OfertaBloque buscarPorCodigo(int codigo) {
+		return getEntityManager().find(OfertaBloque.class, codigo);
 	}
 }
