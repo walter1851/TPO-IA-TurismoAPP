@@ -3,6 +3,8 @@
 	<name>ReservasServicioRest</name>
 	<comment></comment>
 	<projects>
+		<project>ReservasApp</project>
+		<project>ReservasAppEAR</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

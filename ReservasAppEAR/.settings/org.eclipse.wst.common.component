@@ -5,5 +5,9 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
+        <dependent-module archiveName="ReservasServicioRest.war" deploy-path="/" handle="module:/resource/ReservasServicioRest/ReservasServicioRest">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
     </wb-module>
 </project-modules>
