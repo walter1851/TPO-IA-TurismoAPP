@@ -1,4 +1,4 @@
-package com.reservas.bean.dto;
+package com.reservas.dto;
 
 public class UsuarioDTO {
 	private int usuario_id;

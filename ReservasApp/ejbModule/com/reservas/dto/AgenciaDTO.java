@@ -1,4 +1,4 @@
-package com.reservas.bean.dto;
+package com.reservas.dto;
 
 public class AgenciaDTO {
 	private int id;

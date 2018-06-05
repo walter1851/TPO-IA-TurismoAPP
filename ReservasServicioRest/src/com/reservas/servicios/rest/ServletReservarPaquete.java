@@ -7,8 +7,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import com.reservas.bean.dto.MedioPagoDTO;
+
 import com.reservas.businessdelegate.BusinessDelegate;
+import com.reservas.dto.MedioPagoDTO;
 
 @WebServlet("/reservar/paquete")
 public class ServletReservarPaquete extends HttpServlet {

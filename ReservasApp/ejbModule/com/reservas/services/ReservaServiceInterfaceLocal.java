@@ -2,7 +2,7 @@ package com.reservas.services;
 
 import javax.ejb.Local;
 
-import com.reservas.bean.dto.MedioPagoDTO;
+import com.reservas.dto.MedioPagoDTO;
 
 @Local
 public interface ReservaServiceInterfaceLocal {

@@ -11,7 +11,7 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.reservas.bean.dto.OfertaDTO;
+import com.reservas.dto.OfertaDTO;
 import com.reservas.entities.Destino;
 import com.reservas.entities.dao.DestinoDAO;
 import com.reservas.entities.dao.OfertaDAO;

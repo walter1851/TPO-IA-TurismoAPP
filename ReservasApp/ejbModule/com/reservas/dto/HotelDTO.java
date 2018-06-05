@@ -1,4 +1,4 @@
-package com.reservas.bean.dto;
+package com.reservas.dto;
 
 public class HotelDTO {
 	private int hotel_id;

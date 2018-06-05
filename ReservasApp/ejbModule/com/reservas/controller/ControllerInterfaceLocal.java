@@ -3,8 +3,8 @@ package com.reservas.controller;
 import java.text.ParseException;
 import java.util.List;
 
-import com.reservas.bean.dto.MedioPagoDTO;
-import com.reservas.bean.dto.OfertaDTO;
+import com.reservas.dto.MedioPagoDTO;
+import com.reservas.dto.OfertaDTO;
 
 public interface ControllerInterfaceLocal {
 	public void reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre,String apellido,String dni,MedioPagoDTO medioPagoDTO);

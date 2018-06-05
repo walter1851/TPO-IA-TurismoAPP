@@ -5,7 +5,7 @@ import java.util.List;
 
 import javax.ejb.Local;
 
-import com.reservas.bean.dto.OfertaDTO;
+import com.reservas.dto.OfertaDTO;
 
 @Local
 public interface BusquedaServiceInterfaceLocal {

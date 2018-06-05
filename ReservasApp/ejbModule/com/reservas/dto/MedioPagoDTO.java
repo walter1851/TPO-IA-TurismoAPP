@@ -1,4 +1,4 @@
-package com.reservas.bean.dto;
+package com.reservas.dto;
 
 public class MedioPagoDTO {
 	private int medio_de_pago_id;

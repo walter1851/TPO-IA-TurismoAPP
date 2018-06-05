@@ -1,4 +1,4 @@
-package com.reservas.bean.dto;
+package com.reservas.dto;
 
 import java.io.InputStream;
 import java.util.Date;

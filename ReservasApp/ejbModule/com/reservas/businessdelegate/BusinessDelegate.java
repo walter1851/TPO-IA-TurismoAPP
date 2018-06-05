@@ -7,9 +7,9 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.reservas.bean.dto.MedioPagoDTO;
-import com.reservas.bean.dto.OfertaDTO;
 import com.reservas.controller.Controller;
+import com.reservas.dto.MedioPagoDTO;
+import com.reservas.dto.OfertaDTO;
 
 @Stateless
 @LocalBean

@@ -3,8 +3,8 @@ package com.reservas.businessdelegate;
 import java.text.ParseException;
 import java.util.List;
 
-import com.reservas.bean.dto.MedioPagoDTO;
-import com.reservas.bean.dto.OfertaDTO;
+import com.reservas.dto.MedioPagoDTO;
+import com.reservas.dto.OfertaDTO;
 
 public interface BusinessDelegateInterfaceLocal {
 	public void reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion, int cantPersonas,

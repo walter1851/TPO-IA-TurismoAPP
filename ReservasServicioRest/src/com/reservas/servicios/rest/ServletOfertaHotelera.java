@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.reservas.bean.dto.OfertaDTO;
 import com.reservas.businessdelegate.BusinessDelegate;
+import com.reservas.dto.OfertaDTO;
 
 @WebServlet("/reserva")
 public class ServletOfertaHotelera extends HttpServlet {
