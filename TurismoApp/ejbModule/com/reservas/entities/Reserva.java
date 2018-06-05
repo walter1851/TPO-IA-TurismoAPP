@@ -18,12 +18,37 @@ public class Reserva {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "oferta_id")
 	private Oferta oferta;
-	/*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@JoinColumn(name = "usuario_id")
-	protected List<Usuario> usuarios;*/
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "medio_de_pago_id")
 	private MedioPago medioPago;
+	private int usuario_id;
+	private String nombre;
+	private String email;
+	private String dni;
+	public int getUsuario_id() {
+		return usuario_id;
+	}
+	public void setUsuario_id(int usuario_id) {
+		this.usuario_id = usuario_id;
+	}
+	public String getNombre() {
+		return nombre;
+	}
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getDni() {
+		return dni;
+	}
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
 	public int getReserva_id() {
 		return reserva_id;
 	}
