@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="TurismoAppEAR">
+        <wb-resource deploy-path="/" source-path="/EarContent" tag="defaultRootSource"/>
+        <dependent-module archiveName="TurismoApp.jar" deploy-path="/" handle="module:/resource/TurismoApp/TurismoApp">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="TurismoAppClient.jar" deploy-path="/" handle="module:/resource/TurismoAppClient/TurismoAppClient">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="TurismoServiciosRest.war" deploy-path="/" handle="module:/resource/TurismoServiciosRest/TurismoServiciosRest">
+            <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+    </wb-module>
+</project-modules>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+    <wb-module deploy-name="TurismoApp">
+        <wb-resource deploy-path="/" source-path="/ejbModule" tag="defaultRootSource"/>
+        <property name="java-output-path" value="/TurismoApp/build/classes"/>
+        <property name="ClientProject" value="TurismoAppClient"/>
+        <property name="ClientJARURI" value="TurismoAppClient.jar"/>
+    </wb-module>
+</project-modules>
