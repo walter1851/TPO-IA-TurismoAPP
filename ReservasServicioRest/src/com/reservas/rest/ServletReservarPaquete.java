@@ -1,4 +1,4 @@
-package com.reservas.servicios.rest;
+package com.reservas.rest;
 
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -12,7 +12,7 @@ import com.reservas.businessdelegate.BusinessDelegate;
 import com.reservas.dto.MedioPagoDTO;
 
 @WebServlet("/reservar/paquete")
-public class ServletReservarHotel extends HttpServlet {
+public class ServletReservarPaquete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -22,7 +22,6 @@ public class ServletReservarHotel extends HttpServlet {
 		int ofertaid = Integer.parseInt(req.getParameter("ofertaid").toString());
 		String fDesde = req.getParameter("fDesde").toString();
 		String fHasta = req.getParameter("fhasta").toString();
-		String tipoHabitacion = req.getParameter("tipoHabitacion").toString();
 		int cantPersonas = Integer.parseInt(req.getParameter("cantPersonas").toString());
 		String nombre = req.getParameter("nombre").toString();
 		String apellido = req.getParameter("apellido").toString();
@@ -30,6 +29,6 @@ public class ServletReservarHotel extends HttpServlet {
 		String medioPago= req.getParameter("medioPago").toString();
 		//Contruir el dto para pasarlo al business delegate
 		MedioPagoDTO medioPagoDTO=null;
-		bussinessDelegate.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantPersonas, nombre, apellido, dni, medioPagoDTO);
+		bussinessDelegate.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPagoDTO);
 	}
 }

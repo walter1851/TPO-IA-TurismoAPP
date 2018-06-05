@@ -1,4 +1,4 @@
-package com.reservas.servicios.rest;
+package com.reservas.rest;
 
 import java.io.IOException;
 import java.text.ParseException;
