@@ -1,4 +1,4 @@
-package com.reservas.rest;
+package com.reservas.serviciosrest;
 
 import java.io.IOException;
 import javax.ejb.EJB;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.reservas.businessdelegate.BusinessDelegate;
 import com.reservas.dto.MedioPagoDTO;
 
-@WebServlet("/reservar/paquete")
+@WebServlet("/turismo/reservapaquete/reservar")
 public class ServletReservarPaquete extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
