@@ -6,7 +6,7 @@ import org.apache.commons.io.IOUtils;
 
 public class ClienteRest {
 	public static void main(String[] args) throws Exception {
-		URL url = new URL("http://localhost:8080/ReservasServicioRest/turismo/ofertahotelera/buscar");
+		URL url = new URL("http://localhost:8080/TurismoServiciosRest/turismo/ofertahotelera/buscar");
 		HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 		if (urlConnection.getResponseCode() != 200) {
 			throw new RuntimeException("Error de conexión: " + urlConnection.getResponseCode());
