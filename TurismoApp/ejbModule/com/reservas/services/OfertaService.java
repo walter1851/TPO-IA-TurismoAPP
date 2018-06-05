@@ -4,10 +4,10 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.reservas.coreservices.OfertaServiceInterfaceLocal;
 import com.reservas.dao.impl.OfertaDAO;
 import com.reservas.dto.OfertaDTO;
 import com.reservas.entities.Oferta;
+import com.reservas.services.OfertaServiceInterfaceLocal;
 @Stateless
 @LocalBean
 public class OfertaService implements OfertaServiceInterfaceLocal{

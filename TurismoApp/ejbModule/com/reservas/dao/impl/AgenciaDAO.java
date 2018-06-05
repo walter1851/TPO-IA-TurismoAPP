@@ -17,13 +17,17 @@ public class AgenciaDAO extends EntityManagerProvider implements AgenciaDAOInter
 		getEntityManager().persist(agencia);
 	}
 	public void actualizarAgencia(int id,String nombre,String direccion,String codigo_agencia) {
-		Agencia agencia=buscarPorCodigo(id);
+		Agencia agencia=buscarPorId(id);
 		agencia.setNombre(nombre);
 		agencia.setDireccion(direccion);
 		agencia.setCodigo_agencia(codigo_agencia);
 		getEntityManager().merge(agencia);
 	}
-	public Agencia buscarPorCodigo(int codigo) {
-		return getEntityManager().find(Agencia.class, codigo);
+	public Agencia buscarPorId(int id) {
+		return getEntityManager().find(Agencia.class, id);
 	}
+	public Agencia buscarPorCodigoAgencia(String codigo_agencia) {
+		return getEntityManager().find(Agencia.class, codigo_agencia);
+	}
+	
 }

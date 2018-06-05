@@ -2,9 +2,11 @@ package com.reservas.dao.impl;
 
 import java.io.InputStream;
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.Query;
 
 import com.reservas.dao.OfertaDAOInterfaceLocal;
 import com.reservas.entities.Agencia;
@@ -64,6 +66,40 @@ public class OfertaDAO extends EntityManagerProvider implements OfertaDAOInterfa
 	}
 	public Oferta buscarPorCodigo(int codigo) {
 		return getEntityManager().find(Oferta.class, codigo);
+	}
+	public List<Oferta> buscarOfertasHotelera(String destino, int cantPersonas, String fDesde, String fHasta) {
+     	Query ofertasHotelerasQuery = getEntityManager().createQuery(
+		"SELECT o FROM ofertas o "+
+     	"INNER JOIN destinos d on d.destino_id=o.destino_id"+
+     	"INNER JOIN ofertas_tipo ot on ot.oferta_id=o.oferta_id " +
+		"WHERE d.destino = :destino " +
+		"OR o.cantPersonas = :cantPersonas" +
+		"OR o.fDesde = :fDesde" +
+		"OR o.fHasta = :fHasta" +
+		"OR ot.nombre = :tipoDeOferta");
+     	ofertasHotelerasQuery.setParameter("destino", "destino");
+     	ofertasHotelerasQuery.setParameter("cantPersonas", "cantPersonas");
+     	ofertasHotelerasQuery.setParameter("fDesde", "fDesde");
+     	ofertasHotelerasQuery.setParameter("fHasta", "fHasta");
+     	ofertasHotelerasQuery.setParameter("tipoDeOferta", "hotelera");
+	return ofertasHotelerasQuery.getResultList();
+	}
+	public List<Oferta> buscarOfertasPaquete(String destino, int cantPersonas, String fDesde, String fHasta) {
+		Query ofertasHotelerasQuery = getEntityManager().createQuery(
+				"SELECT o FROM ofertas o "+
+		     	"INNER JOIN destinos d on d.destino_id=o.destino_id"+
+		     	"INNER JOIN ofertas_tipo ot on ot.oferta_id=o.oferta_id " +
+				"WHERE d.destino = :destino " +
+				"OR o.cantPersonas = :cantPersonas" +
+				"OR o.fDesde = :fDesde" +
+				"OR o.fHasta = :fHasta" +
+				"OR ot.nombre = :tipoDeOferta");
+		     	ofertasHotelerasQuery.setParameter("destino", "destino");
+		     	ofertasHotelerasQuery.setParameter("cantPersonas", "cantPersonas");
+		     	ofertasHotelerasQuery.setParameter("fDesde", "fDesde");
+		     	ofertasHotelerasQuery.setParameter("fHasta", "fHasta");
+		     	ofertasHotelerasQuery.setParameter("tipoDeOferta", "paquete");
+			return ofertasHotelerasQuery.getResultList();
 	}
 
 }

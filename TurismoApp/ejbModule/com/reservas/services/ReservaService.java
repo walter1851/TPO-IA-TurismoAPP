@@ -4,9 +4,9 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.reservas.coreservices.ReservaServiceInterfaceLocal;
 import com.reservas.dao.impl.ReservaDAO;
 import com.reservas.dto.MedioPagoDTO;
+import com.reservas.services.ReservaServiceInterfaceLocal;
 
 @Stateless
 @LocalBean

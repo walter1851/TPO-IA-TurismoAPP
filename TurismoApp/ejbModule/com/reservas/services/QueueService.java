@@ -3,7 +3,7 @@ package com.reservas.services;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.reservas.coreservices.QueueServiceInterfaceLocal;
+import com.reservas.services.QueueServiceInterfaceLocal;
 
 @Stateless
 @LocalBean

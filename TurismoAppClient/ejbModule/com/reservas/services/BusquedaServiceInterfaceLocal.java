@@ -1,4 +1,4 @@
-package com.reservas.coreservices;
+package com.reservas.services;
 
 import java.text.ParseException;
 import java.util.List;

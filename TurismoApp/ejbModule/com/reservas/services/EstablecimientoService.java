@@ -4,10 +4,10 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.reservas.coreservices.EstablecimientoServiceInterfaceLocal;
 import com.reservas.dao.impl.EstablecimientoDAO;
 import com.reservas.dto.EstablecimientoDTO;
 import com.reservas.entities.Establecimiento;
+import com.reservas.services.EstablecimientoServiceInterfaceLocal;
 
 @Stateless
 @LocalBean

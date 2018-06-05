@@ -8,5 +8,6 @@ import com.reservas.entities.Agencia;
 public interface AgenciaDAOInterfaceLocal {
 	public void nuevaAgencia(String nombre,String direccion,String codigo_agencia);
 	public void actualizarAgencia(int id,String nombre,String direccion,String codigo_agencia);
-	public Agencia buscarPorCodigo(int codigo);
+	public Agencia buscarPorCodigoAgencia(String codigo_agencia);
+	public Agencia buscarPorId(int id);
 }

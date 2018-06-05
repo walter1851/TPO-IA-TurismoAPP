@@ -11,11 +11,12 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.reservas.coreservices.BusquedaServiceInterfaceLocal;
 import com.reservas.dao.impl.DestinoDAO;
 import com.reservas.dao.impl.OfertaDAO;
 import com.reservas.dto.OfertaDTO;
 import com.reservas.entities.Destino;
+import com.reservas.entities.Oferta;
+import com.reservas.services.BusquedaServiceInterfaceLocal;
 
 /**
  * Session Bean implementation class BusquedaOfertaPaqueteService
@@ -26,40 +27,28 @@ public class BusquedaService implements BusquedaServiceInterfaceLocal{
 	@EJB
 	OfertaDAO ofertaDao;
 	@EJB
-	DestinoDAO destinoDao;
-	
+	MapperService mapperService;
+
 	public List<OfertaDTO> buscarOfertaPaquete(String destino,int cantPersonas,String fDesde, String fHasta) throws ParseException {
-		Date dDesde=parseFecha(fDesde);
-		Date dHasta=parseFecha(fHasta);
-		if (validarDestino(destino)) {
-			
+		List<Oferta> ofertasPaquete=null;
+		if (validarBusqueda(fDesde)&&validarBusqueda(fHasta)) {
+			ofertasPaquete=ofertaDao.buscarOfertasPaquete(destino, cantPersonas, fDesde, fHasta);
 		}
-		
-		return null;
+		return mapperService.mapEntityToDto(ofertasPaquete);
 	}
 	public List<OfertaDTO> buscarOfertaHotelera(String destino,int cantPersonas,String fDesde, String fHasta,String tipoHabitacion) throws ParseException {
-		Date dDesde=parseFecha(fDesde);
-		Date dHasta=parseFecha(fHasta);
-		if (validarDestino(destino)) {
-			
+		List<Oferta> ofertasHotelera=null;
+		if (validarBusqueda(fDesde)&&validarBusqueda(fHasta)) {
+			ofertasHotelera=ofertaDao.buscarOfertasPaquete(destino, cantPersonas, fDesde, fHasta);
 		}
-		
-		return null;
+		return mapperService.mapEntityToDto(ofertasHotelera);
 	}
-	private boolean validarDestino(String destino){
-		//validar destino
-		Destino destinoFromDatabase=destinoDao.buscarPorNombre(destino);
-		if (destinoFromDatabase == null)
-			return false;
-		else
-			return true;
-	}
-	private Date parseFecha(String fecha) throws ParseException {
+	private Boolean validarBusqueda(String fecha) throws ParseException {
 		//ValidarFechas
 		//Ejemplo: Wed, 4 Jul 2001 12:08:56 -0700
 		DateFormat format = new SimpleDateFormat("EEE, d MMM yyyy", Locale.ENGLISH);
 		Date desde = format.parse(fecha);
-		return desde;
+		return true;
 	}
 	
 }
