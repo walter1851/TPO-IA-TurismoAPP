@@ -1,4 +1,4 @@
-package com.reservas.dao;
+package com.reservas.dao.impl;
 
 import java.util.Date;
 
@@ -7,11 +7,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import com.reservas.dao.OfertaDAOInterfaceLocal;
 import com.reservas.entities.Oferta;
 
 @Stateless
 @LocalBean
-public class OfertaDAO implements OfertaDAOInterfaceLocal {
+public class OfertaDAO extends EntityManagerProvider implements OfertaDAOInterfaceLocal {
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager manager;
 

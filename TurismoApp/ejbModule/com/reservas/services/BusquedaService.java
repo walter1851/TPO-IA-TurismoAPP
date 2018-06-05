@@ -1,4 +1,4 @@
-package com.reservas.coreservices;
+package com.reservas.services;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -11,8 +11,9 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.reservas.dao.DestinoDAO;
-import com.reservas.dao.OfertaDAO;
+import com.reservas.coreservices.BusquedaServiceInterfaceLocal;
+import com.reservas.dao.impl.DestinoDAO;
+import com.reservas.dao.impl.OfertaDAO;
 import com.reservas.dto.OfertaDTO;
 import com.reservas.entities.Destino;
 

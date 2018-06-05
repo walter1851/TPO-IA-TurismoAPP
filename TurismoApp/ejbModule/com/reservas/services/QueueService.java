@@ -1,7 +1,9 @@
-package com.reservas.coreservices;
+package com.reservas.services;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+
+import com.reservas.coreservices.QueueServiceInterfaceLocal;
 
 @Stateless
 @LocalBean

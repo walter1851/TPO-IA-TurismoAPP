@@ -1,10 +1,11 @@
-package com.reservas.coreservices;
+package com.reservas.services;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.reservas.dao.EstablecimientoDAO;
+import com.reservas.coreservices.EstablecimientoServiceInterfaceLocal;
+import com.reservas.dao.impl.EstablecimientoDAO;
 import com.reservas.dto.EstablecimientoDTO;
 import com.reservas.entities.Establecimiento;
 

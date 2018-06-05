@@ -1,16 +1,18 @@
-package com.reservas.dao;
+package com.reservas.dao.impl;
 
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import com.reservas.dao.ImagenDAOInterfaceLocal;
 import com.reservas.entities.Hotel;
 import com.reservas.entities.Imagen;
 
 @Stateless
 @LocalBean
-public class ImagenDAO implements ImagenDAOInterfaceLocal{
+public class ImagenDAO extends EntityManagerProvider implements ImagenDAOInterfaceLocal{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager manager;
 	

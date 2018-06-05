@@ -1,14 +1,16 @@
-package com.reservas.dao;
+package com.reservas.dao.impl;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import com.reservas.dao.EstablecimientoDAOInterfaceLocal;
 import com.reservas.entities.Establecimiento;
 
 @Stateless
 @LocalBean
-public class EstablecimientoDAO implements EstablecimientoDAOInterfaceLocal{
+public class EstablecimientoDAO extends EntityManagerProvider implements EstablecimientoDAOInterfaceLocal{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager manager;
 	

@@ -5,8 +5,8 @@ import java.util.List;
 
 import javax.ejb.EJB;
 
-import com.reservas.coreservices.BusquedaService;
 import com.reservas.dto.OfertaDTO;
+import com.reservas.services.BusquedaService;
 
 public class ControllerBusqueda implements ControllerBusquedaInterfaceLocal{
 	@EJB
