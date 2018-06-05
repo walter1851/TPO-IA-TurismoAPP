@@ -7,23 +7,28 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import com.reservas.dao.ImagenDAOInterfaceLocal;
+import com.reservas.entities.Establecimiento;
 import com.reservas.entities.Hotel;
 import com.reservas.entities.Imagen;
 
 @Stateless
 @LocalBean
 public class ImagenDAO extends EntityManagerProvider implements ImagenDAOInterfaceLocal{
-	@PersistenceContext(unitName = "MyPU")
-	private EntityManager manager;
-	
-	public void nuevaImagen(Imagen imagen) {
-		// se persiste el objeto imagen y todo el grafo
-		manager.persist(imagen);
-	}
-	public void actualizarImagen(Hotel hotel) {
-		manager.merge(hotel);
-	}
 	public Imagen buscarPorCodigo(int codigo) {
-		return manager.find(Imagen.class, codigo);
+		return 	getEntityManager().find(Imagen.class, codigo);
+	}
+	public void nuevaImagen(String url, Establecimiento establecimiento, Hotel hotel) {
+		Imagen imagen= new Imagen();
+		imagen.setUrl(url);
+		imagen.setEstablecimiento(establecimiento);
+		imagen.setHotel(hotel);
+		getEntityManager().merge(imagen);
+	}
+	public void actualizarImagen(int imagen_id,String url,Establecimiento establecimiento, Hotel hotel) {
+		Imagen imagen= buscarPorCodigo(imagen_id);
+		imagen.setUrl(url);
+		imagen.setEstablecimiento(establecimiento);
+		imagen.setHotel(hotel);
+		getEntityManager().merge(imagen);
 	}
 }

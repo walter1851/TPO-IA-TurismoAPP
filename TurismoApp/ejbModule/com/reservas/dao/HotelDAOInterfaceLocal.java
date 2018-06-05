@@ -6,7 +6,7 @@ import com.reservas.entities.Hotel;
 
 @Local
 public interface HotelDAOInterfaceLocal {
-	public void nuevoHotel(Hotel hotel);
-	public void actualizarHotel(Hotel hotel);
+	public void nuevoHotel(String nombre,String codigo_hotel);
+	public void actualizarHotel(int hotel_id,String nombre, String codigo_hotel);
 	public Hotel buscarPorCodigo(int codigo);
 }

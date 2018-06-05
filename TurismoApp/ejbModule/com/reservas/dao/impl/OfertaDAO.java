@@ -1,33 +1,39 @@
 package com.reservas.dao.impl;
 
+import java.io.InputStream;
 import java.util.Date;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import com.reservas.dao.OfertaDAOInterfaceLocal;
+import com.reservas.entities.Agencia;
+import com.reservas.entities.Destino;
+import com.reservas.entities.Establecimiento;
+import com.reservas.entities.MedioPago;
 import com.reservas.entities.Oferta;
+import com.reservas.entities.OfertaTipo;
 
 @Stateless
 @LocalBean
 public class OfertaDAO extends EntityManagerProvider implements OfertaDAOInterfaceLocal {
-	@PersistenceContext(unitName = "MyPU")
-	private EntityManager manager;
-
-	public void nuevaOferta(Oferta oferta) {
-		// se persiste el objeto oferta y todo el grafo
-		manager.persist(oferta);
+	public void nuevaOferta(String nombre, int cupo, Date fecha_desde, Date fecha_hasta, float precio,
+			String tipo_habitacion, String politicas, String servicios, Destino destino, InputStream foto_paquete,
+			MedioPago medioPago, int cant_personas, Establecimiento establecimiento, Agencia agencia,
+			OfertaTipo ofertaTipo) {
+		// TODO Auto-generated method stub
+		
 	}
-	public void actualizarOferta(Oferta Oferta) {
-		manager.merge(Oferta);
+	public void actualizarOferta(int oferta_id, String nombre, int cupo, Date fecha_desde, Date fecha_hasta,
+			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
+			InputStream foto_paquete, MedioPago medioPago, int cant_personas, Establecimiento establecimiento,
+			Agencia agencia, OfertaTipo ofertaTipo) {
+		// TODO Auto-generated method stub
+		
 	}
 	public Oferta buscarPorCodigo(int codigo) {
-		return manager.find(Oferta.class, codigo);
-	}
-	public Oferta buscarPorVarios(String destino,int cantPersonas,Date dDesde,Date dHasta) {
-		//return manager.find(Oferta.class, destino,cantPersonas,dHasta,dHasta);
+		// TODO Auto-generated method stub
 		return null;
 	}
+
 }

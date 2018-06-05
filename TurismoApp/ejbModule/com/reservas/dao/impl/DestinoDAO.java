@@ -10,13 +10,10 @@ import com.reservas.entities.Destino;
 @Stateless
 @LocalBean
 public class DestinoDAO extends EntityManagerProvider implements DestinoDAOInterfaceLocal{
-	@PersistenceContext(unitName = "MyPU")
-	private EntityManager manager;
-	
 	public Destino buscarPorCodigo(int codigo) {
-		return manager.find(Destino.class, codigo);
+		return getEntityManager().find(Destino.class, codigo);
 	}
 	public Destino buscarPorNombre(String nombreDestino) {
-		return manager.find(Destino.class, nombreDestino);
+		return getEntityManager().find(Destino.class, nombreDestino);
 	}
 }

@@ -32,7 +32,7 @@ public class BusquedaService implements BusquedaServiceInterfaceLocal{
 		Date dDesde=parseFecha(fDesde);
 		Date dHasta=parseFecha(fHasta);
 		if (validarDestino(destino)) {
-			ofertaDao.buscarPorVarios(destino,cantPersonas,dDesde,dHasta);
+			
 		}
 		
 		return null;
@@ -41,7 +41,7 @@ public class BusquedaService implements BusquedaServiceInterfaceLocal{
 		Date dDesde=parseFecha(fDesde);
 		Date dHasta=parseFecha(fHasta);
 		if (validarDestino(destino)) {
-			ofertaDao.buscarPorVarios(destino,cantPersonas,dDesde,dHasta);
+			
 		}
 		
 		return null;
