@@ -1,11 +1,11 @@
-package com.reservas.services;
+package com.reservas.coreservices;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.reservas.dao.OfertaDAO;
 import com.reservas.entities.Oferta;
-import com.reservas.entities.dao.OfertaDAO;
 @Stateless
 @LocalBean
 public class OfertaService implements OfertaServiceInterfaceLocal{

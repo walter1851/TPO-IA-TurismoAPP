@@ -1,4 +1,4 @@
-package com.reservas.entities.dao;
+package com.reservas.dao;
 
 import javax.ejb.Local;
 

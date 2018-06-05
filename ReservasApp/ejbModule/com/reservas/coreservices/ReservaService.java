@@ -1,11 +1,11 @@
-package com.reservas.services;
+package com.reservas.coreservices;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.reservas.dao.ReservaDAO;
 import com.reservas.dto.MedioPagoDTO;
-import com.reservas.entities.dao.ReservaDAO;
 
 @Stateless
 @LocalBean

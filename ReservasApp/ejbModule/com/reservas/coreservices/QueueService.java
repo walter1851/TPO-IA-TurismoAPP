@@ -1,4 +1,4 @@
-package com.reservas.services;
+package com.reservas.coreservices;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;

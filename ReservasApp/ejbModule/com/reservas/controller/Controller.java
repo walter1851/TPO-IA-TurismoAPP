@@ -7,10 +7,10 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.reservas.coreservices.BusquedaService;
+import com.reservas.coreservices.ReservaService;
 import com.reservas.dto.MedioPagoDTO;
 import com.reservas.dto.OfertaDTO;
-import com.reservas.services.BusquedaService;
-import com.reservas.services.ReservaService;
 
 @Stateless
 @LocalBean
