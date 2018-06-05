@@ -7,7 +7,7 @@ import javax.persistence.PersistenceContext;
 import com.reservas.entities.Destino;
 @Stateless
 @LocalBean
-public class DestinoDAO implements DestinoDAOLocal{
+public class DestinoDAO implements DestinoDAOInterfaceLocal{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager manager;
 	

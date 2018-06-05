@@ -10,7 +10,7 @@ import com.reservas.entities.OfertaBloque;
 
 @Stateless
 @LocalBean
-public class OfertaBloqueDAO implements OfertaBloqueDAOLocal{
+public class OfertaBloqueDAO implements OfertaBloqueDAOInterfaceLocal{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager manager;
 	

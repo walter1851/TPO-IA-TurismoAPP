@@ -9,7 +9,7 @@ import com.reservas.entities.dao.EstablecimientoDAO;
 
 @Stateless
 @LocalBean
-public class EstablecimientoService implements EstablecimientoServiceLocal{
+public class EstablecimientoService implements EstablecimientoServiceInterfaceLocal{
 	@EJB
 	EstablecimientoDAO establecimientoDAO;
 	

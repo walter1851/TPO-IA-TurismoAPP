@@ -11,7 +11,7 @@ import com.reservas.entities.Oferta;
 
 @Stateless
 @LocalBean
-public class OfertaDAO implements OfertaDAOLocal {
+public class OfertaDAO implements OfertaDAOInterfaceLocal {
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager manager;
 

@@ -14,7 +14,7 @@ import com.reservas.services.ReservaService;
 
 @Stateless
 @LocalBean
-public class Controller{
+public class Controller implements ControllerInterfaceLocal{
 	@EJB
 	BusquedaService busquedaOfertaService;
 	@EJB

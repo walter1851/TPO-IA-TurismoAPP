@@ -8,7 +8,7 @@ import com.reservas.entities.Oferta;
 import com.reservas.entities.dao.OfertaDAO;
 @Stateless
 @LocalBean
-public class OfertaService implements OfertaServiceLocal{
+public class OfertaService implements OfertaServiceInterfaceLocal{
 	@EJB
 	OfertaDAO ofertaDAO;
 public void guardarOfertaPaquete(Oferta oferta) {

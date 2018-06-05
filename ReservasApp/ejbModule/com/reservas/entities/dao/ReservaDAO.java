@@ -10,7 +10,7 @@ import com.reservas.entities.Reserva;
 
 @Stateless
 @LocalBean
-public class ReservaDAO implements ReservaDAOLocal{
+public class ReservaDAO implements ReservaDAOInterfaceLocal{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager manager;
 	

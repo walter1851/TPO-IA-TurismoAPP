@@ -13,7 +13,7 @@ import com.reservas.controller.Controller;
 
 @Stateless
 @LocalBean
-public class BusinessDelegate{
+public class BusinessDelegate implements BusinessDelegateInterfaceLocal{
 	@EJB
 	Controller controller;
 	public void reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion, int cantPersonas,

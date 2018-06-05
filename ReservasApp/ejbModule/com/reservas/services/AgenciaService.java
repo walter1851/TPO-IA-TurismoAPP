@@ -9,7 +9,7 @@ import com.reservas.entities.dao.AgenciaDAO;
 
 @Stateless
 @LocalBean
-public class AgenciaService implements AgenciaServiceLocal {
+public class AgenciaService implements AgenciaServiceInterfaceLocal {
 	@EJB
 	AgenciaDAO agenciaDao;
 

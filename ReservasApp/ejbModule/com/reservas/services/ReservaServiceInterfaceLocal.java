@@ -5,7 +5,7 @@ import javax.ejb.Local;
 import com.reservas.bean.dto.MedioPagoDTO;
 
 @Local
-public interface ReservaServiceLocal {
+public interface ReservaServiceInterfaceLocal {
 	public void reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, MedioPagoDTO medioPagoDTO);
 

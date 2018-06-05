@@ -5,9 +5,9 @@ import javax.ejb.Stateless;
 
 @Stateless
 @LocalBean
-public class ConsumerQueueService implements ConsumerQueueServiceLocal {
+public class QueueService implements QueueServiceInterfaceLocal {
 
-	public ConsumerQueueService() {
+	public QueueService() {
 	}
 	public void guardarOfertaHotelera(){
 		

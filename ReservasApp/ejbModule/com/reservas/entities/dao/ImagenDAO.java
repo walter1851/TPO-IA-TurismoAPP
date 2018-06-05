@@ -10,7 +10,7 @@ import com.reservas.entities.Imagen;
 
 @Stateless
 @LocalBean
-public class ImagenDAO implements ImagenDAOLocal{
+public class ImagenDAO implements ImagenDAOInterfaceLocal{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager manager;
 	

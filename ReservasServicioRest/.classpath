@@ -15,6 +15,5 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/wildfly-9.0.2.Final/bin/client/jboss-client.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/ReservasApp"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/RepositorioDTO"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

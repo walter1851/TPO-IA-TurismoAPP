@@ -9,7 +9,7 @@ import com.reservas.entities.dao.ReservaDAO;
 
 @Stateless
 @LocalBean
-public class ReservaService implements ReservaServiceLocal {
+public class ReservaService implements ReservaServiceInterfaceLocal {
 	@EJB
 	ReservaDAO reservaDAO;
 	@EJB

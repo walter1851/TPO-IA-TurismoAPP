@@ -10,7 +10,7 @@ import com.reservas.entities.Agencia;
 
 @Stateless
 @LocalBean
-public class AgenciaDAO implements AgenciaDAOLocal{
+public class AgenciaDAO implements AgenciaDAOInterfaceLocal{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager manager;
 	

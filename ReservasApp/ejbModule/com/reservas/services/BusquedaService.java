@@ -21,7 +21,7 @@ import com.reservas.entities.dao.OfertaDAO;
  */
 @Stateless
 @LocalBean
-public class BusquedaService implements BusquedaServiceLocal{
+public class BusquedaService implements BusquedaServiceInterfaceLocal{
 	@EJB
 	OfertaDAO ofertaDao;
 	@EJB

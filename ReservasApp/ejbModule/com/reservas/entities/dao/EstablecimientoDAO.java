@@ -8,7 +8,7 @@ import com.reservas.entities.Establecimiento;
 
 @Stateless
 @LocalBean
-public class EstablecimientoDAO implements EstablecimientoDAOLocal{
+public class EstablecimientoDAO implements EstablecimientoDAOInterfaceLocal{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager manager;
 	

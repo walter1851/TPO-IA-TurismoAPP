@@ -6,7 +6,7 @@ import com.reservas.entities.Hotel;
 import com.reservas.entities.Imagen;
 
 @Local
-public interface ImagenDAOLocal {
+public interface ImagenDAOInterfaceLocal {
 	public void nuevaImagen(Imagen imagen);
 	public void actualizarImagen(Hotel hotel);
 	public Imagen buscarPorCodigo(int codigo);
