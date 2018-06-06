@@ -1,6 +1,5 @@
 package com.turismo.dao;
 
-import java.util.Date;
 
 import javax.ejb.Local;
 

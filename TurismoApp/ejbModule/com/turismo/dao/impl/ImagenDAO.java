@@ -3,8 +3,6 @@ package com.turismo.dao.impl;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 import com.turismo.dao.ImagenDAOInterfaceLocal;
 import com.turismo.entities.Establecimiento;
