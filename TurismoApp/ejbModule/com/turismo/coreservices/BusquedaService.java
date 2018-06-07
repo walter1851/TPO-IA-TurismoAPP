@@ -25,9 +25,9 @@ import com.turismo.entities.Oferta;
 @LocalBean
 public class BusquedaService implements BusquedaServiceLocal{
 	@EJB
-	OfertaDAO ofertaDao;
+	private OfertaDAO ofertaDao;
 	@EJB
-	MapperService mapperService;
+	private MapperService mapperService;
 
 	public List<OfertaDTO> buscarOfertaPaquete(String destino,int cantPersonas,String fDesde, String fHasta) throws ParseException {
 		List<Oferta> ofertasPaquete=null;

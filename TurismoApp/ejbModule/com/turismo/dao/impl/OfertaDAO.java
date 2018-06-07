@@ -6,6 +6,8 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import com.turismo.dao.OfertaDAOLocal;
@@ -18,7 +20,10 @@ import com.turismo.entities.OfertaTipo;
 
 @Stateless
 @LocalBean
-public class OfertaDAO extends EntityManagerProvider implements OfertaDAOLocal {
+public class OfertaDAO implements OfertaDAOLocal {
+	@PersistenceContext(unitName = "MyPU")
+	private EntityManager entityManager;
+	
 	public void nuevaOferta(String nombre, int cupo, Date fecha_desde, Date fecha_hasta, float precio,
 			String tipo_habitacion, String politicas, String servicios, Destino destino, InputStream foto_paquete,
 			MedioPago medioPago, int cant_personas, Establecimiento establecimiento, Agencia agencia,
@@ -39,7 +44,7 @@ public class OfertaDAO extends EntityManagerProvider implements OfertaDAOLocal {
 		oferta.setEstablecimiento(establecimiento);
 		oferta.setAgencia(agencia);
 		oferta.setOfertaTipo(ofertaTipo);
-		getEntityManager().merge(oferta);
+		entityManager.merge(oferta);
 	}
 	public void actualizarOferta(int oferta_id, String nombre, int cupo, Date fecha_desde, Date fecha_hasta,
 			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
@@ -61,14 +66,14 @@ public class OfertaDAO extends EntityManagerProvider implements OfertaDAOLocal {
 		oferta.setEstablecimiento(establecimiento);
 		oferta.setAgencia(agencia);
 		oferta.setOfertaTipo(ofertaTipo);
-		getEntityManager().merge(oferta);
+		entityManager.merge(oferta);
 		
 	}
 	public Oferta buscarPorCodigo(int codigo) {
-		return getEntityManager().find(Oferta.class, codigo);
+		return entityManager.find(Oferta.class, codigo);
 	}
 	public List<Oferta> buscarOfertasHotelera(String destino, int cantPersonas, String fDesde, String fHasta) {
-     	Query ofertasHotelerasQuery = getEntityManager().createQuery(
+     	Query ofertasHotelerasQuery = entityManager.createQuery(
 		"SELECT o FROM ofertas o "+
      	"INNER JOIN destinos d on d.destino_id=o.destino_id"+
      	"INNER JOIN ofertas_tipo ot on ot.oferta_id=o.oferta_id " +
@@ -85,7 +90,7 @@ public class OfertaDAO extends EntityManagerProvider implements OfertaDAOLocal {
 	return ofertasHotelerasQuery.getResultList();
 	}
 	public List<Oferta> buscarOfertasPaquete(String destino, int cantPersonas, String fDesde, String fHasta) {
-		Query ofertasHotelerasQuery = getEntityManager().createQuery(
+		Query ofertasHotelerasQuery = entityManager.createQuery(
 				"SELECT o FROM ofertas o "+
 		     	"INNER JOIN destinos d on d.destino_id=o.destino_id"+
 		     	"INNER JOIN ofertas_tipo ot on ot.oferta_id=o.oferta_id " +

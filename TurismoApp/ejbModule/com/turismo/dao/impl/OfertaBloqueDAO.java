@@ -14,22 +14,24 @@ import com.turismo.entities.OfertaBloque;
 
 @Stateless
 @LocalBean
-public class OfertaBloqueDAO extends EntityManagerProvider implements OfertaBloqueDAOLocal{
+public class OfertaBloqueDAO implements OfertaBloqueDAOLocal{
+	@PersistenceContext(unitName = "MyPU")
+	private EntityManager entityManager;
 	public void nuevoBloque(Oferta oferta, Date fecha, int cupo) {
 		OfertaBloque ofertaBloque=new OfertaBloque();
 		ofertaBloque.setOferta(oferta);
 		ofertaBloque.setFecha_Bloque(fecha);
 		ofertaBloque.setCupo(cupo);
-		getEntityManager().merge(ofertaBloque);
+		entityManager.merge(ofertaBloque);
 	}
 	public void actualizarBloque(int oferta_bloque_id, Oferta oferta, Date fecha, int cupo) {
 		OfertaBloque ofertaBloque=buscarPorCodigo(oferta_bloque_id);
 		ofertaBloque.setOferta(oferta);
 		ofertaBloque.setFecha_Bloque(fecha);
 		ofertaBloque.setCupo(cupo);
-		getEntityManager().merge(ofertaBloque);
+		entityManager.merge(ofertaBloque);
 	}
 	public OfertaBloque buscarPorCodigo(int codigo) {
-		return getEntityManager().find(OfertaBloque.class, codigo);
+		return entityManager.find(OfertaBloque.class, codigo);
 	}
 }

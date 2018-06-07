@@ -12,9 +12,9 @@ import com.turismo.dto.OfertaDTO;
 
 public class ControllerService implements ControllerServiceLocal{
 	@EJB
-	BusquedaService busquedaOfertaService;
+	private BusquedaService busquedaOfertaService;
 	@EJB
-	ReservaService reservaService;
+	private ReservaService reservaService;
 	
 	public List<OfertaDTO> buscarOfertaPaquete(String destino,int cantPersonas,String fDesde, String fHasta) throws ParseException{
 		return busquedaOfertaService.buscarOfertaPaquete(destino, cantPersonas, fDesde, fHasta);

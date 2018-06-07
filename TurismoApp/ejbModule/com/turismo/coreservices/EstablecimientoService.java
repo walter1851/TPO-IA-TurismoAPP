@@ -14,7 +14,7 @@ import com.turismo.entities.Hotel;
 @LocalBean
 public class EstablecimientoService implements EstablecimientoServiceLocal{
 	@EJB
-	EstablecimientoDAO establecimientoDAO;
+	private EstablecimientoDAO establecimientoDAO;
 	
 public void guardarEstablecimiento(String nombre,String direccion,String ciudad, String estado,String descripcion,String estrellas,String mapa,String codigo_establecimiento,Hotel hotel) {
 	if (!existeEstablecimiento(codigo_establecimiento))

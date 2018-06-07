@@ -13,11 +13,13 @@ import com.turismo.entities.Reserva;
 
 @Stateless
 @LocalBean
-public class ReservaDAO extends EntityManagerProvider implements ReservaDAOLocal{
+public class ReservaDAO implements ReservaDAOLocal{
+	@PersistenceContext(unitName = "MyPU")
+	private EntityManager entityManager;
 	@EJB
-	OfertaDAO ofertaDAO;
+	private OfertaDAO ofertaDAO;
 	@EJB
-	MedioPagoDAO medioPagoDAO;
+	private MedioPagoDAO medioPagoDAO;
 	public void nuevaReserva(int oferta_id, int usuario_id, int medio_de_pago_id, String nombre, String email,
 			String dni) {
 		Oferta oferta=ofertaDAO.buscarPorCodigo(oferta_id);
@@ -39,6 +41,6 @@ public class ReservaDAO extends EntityManagerProvider implements ReservaDAOLocal
 		reserva.setEmail(email);
 	}
 	public Reserva buscarPorIdReserva(int reserva_id) {
-		return getEntityManager().find(Reserva.class, reserva_id);
+		return entityManager.find(Reserva.class, reserva_id);
 	}	
 }

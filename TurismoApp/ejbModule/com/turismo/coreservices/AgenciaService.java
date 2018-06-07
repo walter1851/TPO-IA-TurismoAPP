@@ -12,7 +12,7 @@ import com.turismo.entities.Agencia;
 @LocalBean
 public class AgenciaService implements AgenciaServiceLocal {
 	@EJB
-	AgenciaDAO agenciaDao;
+	private AgenciaDAO agenciaDao;
 
 	public void guardarAgencia(String nombre,String direccion,String codigo_agencia) {
 		if (!existeAgencia(codigo_agencia)) {

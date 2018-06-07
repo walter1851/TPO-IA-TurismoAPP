@@ -22,6 +22,7 @@ public class OfertaPaqueteServicioRest {
 	@POST
 	@Path("/buscar")
 	@Produces(MediaType.APPLICATION_JSON)
+	
 	public Response buscar(@PathParam("destino") String destino, int cantPersonas,String fDesde,String fHasta) {
 		try {
 			List<OfertaDTO> ofertas = facade.buscarOfertaPaquete(destino, cantPersonas, fDesde, fHasta);

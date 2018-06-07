@@ -20,7 +20,7 @@ import com.turismo.entities.OfertaTipo;
 @LocalBean
 public class OfertaService implements OfertaServiceLocal{
 	@EJB
-	OfertaDAO ofertaDAO;
+	private OfertaDAO ofertaDAO;
 public void guardarOfertaPaquete(String nombre,int cupo,Date fecha_desde,Date fecha_hasta,float precio,String tipo_habitacion,String politicas,String servicios,Destino destino,InputStream foto_paquete,MedioPago medioPago, int cant_personas,Establecimiento establecimiento,Agencia agencia,OfertaTipo ofertaTipo) {
 
 } 
