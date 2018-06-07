@@ -1,0 +1,32 @@
+package com.turismo.controller;
+
+import java.text.ParseException;
+import java.util.List;
+
+import javax.ejb.EJB;
+
+import com.turismo.controller.ControllerServiceLocal;
+import com.turismo.coreservices.BusquedaService;
+import com.turismo.coreservices.ReservaService;
+import com.turismo.dto.OfertaDTO;
+
+public class ControllerService implements ControllerServiceLocal{
+	@EJB
+	BusquedaService busquedaOfertaService;
+	@EJB
+	ReservaService reservaService;
+	
+	public List<OfertaDTO> buscarOfertaPaquete(String destino,int cantPersonas,String fDesde, String fHasta) throws ParseException{
+		return busquedaOfertaService.buscarOfertaPaquete(destino, cantPersonas, fDesde, fHasta);
+	}
+
+	public List<OfertaDTO> buscarOfertaHotelera(String destino,int cantPersonas,String fDesde, String fHasta, String tipoHabitacion) throws ParseException {
+		return busquedaOfertaService.buscarOfertaHotelera(destino, cantPersonas, fDesde, fHasta, tipoHabitacion);
+	}
+	public void reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre,String apellido,String dni,String medioPago) {
+		reservaService.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantPersonas, nombre, apellido, dni, medioPago);
+	}
+	public void reservarPaquete(int ofertaid,String fDesde,String fHasta,int cantPersonas,String nombre,String apellido,String dni,String medioPago) {
+		reservaService.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPago);
+	}
+}

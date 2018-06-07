@@ -4,13 +4,13 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
-import com.turismo.dao.EstablecimientoDAOInterfaceLocal;
+import com.turismo.dao.EstablecimientoDAOLocal;
 import com.turismo.entities.Establecimiento;
 import com.turismo.entities.Hotel;
 
 @Stateless
 @LocalBean
-public class EstablecimientoDAO extends EntityManagerProvider implements EstablecimientoDAOInterfaceLocal {
+public class EstablecimientoDAO extends EntityManagerProvider implements EstablecimientoDAOLocal {
 	public void nuevoEstablecimiento(String nombre, String direccion, String ciudad, String estado, String descripcion,
 			String estrellas, String mapa, String codigo_establecimiento, Hotel hotel) {
 		Establecimiento establecimiento = new Establecimiento();

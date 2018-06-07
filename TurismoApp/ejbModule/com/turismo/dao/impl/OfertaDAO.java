@@ -8,7 +8,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
-import com.turismo.dao.OfertaDAOInterfaceLocal;
+import com.turismo.dao.OfertaDAOLocal;
 import com.turismo.entities.Agencia;
 import com.turismo.entities.Destino;
 import com.turismo.entities.Establecimiento;
@@ -18,7 +18,7 @@ import com.turismo.entities.OfertaTipo;
 
 @Stateless
 @LocalBean
-public class OfertaDAO extends EntityManagerProvider implements OfertaDAOInterfaceLocal {
+public class OfertaDAO extends EntityManagerProvider implements OfertaDAOLocal {
 	public void nuevaOferta(String nombre, int cupo, Date fecha_desde, Date fecha_hasta, float precio,
 			String tipo_habitacion, String politicas, String servicios, Destino destino, InputStream foto_paquete,
 			MedioPago medioPago, int cant_personas, Establecimiento establecimiento, Agencia agencia,

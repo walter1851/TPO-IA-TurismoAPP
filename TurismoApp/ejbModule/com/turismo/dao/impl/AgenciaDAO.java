@@ -3,12 +3,12 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
-import com.turismo.dao.AgenciaDAOInterfaceLocal;
+import com.turismo.dao.AgenciaDAOLocal;
 import com.turismo.entities.Agencia;
 
 @Stateless
 @LocalBean
-public class AgenciaDAO extends EntityManagerProvider implements AgenciaDAOInterfaceLocal{
+public class AgenciaDAO extends EntityManagerProvider implements AgenciaDAOLocal{
 	public void nuevaAgencia(String nombre,String direccion,String codigo_agencia) {
 		Agencia agencia = new Agencia();
 		agencia.setNombre(nombre);

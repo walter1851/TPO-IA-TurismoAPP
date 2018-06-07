@@ -2,11 +2,11 @@ package com.turismo.dao.impl;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.turismo.dao.MedioPagoDAOInterfaceLocal;
+import com.turismo.dao.MedioPagoDAOLocal;
 import com.turismo.entities.MedioPago;
 @Stateless
 @LocalBean
-public class MedioPagoDAO extends EntityManagerProvider implements MedioPagoDAOInterfaceLocal {
+public class MedioPagoDAO extends EntityManagerProvider implements MedioPagoDAOLocal {
 	public void nuevoMedioPago(String nombre, String codigo) {
 		MedioPago medioPago= new MedioPago();
 		medioPago.setNombre(nombre);

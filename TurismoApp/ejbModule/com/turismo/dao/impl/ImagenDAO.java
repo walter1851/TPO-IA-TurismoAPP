@@ -4,14 +4,14 @@ package com.turismo.dao.impl;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
-import com.turismo.dao.ImagenDAOInterfaceLocal;
+import com.turismo.dao.ImagenDAOLocal;
 import com.turismo.entities.Establecimiento;
 import com.turismo.entities.Hotel;
 import com.turismo.entities.Imagen;
 
 @Stateless
 @LocalBean
-public class ImagenDAO extends EntityManagerProvider implements ImagenDAOInterfaceLocal{
+public class ImagenDAO extends EntityManagerProvider implements ImagenDAOLocal{
 	public Imagen buscarPorCodigo(int codigo) {
 		return 	getEntityManager().find(Imagen.class, codigo);
 	}

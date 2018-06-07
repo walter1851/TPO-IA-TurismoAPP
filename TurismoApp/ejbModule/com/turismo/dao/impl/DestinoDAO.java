@@ -4,12 +4,12 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.Query;
 
-import com.turismo.dao.DestinoDAOInterfaceLocal;
+import com.turismo.dao.DestinoDAOLocal;
 import com.turismo.entities.Destino;
 
 @Stateless
 @LocalBean
-public class DestinoDAO extends EntityManagerProvider implements DestinoDAOInterfaceLocal {
+public class DestinoDAO extends EntityManagerProvider implements DestinoDAOLocal {
 	public Destino buscarPorCodigo(int codigo) {
 		return getEntityManager().find(Destino.class, codigo);
 	}

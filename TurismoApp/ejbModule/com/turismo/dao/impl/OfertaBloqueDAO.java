@@ -7,14 +7,14 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.turismo.dao.OfertaBloqueDAOInterfaceLocal;
+import com.turismo.dao.OfertaBloqueDAOLocal;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaBloque;
 
 
 @Stateless
 @LocalBean
-public class OfertaBloqueDAO extends EntityManagerProvider implements OfertaBloqueDAOInterfaceLocal{
+public class OfertaBloqueDAO extends EntityManagerProvider implements OfertaBloqueDAOLocal{
 	public void nuevoBloque(Oferta oferta, Date fecha, int cupo) {
 		OfertaBloque ofertaBloque=new OfertaBloque();
 		ofertaBloque.setOferta(oferta);
