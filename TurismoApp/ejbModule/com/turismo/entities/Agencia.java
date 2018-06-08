@@ -12,16 +12,16 @@ import javax.persistence.Table;
 public class Agencia {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private int agencia_id;
 	private String nombre;
 	private String direccion;
 	@Column(unique = true)
 	private String codigo_agencia;
 	public int getId() {
-		return id;
+		return agencia_id;
 	}
 	public void setId(int id) {
-		this.id = id;
+		this.agencia_id = id;
 	}
 	public String getNombre() {
 		return nombre;

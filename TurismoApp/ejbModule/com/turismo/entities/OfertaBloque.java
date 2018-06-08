@@ -2,10 +2,13 @@ package com.turismo.entities;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -14,8 +17,10 @@ public class OfertaBloque {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int oferta_bloque_id;
+	@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="oferta_id")
 	private Oferta oferta;
-	Date fecha_Bloque;
+	Date fecha_bloque;
 	private int cupo;
 	public int getOferta_bloque_id() {
 		return oferta_bloque_id;
@@ -30,10 +35,10 @@ public class OfertaBloque {
 		this.oferta = oferta;
 	}
 	public Date getFecha_Bloque() {
-		return fecha_Bloque;
+		return fecha_bloque;
 	}
 	public void setFecha_Bloque(Date fecha_Bloque) {
-		this.fecha_Bloque = fecha_Bloque;
+		this.fecha_bloque = fecha_Bloque;
 	}
 	public int getCupo() {
 		return cupo;

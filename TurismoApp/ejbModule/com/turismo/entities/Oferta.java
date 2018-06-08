@@ -38,7 +38,7 @@ public class Oferta {
 	@JoinColumn(name="establecimiento_id")
 	private Establecimiento establecimiento;
 	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="id")
+	@JoinColumn(name="agencia_id")
 	private Agencia agencia;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="oferta_tipo_id")
