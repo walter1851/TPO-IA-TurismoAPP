@@ -4,12 +4,15 @@ import java.text.ParseException;
 import java.util.List;
 
 import javax.ejb.EJB;
+import javax.ejb.LocalBean;
+import javax.ejb.Stateless;
 
 import com.turismo.controller.ControllerServiceLocal;
 import com.turismo.coreservices.BusquedaService;
 import com.turismo.coreservices.ReservaService;
 import com.turismo.dto.OfertaDTO;
-
+@Stateless
+@LocalBean
 public class ControllerService implements ControllerServiceLocal{
 	@EJB
 	private BusquedaService busquedaOfertaService;

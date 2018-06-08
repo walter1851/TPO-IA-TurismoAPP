@@ -25,7 +25,7 @@ public class OfertaDAO implements OfertaDAOLocal {
 	private EntityManager entityManager;
 	
 	public void nuevaOferta(String nombre, int cupo, Date fecha_desde, Date fecha_hasta, float precio,
-			String tipo_habitacion, String politicas, String servicios, Destino destino, InputStream foto_paquete,
+			String tipo_habitacion, String politicas, String servicios, Destino destino, String foto_paquete,
 			MedioPago medioPago, int cant_personas, Establecimiento establecimiento, Agencia agencia,
 			OfertaTipo ofertaTipo) {
 		Oferta oferta=new Oferta();
@@ -48,7 +48,7 @@ public class OfertaDAO implements OfertaDAOLocal {
 	}
 	public void actualizarOferta(int oferta_id, String nombre, int cupo, Date fecha_desde, Date fecha_hasta,
 			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
-			InputStream foto_paquete, MedioPago medioPago, int cant_personas, Establecimiento establecimiento,
+			String foto_paquete, MedioPago medioPago, int cant_personas, Establecimiento establecimiento,
 			Agencia agencia, OfertaTipo ofertaTipo) {
 		Oferta oferta=buscarPorCodigo(oferta_id);
 		oferta.setNombre(nombre);

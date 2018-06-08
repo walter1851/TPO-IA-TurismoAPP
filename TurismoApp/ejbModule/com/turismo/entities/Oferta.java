@@ -8,8 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import java.io.InputStream;
 import java.util.Date;
 
 @Entity
@@ -29,7 +27,10 @@ public class Oferta {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="destino_id")
 	private Destino destino;
-	private InputStream foto_paquete;
+	/*NOTA: Despues buscamos un tipo de dato para foto_paquete, 
+	probe con InputStream pero hibernate dice
+	que no puede mapear ese tipo de dato*/
+	private String foto_paquete;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="medio_de_pago_id")
 	private MedioPago medioPago;
@@ -103,10 +104,10 @@ public class Oferta {
 	public void setDestino(Destino destino) {
 		this.destino = destino;
 	}
-	public InputStream getFoto_paquete() {
+	public String getFoto_paquete() {
 		return foto_paquete;
 	}
-	public void setFoto_paquete(InputStream foto_paquete) {
+	public void setFoto_paquete(String foto_paquete) {
 		this.foto_paquete = foto_paquete;
 	}
 	public MedioPago getMedioPago() {

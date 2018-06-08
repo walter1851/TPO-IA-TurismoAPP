@@ -20,9 +20,9 @@ import com.turismo.rerviciosrest.response.WebResponse;
 @Path("/reserva")
 @Stateless
 public class ReservaServicioRest{
-	/*
 	@EJB
-	private Controller facade;
+	private ControllerService facade;
+	/*
 	@POST
 	@Path("/buscar")
 	@Produces(MediaType.APPLICATION_JSON)
