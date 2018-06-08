@@ -12,5 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/dozer-core-6.1.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

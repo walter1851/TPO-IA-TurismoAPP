@@ -22,7 +22,6 @@ public class OfertaPaqueteServicioRest {
 	@POST
 	@Path("/buscar")
 	@Produces(MediaType.APPLICATION_JSON)
-	
 	public Response buscar(@PathParam("destino") String destino, int cantPersonas,String fDesde,String fHasta) {
 		try {
 			List<OfertaDTO> ofertas = facade.buscarOfertaPaquete(destino, cantPersonas, fDesde, fHasta);
@@ -32,14 +31,17 @@ public class OfertaPaqueteServicioRest {
 			return Response.ok(new WebResponse(e.getMessage())).build();
 		}
 	}
+	//Esto despues hay que sacarlo. Metodo get es solo para testearlo mas facil, sin tener que hacer un post.
 	@GET
 	@Path("/test")
-	@Produces({ "text/plain" })
-	public String test(){
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response test(@PathParam("destino") String destino, int cantPersonas,String fDesde,String fHasta) {
 		try {
-			return "ESTO ES UNA PRUEBA exitosa!";
+			List<OfertaDTO> ofertas = facade.buscarOfertaPaquete(destino, cantPersonas, fDesde, fHasta);
+			return Response.ok(new WebResponse(ofertas)).build();
 		} catch (Exception e) {
-			return "ESTO ES UN error!";
+			//logearerror(e.getMessage());
+			return Response.ok(new WebResponse(e.getMessage())).build();
 		}
 	}
 }

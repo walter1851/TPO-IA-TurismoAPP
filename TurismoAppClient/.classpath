@@ -12,5 +12,7 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/converter-jackson-2.4.0.jar"/>
+	<classpathentry kind="lib" path="D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/jackson-jaxrs-json-provider-2.9.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>
