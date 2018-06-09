@@ -1,4 +1,4 @@
-package com.turismo.serviciosrest;
+package com.turismo.serviciorest;
 
 import java.util.List;
 
@@ -13,7 +13,8 @@ import javax.ws.rs.core.Response;
 
 import com.turismo.controller.ControllerService;
 import com.turismo.dto.OfertaDTO;
-import com.turismo.rerviciosrest.response.WebResponse;
+import com.turismo.exceptions.OfertaPaqueteException;
+import com.turismo.serviciorest.response.WebResponse;
 
 @Path("/ofertapaquete")
 @Stateless
@@ -28,7 +29,7 @@ public class OfertaPaqueteServicioRest {
 		try {
 			List<OfertaDTO> ofertas = facade.buscarOfertaPaquete(destino, cantPersonas, fDesde, fHasta);
 			return Response.ok(new WebResponse(ofertas)).build();
-		} catch (Exception e) {
+		} catch (OfertaPaqueteException e) {
 			// logearerror(e.getMessage());
 			return Response.ok(new WebResponse(false, e.getMessage())).build();
 		}

@@ -1,4 +1,4 @@
-package com.turismo.rerviciosrest.response;
+package com.turismo.serviciorest.response;
 
 public class WebResponse {
 	private boolean statusR;

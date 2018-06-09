@@ -9,12 +9,10 @@ import javax.ejb.Stateless;
 
 import com.turismo.coreservices.OfertaServiceLocal;
 import com.turismo.dao.OfertaDAO;
-import com.turismo.dto.OfertaDTO;
 import com.turismo.entities.Agencia;
 import com.turismo.entities.Destino;
 import com.turismo.entities.Establecimiento;
 import com.turismo.entities.MedioPago;
-import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaTipo;
 @Stateless
 @LocalBean

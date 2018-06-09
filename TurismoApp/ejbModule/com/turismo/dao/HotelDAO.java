@@ -2,7 +2,6 @@ package com.turismo.dao;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 

@@ -2,7 +2,6 @@ package com.turismo.coreservices;
 
 import javax.ejb.Local;
 
-import com.turismo.dto.MedioPagoDTO;
 
 @Local
 public interface ReservaServiceLocal {

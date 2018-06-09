@@ -1,6 +1,5 @@
 package com.turismo.dao;
 
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
@@ -71,6 +70,7 @@ public class OfertaDAO implements OfertaDAOLocal {
 	public Oferta buscarPorCodigo(int codigo) {
 		return entityManager.find(Oferta.class, codigo);
 	}
+	@SuppressWarnings("unchecked")
 	public List<Oferta> buscarOfertasHotelera(String destino, int cantPersonas, String fDesde, String fHasta) {
      	Query ofertasHotelerasQuery = entityManager.createQuery(
 		"SELECT o FROM ofertas o "+
@@ -88,6 +88,7 @@ public class OfertaDAO implements OfertaDAOLocal {
      	ofertasHotelerasQuery.setParameter("tipoDeOferta", "hotelera");
 	return ofertasHotelerasQuery.getResultList();
 	}
+	@SuppressWarnings("unchecked")
 	public List<Oferta> buscarOfertasPaquete(String destino, int cantPersonas, String fDesde, String fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery(
 				"SELECT o FROM ofertas o "+

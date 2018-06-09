@@ -15,6 +15,8 @@ import com.turismo.coreservices.BusquedaServiceLocal;
 import com.turismo.dao.OfertaDAO;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.entities.Oferta;
+import com.turismo.exceptions.OfertaHoteleraException;
+import com.turismo.exceptions.OfertaPaqueteException;
 
 /**
  * Session Bean implementation class BusquedaOfertaPaqueteService
@@ -26,17 +28,25 @@ public class BusquedaService implements BusquedaServiceLocal{
 	private OfertaDAO ofertaDao;
 	@EJB
 	private MapperService mapperService;
-	public List<OfertaDTO> buscarOfertaPaquete(String destino,int cantPersonas,String fDesde, String fHasta) throws ParseException {
+	public List<OfertaDTO> buscarOfertaPaquete(String destino,int cantPersonas,String fDesde, String fHasta) throws OfertaPaqueteException{
+		try {
 		List<Oferta> ofertasPaquete=null;
 		if (validarBusqueda(fDesde)&&validarBusqueda(fHasta)) {
 			ofertasPaquete=ofertaDao.buscarOfertasPaquete(destino, cantPersonas, fDesde, fHasta);
 		}
 		return mapperService.obtenerListOfertaDTO(ofertasPaquete);
+		}catch(ParseException e) {
+			throw new OfertaPaqueteException("La fecha ingresada no tiene el formato adecuado.");
+		}
 	}
-	public List<OfertaDTO> buscarOfertaHotelera(String destino,int cantPersonas,String fDesde, String fHasta,String tipoHabitacion) throws ParseException {
+	public List<OfertaDTO> buscarOfertaHotelera(String destino,int cantPersonas,String fDesde, String fHasta,String tipoHabitacion) throws OfertaHoteleraException {
 		List<Oferta> ofertasHotelera=null;
-		if (validarBusqueda(fDesde)&&validarBusqueda(fHasta)) {
-			ofertasHotelera=ofertaDao.buscarOfertasPaquete(destino, cantPersonas, fDesde, fHasta);
+		try {
+			if (validarBusqueda(fDesde)&&validarBusqueda(fHasta)) {
+				ofertasHotelera=ofertaDao.buscarOfertasPaquete(destino, cantPersonas, fDesde, fHasta);
+			}
+		} catch (ParseException e) {
+			throw new OfertaHoteleraException("La fecha ingresada no tiene el formato adecuado.");
 		}
 		return mapperService.obtenerListOfertaDTO(ofertasHotelera);
 	}

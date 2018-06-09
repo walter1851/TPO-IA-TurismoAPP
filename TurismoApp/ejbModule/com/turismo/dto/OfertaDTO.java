@@ -2,12 +2,6 @@ package com.turismo.dto;
 
 import java.util.Date;
 
-import com.turismo.entities.Agencia;
-import com.turismo.entities.Destino;
-import com.turismo.entities.Establecimiento;
-import com.turismo.entities.MedioPago;
-import com.turismo.entities.OfertaTipo;
-
 
 public class OfertaDTO {
 	private int oferta_id;

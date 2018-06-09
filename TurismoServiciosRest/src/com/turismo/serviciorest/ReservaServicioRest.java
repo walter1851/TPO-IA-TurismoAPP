@@ -1,4 +1,4 @@
-package com.turismo.serviciosrest;
+package com.turismo.serviciorest;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.POST;
@@ -9,7 +9,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.turismo.controller.ControllerService;
-import com.turismo.rerviciosrest.response.WebResponse;
+import com.turismo.serviciorest.response.WebResponse;
 
 @Path("/reserva")
 @Stateless

@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 
 import com.turismo.coreservices.ReservaServiceLocal;
 import com.turismo.dao.ReservaDAO;
-import com.turismo.dto.MedioPagoDTO;
 
 @Stateless
 @LocalBean

@@ -1,6 +1,5 @@
 package com.turismo.dao;
 
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 
