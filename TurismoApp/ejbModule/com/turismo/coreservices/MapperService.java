@@ -54,6 +54,14 @@ public class MapperService implements MapperServiceLocal{
 			
 			establecimientoDTO.setCiudad(oferta.getEstablecimiento().getCiudad());
 			establecimientoDTO.setCodigo_establecimiento(oferta.getEstablecimiento().getCodigo_establecimiento());
+			establecimientoDTO.setDescripcion(oferta.getEstablecimiento().getDescripcion());
+			establecimientoDTO.setDireccion(oferta.getEstablecimiento().getDireccion());
+			establecimientoDTO.setEstablecimiento_id(oferta.getEstablecimiento().getEstablecimiento_id());
+			establecimientoDTO.setEstado(oferta.getEstablecimiento().getEstado());
+			establecimientoDTO.setEstrellas(oferta.getEstablecimiento().getEstrellas());
+			establecimientoDTO.setHotel(oferta.getEstablecimiento().getHotel());
+			establecimientoDTO.setMapa(oferta.getEstablecimiento().getMapa());
+			establecimientoDTO.setNombre(oferta.getEstablecimiento().getNombre());
 			
 			ofertaDTO.setOferta_id(oferta.getOferta_id());
 			ofertaDTO.setAgenciaDTO(agenciaDTO);
@@ -70,6 +78,8 @@ public class MapperService implements MapperServiceLocal{
 			ofertaDTO.setCupo(oferta.getCupo());
 			ofertaDTO.setServicios(oferta.getServicios());
 			ofertaDTO.setTipo_habitacion(oferta.getTipo_habitacion());
+			ofertaDTO.setPrecio(oferta.getPrecio());
+			ofertaDTO.setNombre(oferta.getNombre());
 			listOfertaDTO.add(ofertaDTO);
 		}
 		return listOfertaDTO;
