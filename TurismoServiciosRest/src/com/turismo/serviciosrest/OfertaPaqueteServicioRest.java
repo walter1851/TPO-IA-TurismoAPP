@@ -19,23 +19,10 @@ import com.turismo.rerviciosrest.response.WebResponse;
 public class OfertaPaqueteServicioRest {
 	@EJB
 	private ControllerService facade;
-	@POST
+	@GET
 	@Path("/buscar")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscar(@PathParam("destino") String destino, int cantPersonas,String fDesde,String fHasta) {
-		try {
-			List<OfertaDTO> ofertas = facade.buscarOfertaPaquete(destino, cantPersonas, fDesde, fHasta);
-			return Response.ok(new WebResponse(ofertas)).build();
-		} catch (Exception e) {
-			//logearerror(e.getMessage());
-			return Response.ok(new WebResponse(e.getMessage())).build();
-		}
-	}
-	//Esto despues hay que sacarlo. Metodo get es solo para testearlo mas facil, sin tener que hacer un post.
-	@GET
-	@Path("/test")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Response test(@PathParam("destino") String destino, int cantPersonas,String fDesde,String fHasta) {
+	public Response buscar(@PathParam("destino") String destino,@PathParam("cantPersonas") int cantPersonas,@PathParam("fDesde") String fDesde,@PathParam("fHasta")String fHasta) {
 		try {
 			List<OfertaDTO> ofertas = facade.buscarOfertaPaquete(destino, cantPersonas, fDesde, fHasta);
 			return Response.ok(new WebResponse(ofertas)).build();

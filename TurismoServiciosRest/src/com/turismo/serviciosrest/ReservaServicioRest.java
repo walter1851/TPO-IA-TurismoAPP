@@ -22,17 +22,16 @@ import com.turismo.rerviciosrest.response.WebResponse;
 public class ReservaServicioRest{
 	@EJB
 	private ControllerService facade;
-	/*
 	@POST
 	@Path("/buscar")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscar(@PathParam("ofertaid") int ofertaid, String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre, String apellido,String dni,String medioPago) {
+	public Response buscar(@PathParam("ofertaid") int ofertaid,@PathParam("fDesde") String fDesde,@PathParam("fHasta") String fHasta,@PathParam("tipoHabitacion") String tipoHabitacion,@PathParam("cantPersonas") int cantPersonas,@PathParam("nombre") String nombre,@PathParam("apellido") String apellido,@PathParam("dni") String dni,@PathParam("medioPago") String medioPago) {
 		try {
 			facade.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantPersonas, nombre, apellido, dni, medioPago);
-			return Response.ok(new WebResponse(ofertas)).build();
+			return Response.ok(new WebResponse(true,"ok")).build();
 		} catch (Exception e) {
 			//logearerror(e.getMessage());
 			return Response.ok(new WebResponse(e.getMessage())).build();
 		}
-	}*/
+	}
 }
