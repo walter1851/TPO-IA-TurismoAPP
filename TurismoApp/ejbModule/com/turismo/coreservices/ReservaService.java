@@ -19,14 +19,17 @@ public class ReservaService implements ReservaServiceLocal {
 	private ReservaDAO reservaDAO;
 	@EJB
 	private OfertaBloqueDAO ofertaBloqueDAO;
-	public void reservarPaquete(int ofertaid,String fDesde,String fHasta,int cantPersonas,String nombre,String apellido,String dni,String medioPago) throws ReservaException {
+	public void reservarPaquete(int ofertaid,String fDesde,String fHasta,int cantPersonas,String nombre,String apellido,String dni,String medioPago,String emailUsuario) throws ReservaException {
 	
 	}
-	public void reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre,String apellido,String dni,String medioPago) throws ReservaException {
+	public void reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre,String apellido,String dni,String medioPago,String emailUsuario) throws ReservaException {
+		//valido el formato de las fechas
 		boolean fechasValidas=validarReserva();
+		//obtengo todos los bloques que coinciden para validar la disponiblidad
 		List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloques(ofertaid,fDesde, fHasta, cantPersonas);
 		boolean hayDisponibilidad=this.validarDisponibilidad(bloques);
-		boolean puedoReservar=true/*tengo que preguntarle si puedo reservar al backoffice*/;
+		//consulto al backoffice si puedo reservar
+		boolean puedoReservar=true/*completar despues*/;
 
 		if (!fechasValidas)
 				throw new ReservaException("La fecha ingresada no tiene el formato adecuado.");
@@ -40,7 +43,7 @@ public class ReservaService implements ReservaServiceLocal {
 				//Descontamos uno al cupo
 				ofertaBloque.setCupo(ofertaBloque.getCupo()-1);
 				ofertaBloqueDAO.actualizarBloque(ofertaBloque);
-				//crear reserva
+				reservaDAO.crearReserva(ofertaBloque.getOferta(), 1, ofertaBloque.getOferta().getMedioPago(), nombre, emailUsuario, dni);
 			}
 		}		
 	}
