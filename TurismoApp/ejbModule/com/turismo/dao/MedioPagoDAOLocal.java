@@ -8,5 +8,5 @@ import com.turismo.entities.MedioPago;
 public interface MedioPagoDAOLocal {
 	public void nuevoMedioPago(String nombre,String codigo);
 	public void actualizarBloque(int medio_de_pago_id,String nombre,String codigo);
-	public MedioPago buscarPorId(int medio_de_pago_id);
+	public MedioPago buscarPorIdMedioPago(int medio_de_pago_id);
 }

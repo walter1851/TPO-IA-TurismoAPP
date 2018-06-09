@@ -3,6 +3,7 @@ package com.turismo.dao;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import com.turismo.entities.Hotel;
@@ -21,13 +22,17 @@ public class HotelDAO implements HotelDAOLocal {
 	}
 
 	public void actualizarHotel(int hotel_id,String nombre,String codigo_hotel) {
-		Hotel hotel=buscarPorCodigo(hotel_id);
+		Hotel hotel=buscarPorIdHotel(hotel_id);
 				hotel.setNombre(nombre);
 				hotel.setCodigo_hotel(codigo_hotel);
 				entityManager.merge(hotel);
 	}
 
-	public Hotel buscarPorCodigo(int codigo) {
-		return entityManager.find(Hotel.class, codigo);
+	public Hotel buscarPorIdHotel(int hotelId) {
+		try {
+		return entityManager.find(Hotel.class, hotelId);
+		} catch (NoResultException nre) {
+			return null;
+		}
 	}
 }

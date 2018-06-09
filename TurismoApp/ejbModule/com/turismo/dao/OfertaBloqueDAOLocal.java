@@ -11,5 +11,5 @@ import com.turismo.entities.OfertaBloque;
 public interface OfertaBloqueDAOLocal {
 	public void nuevoBloque(Oferta oferta,Date fecha,int cupo);
 	public void actualizarBloque(int oferta_bloque_id,Oferta oferta,Date fecha,int cupo);
-	public OfertaBloque buscarPorCodigo(int codigo);
+	public OfertaBloque buscarPorIdBloque(int idBloque);
 }

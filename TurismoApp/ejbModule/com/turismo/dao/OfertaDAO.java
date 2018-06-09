@@ -6,6 +6,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -21,12 +22,12 @@ import com.turismo.entities.OfertaTipo;
 public class OfertaDAO implements OfertaDAOLocal {
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
-	
+
 	public void nuevaOferta(String nombre, int cupo, Date fecha_desde, Date fecha_hasta, float precio,
 			String tipo_habitacion, String politicas, String servicios, Destino destino, String foto_paquete,
 			MedioPago medioPago, int cant_personas, Establecimiento establecimiento, Agencia agencia,
 			OfertaTipo ofertaTipo) {
-		Oferta oferta=new Oferta();
+		Oferta oferta = new Oferta();
 		oferta.setNombre(nombre);
 		oferta.setCupo(cupo);
 		oferta.setFecha_desde(fecha_desde);
@@ -44,11 +45,12 @@ public class OfertaDAO implements OfertaDAOLocal {
 		oferta.setOfertaTipo(ofertaTipo);
 		entityManager.merge(oferta);
 	}
+
 	public void actualizarOferta(int oferta_id, String nombre, int cupo, Date fecha_desde, Date fecha_hasta,
 			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
 			String foto_paquete, MedioPago medioPago, int cant_personas, Establecimiento establecimiento,
 			Agencia agencia, OfertaTipo ofertaTipo) {
-		Oferta oferta=buscarPorCodigo(oferta_id);
+		Oferta oferta = buscarPorIdOferta(oferta_id);
 		oferta.setNombre(nombre);
 		oferta.setCupo(cupo);
 		oferta.setFecha_desde(fecha_desde);
@@ -65,46 +67,49 @@ public class OfertaDAO implements OfertaDAOLocal {
 		oferta.setAgencia(agencia);
 		oferta.setOfertaTipo(ofertaTipo);
 		entityManager.merge(oferta);
-		
+
 	}
-	public Oferta buscarPorCodigo(int codigo) {
-		return entityManager.find(Oferta.class, codigo);
+
+	public Oferta buscarPorIdOferta(int idOferta) {
+		try {
+			return entityManager.find(Oferta.class, idOferta);
+		} catch (NoResultException nre) {
+			return null;
+		}
 	}
+
 	@SuppressWarnings("unchecked")
 	public List<Oferta> buscarOfertasHotelera(String destino, int cantPersonas, String fDesde, String fHasta) {
-     	Query ofertasHotelerasQuery = entityManager.createQuery(
-		"SELECT o FROM ofertas o "+
-     	"INNER JOIN destinos d on d.destino_id=o.destino_id"+
-     	"INNER JOIN ofertas_tipo ot on ot.oferta_id=o.oferta_id " +
-		"WHERE d.destino = :destino " +
-		"OR o.cantPersonas = :cantPersonas" +
-		"OR o.fDesde = :fDesde" +
-		"OR o.fHasta = :fHasta" +
-		"OR ot.nombre = :tipoDeOferta");
-     	ofertasHotelerasQuery.setParameter("destino", "destino");
-     	ofertasHotelerasQuery.setParameter("cantPersonas", "cantPersonas");
-     	ofertasHotelerasQuery.setParameter("fDesde", "fDesde");
-     	ofertasHotelerasQuery.setParameter("fHasta", "fHasta");
-     	ofertasHotelerasQuery.setParameter("tipoDeOferta", "hotelera");
-	return ofertasHotelerasQuery.getResultList();
-	}
-	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasPaquete(String destino, int cantPersonas, String fDesde, String fHasta) {
-		Query ofertasHotelerasQuery = entityManager.createQuery(
-				"SELECT o FROM ofertas o "+
-		     	"INNER JOIN destinos d on d.destino_id=o.destino_id"+
-		     	"INNER JOIN ofertas_tipo ot on ot.oferta_id=o.oferta_id " +
-				"WHERE d.destino = :destino " +
-				"OR o.cantPersonas = :cantPersonas" +
-				"OR o.fDesde = :fDesde" +
-				"OR o.fHasta = :fHasta" +
-				"OR ot.nombre = :tipoDeOferta");
-		     	ofertasHotelerasQuery.setParameter("destino", "destino");
-		     	ofertasHotelerasQuery.setParameter("cantPersonas", "cantPersonas");
-		     	ofertasHotelerasQuery.setParameter("fDesde", "fDesde");
-		     	ofertasHotelerasQuery.setParameter("fHasta", "fHasta");
-		     	ofertasHotelerasQuery.setParameter("tipoDeOferta", "paquete");
+			Query ofertasHotelerasQuery = entityManager
+					.createQuery("SELECT o FROM Ofertas o " + " INNER JOIN o.destino d"
+							+ " INNER JOIN o.ofertaTipo ot " + "WHERE d.nombre = :destino"
+							+ " OR o.cant_personas = :cantPersonas" + " OR o.fecha_desde = :fDesde" 
+							+ " OR o.fecha_hasta = :fHasta"
+							+ " OR ot.nombre = :tipoDeOferta");
+			ofertasHotelerasQuery.setParameter("destino", destino);
+			ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
+			//la fecha esta en null para que no pinche, solo para probar
+			ofertasHotelerasQuery.setParameter("fDesde", null);
+			//la fecha esta en null para que no pinche, solo para probar
+			ofertasHotelerasQuery.setParameter("fHasta", null);
+			ofertasHotelerasQuery.setParameter("tipoDeOferta", "hotelera");
 			return ofertasHotelerasQuery.getResultList();
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Oferta> buscarOfertasPaquete(String destino, int cantPersonas, String fDesde, String fHasta) {
+			Query ofertasHotelerasQuery = entityManager
+					.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
+							+ " INNER JOIN o.ofertaTipo ot " + "WHERE d.nombre = :destino"
+							+ " OR o.cant_personas = :cantPersonas" + " OR o.fecha_desde = :fDesde" + " OR o.fecha_hasta = :fHasta"
+							+ " OR ot.nombre = :tipoDeOferta");
+			ofertasHotelerasQuery.setParameter("destino", destino);
+			ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
+			//la fecha esta en null para que no pinche, solo para probar
+			ofertasHotelerasQuery.setParameter("fDesde", null);
+			//la fecha esta en null para que no pinche, solo para probar
+			ofertasHotelerasQuery.setParameter("fHasta", null);
+			ofertasHotelerasQuery.setParameter("tipoDeOferta", "paquete");
+			return ofertasHotelerasQuery.getResultList();
+	}
 }

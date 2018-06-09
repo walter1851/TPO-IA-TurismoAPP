@@ -10,5 +10,5 @@ import com.turismo.entities.Imagen;
 public interface ImagenDAOLocal {
 	public void nuevaImagen(String url, Establecimiento establecimiento, Hotel hotel);
 	public void actualizarImagen(int imagen_id,String url,Establecimiento establecimiento,Hotel hotel);
-	public Imagen buscarPorCodigo(int codigo);
+	public Imagen buscarPorIdImagen(int imagenId);
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 
 import com.turismo.entities.Oferta;
@@ -24,13 +25,17 @@ public class OfertaBloqueDAO implements OfertaBloqueDAOLocal{
 		entityManager.merge(ofertaBloque);
 	}
 	public void actualizarBloque(int oferta_bloque_id, Oferta oferta, Date fecha, int cupo) {
-		OfertaBloque ofertaBloque=buscarPorCodigo(oferta_bloque_id);
+		OfertaBloque ofertaBloque=buscarPorIdBloque(oferta_bloque_id);
 		ofertaBloque.setOferta(oferta);
 		ofertaBloque.setFecha_Bloque(fecha);
 		ofertaBloque.setCupo(cupo);
 		entityManager.merge(ofertaBloque);
 	}
-	public OfertaBloque buscarPorCodigo(int codigo) {
-		return entityManager.find(OfertaBloque.class, codigo);
+	public OfertaBloque buscarPorIdBloque(int oferta_bloque_id) {
+		try {
+		return entityManager.find(OfertaBloque.class, oferta_bloque_id);
+		} catch (NoResultException nre) {
+			return null;
+		}
 	}
 }

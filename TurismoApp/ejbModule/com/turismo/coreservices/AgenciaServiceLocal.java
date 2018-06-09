@@ -6,5 +6,5 @@ import javax.ejb.Local;
 
 @Local
 public interface AgenciaServiceLocal {
-	//void guardarAgencia(AgenciaDTO agencia);
+	public void guardarAgencia(String nombre,String direccion,String codigo_agencia);
 }

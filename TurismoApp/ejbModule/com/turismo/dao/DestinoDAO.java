@@ -3,6 +3,7 @@ package com.turismo.dao;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -13,13 +14,22 @@ import com.turismo.entities.Destino;
 public class DestinoDAO implements DestinoDAOLocal {
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
-	public Destino buscarPorCodigo(int codigo) {
-		return entityManager.find(Destino.class, codigo);
+
+	public Destino buscarPorIdDestino(int destinoId) {
+		try {
+			return entityManager.find(Destino.class, destinoId);
+		} catch (NoResultException nre) {
+			return null;
+		}
 	}
 
 	public Destino buscarPorNombre(String nombreDestino) {
-		Query destinoQuery = entityManager.createQuery("SELECT d FROM destinos d " + "WHERE d.nombre = :nombre ");
-		destinoQuery.setParameter("nombre", "nombreDestino");
-		return (Destino) destinoQuery.getSingleResult();
+		try {
+			Query destinoQuery = entityManager.createQuery("SELECT d FROM destinos d " + "WHERE d.nombre = :nombre ");
+			destinoQuery.setParameter("nombre", "nombreDestino");
+			return (Destino) destinoQuery.getSingleResult();
+		} catch (NoResultException nre) {
+			return null;
+		}
 	}
 }
