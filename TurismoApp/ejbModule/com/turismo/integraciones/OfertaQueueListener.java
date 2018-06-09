@@ -35,7 +35,9 @@ private OfertaService ofertaService;
     public void onMessage(Message message) {
     	try {
 			String jsonString = ((TextMessage) message).getText();
-		} catch (JMSException e) {
+			OfertaPaqueteMensaje ofertaPaqueteMensaje = (OfertaPaqueteMensaje) JsonConverter.convertToObject(jsonString,
+					OfertaPaqueteMensaje.class);
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

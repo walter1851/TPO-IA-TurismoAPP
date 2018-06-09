@@ -43,7 +43,7 @@ public class OfertaDAO implements OfertaDAOLocal {
 		oferta.setEstablecimiento(establecimiento);
 		oferta.setAgencia(agencia);
 		oferta.setOfertaTipo(ofertaTipo);
-		entityManager.merge(oferta);
+		entityManager.persist(oferta);
 	}
 
 	public void actualizarOferta(int oferta_id, String nombre, int cupo, Date fecha_desde, Date fecha_hasta,

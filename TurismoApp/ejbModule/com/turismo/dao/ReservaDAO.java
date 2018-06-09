@@ -29,6 +29,7 @@ public class ReservaDAO implements ReservaDAOLocal{
 		reserva.setMedioPago(medioPagoDAO.buscarPorIdMedioPago(medio_de_pago_id));
 		reserva.setNombre(nombre);
 		reserva.setEmail(email);
+		entityManager.persist(reserva);
 	}
 	public void actualizarReserva(int reserva_id, int oferta_id, int usuario_id, int medio_de_pago_id, String nombre,
 			String email, String dni) {
@@ -39,6 +40,7 @@ public class ReservaDAO implements ReservaDAOLocal{
 		reserva.setMedioPago(medioPagoDAO.buscarPorIdMedioPago(medio_de_pago_id));
 		reserva.setNombre(nombre);
 		reserva.setEmail(email);
+		entityManager.merge(reserva);
 	}
 	public Reserva buscarPorIdReserva(int reserva_id) {
 		try {

@@ -15,7 +15,7 @@ public class MedioPagoDAO implements MedioPagoDAOLocal {
 		MedioPago medioPago= new MedioPago();
 		medioPago.setNombre(nombre);
 		medioPago.setCodigo(codigo);
-		entityManager.merge(medioPago);
+		entityManager.persist(medioPago);
 	}
 	public void actualizarBloque(int medio_de_pago_id, String nombre, String codigo) {
 		MedioPago medioPago= buscarPorIdMedioPago(medio_de_pago_id);

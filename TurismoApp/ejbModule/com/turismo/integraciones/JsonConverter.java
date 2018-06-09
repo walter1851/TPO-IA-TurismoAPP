@@ -1,4 +1,4 @@
-package com.turismo.json;
+package com.turismo.integraciones;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonConverter {

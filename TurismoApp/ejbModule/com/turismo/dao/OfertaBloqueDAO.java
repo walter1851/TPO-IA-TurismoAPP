@@ -22,7 +22,7 @@ public class OfertaBloqueDAO implements OfertaBloqueDAOLocal{
 		ofertaBloque.setOferta(oferta);
 		ofertaBloque.setFecha_Bloque(fecha);
 		ofertaBloque.setCupo(cupo);
-		entityManager.merge(ofertaBloque);
+		entityManager.persist(ofertaBloque);
 	}
 	public void actualizarBloque(int oferta_bloque_id, Oferta oferta, Date fecha, int cupo) {
 		OfertaBloque ofertaBloque=buscarPorIdBloque(oferta_bloque_id);

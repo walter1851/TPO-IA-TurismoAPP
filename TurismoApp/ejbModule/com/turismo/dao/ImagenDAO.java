@@ -29,7 +29,7 @@ public class ImagenDAO implements ImagenDAOLocal{
 		imagen.setUrl(url);
 		imagen.setEstablecimiento(establecimiento);
 		imagen.setHotel(hotel);
-		entityManager.merge(imagen);
+		entityManager.persist(imagen);
 	}
 	public void actualizarImagen(int imagen_id,String url,Establecimiento establecimiento, Hotel hotel) {
 		Imagen imagen= buscarPorIdImagen(imagen_id);
