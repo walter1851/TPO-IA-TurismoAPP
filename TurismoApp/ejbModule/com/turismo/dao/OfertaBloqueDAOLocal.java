@@ -1,6 +1,7 @@
 package com.turismo.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.ejb.Local;
 
@@ -10,6 +11,7 @@ import com.turismo.entities.OfertaBloque;
 @Local
 public interface OfertaBloqueDAOLocal {
 	public void nuevoBloque(Oferta oferta,Date fecha,int cupo);
-	public void actualizarBloque(int oferta_bloque_id,Oferta oferta,Date fecha,int cupo);
+	public void actualizarBloque(OfertaBloque ofertaBloque);
 	public OfertaBloque buscarPorIdBloque(int idBloque);
+	public List<OfertaBloque> buscarBloques(int ofertaId,String fDesde, String fHasta, int cantPersonas) ;
 }
