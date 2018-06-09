@@ -1,4 +1,4 @@
-package com.turismo.dao.impl;
+package com.turismo.dao;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;

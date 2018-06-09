@@ -8,7 +8,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.turismo.coreservices.OfertaServiceLocal;
-import com.turismo.dao.impl.OfertaDAO;
+import com.turismo.dao.OfertaDAO;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.entities.Agencia;
 import com.turismo.entities.Destino;

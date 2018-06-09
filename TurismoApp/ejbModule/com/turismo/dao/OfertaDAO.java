@@ -1,4 +1,4 @@
-package com.turismo.dao.impl;
+package com.turismo.dao;
 
 import java.io.InputStream;
 import java.util.Date;

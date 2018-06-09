@@ -13,8 +13,8 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.turismo.coreservices.BusquedaServiceLocal;
-import com.turismo.dao.impl.DestinoDAO;
-import com.turismo.dao.impl.OfertaDAO;
+import com.turismo.dao.DestinoDAO;
+import com.turismo.dao.OfertaDAO;
 import com.turismo.dto.DestinoDTO;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.entities.Agencia;

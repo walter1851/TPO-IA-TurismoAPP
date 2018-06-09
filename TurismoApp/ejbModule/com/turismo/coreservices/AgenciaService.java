@@ -5,7 +5,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.turismo.coreservices.AgenciaServiceLocal;
-import com.turismo.dao.impl.AgenciaDAO;
+import com.turismo.dao.AgenciaDAO;
 import com.turismo.entities.Agencia;
 
 @Stateless
