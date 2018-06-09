@@ -30,7 +30,7 @@ public class ReservaServicioRest {
 			return Response.ok(new WebResponse(true, "ok")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(e.getMessage())).build();
+			return Response.ok(new WebResponse(false,e.getMessage())).build();
 		}
 	}
 }

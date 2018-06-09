@@ -42,8 +42,8 @@ public class AgenciaDAO implements AgenciaDAOLocal {
 	public Agencia buscarPorCodigoAgencia(String codigo_agencia) {
 		try {
 			Query agenciaQuery = entityManager
-					.createQuery("SELECT a FROM agencias a " + "WHERE a.codigo_agencia = :codigo_agencia ");
-			agenciaQuery.setParameter("codigo_agencia", "codigo_agencia");
+					.createQuery("SELECT a FROM agencia a " + "WHERE a.codigo_agencia = :codigo_agencia ");
+			agenciaQuery.setParameter("codigo_agencia", codigo_agencia);
 			return (Agencia) agenciaQuery.getSingleResult();
 		} catch (NoResultException nre) {
 			return null;

@@ -25,8 +25,8 @@ public class DestinoDAO implements DestinoDAOLocal {
 
 	public Destino buscarPorNombre(String nombreDestino) {
 		try {
-			Query destinoQuery = entityManager.createQuery("SELECT d FROM destinos d " + "WHERE d.nombre = :nombre ");
-			destinoQuery.setParameter("nombre", "nombreDestino");
+			Query destinoQuery = entityManager.createQuery("SELECT d FROM destino d " + "WHERE d.nombre = :nombre ");
+			destinoQuery.setParameter("nombre", nombreDestino);
 			return (Destino) destinoQuery.getSingleResult();
 		} catch (NoResultException nre) {
 			return null;
