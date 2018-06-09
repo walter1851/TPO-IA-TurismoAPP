@@ -17,12 +17,15 @@ public class Agencia {
 	private String direccion;
 	@Column(unique = true)
 	private String codigo_agencia;
-	public int getId() {
+
+	public int getAgencia_id() {
 		return agencia_id;
 	}
-	public void setId(int id) {
-		this.agencia_id = id;
+
+	public void setAgencia_id(int agencia_id) {
+		this.agencia_id = agencia_id;
 	}
+
 	public String getNombre() {
 		return nombre;
 	}

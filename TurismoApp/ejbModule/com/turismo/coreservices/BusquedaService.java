@@ -3,7 +3,6 @@ package com.turismo.coreservices;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -13,16 +12,9 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 import com.turismo.coreservices.BusquedaServiceLocal;
-import com.turismo.dao.DestinoDAO;
 import com.turismo.dao.OfertaDAO;
-import com.turismo.dto.DestinoDTO;
 import com.turismo.dto.OfertaDTO;
-import com.turismo.entities.Agencia;
-import com.turismo.entities.Destino;
-import com.turismo.entities.Establecimiento;
-import com.turismo.entities.MedioPago;
 import com.turismo.entities.Oferta;
-import com.turismo.entities.OfertaTipo;
 
 /**
  * Session Bean implementation class BusquedaOfertaPaqueteService
@@ -52,6 +44,7 @@ public class BusquedaService implements BusquedaServiceLocal{
 		//ValidarFechas
 		//Ejemplo: Wed, 4 Jul 2001 12:08:56 -0700
 		DateFormat format = new SimpleDateFormat("EEE, d MMM yyyy", Locale.ENGLISH);
+		@SuppressWarnings("unused")
 		Date desde = format.parse(fecha);
 		return true;
 	}

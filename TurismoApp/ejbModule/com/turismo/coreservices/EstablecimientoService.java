@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 
 import com.turismo.coreservices.EstablecimientoServiceLocal;
 import com.turismo.dao.EstablecimientoDAO;
-import com.turismo.dto.EstablecimientoDTO;
 import com.turismo.entities.Establecimiento;
 import com.turismo.entities.Hotel;
 

@@ -19,7 +19,7 @@ public class OfertaDTO {
 	private String tipo_habitacion;
 	private String politicas;
 	private String servicios;
-	private Destino destinoDTO;
+	private DestinoDTO destinoDTO;
 	/*NOTA: Despues buscamos un tipo de dato para foto_paquete, 
 	probe con InputStream pero hibernate dice
 	que no puede mapear ese tipo de dato*/
@@ -83,10 +83,10 @@ public class OfertaDTO {
 	public void setServicios(String servicios) {
 		this.servicios = servicios;
 	}
-	public Destino getDestinoDTO() {
+	public DestinoDTO getDestinoDTO() {
 		return destinoDTO;
 	}
-	public void setDestinoDTO(Destino destinoDTO) {
+	public void setDestinoDTO(DestinoDTO destinoDTO) {
 		this.destinoDTO = destinoDTO;
 	}
 	public String getFoto_paquete() {

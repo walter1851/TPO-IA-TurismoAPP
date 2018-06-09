@@ -6,6 +6,7 @@ public class AgenciaDTO {
 	private String nombre;
 	private String direccion;
 	private String codigo_agencia;
+	
 	public int getAgencia_id() {
 		return agencia_id;
 	}
