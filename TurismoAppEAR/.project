@@ -4,7 +4,6 @@
 	<comment></comment>
 	<projects>
 		<project>TurismoApp</project>
-		<project>TurismoAppClient</project>
 		<project>TurismoServiciosRest</project>
 	</projects>
 	<buildSpec>

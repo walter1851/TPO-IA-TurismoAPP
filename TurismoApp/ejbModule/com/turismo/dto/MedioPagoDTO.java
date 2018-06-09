@@ -3,7 +3,7 @@ package com.turismo.dto;
 public class MedioPagoDTO {
 	private int medio_de_pago_id;
 	private String nombre;
-	private int codigo;
+	private String codigo;
 	public int getMedio_de_pago_id() {
 		return medio_de_pago_id;
 	}
@@ -16,11 +16,10 @@ public class MedioPagoDTO {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public int getCodigo() {
+	public String getCodigo() {
 		return codigo;
 	}
-	public void setCodigo(int codigo) {
+	public void setCodigo(String codigo) {
 		this.codigo = codigo;
 	}
-	
 }

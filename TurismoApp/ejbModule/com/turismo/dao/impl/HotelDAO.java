@@ -6,7 +6,6 @@ import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.turismo.dao.HotelDAOLocal;
 import com.turismo.entities.Hotel;
 
 @Stateless

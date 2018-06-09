@@ -1,6 +1,6 @@
 package com.turismo.dto;
 
-import com.turismo.dto.HotelDTO;
+import com.turismo.entities.Hotel;
 
 public class EstablecimientoDTO {
 	private int establecimiento_id;
@@ -11,8 +11,8 @@ public class EstablecimientoDTO {
 	private String descripcion;
 	private String estrellas;
 	private String mapa;
-	private int codigo_establecimiento;
-	private HotelDTO hotel;
+	private String codigo_establecimiento;
+	private Hotel hotel;
 	public int getEstablecimiento_id() {
 		return establecimiento_id;
 	}
@@ -61,16 +61,17 @@ public class EstablecimientoDTO {
 	public void setMapa(String mapa) {
 		this.mapa = mapa;
 	}
-	public int getCodigo_establecimiento() {
+	public String getCodigo_establecimiento() {
 		return codigo_establecimiento;
 	}
-	public void setCodigo_establecimiento(int codigo_establecimiento) {
+	public void setCodigo_establecimiento(String codigo_establecimiento) {
 		this.codigo_establecimiento = codigo_establecimiento;
 	}
-	public HotelDTO getHotel() {
+	public Hotel getHotel() {
 		return hotel;
 	}
-	public void setHotel(HotelDTO hotel) {
+	public void setHotel(Hotel hotel) {
 		this.hotel = hotel;
 	}
+	
 }

@@ -6,7 +6,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.turismo.dao.ImagenDAOLocal;
 import com.turismo.entities.Establecimiento;
 import com.turismo.entities.Hotel;
 import com.turismo.entities.Imagen;

@@ -6,7 +6,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.turismo.dao.DestinoDAOLocal;
 import com.turismo.entities.Destino;
 
 @Stateless

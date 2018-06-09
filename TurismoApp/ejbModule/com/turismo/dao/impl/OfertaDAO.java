@@ -10,7 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import com.turismo.dao.OfertaDAOLocal;
 import com.turismo.entities.Agencia;
 import com.turismo.entities.Destino;
 import com.turismo.entities.Establecimiento;

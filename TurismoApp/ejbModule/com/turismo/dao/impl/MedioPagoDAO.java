@@ -4,7 +4,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import com.turismo.dao.MedioPagoDAOLocal;
 import com.turismo.entities.MedioPago;
 @Stateless
 @LocalBean

@@ -1,13 +1,12 @@
 package com.turismo.dto;
 
-import java.io.InputStream;
 import java.util.Date;
 
-import com.turismo.dto.AgenciaDTO;
-import com.turismo.dto.DestinoDTO;
-import com.turismo.dto.EstablecimientoDTO;
-import com.turismo.dto.MedioPagoDTO;
-import com.turismo.dto.OfertaTipoDTO;
+import com.turismo.entities.Agencia;
+import com.turismo.entities.Destino;
+import com.turismo.entities.Establecimiento;
+import com.turismo.entities.MedioPago;
+import com.turismo.entities.OfertaTipo;
 
 
 public class OfertaDTO {
@@ -20,13 +19,16 @@ public class OfertaDTO {
 	private String tipo_habitacion;
 	private String politicas;
 	private String servicios;
-	private DestinoDTO destino;
-	private InputStream foto_paquete;
-	private MedioPagoDTO medioPago;
+	private Destino destinoDTO;
+	/*NOTA: Despues buscamos un tipo de dato para foto_paquete, 
+	probe con InputStream pero hibernate dice
+	que no puede mapear ese tipo de dato*/
+	private String foto_paquete;
+	private MedioPagoDTO medioPagoDTO;
 	private int cant_personas;
-	private EstablecimientoDTO establecimiento;
-	private AgenciaDTO agencia;
-	private OfertaTipoDTO ofertaTipo;
+	private EstablecimientoDTO establecimientoDTO;
+	private AgenciaDTO agenciaDTO;
+	private OfertaTipoDTO ofertaTipoDTO;
 	public int getOferta_id() {
 		return oferta_id;
 	}
@@ -81,23 +83,23 @@ public class OfertaDTO {
 	public void setServicios(String servicios) {
 		this.servicios = servicios;
 	}
-	public DestinoDTO getDestino() {
-		return destino;
+	public Destino getDestinoDTO() {
+		return destinoDTO;
 	}
-	public void setDestino(DestinoDTO destino) {
-		this.destino = destino;
+	public void setDestinoDTO(Destino destinoDTO) {
+		this.destinoDTO = destinoDTO;
 	}
-	public InputStream getFoto_paquete() {
+	public String getFoto_paquete() {
 		return foto_paquete;
 	}
-	public void setFoto_paquete(InputStream foto_paquete) {
+	public void setFoto_paquete(String foto_paquete) {
 		this.foto_paquete = foto_paquete;
 	}
-	public MedioPagoDTO getMedioPago() {
-		return medioPago;
+	public MedioPagoDTO getMedioPagoDTO() {
+		return medioPagoDTO;
 	}
-	public void setMedioPago(MedioPagoDTO medioPago) {
-		this.medioPago = medioPago;
+	public void setMedioPagoDTO(MedioPagoDTO medioPagoDTO) {
+		this.medioPagoDTO = medioPagoDTO;
 	}
 	public int getCant_personas() {
 		return cant_personas;
@@ -105,22 +107,24 @@ public class OfertaDTO {
 	public void setCant_personas(int cant_personas) {
 		this.cant_personas = cant_personas;
 	}
-	public EstablecimientoDTO getEstablecimiento() {
-		return establecimiento;
+	public EstablecimientoDTO getEstablecimientoDTO() {
+		return establecimientoDTO;
 	}
-	public void setEstablecimiento(EstablecimientoDTO establecimiento) {
-		this.establecimiento = establecimiento;
+	public void setEstablecimientoDTO(EstablecimientoDTO establecimientoDTO) {
+		this.establecimientoDTO = establecimientoDTO;
 	}
-	public AgenciaDTO getAgencia() {
-		return agencia;
+	public AgenciaDTO getAgenciaDTO() {
+		return agenciaDTO;
 	}
-	public void setAgencia(AgenciaDTO agencia) {
-		this.agencia = agencia;
+	public void setAgenciaDTO(AgenciaDTO agenciaDTO) {
+		this.agenciaDTO = agenciaDTO;
 	}
-	public OfertaTipoDTO getOfertaTipo() {
-		return ofertaTipo;
+	public OfertaTipoDTO getOfertaTipoDTO() {
+		return ofertaTipoDTO;
 	}
-	public void setOfertaTipo(OfertaTipoDTO ofertaTipo) {
-		this.ofertaTipo = ofertaTipo;
+	public void setOfertaTipoDTO(OfertaTipoDTO ofertaTipoDTO) {
+		this.ofertaTipoDTO = ofertaTipoDTO;
 	}
+	
+	
 }

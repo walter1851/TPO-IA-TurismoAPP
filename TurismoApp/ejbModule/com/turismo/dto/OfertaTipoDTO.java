@@ -1,5 +1,6 @@
 package com.turismo.dto;
 
+
 public class OfertaTipoDTO {
 	private int oferta_tipo_id;
 	private String nombre;

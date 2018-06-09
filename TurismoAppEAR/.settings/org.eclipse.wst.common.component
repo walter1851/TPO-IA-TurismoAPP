@@ -5,11 +5,20 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="TurismoAppClient.jar" deploy-path="/" handle="module:/resource/TurismoAppClient/TurismoAppClient">
-            <dependency-type>uses</dependency-type>
-        </dependent-module>
         <dependent-module archiveName="TurismoServiciosRest.war" deploy-path="/" handle="module:/resource/TurismoServiciosRest/TurismoServiciosRest">
             <dependent-object/>
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jackson-databind-2.9.1.jar" deploy-path="/lib" handle="module:/classpath/lib/D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/jackson JAR/jackson-databind-2.9.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jackson-jaxrs-json-provider-2.9.0.jar" deploy-path="/lib" handle="module:/classpath/lib/D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/jackson JAR/jackson-jaxrs-json-provider-2.9.0.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jackson-annotations-2.9.1.jar" deploy-path="/lib" handle="module:/classpath/lib/D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/jackson JAR/jackson-annotations-2.9.1.jar">
+            <dependency-type>uses</dependency-type>
+        </dependent-module>
+        <dependent-module archiveName="jackson-core-2.9.1.jar" deploy-path="/lib" handle="module:/classpath/lib/D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/jackson JAR/jackson-core-2.9.1.jar">
             <dependency-type>uses</dependency-type>
         </dependent-module>
     </wb-module>

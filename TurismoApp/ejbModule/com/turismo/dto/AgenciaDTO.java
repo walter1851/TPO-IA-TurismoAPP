@@ -1,15 +1,16 @@
 package com.turismo.dto;
 
+
 public class AgenciaDTO {
-	private int id;
+	private int agencia_id;
 	private String nombre;
 	private String direccion;
 	private String codigo_agencia;
-	public int getId() {
-		return id;
+	public int getAgencia_id() {
+		return agencia_id;
 	}
-	public void setId(int id) {
-		this.id = id;
+	public void setAgencia_id(int agencia_id) {
+		this.agencia_id = agencia_id;
 	}
 	public String getNombre() {
 		return nombre;
@@ -29,4 +30,5 @@ public class AgenciaDTO {
 	public void setCodigo_agencia(String codigo_agencia) {
 		this.codigo_agencia = codigo_agencia;
 	}
+	
 }

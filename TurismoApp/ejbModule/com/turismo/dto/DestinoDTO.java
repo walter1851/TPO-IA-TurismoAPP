@@ -1,7 +1,6 @@
 package com.turismo.dto;
 
 public class DestinoDTO {
-
 	private int destino_id;
 	private String nombre;
 	public int getDestino_id() {

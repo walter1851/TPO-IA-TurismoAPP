@@ -1,4 +1,4 @@
-package com.turismo.dao;
+package com.turismo.dao.impl;
 
 
 import javax.ejb.Local;
