@@ -80,12 +80,13 @@ public class OfertaDAO implements OfertaDAOLocal {
 
 	@SuppressWarnings("unchecked")
 	public List<Oferta> buscarOfertasHotelera(String destino, int cantPersonas, String fDesde, String fHasta) {
+			//Despues comparamos bien el tema de las fechas, por el momento lo dejo asi para probar
 			Query ofertasHotelerasQuery = entityManager
 					.createQuery("SELECT o FROM Ofertas o " + " INNER JOIN o.destino d"
 							+ " INNER JOIN o.ofertaTipo ot " + "WHERE d.nombre = :destino"
-							+ " OR o.cant_personas = :cantPersonas" + " OR o.fecha_desde = :fDesde" 
-							+ " OR o.fecha_hasta = :fHasta"
-							+ " OR ot.nombre = :tipoDeOferta");
+							+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde >= :fDesde" 
+							+ " AND o.fecha_hasta <= :fHasta"
+							+ " AND ot.nombre = :tipoDeOferta");
 			ofertasHotelerasQuery.setParameter("destino", destino);
 			ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
 			//la fecha esta en null para que no pinche, solo para probar
@@ -101,8 +102,8 @@ public class OfertaDAO implements OfertaDAOLocal {
 			Query ofertasHotelerasQuery = entityManager
 					.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
 							+ " INNER JOIN o.ofertaTipo ot " + "WHERE d.nombre = :destino"
-							+ " OR o.cant_personas = :cantPersonas" + " OR o.fecha_desde = :fDesde" + " OR o.fecha_hasta = :fHasta"
-							+ " OR ot.nombre = :tipoDeOferta");
+							+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde = :fDesde" + " AND o.fecha_hasta = :fHasta"
+							+ " AND ot.nombre = :tipoDeOferta");
 			ofertasHotelerasQuery.setParameter("destino", destino);
 			ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
 			//la fecha esta en null para que no pinche, solo para probar

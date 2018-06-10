@@ -13,5 +13,5 @@ public interface OfertaBloqueDAOLocal {
 	public void nuevoBloque(Oferta oferta,Date fecha,int cupo);
 	public void actualizarBloque(OfertaBloque ofertaBloque);
 	public OfertaBloque buscarPorIdBloque(int idBloque);
-	public List<OfertaBloque> buscarBloques(int ofertaId,String fDesde, String fHasta, int cantPersonas) ;
+	public List<OfertaBloque> buscarBloques(int ofertaId,String fDesde, String fHasta, int cantPersonas,String tipoHabitacion) ;
 }
