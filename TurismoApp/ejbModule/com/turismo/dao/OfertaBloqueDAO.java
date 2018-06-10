@@ -43,7 +43,7 @@ public class OfertaBloqueDAO implements OfertaBloqueDAOLocal {
 		//Despues comparamos bien el tema de las fechas, por el momento lo dejo asi para probar
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o" + "WHERE o.fecha_desde >= :fDesde "
-						+ "AND o.fecha_hasta >= :fHasta " + "AND o.cant_personas <= :cantPersonas "
+						+ "AND o.fecha_hasta >= :fHasta " + "AND o.cant_personas >= :cantPersonas "
 						+ "AND o.oferta_id = :ofertaId ");
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);
@@ -56,7 +56,7 @@ public class OfertaBloqueDAO implements OfertaBloqueDAOLocal {
 		//Despues comparamos bien el tema de las fechas, por el momento lo dejo asi para probar
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o" + "WHERE o.fecha_desde >= :fDesde "
-						+ "AND o.fecha_hasta <= :fHasta " + "AND o.cant_personas <= :cantPersonas "
+						+ "AND o.fecha_hasta >= :fHasta " + "AND o.cant_personas >= :cantPersonas "
 						+ "AND o.oferta_id = :ofertaId " + "o.tipo_habitacion=:tipoHabitacion");
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);

@@ -79,37 +79,33 @@ public class OfertaDAO implements OfertaDAOLocal {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasHotelera(String destino, int cantPersonas, String fDesde, String fHasta) {
+	public List<Oferta> buscarOfertasHotelera(String destino, int cantPersonas, Date fDesde, Date fHasta) {
 			//Despues comparamos bien el tema de las fechas, por el momento lo dejo asi para probar
 			Query ofertasHotelerasQuery = entityManager
 					.createQuery("SELECT o FROM Ofertas o " + " INNER JOIN o.destino d"
 							+ " INNER JOIN o.ofertaTipo ot " + "WHERE d.nombre = :destino"
-							+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde >= :fDesde" 
-							+ " AND o.fecha_hasta <= :fHasta"
+							+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde <= :fDesde" 
+							+ " AND o.fecha_hasta >= :fHasta"
 							+ " AND ot.nombre = :tipoDeOferta");
 			ofertasHotelerasQuery.setParameter("destino", destino);
 			ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
-			//la fecha esta en null para que no pinche, solo para probar
-			ofertasHotelerasQuery.setParameter("fDesde", null);
-			//la fecha esta en null para que no pinche, solo para probar
-			ofertasHotelerasQuery.setParameter("fHasta", null);
+			ofertasHotelerasQuery.setParameter("fDesde", fDesde);
+			ofertasHotelerasQuery.setParameter("fHasta", fHasta);
 			ofertasHotelerasQuery.setParameter("tipoDeOferta", "hotelera");
 			return ofertasHotelerasQuery.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasPaquete(String destino, int cantPersonas, String fDesde, String fHasta) {
+	public List<Oferta> buscarOfertasPaquete(String destino, int cantPersonas, Date fDesde, Date fHasta) {
 			Query ofertasHotelerasQuery = entityManager
 					.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
 							+ " INNER JOIN o.ofertaTipo ot " + "WHERE d.nombre = :destino"
-							+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde = :fDesde" + " AND o.fecha_hasta = :fHasta"
+							+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta"
 							+ " AND ot.nombre = :tipoDeOferta");
 			ofertasHotelerasQuery.setParameter("destino", destino);
 			ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
-			//la fecha esta en null para que no pinche, solo para probar
-			ofertasHotelerasQuery.setParameter("fDesde", null);
-			//la fecha esta en null para que no pinche, solo para probar
-			ofertasHotelerasQuery.setParameter("fHasta", null);
+			ofertasHotelerasQuery.setParameter("fDesde", fDesde);
+			ofertasHotelerasQuery.setParameter("fHasta", fHasta);
 			ofertasHotelerasQuery.setParameter("tipoDeOferta", "paquete");
 			return ofertasHotelerasQuery.getResultList();
 	}
