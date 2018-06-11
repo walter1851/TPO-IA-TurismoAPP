@@ -4,7 +4,9 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
+import com.turismo.entities.Destino;
 import com.turismo.entities.MedioPago;
 @Stateless
 @LocalBean
@@ -27,6 +29,15 @@ public class MedioPagoDAO implements MedioPagoDAOLocal {
 	public MedioPago buscarPorIdMedioPago(int medio_de_pago_id) {
 		try {
 		return entityManager.find(MedioPago.class, medio_de_pago_id);
+		} catch (NoResultException nre) {
+			return null;
+		}
+	}
+	public MedioPago buscarPorCodigoMedioPago(String codigoMedioPago) {
+		try {
+			Query medioPagoQuery = entityManager.createQuery("SELECT mp FROM MedioPago mp " + "WHERE mp.codigo = :codigoMedioPago ");
+			medioPagoQuery.setParameter("codigoMedioPago", codigoMedioPago);
+			return (MedioPago) medioPagoQuery.getSingleResult();
 		} catch (NoResultException nre) {
 			return null;
 		}

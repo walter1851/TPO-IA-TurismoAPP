@@ -19,8 +19,9 @@ public class ReservaService implements ReservaServiceLocal {
 	private ReservaDAO reservaDAO;
 	@EJB
 	private OfertaBloqueDAO ofertaBloqueDAO;
-	public void reservarPaquete(int ofertaid,String fDesde,String fHasta,int cantPersonas,String nombre,String apellido,String dni,String medioPago,String emailUsuario) throws ReservaException {
-		//valido el formato de las fechas
+	public boolean reservarPaquete(int ofertaid,String fDesde,String fHasta,int cantPersonas,String nombre,String apellido,String dni,String medioPago,String emailUsuario) throws ReservaException {
+				//valido el formato de las fechas
+				boolean reservaOK=false;
 				boolean fechasValidas=validarReserva();
 				//obtengo todos los bloques que coinciden para validar la disponiblidad
 				List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloques(ofertaid,fDesde, fHasta, cantPersonas);
@@ -36,15 +37,22 @@ public class ReservaService implements ReservaServiceLocal {
 					throw new ReservaException("No hay autorizacion del backoffice para reservar");		
 					
 				if (fechasValidas&&hayDisponibilidad&&puedoReservar) {
+					boolean cupoActualizado=true;
 					for (OfertaBloque ofertaBloque: bloques) {
 						//Descontamos uno al cupo
 						ofertaBloque.setCupo(ofertaBloque.getCupo()-1);
-						ofertaBloqueDAO.actualizarBloque(ofertaBloque);
-						reservaDAO.crearReserva(ofertaBloque.getOferta(), 1, ofertaBloque.getOferta().getMedioPago(), nombre, emailUsuario, dni);
+						if (!ofertaBloqueDAO.actualizarBloque(ofertaBloque))
+							cupoActualizado=false;
 					}
-				}		
+					if (cupoActualizado) 
+						reservaOK=reservaDAO.crearReserva(ofertaid, 1, medioPago, nombre, emailUsuario, dni);
+					else 
+						throw new ReservaException("No se pudo actualizar el cupo.");	
+				}
+				return reservaOK;
 	}
-	public void reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre,String apellido,String dni,String medioPago,String emailUsuario) throws ReservaException {
+	public boolean reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre,String apellido,String dni,String medioPago,String emailUsuario) throws ReservaException {
+		boolean reservaOK=false;
 		//valido el formato de las fechas
 		boolean fechasValidas=validarReserva();
 		//obtengo todos los bloques que coinciden para validar la disponiblidad
@@ -61,13 +69,19 @@ public class ReservaService implements ReservaServiceLocal {
 			throw new ReservaException("No hay autorizacion del backoffice para reservar");		
 			
 		if (fechasValidas&&hayDisponibilidad&&puedoReservar) {
+			boolean cupoActualizado=true;
 			for (OfertaBloque ofertaBloque: bloques) {
 				//Descontamos uno al cupo
 				ofertaBloque.setCupo(ofertaBloque.getCupo()-1);
-				ofertaBloqueDAO.actualizarBloque(ofertaBloque);
-				reservaDAO.crearReserva(ofertaBloque.getOferta(), 1, ofertaBloque.getOferta().getMedioPago(), nombre, emailUsuario, dni);
+				if (!ofertaBloqueDAO.actualizarBloque(ofertaBloque))
+					cupoActualizado=false;
 			}
-		}		
+			if (cupoActualizado) 
+				reservaOK=reservaDAO.crearReserva(ofertaid, 1, medioPago, nombre, emailUsuario, dni);
+			else 
+				throw new ReservaException("No se pudo actualizar el cupo.");	
+		}
+		return reservaOK;
 	}
 	private boolean validarDisponibilidad(List<OfertaBloque> bloques) {
 		// Verfico que exista cupo mayor o igual a uno para cada uno de los bloques

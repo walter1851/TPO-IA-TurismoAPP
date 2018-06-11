@@ -20,15 +20,25 @@ public class OfertaBloqueDAO implements OfertaBloqueDAOLocal {
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public void nuevoBloque(Oferta oferta, Date fecha, int cupo) {
+	public boolean nuevoBloque(Oferta oferta, Date fecha, int cupo) {
+		try {
 		OfertaBloque ofertaBloque = new OfertaBloque();
 		ofertaBloque.setOferta(oferta);
 		ofertaBloque.setFecha_Bloque(fecha);
 		ofertaBloque.setCupo(cupo);
 		entityManager.persist(ofertaBloque);
+		return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
-	public void actualizarBloque(OfertaBloque ofertaBloque) {
-		entityManager.merge(ofertaBloque);
+	public boolean actualizarBloque(OfertaBloque ofertaBloque) {
+		try {
+			entityManager.merge(ofertaBloque);
+		return true;
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	public OfertaBloque buscarPorIdBloque(int oferta_bloque_id) {

@@ -10,8 +10,8 @@ import com.turismo.entities.OfertaBloque;
 
 @Local
 public interface OfertaBloqueDAOLocal {
-	public void nuevoBloque(Oferta oferta,Date fecha,int cupo);
-	public void actualizarBloque(OfertaBloque ofertaBloque);
+	public boolean nuevoBloque(Oferta oferta,Date fecha,int cupo);
+	public boolean actualizarBloque(OfertaBloque ofertaBloque);
 	public OfertaBloque buscarPorIdBloque(int idBloque);
 	public List<OfertaBloque> buscarBloques(int ofertaId,String fDesde, String fHasta, int cantPersonas,String tipoHabitacion) ;
 }
