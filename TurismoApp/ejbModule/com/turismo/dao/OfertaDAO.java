@@ -19,7 +19,7 @@ import com.turismo.entities.OfertaTipo;
 
 @Stateless
 @LocalBean
-public class OfertaDAO implements OfertaDAOLocal {
+public class OfertaDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 

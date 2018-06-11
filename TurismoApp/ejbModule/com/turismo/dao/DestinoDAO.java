@@ -11,7 +11,7 @@ import com.turismo.entities.Destino;
 
 @Stateless
 @LocalBean
-public class DestinoDAO implements DestinoDAOLocal {
+public class DestinoDAO {
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 

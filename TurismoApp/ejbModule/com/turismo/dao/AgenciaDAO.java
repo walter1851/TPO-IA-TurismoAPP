@@ -11,7 +11,7 @@ import com.turismo.entities.Agencia;
 
 @Stateless
 @LocalBean
-public class AgenciaDAO implements AgenciaDAOLocal {
+public class AgenciaDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 

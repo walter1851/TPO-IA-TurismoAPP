@@ -3,14 +3,12 @@ package com.turismo.coreservices;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
-import com.turismo.coreservices.AgenciaServiceLocal;
 import com.turismo.dao.AgenciaDAO;
 import com.turismo.entities.Agencia;
 
 @Stateless
 @LocalBean
-public class AgenciaService implements AgenciaServiceLocal {
+public class AgenciaService{
 	@EJB
 	private AgenciaDAO agenciaDao;
 

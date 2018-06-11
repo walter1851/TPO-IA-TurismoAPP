@@ -13,7 +13,7 @@ import com.turismo.entities.Reserva;
 
 @Stateless
 @LocalBean
-public class ReservaDAO implements ReservaDAOLocal {
+public class ReservaDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 	@EJB

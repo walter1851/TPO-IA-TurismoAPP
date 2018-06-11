@@ -11,8 +11,6 @@ import java.util.Locale;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
-import com.turismo.coreservices.BusquedaServiceLocal;
 import com.turismo.dao.OfertaDAO;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.entities.Oferta;
@@ -24,7 +22,7 @@ import com.turismo.exceptions.OfertaPaqueteException;
  */
 @Stateless
 @LocalBean
-public class BusquedaService implements BusquedaServiceLocal {
+public class BusquedaService{
 	@EJB
 	private OfertaDAO ofertaDao;
 	@EJB

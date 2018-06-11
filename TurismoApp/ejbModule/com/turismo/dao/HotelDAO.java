@@ -10,7 +10,7 @@ import com.turismo.entities.Hotel;
 
 @Stateless
 @LocalBean
-public class HotelDAO implements HotelDAOLocal {
+public class HotelDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 	

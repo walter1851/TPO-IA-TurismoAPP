@@ -10,7 +10,7 @@ import com.turismo.entities.Destino;
 import com.turismo.entities.MedioPago;
 @Stateless
 @LocalBean
-public class MedioPagoDAO implements MedioPagoDAOLocal {
+public class MedioPagoDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 	public void nuevoMedioPago(String nombre, String codigo) {

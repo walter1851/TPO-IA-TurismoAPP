@@ -5,8 +5,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
-import com.turismo.controller.ControllerServiceLocal;
 import com.turismo.coreservices.BusquedaService;
 import com.turismo.coreservices.ReservaService;
 import com.turismo.dto.OfertaDTO;
@@ -15,7 +13,7 @@ import com.turismo.exceptions.OfertaPaqueteException;
 import com.turismo.exceptions.ReservaException;
 @Stateless
 @LocalBean
-public class ControllerService implements ControllerServiceLocal{
+public class ControllerService{
 	@EJB
 	private BusquedaService busquedaOfertaService;
 	@EJB

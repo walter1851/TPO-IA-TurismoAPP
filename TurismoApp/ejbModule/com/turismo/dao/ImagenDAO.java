@@ -13,7 +13,7 @@ import com.turismo.entities.Imagen;
 
 @Stateless
 @LocalBean
-public class ImagenDAO implements ImagenDAOLocal{
+public class ImagenDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 	

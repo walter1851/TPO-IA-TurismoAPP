@@ -5,8 +5,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
-import com.turismo.coreservices.ReservaServiceLocal;
 import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.ReservaDAO;
 import com.turismo.entities.OfertaBloque;
@@ -14,7 +12,7 @@ import com.turismo.exceptions.ReservaException;
 
 @Stateless
 @LocalBean
-public class ReservaService implements ReservaServiceLocal {
+public class ReservaService{
 	@EJB
 	private ReservaDAO reservaDAO;
 	@EJB

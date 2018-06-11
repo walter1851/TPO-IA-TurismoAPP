@@ -16,7 +16,7 @@ import com.turismo.entities.OfertaBloque;
 
 @Stateless
 @LocalBean
-public class OfertaBloqueDAO implements OfertaBloqueDAOLocal {
+public class OfertaBloqueDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 

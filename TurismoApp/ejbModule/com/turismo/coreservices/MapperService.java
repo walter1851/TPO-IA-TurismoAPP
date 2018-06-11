@@ -5,8 +5,6 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
-import com.turismo.coreservices.MapperServiceLocal;
 import com.turismo.dto.AgenciaDTO;
 import com.turismo.dto.DestinoDTO;
 import com.turismo.dto.EstablecimientoDTO;
@@ -19,7 +17,7 @@ import com.turismo.entities.Oferta;
 
 @Stateless
 @LocalBean
-public class MapperService implements MapperServiceLocal{
+public class MapperService{
 	public List<OfertaDTO> obtenerListOfertaDTO(List<Oferta> ofertas) {
 		List<OfertaDTO> listOfertaDTO = new ArrayList<OfertaDTO>();
 		OfertaDTO ofertaDTO;

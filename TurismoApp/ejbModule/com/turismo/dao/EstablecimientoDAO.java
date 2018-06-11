@@ -13,7 +13,7 @@ import com.turismo.entities.Hotel;
 
 @Stateless
 @LocalBean
-public class EstablecimientoDAO implements EstablecimientoDAOLocal {
+public class EstablecimientoDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
