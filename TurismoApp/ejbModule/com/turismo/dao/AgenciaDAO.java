@@ -15,12 +15,13 @@ public class AgenciaDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public void nuevaAgencia(String nombre, String direccion, String codigo_agencia) {
+	public Agencia nuevaAgencia(String nombre, String direccion, String codigo_agencia) {
 		Agencia agencia = new Agencia();
 		agencia.setNombre(nombre);
 		agencia.setDireccion(direccion);
 		agencia.setCodigo_agencia(codigo_agencia);
 		entityManager.persist(agencia);
+		return agencia;
 	}
 
 	public void actualizarAgencia(int id, String nombre, String direccion, String codigo_agencia) {

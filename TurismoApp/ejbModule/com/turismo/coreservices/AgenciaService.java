@@ -12,10 +12,11 @@ public class AgenciaService{
 	@EJB
 	private AgenciaDAO agenciaDao;
 
-	public void guardarAgencia(String nombre,String direccion,String codigo_agencia) {
+	public Agencia guardarAgencia(String nombre,String direccion,String codigo_agencia) {
 		if (!existeAgencia(codigo_agencia)) {
-			agenciaDao.nuevaAgencia(nombre,direccion,codigo_agencia);
-		}
+			return agenciaDao.nuevaAgencia(nombre,direccion,codigo_agencia);
+		}else
+			return null;
 	}
 
 	private boolean existeAgencia(String codigo_agencia) {

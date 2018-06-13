@@ -14,11 +14,12 @@ public class HotelDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 	
-	public void nuevoHotel(String nombre, String codigo_hotel) {
+	public Hotel nuevoHotel(String nombre, String codigo_hotel) {
 		Hotel hotel = new Hotel();
 		hotel.setNombre(nombre);
 		hotel.setCodigo_hotel(codigo_hotel);
 		entityManager.persist(hotel);
+		return hotel;
 	}
 
 	public void actualizarHotel(int hotel_id,String nombre,String codigo_hotel) {

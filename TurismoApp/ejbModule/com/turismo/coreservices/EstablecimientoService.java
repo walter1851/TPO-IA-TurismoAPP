@@ -13,9 +13,11 @@ public class EstablecimientoService{
 	@EJB
 	private EstablecimientoDAO establecimientoDAO;
 	
-public void guardarEstablecimiento(String nombre,String direccion,String ciudad, String estado,String descripcion,String estrellas,String mapa,String codigo_establecimiento,Hotel hotel) {
+public Establecimiento guardarEstablecimiento(String nombre,String direccion,String ciudad, String estado,String descripcion,String estrellas,String mapa,String codigo_establecimiento,Hotel hotel) {
 	if (!existeEstablecimiento(codigo_establecimiento))
-		establecimientoDAO.nuevoEstablecimiento(nombre,direccion,ciudad, estado, descripcion,estrellas, mapa, codigo_establecimiento,hotel);
+		return establecimientoDAO.nuevoEstablecimiento(nombre,direccion,ciudad, estado, descripcion,estrellas, mapa, codigo_establecimiento, hotel);
+	else
+		return null;
 }
 private boolean existeEstablecimiento(String codigo_establecimiento) {
 	Establecimiento establecimientoFromDatabase = establecimientoDAO.buscarPorCodigoEstablecimiento(codigo_establecimiento);

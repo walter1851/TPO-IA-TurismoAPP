@@ -23,10 +23,9 @@ public class OfertaDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public void nuevaOferta(String nombre, int cupo, Date fecha_desde, Date fecha_hasta, float precio,
+	public Oferta nuevaOfertaHotelera(String nombre, int cupo, Date fecha_desde, Date fecha_hasta, float precio,
 			String tipo_habitacion, String politicas, String servicios, Destino destino, String foto_paquete,
-			MedioPago medioPago, int cant_personas, Establecimiento establecimiento, Agencia agencia,
-			OfertaTipo ofertaTipo) {
+			MedioPago medioPago, int cant_personas, Establecimiento establecimiento, OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
 		oferta.setNombre(nombre);
 		oferta.setCupo(cupo);
@@ -41,11 +40,34 @@ public class OfertaDAO{
 		oferta.setMedioPago(medioPago);
 		oferta.setCant_personas(cant_personas);
 		oferta.setEstablecimiento(establecimiento);
+		oferta.setAgencia(null);
+		oferta.setOfertaTipo(ofertaTipo);
+		oferta.setDestino(destino);
+		entityManager.persist(oferta);
+		return oferta;
+	}
+	public Oferta nuevaOfertaPaquete(String nombre, int cupo, Date fecha_desde, Date fecha_hasta, float precio, String politicas, String servicios, Destino destino, String foto_paquete,
+			MedioPago medioPago, int cant_personas,Agencia agencia, OfertaTipo ofertaTipo) {
+		Oferta oferta = new Oferta();
+		oferta.setNombre(nombre);
+		oferta.setCupo(cupo);
+		oferta.setFecha_desde(fecha_desde);
+		oferta.setFecha_hasta(fecha_hasta);
+		oferta.setPrecio(precio);
+		oferta.setTipo_habitacion(null);
+		oferta.setPoliticas(politicas);
+		oferta.setServicios(servicios);
+		oferta.setDestino(destino);
+		oferta.setFoto_paquete(foto_paquete);
+		oferta.setMedioPago(medioPago);
+		oferta.setCant_personas(cant_personas);
+		oferta.setEstablecimiento(null);
 		oferta.setAgencia(agencia);
 		oferta.setOfertaTipo(ofertaTipo);
+		oferta.setDestino(destino);
 		entityManager.persist(oferta);
+		return oferta;
 	}
-
 	public void actualizarOferta(int oferta_id, String nombre, int cupo, Date fecha_desde, Date fecha_hasta,
 			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
 			String foto_paquete, MedioPago medioPago, int cant_personas, Establecimiento establecimiento,

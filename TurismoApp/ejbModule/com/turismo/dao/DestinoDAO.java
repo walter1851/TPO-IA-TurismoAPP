@@ -23,7 +23,7 @@ public class DestinoDAO {
 		}
 	}
 
-	public Destino buscarPorNombre(String nombreDestino) {
+	public Destino buscarDestinoPorNombre(String nombreDestino) {
 		try {
 			Query destinoQuery = entityManager.createQuery("SELECT d FROM destino d " + "WHERE d.nombre = :nombre ");
 			destinoQuery.setParameter("nombre", nombreDestino);

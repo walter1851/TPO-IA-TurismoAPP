@@ -17,7 +17,7 @@ public class EstablecimientoDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public void nuevoEstablecimiento(String nombre, String direccion, String ciudad, String estado, String descripcion,
+	public Establecimiento nuevoEstablecimiento(String nombre, String direccion, String ciudad, String estado, String descripcion,
 			String estrellas, String mapa, String codigo_establecimiento, Hotel hotel) {
 		Establecimiento establecimiento = new Establecimiento();
 		establecimiento.setNombre(nombre);
@@ -30,6 +30,7 @@ public class EstablecimientoDAO{
 		establecimiento.setCodigo_establecimiento(codigo_establecimiento);
 		establecimiento.setHotel(hotel);
 		entityManager.persist(establecimiento);
+		return establecimiento;
 	}
 
 	public void actualizarEstablecimiento(Establecimiento establecimiento) {
