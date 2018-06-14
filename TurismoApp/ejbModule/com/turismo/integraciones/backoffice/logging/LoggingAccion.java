@@ -1,4 +1,4 @@
-package com.turismo.integraciones;
+package com.turismo.integraciones.backoffice.logging;
 
 public enum LoggingAccion {
 	RESERVA_DE_HOTEL(1, "Nueva reserva de hotel"),

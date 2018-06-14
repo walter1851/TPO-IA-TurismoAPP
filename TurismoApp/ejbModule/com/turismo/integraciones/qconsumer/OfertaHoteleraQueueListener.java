@@ -1,19 +1,16 @@
-package com.turismo.integraciones;
+package com.turismo.integraciones.qconsumer;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
-import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
-import com.turismo.coreservices.AgenciaService;
 import com.turismo.coreservices.OfertaService;
-import com.turismo.entities.Agencia;
 
 /**
- * Message-Driven Bean implementation class for: OfertaQueueListener
+ * Message-Driven Bean implementation class for: OfertaHoteleraQueueListener
  */
 //cambiar la ruta, por la cola remota
 @MessageDriven(
@@ -22,10 +19,10 @@ import com.turismo.entities.Agencia;
 				propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 		}, 
 		mappedName = "java:/jms/queue/TurismoQueue")
-public class OfertaPaqueteQueueListener implements MessageListener {
-@EJB
-private OfertaService ofertaService;
-    public OfertaPaqueteQueueListener() {
+public class OfertaHoteleraQueueListener implements MessageListener {
+	@EJB
+	private OfertaService ofertaService;
+    public OfertaHoteleraQueueListener() {
         // TODO Auto-generated constructor stub
     }
 	
@@ -35,15 +32,13 @@ private OfertaService ofertaService;
     public void onMessage(Message message) {
     	try {
 			String jsonString = ((TextMessage) message).getText();
-			OfertaPaqueteMensaje ofertaPaqueteMensaje = (OfertaPaqueteMensaje) JsonConverter.convertToObject(jsonString,
-					OfertaPaqueteMensaje.class);
-			ofertaService.guardarOfertaPaquete(ofertaPaqueteMensaje);
+			OfertaHoteleraMensaje ofertaHoteleraMensaje = (OfertaHoteleraMensaje) JsonConverter.convertToObject(jsonString,
+					OfertaHoteleraMensaje.class);
+			ofertaService.guardarOfertaHotelera(ofertaHoteleraMensaje);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-        
     }
 
 }

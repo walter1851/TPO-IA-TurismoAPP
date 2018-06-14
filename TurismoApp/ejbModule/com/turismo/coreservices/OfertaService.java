@@ -15,8 +15,8 @@ import com.turismo.entities.Hotel;
 import com.turismo.entities.MedioPago;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaTipo;
-import com.turismo.integraciones.OfertaHoteleraMensaje;
-import com.turismo.integraciones.OfertaPaqueteMensaje;
+import com.turismo.integraciones.qconsumer.OfertaHoteleraMensaje;
+import com.turismo.integraciones.qconsumer.OfertaPaqueteMensaje;
 
 @Stateless
 @LocalBean

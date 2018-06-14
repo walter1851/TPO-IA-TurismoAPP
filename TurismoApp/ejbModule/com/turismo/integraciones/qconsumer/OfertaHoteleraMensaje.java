@@ -1,4 +1,4 @@
-package com.turismo.integraciones;
+package com.turismo.integraciones.qconsumer;
 
 import java.util.Date;
 import java.util.List;

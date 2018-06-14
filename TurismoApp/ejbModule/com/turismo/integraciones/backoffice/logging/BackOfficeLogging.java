@@ -1,4 +1,4 @@
-package com.turismo.integraciones;
+package com.turismo.integraciones.backoffice.logging;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jms.JMSContext;
