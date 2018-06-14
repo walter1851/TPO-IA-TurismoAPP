@@ -1,25 +1,22 @@
 package com.turismo.integraciones;
 
-import java.util.List;
+import java.time.LocalDate;
 
 public class OfertaPaqueteMensaje {
-	/* id: int
-nombre: string
-	ciudadDestino: {
-	id: int
-	nombre: String
-},
-cupo: int
-cantPersonas: int
-agencia: Agencia
-foto: string (base64)
-fechaDesde: DateTime // Ej: 2007-04-05T12:30-02:00
-fechaHasta: DateTime // Ej: 2007-04-05T12:30-02:00
-estado: string // INACTIVO, ACTIVO
-precio: float
-descripcion: String
-politicas: string
-servicios: string
-mediosDePago: string
-*/
+private int idPaquete;
+private String nombrePaquete;
+private int	idCiudadDestino;
+private String nombreCiudadDestino;
+private int cupo;
+private int cantPersonas;
+//agencia: Agencia
+private String foto;
+private LocalDate fechaDesde; // Ej: 2007-04-05T12:30-02:00
+private LocalDate fechaHasta; // Ej: 2007-04-05T12:30-02:00
+private String estado; // INACTIVO, ACTIVO
+private float precio;
+private String descripcion;
+private String politicas;
+private String servicios;
+private String mediosDePago;
 }

@@ -1,5 +1,6 @@
 package com.turismo.dto;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -7,8 +8,8 @@ public class OfertaDTO {
 	private int oferta_id;
 	private String nombre;
 	private int cupo;
-	private Date fecha_desde;
-	private Date fecha_hasta;
+	private LocalDate fecha_desde;
+	private LocalDate fecha_hasta;
 	private float precio;
 	private String tipo_habitacion;
 	private String politicas;
@@ -41,16 +42,16 @@ public class OfertaDTO {
 	public void setCupo(int cupo) {
 		this.cupo = cupo;
 	}
-	public Date getFecha_desde() {
+	public LocalDate getFecha_desde() {
 		return fecha_desde;
 	}
-	public void setFecha_desde(Date fecha_desde) {
+	public void setFecha_desde(LocalDate fecha_desde) {
 		this.fecha_desde = fecha_desde;
 	}
-	public Date getFecha_hasta() {
+	public LocalDate getFecha_hasta() {
 		return fecha_hasta;
 	}
-	public void setFecha_hasta(Date fecha_hasta) {
+	public void setFecha_hasta(LocalDate fecha_hasta) {
 		this.fecha_hasta = fecha_hasta;
 	}
 	public float getPrecio() {

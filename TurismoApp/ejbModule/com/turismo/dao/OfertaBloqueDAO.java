@@ -1,5 +1,6 @@
 package com.turismo.dao;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class OfertaBloqueDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public boolean nuevoBloque(Oferta oferta, Date fecha, int cupo) {
+	public boolean nuevoBloque(Oferta oferta, LocalDate fecha, int cupo) {
 		try {
 		OfertaBloque ofertaBloque = new OfertaBloque();
 		ofertaBloque.setOferta(oferta);

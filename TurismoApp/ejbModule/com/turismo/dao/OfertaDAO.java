@@ -1,5 +1,6 @@
 package com.turismo.dao;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class OfertaDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public Oferta nuevaOfertaHotelera(String nombre, int cupo, Date fecha_desde, Date fecha_hasta, float precio,
+	public Oferta nuevaOfertaHotelera(String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta, float precio,
 			String tipo_habitacion, String politicas, String servicios, Destino destino, String foto_paquete,
 			MedioPago medioPago, int cant_personas, Establecimiento establecimiento, OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
@@ -46,7 +47,7 @@ public class OfertaDAO{
 		entityManager.persist(oferta);
 		return oferta;
 	}
-	public Oferta nuevaOfertaPaquete(String nombre, int cupo, Date fecha_desde, Date fecha_hasta, float precio, String politicas, String servicios, Destino destino, String foto_paquete,
+	public Oferta nuevaOfertaPaquete(String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta, float precio, String politicas, String servicios, Destino destino, String foto_paquete,
 			MedioPago medioPago, int cant_personas,Agencia agencia, OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
 		oferta.setNombre(nombre);
@@ -68,7 +69,7 @@ public class OfertaDAO{
 		entityManager.persist(oferta);
 		return oferta;
 	}
-	public void actualizarOferta(int oferta_id, String nombre, int cupo, Date fecha_desde, Date fecha_hasta,
+	public void actualizarOferta(int oferta_id, String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta,
 			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
 			String foto_paquete, MedioPago medioPago, int cant_personas, Establecimiento establecimiento,
 			Agencia agencia, OfertaTipo ofertaTipo) {
