@@ -3,18 +3,23 @@ package com.turismo.integraciones;
 import java.util.List;
 
 public class OfertaPaqueteMensaje {
-	/*Se cambiara segun lo que nos pongamos de acuerdo con los demas grupos*/
-	private String codigoAgencia;
-	private String destino;
-	private String fecha_desde;
-	private String fecha_hasta;
-	private int cantidadPersonas;
-	private String foto_paquete;
-	private String descripcion_paquete;
-	private List<String> servicios_paquete;
-	private float precio;
-	private String politica_cancelacion;
-	private List<Integer> medio_pago_paquete;
-	private String mail_agencia;
-	private int cupo_paquete;
+	/* id: int
+nombre: string
+	ciudadDestino: {
+	id: int
+	nombre: String
+},
+cupo: int
+cantPersonas: int
+agencia: Agencia
+foto: string (base64)
+fechaDesde: DateTime // Ej: 2007-04-05T12:30-02:00
+fechaHasta: DateTime // Ej: 2007-04-05T12:30-02:00
+estado: string // INACTIVO, ACTIVO
+precio: float
+descripcion: String
+politicas: string
+servicios: string
+mediosDePago: string
+*/
 }

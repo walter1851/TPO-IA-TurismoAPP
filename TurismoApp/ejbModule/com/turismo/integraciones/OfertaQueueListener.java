@@ -8,7 +8,9 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
+import com.turismo.coreservices.AgenciaService;
 import com.turismo.coreservices.OfertaService;
+import com.turismo.entities.Agencia;
 
 /**
  * Message-Driven Bean implementation class for: OfertaQueueListener
@@ -25,6 +27,8 @@ dos MDBs (message driven bean), uno para oferta hotelera y otro para paquete*/
 public class OfertaQueueListener implements MessageListener {
 @EJB
 private OfertaService ofertaService;
+@EJB
+private AgenciaService agenciaService;
     public OfertaQueueListener() {
         // TODO Auto-generated constructor stub
     }
@@ -37,6 +41,8 @@ private OfertaService ofertaService;
 			String jsonString = ((TextMessage) message).getText();
 			OfertaPaqueteMensaje ofertaPaqueteMensaje = (OfertaPaqueteMensaje) JsonConverter.convertToObject(jsonString,
 					OfertaPaqueteMensaje.class);
+			//Desp completo
+  
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
