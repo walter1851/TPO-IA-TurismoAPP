@@ -32,29 +32,11 @@ import javax.xml.bind.annotation.XmlType;
 })
 public class GetPrestadorAutorizadoResponse {
 
-    protected SolicitudDTO solicitud;
-
-    /**
-     * Obtiene el valor de la propiedad solicitud.
-     * 
-     * @return
-     *     possible object is
-     *     {@link SolicitudDTO }
-     *     
-     */
-    public SolicitudDTO getSolicitud() {
+    protected ResponseMensaje solicitud;
+    public ResponseMensaje getSolicitud() {
         return solicitud;
     }
-
-    /**
-     * Define el valor de la propiedad solicitud.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link SolicitudDTO }
-     *     
-     */
-    public void setSolicitud(SolicitudDTO value) {
+    public void setSolicitud(ResponseMensaje value) {
         this.solicitud = value;
     }
 
