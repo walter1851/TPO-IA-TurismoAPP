@@ -1,6 +1,7 @@
 package com.turismo.dao;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -21,7 +22,7 @@ public class OfertaBloqueDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public boolean nuevoBloque(Oferta oferta, LocalDate fecha, int cupo) {
+	public boolean nuevoBloque(Oferta oferta, LocalDateTime fecha, int cupo) {
 		try {
 		OfertaBloque ofertaBloque = new OfertaBloque();
 		ofertaBloque.setOferta(oferta);
@@ -50,7 +51,7 @@ public class OfertaBloqueDAO{
 		}
 	}
 	@SuppressWarnings("unchecked")
-	public List<OfertaBloque> buscarBloques(int ofertaId,String fDesde, String fHasta, int cantPersonas) {
+	public List<OfertaBloque> buscarBloques(int ofertaId,LocalDateTime fDesde, LocalDateTime fHasta, int cantPersonas) {
 		//Despues comparamos bien el tema de las fechas, por el momento lo dejo asi para probar
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o" + "WHERE o.fecha_desde >= :fDesde "
@@ -63,7 +64,7 @@ public class OfertaBloqueDAO{
 		return bloqueQuery.getResultList();
 	}
 	@SuppressWarnings("unchecked")
-	public List<OfertaBloque> buscarBloques(int ofertaId,String fDesde, String fHasta, int cantPersonas,String tipoHabitacion) {
+	public List<OfertaBloque> buscarBloques(int ofertaId,LocalDateTime fDesde, LocalDateTime fHasta, int cantPersonas,String tipoHabitacion) {
 		//Despues comparamos bien el tema de las fechas, por el momento lo dejo asi para probar
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o" + "WHERE o.fecha_desde >= :fDesde "

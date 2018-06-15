@@ -3,6 +3,9 @@ package com.turismo.coreservices;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -31,11 +34,11 @@ public class BusquedaService{
 	public List<OfertaDTO> buscarOfertaPaquete(String destino, int cantPersonas, String fDesde, String fHasta)
 			throws OfertaPaqueteException {
 		List<Oferta> ofertasPaquete = null;
-		Date fDesdeConverted;
-		Date fHastaConverted;
+		LocalDateTime fDesdeConverted;
+		LocalDateTime fHastaConverted;
 		try {
-			fDesdeConverted = convertToDate(fDesde);
-			fHastaConverted = convertToDate(fHasta);
+			fDesdeConverted = convertStringToLocalDateTime(fDesde);
+			fHastaConverted = convertStringToLocalDateTime(fHasta);
 		} catch (ParseException e) {
 			throw new OfertaPaqueteException("El formato de la fecha no es el correcto");
 		}
@@ -54,11 +57,11 @@ public class BusquedaService{
 	public List<OfertaDTO> buscarOfertaHotelera(String destino, int cantPersonas, String fDesde, String fHasta,
 			String tipoHabitacion) throws OfertaHoteleraException {
 		List<Oferta> ofertasPaquete = null;
-		Date fDesdeConverted;
-		Date fHastaConverted;
+		LocalDateTime fDesdeConverted;
+		LocalDateTime fHastaConverted;
 		try {
-			fDesdeConverted = convertToDate(fDesde);
-			fHastaConverted = convertToDate(fHasta);
+			fDesdeConverted = convertStringToLocalDateTime(fDesde);
+			fHastaConverted = convertStringToLocalDateTime(fHasta);
 		} catch (ParseException e) {
 			throw new OfertaHoteleraException("El formato de la fecha no es el correcto");
 		}
@@ -74,23 +77,23 @@ public class BusquedaService{
 			return mapperService.obtenerListOfertaDTO(ofertasPaquete);
 	}
 
-	private Boolean validarBusqueda(Date fDesde, Date fHasta) {
+	private Boolean validarBusqueda(LocalDateTime fDesde, LocalDateTime fHasta) {
 		/*
 		 * Estamos validando que fDesde no sea mayor que fHasta y que la fecha actual se
 		 * encuentre dentro de dichos rangos
 		 */
-		boolean fHastaMayor = fDesde.before(fHasta);
-		Date fechaActual = Calendar.getInstance().getTime();
-		if (fDesde.after(fechaActual) && fHasta.before(fechaActual) && fHastaMayor)
+		LocalDateTime fechaActual = LocalDateTime.now();
+		if (fDesde.isAfter(fechaActual) && fHasta.isBefore(fechaActual) && fDesde.isBefore(fHasta))
 			return true;
 		else
 			return false;
 	}
-
-	private Date convertToDate(String stringFecha) throws ParseException {
+	private LocalDateTime convertStringToLocalDateTime(String stringFecha) throws ParseException {
 		//Estamos validando que la fecha tenga el formato correcto
-		DateFormat format = new SimpleDateFormat("EEE, d MMM yyyy", Locale.ENGLISH);
-		Date date = format.parse(stringFecha);
-		return date;
+		//ejemplo 2018-06-20T12:30-02:00
+		DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
+		//ISO_OFFSET_DATE_TIME	Date Time with Offset	2011-12-03T10:15:30+01:00'
+		LocalDateTime dateTime = LocalDateTime.parse(stringFecha, formatter);
+		return dateTime;
 	}
 }

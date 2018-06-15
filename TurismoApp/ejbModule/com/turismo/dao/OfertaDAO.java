@@ -1,6 +1,7 @@
 package com.turismo.dao;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +25,7 @@ public class OfertaDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public Oferta nuevaOfertaHotelera(String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta, float precio,
+	public Oferta nuevaOfertaHotelera(String nombre, int cupo, LocalDateTime fecha_desde, LocalDateTime fecha_hasta, float precio,
 			String tipo_habitacion, String politicas, String servicios, Destino destino, String foto_paquete,
 			MedioPago medioPago, int cant_personas, Establecimiento establecimiento, OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
@@ -47,7 +48,7 @@ public class OfertaDAO{
 		entityManager.persist(oferta);
 		return oferta;
 	}
-	public Oferta nuevaOfertaPaquete(String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta, float precio, String politicas, String servicios, Destino destino, String foto_paquete,
+	public Oferta nuevaOfertaPaquete(String nombre, int cupo, LocalDateTime fecha_desde, LocalDateTime fecha_hasta, float precio, String politicas, String servicios, Destino destino, String foto_paquete,
 			MedioPago medioPago, int cant_personas,Agencia agencia, OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
 		oferta.setNombre(nombre);
@@ -69,7 +70,7 @@ public class OfertaDAO{
 		entityManager.persist(oferta);
 		return oferta;
 	}
-	public void actualizarOferta(int oferta_id, String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta,
+	public void actualizarOferta(int oferta_id, String nombre, int cupo, LocalDateTime fecha_desde, LocalDateTime fecha_hasta,
 			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
 			String foto_paquete, MedioPago medioPago, int cant_personas, Establecimiento establecimiento,
 			Agencia agencia, OfertaTipo ofertaTipo) {
@@ -102,7 +103,7 @@ public class OfertaDAO{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasHotelera(String destino, int cantPersonas, Date fDesde, Date fHasta) {
+	public List<Oferta> buscarOfertasHotelera(String destino, int cantPersonas, LocalDateTime fDesde, LocalDateTime fHasta) {
 			//Despues comparamos bien el tema de las fechas, por el momento lo dejo asi para probar
 			Query ofertasHotelerasQuery = entityManager
 					.createQuery("SELECT o FROM Ofertas o " + " INNER JOIN o.destino d"
@@ -119,7 +120,7 @@ public class OfertaDAO{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasPaquete(String destino, int cantPersonas, Date fDesde, Date fHasta) {
+	public List<Oferta> buscarOfertasPaquete(String destino, int cantPersonas, LocalDateTime fDesde, LocalDateTime fHasta) {
 			Query ofertasHotelerasQuery = entityManager
 					.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
 							+ " INNER JOIN o.ofertaTipo ot " + "WHERE d.nombre = :destino"

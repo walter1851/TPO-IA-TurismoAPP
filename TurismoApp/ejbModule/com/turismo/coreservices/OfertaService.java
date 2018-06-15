@@ -1,6 +1,8 @@
 package com.turismo.coreservices;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -38,8 +40,8 @@ public class OfertaService {
 		//Despues lo veo bien, primero tengo que analizar como mapea JACKSON
 		String nombreOferta=null; 
 		int cupo=1; 
-		LocalDate fecha_desde=null; 
-		LocalDate fecha_hasta=null;
+		LocalDateTime fecha_desde=null; 
+		LocalDateTime fecha_hasta=null;
 		float precio=1; 
 		String politicas=null; 
 		String servicios=null; 
@@ -55,7 +57,7 @@ public class OfertaService {
 		Agencia agencia = agenciaService.guardarAgencia(codigo_agencia, direccionAgencia, nombreAgencia);
 		Oferta nuevaOferta = ofertaDAO.nuevaOfertaPaquete(nombreOferta, cupo, fecha_desde, fecha_hasta, precio,
 				politicas, servicios, destino, foto_paquete, medioPago, cant_personas, agencia, ofertaTipo);
-		LocalDate fechaPivote = fecha_desde;
+		LocalDateTime fechaPivote = fecha_desde;
 		// igual a cero significa q son iguales
 		// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias
 		while (fechaPivote.compareTo(fecha_hasta) == 0) {
@@ -69,8 +71,8 @@ public class OfertaService {
 	String nombreOferta=null; 
 		String nombreDestino=null; 
 		int cupo=1; 
-		LocalDate fecha_desde=null;
-		LocalDate fecha_hasta=null; 
+		LocalDateTime fecha_desde=null;
+		LocalDateTime fecha_hasta=null; 
 		float precio=0; 
 		String tipo_habitacion=null; 
 		String politicas=null;
@@ -97,7 +99,7 @@ public class OfertaService {
 		Oferta nuevaOferta = ofertaDAO.nuevaOfertaHotelera(nombreOferta, cupo, fecha_desde, fecha_hasta, precio,
 				tipo_habitacion, politicas, servicios, destino, foto_paquete, medioPago, cant_personas, establecimiento,
 				ofertaTipo);
-		LocalDate fechaPivote = fecha_desde;
+		LocalDateTime fechaPivote = fecha_desde;
 		// igual a cero significa q son iguales
 		// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias
 		while (fechaPivote.compareTo(fecha_hasta) == 0) {
