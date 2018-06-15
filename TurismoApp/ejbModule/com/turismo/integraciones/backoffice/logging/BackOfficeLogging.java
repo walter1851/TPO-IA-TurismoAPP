@@ -1,4 +1,5 @@
 package com.turismo.integraciones.backoffice.logging;
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jms.JMSContext;
@@ -10,21 +11,23 @@ import org.jboss.logging.Logger;
 public class BackOfficeLogging {
 	private static Logger LOGGER = Logger.getLogger(BackOfficeLogging.class);
 
-	// @Resource(lookup = "java:/jms/topic/portalWebTopicTest")
-	private Queue queue;
+	//Modificar por la dirección de la cola remota
+	@Resource(lookup = "java:/jms/queue/TurismoQueue")
+	private Queue remoteQueue;
 
-	@Inject
+	@Inject	
+	//@JMSConnectionFactory("java:/ConnectionFactory")
 	JMSContext context;
 	public BackOfficeLogging() {
 	}
 	public void error(String desc) {
 		try {
-			if (this.queue == null) return;
-			LoggingMensaje lm = new LoggingMensaje();
-			lm.setAccion(LoggingAccion.ERROR.getId());
-			lm.setDescripcion(desc);
-			ObjectMessage message = this.context.createObjectMessage(lm);
-			this.context.createProducer().send(this.queue, message);
+			if (this.remoteQueue == null) return;
+			LoggingMensaje loggingMensaje = new LoggingMensaje();
+			loggingMensaje.setAccion(LoggingAccion.ERROR.getId());
+			loggingMensaje.setDescripcion(desc);
+			ObjectMessage message = this.context.createObjectMessage(loggingMensaje);
+			this.context.createProducer().send(this.remoteQueue, message);
 		} catch (Exception e) {
 			BackOfficeLogging.LOGGER.error(e.getMessage(), e);
 		}
@@ -32,11 +35,11 @@ public class BackOfficeLogging {
 
 	public void info(LoggingAccion action) {
 		try {
-			if (this.queue == null) return;
+			if (this.remoteQueue == null) return;
 			LoggingMensaje loggingMensaje = new LoggingMensaje();
 			loggingMensaje.setAccion(action.getId());
 			ObjectMessage message = this.context.createObjectMessage(loggingMensaje);
-			this.context.createProducer().send(this.queue, message);
+			this.context.createProducer().send(this.remoteQueue, message);
 		} catch (Exception e) {
 			BackOfficeLogging.LOGGER.error(e.getMessage(), e);
 		}
