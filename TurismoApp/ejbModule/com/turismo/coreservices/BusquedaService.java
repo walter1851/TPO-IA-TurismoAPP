@@ -6,6 +6,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -39,7 +40,7 @@ public class BusquedaService{
 		try {
 			fDesdeConverted = convertStringToLocalDateTime(fDesde);
 			fHastaConverted = convertStringToLocalDateTime(fHasta);
-		} catch (ParseException e) {
+		} catch (DateTimeParseException e) {
 			throw new OfertaPaqueteException("El formato de la fecha no es el correcto");
 		}
 		if (validarBusqueda(fDesdeConverted, fHastaConverted))
@@ -62,7 +63,7 @@ public class BusquedaService{
 		try {
 			fDesdeConverted = convertStringToLocalDateTime(fDesde);
 			fHastaConverted = convertStringToLocalDateTime(fHasta);
-		} catch (ParseException e) {
+		} catch (DateTimeParseException e) {
 			throw new OfertaHoteleraException("El formato de la fecha no es el correcto");
 		}
 		if (validarBusqueda(fDesdeConverted, fHastaConverted))
@@ -88,7 +89,7 @@ public class BusquedaService{
 		else
 			return false;
 	}
-	private LocalDateTime convertStringToLocalDateTime(String stringFecha) throws ParseException {
+	private LocalDateTime convertStringToLocalDateTime(String stringFecha) {
 		//Estamos validando que la fecha tenga el formato correcto
 		//ejemplo 2018-06-20T12:30-02:00
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;

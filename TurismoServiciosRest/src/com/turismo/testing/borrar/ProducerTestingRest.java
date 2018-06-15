@@ -18,9 +18,10 @@ import com.turismo.serviciorest.response.WebResponse;
 @Path("/ofertapaquete")
 @Stateless
 public class ProducerTestingRest {
+	/*
 	@EJB
 	private ProducerTestingQueue testingQueue;
-	/*
+	
 	@GET
 	@Path("buscar/{destino}/{cantPersonas}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)

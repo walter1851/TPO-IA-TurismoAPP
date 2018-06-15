@@ -12,6 +12,7 @@ import com.turismo.integraciones.qconsumer.OfertaPaqueteMensaje;
 
 @Stateless
 public class ProducerTestingQueue {
+	
 	@Resource(lookup = "java:/jms/queue/TurismoQueue")
 	private Queue testQueue;
 

@@ -22,8 +22,9 @@ public class ReservaService {
 	private ReservaDAO reservaDAO;
 	@EJB
 	private OfertaBloqueDAO ofertaBloqueDAO;
+	/*
 	@EJB
-	private BackOfficeAutorizacion backOfficeAutorizador;
+	private BackOfficeAutorizacion backOfficeAutorizador;*/
 
 	public boolean reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, String medioPago, String emailUsuario) throws ReservaException {
