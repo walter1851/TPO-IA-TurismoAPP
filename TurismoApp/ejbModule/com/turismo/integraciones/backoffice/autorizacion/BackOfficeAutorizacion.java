@@ -9,7 +9,7 @@ import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceFeature;
 import javax.xml.ws.Service;
 @WebServiceClient(name = "PrestadorAutorizadoService", 
-                  wsdlLocation = "file:/home/ebarbin/wildfly-11.0.0.Beta1/bin/bo.wsdl",
+                  wsdlLocation = "file:/???",
                   targetNamespace = "http://soap.servicios/") 
 public class BackOfficeAutorizacion extends Service {
     public final static URL WSDL_LOCATION;
@@ -19,11 +19,11 @@ public class BackOfficeAutorizacion extends Service {
     static {
         URL url = null;
         try {
-            url = new URL("file:/home/ebarbin/wildfly-11.0.0.Beta1/bin/bo.wsdl");
+            url = new URL("file:/???");
         } catch (MalformedURLException e) {
             java.util.logging.Logger.getLogger(BackOfficeAutorizacion.class.getName())
                 .log(java.util.logging.Level.INFO, 
-                     "Can not initialize the default wsdl from {0}", "file:/home/ebarbin/wildfly-11.0.0.Beta1/bin/bo.wsdl");
+                     "no se puede inicializar wsfld desde el archivo {0}", "file:???");
         }
         WSDL_LOCATION = url;
     }
@@ -52,11 +52,11 @@ public class BackOfficeAutorizacion extends Service {
         super(wsdlLocation, serviceName, features);
     }    
     @WebEndpoint(name = "ServiciosSOAP/PrestadorAutorizadoPort")
-    public BackOfficeAutorizacionInterface getServiciosBO_002fPrestadorAutorizadoPort() {
+    public BackOfficeAutorizacionInterface getServicioPrestadorAutorizadoPort() {
         return super.getPort(backOfficeAutorizacion_PrestadorPort, BackOfficeAutorizacionInterface.class);
     }
     @WebEndpoint(name = "ServiciosSOAP/PrestadorAutorizadoPort")
-    public BackOfficeAutorizacionInterface getServiciosBO_002fPrestadorAutorizadoPort(WebServiceFeature... features) {
+    public BackOfficeAutorizacionInterface getServicioPrestadorAutorizadoPort(WebServiceFeature... features) {
         return super.getPort(backOfficeAutorizacion_PrestadorPort, BackOfficeAutorizacionInterface.class, features);
     }
 
