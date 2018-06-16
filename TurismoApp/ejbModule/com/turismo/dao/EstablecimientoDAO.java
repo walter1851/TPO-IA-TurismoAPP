@@ -50,7 +50,7 @@ public class EstablecimientoDAO{
 					"SELECT e FROM establecimiento e " + "WHERE e.codigo_establecimiento = :codigo_establecimiento ");
 			establecimientoQuery.setParameter("codigo_establecimiento", codigo_establecimiento);
 			return (Establecimiento) establecimientoQuery.getSingleResult();
-		} catch (NoResultException nre) {
+		} catch (Exception nre) {
 			return null;
 		}
 	}

@@ -18,10 +18,10 @@ import com.turismo.entities.Agencia;
 //cambiar la ruta, por la cola remota
 @MessageDriven(
 		activationConfig = { @ActivationConfigProperty(
-				propertyName = "destination", propertyValue = "java:/jms/queue/TurismoQueue"), @ActivationConfigProperty(
+				propertyName = "destination", propertyValue = "java:/jms/queue/OfertaPaqueteQueue"), @ActivationConfigProperty(
 				propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 		}, 
-		mappedName = "java:/jms/queue/TurismoQueue")
+		mappedName = "java:/jms/queue/OfertaPaqueteQueue")
 public class OfertaPaqueteQueueListener implements MessageListener {
 @EJB
 private OfertaService ofertaService;
@@ -34,6 +34,7 @@ private OfertaService ofertaService;
      */
     public void onMessage(Message message) {
     	try {
+
 			String jsonString = ((TextMessage) message).getText();
 			OfertaPaqueteMensaje ofertaPaqueteMensaje = (OfertaPaqueteMensaje) JsonConverter.convertToObject(jsonString,
 					OfertaPaqueteMensaje.class);

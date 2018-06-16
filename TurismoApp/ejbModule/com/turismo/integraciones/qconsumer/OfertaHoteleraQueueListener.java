@@ -15,10 +15,10 @@ import com.turismo.coreservices.OfertaService;
 //cambiar la ruta, por la cola remota
 @MessageDriven(
 		activationConfig = { @ActivationConfigProperty(
-				propertyName = "destination", propertyValue = "java:/jms/queue/TurismoQueue"), @ActivationConfigProperty(
+				propertyName = "destination", propertyValue = "java:/jms/queue/OfertaHoteleraQueue"), @ActivationConfigProperty(
 				propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 		}, 
-		mappedName = "java:/jms/queue/TurismoQueue")
+		mappedName = "java:/jms/queue/OfertaHoteleraQueue")
 public class OfertaHoteleraQueueListener implements MessageListener {
 	@EJB
 	private OfertaService ofertaService;

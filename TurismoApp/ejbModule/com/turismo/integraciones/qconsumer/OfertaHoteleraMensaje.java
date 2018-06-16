@@ -1,11 +1,14 @@
 package com.turismo.integraciones.qconsumer;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Response;
+
 public class OfertaHoteleraMensaje {
-	// Campos oferta hotelera
-	private int idOfertaHotelera;
+	private String idOfertaHotelera;
 	private String nombreOfertaHotelera;
 	private float precio;// precio de la habitacion
 	private int cupo;
@@ -13,14 +16,14 @@ public class OfertaHoteleraMensaje {
 	private List<String> mediosDePago;
 	private String tipoHabitacion; // SIMPLE, DOBLE, TRIPLE
 	// Establecimiento
-	private int idEstablecimiento;
+	private String idEstablecimiento;
 	private String uidBackOffice; // Id recibido del backoffice
 	private String nombreEstablecimiento;
 	private String direccionEstablecimiento;
-	private int idCiudad;
+	private String idCiudad;
 	private String nombreCiudad;
 	// Hotel
-	private int idHotel;
+	private String idHotel;
 	private String nombreHotel;
 	private String urlFotoHotel;
 	// Establecimiento
@@ -30,16 +33,16 @@ public class OfertaHoteleraMensaje {
 	private String urlFotoEstablecimiento;// Esto es una foto sola, no es un array
 	private int cantEstrellas;// de 1 a 5
 	// Campos oferta hotelera
-	private Date fechaDesde;// Ej: 2007-04-05T12:30-02:00
-	private Date fechaHasta;// Ej: 2007-04-05T12:30-02:00
+	private String fechaDesde;// Ej: 2007-04-05T12:30-02:00
+	private String fechaHasta;// Ej: 2007-04-05T12:30-02:00
 	private String politicaCancelacion;// Texto con las politicas
-	private List<String> servicios;
+	private String servicios;
 
-	public int getIdOfertaHotelera() {
+	public String getIdOfertaHotelera() {
 		return idOfertaHotelera;
 	}
 
-	public void setIdOfertaHotelera(int idOfertaHotelera) {
+	public void setIdOfertaHotelera(String idOfertaHotelera) {
 		this.idOfertaHotelera = idOfertaHotelera;
 	}
 
@@ -83,11 +86,11 @@ public class OfertaHoteleraMensaje {
 		this.tipoHabitacion = tipoHabitacion;
 	}
 
-	public int getIdEstablecimiento() {
+	public String getIdEstablecimiento() {
 		return idEstablecimiento;
 	}
 
-	public void setIdEstablecimiento(int idEstablecimiento) {
+	public void setIdEstablecimiento(String idEstablecimiento) {
 		this.idEstablecimiento = idEstablecimiento;
 	}
 
@@ -115,11 +118,11 @@ public class OfertaHoteleraMensaje {
 		this.direccionEstablecimiento = direccionEstablecimiento;
 	}
 
-	public int getIdCiudad() {
+	public String getIdCiudad() {
 		return idCiudad;
 	}
 
-	public void setIdCiudad(int idCiudad) {
+	public void setIdCiudad(String idCiudad) {
 		this.idCiudad = idCiudad;
 	}
 
@@ -131,11 +134,11 @@ public class OfertaHoteleraMensaje {
 		this.nombreCiudad = nombreCiudad;
 	}
 
-	public int getIdHotel() {
+	public String getIdHotel() {
 		return idHotel;
 	}
 
-	public void setIdHotel(int idHotel) {
+	public void setIdHotel(String idHotel) {
 		this.idHotel = idHotel;
 	}
 
@@ -195,19 +198,19 @@ public class OfertaHoteleraMensaje {
 		this.cantEstrellas = cantEstrellas;
 	}
 
-	public Date getFechaDesde() {
+	public String getFechaDesde() {
 		return fechaDesde;
 	}
 
-	public void setFechaDesde(Date fechaDesde) {
+	public void setFechaDesde(String fechaDesde) {
 		this.fechaDesde = fechaDesde;
 	}
 
-	public Date getFechaHasta() {
+	public String getFechaHasta() {
 		return fechaHasta;
 	}
 
-	public void setFechaHasta(Date fechaHasta) {
+	public void setFechaHasta(String fechaHasta) {
 		this.fechaHasta = fechaHasta;
 	}
 
@@ -219,11 +222,11 @@ public class OfertaHoteleraMensaje {
 		this.politicaCancelacion = politicaCancelacion;
 	}
 
-	public List<String> getServicios() {
+	public String getServicios() {
 		return servicios;
 	}
 
-	public void setServicios(List<String> servicios) {
+	public void setServicios(String servicios) {
 		this.servicios = servicios;
 	}
 

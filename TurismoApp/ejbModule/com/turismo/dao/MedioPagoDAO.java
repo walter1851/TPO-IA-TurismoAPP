@@ -13,13 +13,14 @@ import com.turismo.entities.MedioPago;
 public class MedioPagoDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
-	public void nuevoMedioPago(String nombre, String codigo) {
+	public MedioPago nuevoMedioPago(String nombre, String codigo) {
 		MedioPago medioPago= new MedioPago();
 		medioPago.setNombre(nombre);
 		medioPago.setCodigo(codigo);
 		entityManager.persist(medioPago);
+		return medioPago;
 	}
-	public void actualizarBloque(int medio_de_pago_id, String nombre, String codigo) {
+	public void actualizarMedioPago(int medio_de_pago_id, String nombre, String codigo) {
 		MedioPago medioPago= buscarPorIdMedioPago(medio_de_pago_id);
 		medioPago.setNombre(nombre);
 		medioPago.setCodigo(codigo);

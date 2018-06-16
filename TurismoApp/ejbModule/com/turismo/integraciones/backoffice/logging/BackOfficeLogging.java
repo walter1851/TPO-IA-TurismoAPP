@@ -12,7 +12,7 @@ public class BackOfficeLogging {
 	private static Logger LOGGER = Logger.getLogger(BackOfficeLogging.class);
 
 	//Modificar por la dirección de la cola remota
-	@Resource(lookup = "java:/jms/queue/TurismoQueue")
+	//@Resource(lookup = "java:/jms/queue/TurismoQueue")
 	private Queue remoteQueue;
 
 	@Inject	

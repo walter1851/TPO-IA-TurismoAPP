@@ -4,34 +4,33 @@ import java.time.LocalDate;
 import java.util.List;
 
 public class OfertaPaqueteMensaje {
-	// Oferta Paquete
-	private int idPaquete;
+	private String idPaquete;
 	private String nombrePaquete;
-	private int idCiudadDestino;
+	private String idCiudadDestino;
 	private String nombreCiudadDestino;
 	private int cupo;
 	private int cantPersonas;
 	// AGENCIA
-	private int idAgencia;
+	private String idAgencia;
 	private String nombreAgencia;
 	private String direccionAgencia;
 	private String estadoAgencia; // INACTIVO, ACTIVO
 	// Oferta Paquete
 	private String foto;
-	private LocalDate fechaDesde; // Ej: 2007-04-05T12:30-02:00
-	private LocalDate fechaHasta; // Ej: 2007-04-05T12:30-02:00
+	private String fechaDesde; // Ej: 2007-04-05T12:30-02:00
+	private String fechaHasta; // Ej: 2007-04-05T12:30-02:00
 	private String estado; // INACTIVO, ACTIVO
 	private float precio;
 	private String descripcion;
 	private String politicaCancelacion;
-	private List<String> servicios;
+	private String servicios;
 	private List<String> mediosDePago;
 
-	public int getIdPaquete() {
+	public String getIdPaquete() {
 		return idPaquete;
 	}
 
-	public void setIdPaquete(int idPaquete) {
+	public void setIdPaquete(String idPaquete) {
 		this.idPaquete = idPaquete;
 	}
 
@@ -43,11 +42,11 @@ public class OfertaPaqueteMensaje {
 		this.nombrePaquete = nombrePaquete;
 	}
 
-	public int getIdCiudadDestino() {
+	public String getIdCiudadDestino() {
 		return idCiudadDestino;
 	}
 
-	public void setIdCiudadDestino(int idCiudadDestino) {
+	public void setIdCiudadDestino(String idCiudadDestino) {
 		this.idCiudadDestino = idCiudadDestino;
 	}
 
@@ -75,11 +74,11 @@ public class OfertaPaqueteMensaje {
 		this.cantPersonas = cantPersonas;
 	}
 
-	public int getIdAgencia() {
+	public String getIdAgencia() {
 		return idAgencia;
 	}
 
-	public void setIdAgencia(int idAgencia) {
+	public void setIdAgencia(String idAgencia) {
 		this.idAgencia = idAgencia;
 	}
 
@@ -115,19 +114,19 @@ public class OfertaPaqueteMensaje {
 		this.foto = foto;
 	}
 
-	public LocalDate getFechaDesde() {
+	public String getFechaDesde() {
 		return fechaDesde;
 	}
 
-	public void setFechaDesde(LocalDate fechaDesde) {
+	public void setFechaDesde(String fechaDesde) {
 		this.fechaDesde = fechaDesde;
 	}
 
-	public LocalDate getFechaHasta() {
+	public String getFechaHasta() {
 		return fechaHasta;
 	}
 
-	public void setFechaHasta(LocalDate fechaHasta) {
+	public void setFechaHasta(String fechaHasta) {
 		this.fechaHasta = fechaHasta;
 	}
 
@@ -163,11 +162,11 @@ public class OfertaPaqueteMensaje {
 		this.politicaCancelacion = politicaCancelacion;
 	}
 
-	public List<String> getServicios() {
+	public String getServicios() {
 		return servicios;
 	}
 
-	public void setServicios(List<String> servicios) {
+	public void setServicios(String servicios) {
 		this.servicios = servicios;
 	}
 
