@@ -52,9 +52,10 @@ public class OfertaBloqueDAO{
 	}
 	@SuppressWarnings("unchecked")
 	public List<OfertaBloque> buscarBloques(int ofertaId,LocalDateTime fDesde, LocalDateTime fHasta, int cantPersonas) {
+		try {
 		//Despues comparamos bien el tema de las fechas, por el momento lo dejo asi para probar
 		Query bloqueQuery = entityManager
-				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o" + "WHERE o.fecha_desde >= :fDesde "
+				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + "WHERE o.fecha_desde >= :fDesde "
 						+ "AND o.fecha_hasta >= :fHasta " + "AND o.cant_personas >= :cantPersonas "
 						+ "AND o.oferta_id = :ofertaId ");
 		bloqueQuery.setParameter("fDesde", fDesde);
@@ -62,9 +63,13 @@ public class OfertaBloqueDAO{
 		bloqueQuery.setParameter("cantPersonas", cantPersonas);
 		bloqueQuery.setParameter("ofertaId", ofertaId);
 		return bloqueQuery.getResultList();
+		}catch(Exception e) {
+			return null;
+		}
 	}
 	@SuppressWarnings("unchecked")
 	public List<OfertaBloque> buscarBloques(int ofertaId,LocalDateTime fDesde, LocalDateTime fHasta, int cantPersonas,String tipoHabitacion) {
+		try {
 		//Despues comparamos bien el tema de las fechas, por el momento lo dejo asi para probar
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o" + "WHERE o.fecha_desde >= :fDesde "
@@ -76,5 +81,8 @@ public class OfertaBloqueDAO{
 		bloqueQuery.setParameter("ofertaId", ofertaId);
 		bloqueQuery.setParameter("tipoHabitacion", tipoHabitacion);
 		return bloqueQuery.getResultList();
+		}catch(Exception e) {
+			return null;
+		}
 	}
 }

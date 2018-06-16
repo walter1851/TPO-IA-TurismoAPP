@@ -2,6 +2,7 @@ package com.turismo.serviciorest;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
@@ -17,8 +18,8 @@ import com.turismo.serviciorest.response.WebResponse;
 public class ReservaServicioRest {
 	@EJB
 	private ControllerService facade;
-
-	@POST
+	//CAMBIAR POR METODO POST
+	@GET
 	@Path("reservarhotel/{ofertaid}/{fDesde}/{fHasta}/{tipoHabitacion}/{cantPersonas}/{nombre}/{apellido}/{dni}/{medioPago}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response reservarHotel(@PathParam("ofertaid") int ofertaid, @PathParam("fDesde") String fDesde,
@@ -35,9 +36,9 @@ public class ReservaServicioRest {
 			return Response.ok(new WebResponse(false, e.getMessage())).build();
 		}
 	}
-
-	@POST
-	@Path("reservarpaquete/{ofertaid}/{fDesde}/{fHasta}/{cantPersonas}/{nombre}/{apellido}/{dni}/{medioPago}")
+	//CAMBIAR POR METODO POST
+	@GET
+	@Path("reservarpaquete/{ofertaid}/{fDesde}/{fHasta}/{cantPersonas}/{nombre}/{apellido}/{dni}/{medioPago}/{mailUsuario}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response reservarPaquete(@PathParam("ofertaid") int ofertaid, @PathParam("fDesde") String fDesde,
 			@PathParam("fHasta") String fHasta, @PathParam("cantPersonas") int cantPersonas,

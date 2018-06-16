@@ -97,7 +97,7 @@ public class OfertaDAO{
 	public Oferta buscarPorIdOferta(int idOferta) {
 		try {
 			return entityManager.find(Oferta.class, idOferta);
-		} catch (NoResultException nre) {
+		} catch (Exception nre) {
 			return null;
 		}
 	}

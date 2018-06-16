@@ -85,7 +85,7 @@ public class OfertaService {
 		// igual a cero significa q son iguales
 		// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias
 		int count=0; //contador para prevenir que procese eternamente
-		while (fechaPivote.compareTo(fHastaConverted) == 0 && count<20) {
+		while (fechaPivote.compareTo(fHastaConverted) <= 0 && count<100) {
 			ofertaBloqueDAO.nuevoBloque(nuevaOferta, fechaPivote, cupo);
 			fechaPivote.plusDays(1);
 			count++;
@@ -152,7 +152,7 @@ public class OfertaService {
 		// igual a cero significa q son iguales
 		// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias
 		int count=0; //contador para prevenir que procese eternamente
-		while (fechaPivote.compareTo(fHastaConverted) == 0 && count<20) {
+		while (fechaPivote.compareTo(fHastaConverted) <= 0 && count<100) {
 			ofertaBloqueDAO.nuevoBloque(nuevaOferta, fechaPivote, cupo);
 			fechaPivote.plusDays(1);
 			count++;
