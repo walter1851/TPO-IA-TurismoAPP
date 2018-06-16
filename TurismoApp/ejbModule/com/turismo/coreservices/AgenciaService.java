@@ -13,17 +13,15 @@ public class AgenciaService{
 	private AgenciaDAO agenciaDao;
 
 	public Agencia guardarAgencia(String nombre,String direccion,String codigo_agencia) {
-		if (!existeAgencia(codigo_agencia)) {
+		Agencia agenciaFromDatabase=buscarAgencia(codigo_agencia);
+		if (agenciaFromDatabase==null) 
 			return agenciaDao.nuevaAgencia(nombre,direccion,codigo_agencia);
-		}else
-			return null;
+		else
+			return agenciaFromDatabase;
 	}
 
-	private boolean existeAgencia(String codigo_agencia) {
-		Agencia agenciaFromDatabase = agenciaDao.buscarPorCodigoAgencia(codigo_agencia);
-		if (agenciaFromDatabase == null)
-			return false;
-		else
-			return true;
+	private Agencia buscarAgencia(String codigo_agencia) {
+		return agenciaDao.buscarPorCodigoAgencia(codigo_agencia);
+
 	}
 }

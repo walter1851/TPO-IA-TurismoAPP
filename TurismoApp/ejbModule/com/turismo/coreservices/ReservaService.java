@@ -146,7 +146,7 @@ public class ReservaService {
 		 * encuentre dentro de dichos rangos
 		 */
 		LocalDateTime fechaActual = LocalDateTime.now();
-		if (fDesde.isAfter(fechaActual) && fHasta.isBefore(fechaActual) && fDesde.isBefore(fHasta))
+		if (fDesde.isBefore(fechaActual) && fHasta.isAfter(fechaActual) && fDesde.isBefore(fHasta))
 			return true;
 		else
 			return false;

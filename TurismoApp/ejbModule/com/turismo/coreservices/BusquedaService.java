@@ -52,12 +52,12 @@ public class BusquedaService{
 			throw new OfertaPaqueteException("No se encontraron paquetes para el destino " + destino + " desde el "
 					+ fDesde + " Hasta el " + fHasta);
 		else
-			return mapperService.obtenerListOfertaDTO(ofertasPaquete);
+			return mapperService.obtenerListOfertaPaqueteDTO(ofertasPaquete);
 	}
 
 	public List<OfertaDTO> buscarOfertaHotelera(String destino, int cantPersonas, String fDesde, String fHasta,
 			String tipoHabitacion) throws OfertaHoteleraException {
-		List<Oferta> ofertasPaquete = null;
+		List<Oferta> ofertasHoteleras = null;
 		LocalDateTime fDesdeConverted;
 		LocalDateTime fHastaConverted;
 		try {
@@ -67,15 +67,15 @@ public class BusquedaService{
 			throw new OfertaHoteleraException("El formato de la fecha no es el correcto");
 		}
 		if (validarBusqueda(fDesdeConverted, fHastaConverted))
-			ofertasPaquete = ofertaDao.buscarOfertasHotelera(destino, cantPersonas, fDesdeConverted, fHastaConverted);
+			ofertasHoteleras = ofertaDao.buscarOfertasHotelera(destino, cantPersonas, fDesdeConverted, fHastaConverted);
 		else
 			throw new OfertaHoteleraException("La fecha de inicio es mayor que la final o la fecha actual no se encuentra dentro de dicho rangos");
 		
-		if (ofertasPaquete.isEmpty())
+		if (ofertasHoteleras.isEmpty())
 			throw new OfertaHoteleraException("No se encontraron paquetes para el destino " + destino + " desde el "
 					+ fDesde + " Hasta el " + fHasta);
 		else
-			return mapperService.obtenerListOfertaDTO(ofertasPaquete);
+			return mapperService.obtenerListOfertaHoteleraDTO(ofertasHoteleras);
 	}
 
 	private Boolean validarBusqueda(LocalDateTime fDesde, LocalDateTime fHasta) {
@@ -84,7 +84,7 @@ public class BusquedaService{
 		 * encuentre dentro de dichos rangos
 		 */
 		LocalDateTime fechaActual = LocalDateTime.now();
-		if (fDesde.isAfter(fechaActual) && fHasta.isBefore(fechaActual) && fDesde.isBefore(fHasta))
+		if (fDesde.isBefore(fechaActual) && fHasta.isAfter(fechaActual) && fDesde.isBefore(fHasta))
 			return true;
 		else
 			return false;

@@ -46,7 +46,7 @@ public class AgenciaDAO{
 					.createQuery("SELECT a FROM agencia a " + "WHERE a.codigo_agencia = :codigo_agencia ");
 			agenciaQuery.setParameter("codigo_agencia", codigo_agencia);
 			return (Agencia) agenciaQuery.getSingleResult();
-		} catch (NoResultException nre) {
+		} catch (Exception nre) {
 			return null;
 		}
 	}

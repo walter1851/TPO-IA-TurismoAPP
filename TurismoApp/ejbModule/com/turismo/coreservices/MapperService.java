@@ -18,53 +18,40 @@ import com.turismo.entities.Oferta;
 @Stateless
 @LocalBean
 public class MapperService{
-	public List<OfertaDTO> obtenerListOfertaDTO(List<Oferta> ofertas) {
-		List<OfertaDTO> listOfertaDTO = new ArrayList<OfertaDTO>();
+	public List<OfertaDTO> obtenerListOfertaPaqueteDTO(List<Oferta> ofertas) {
+		List<OfertaDTO> listOfertaPaqueteDTO = new ArrayList<OfertaDTO>();
 		OfertaDTO ofertaDTO;
 		OfertaTipoDTO ofertaTipoDTO;
 	    DestinoDTO destinoDTO;
 	    MedioPagoDTO medioPagoDTO;
-	    EstablecimientoDTO establecimientoDTO;
 		AgenciaDTO agenciaDTO;
 
 		for (Oferta oferta : ofertas) {
 			ofertaDTO = new OfertaDTO();
 			destinoDTO = new DestinoDTO();
-			establecimientoDTO=new EstablecimientoDTO();
 			medioPagoDTO=new MedioPagoDTO();
 			agenciaDTO=new AgenciaDTO();
 			ofertaTipoDTO=new OfertaTipoDTO();
 			
-			ofertaTipoDTO.setNombre(oferta.getOfertaTipo().getNombre());
-			ofertaTipoDTO.setOferta_tipo_id(oferta.getOfertaTipo().getOferta_tipo_id());
+			//chequear esto que lo hace explotar cuando me intenta traer todo, algun campo es null
+			//ofertaTipoDTO.setNombre(oferta.getOfertaTipo().getNombre());
+			//ofertaTipoDTO.setOferta_tipo_id(oferta.getOfertaTipo().getOferta_tipo_id());
 			
-			agenciaDTO.setAgencia_id(oferta.getAgencia().getAgencia_id());
-			agenciaDTO.setCodigo_agencia(oferta.getAgencia().getCodigo_agencia());
-			agenciaDTO.setDireccion(oferta.getAgencia().getDireccion());
-			agenciaDTO.setNombre(oferta.getAgencia().getNombre());
+			//agenciaDTO.setAgencia_id(oferta.getAgencia().getAgencia_id());
+			//agenciaDTO.setCodigo_agencia(oferta.getAgencia().getCodigo_agencia());
+			//agenciaDTO.setDireccion(oferta.getAgencia().getDireccion());
+			//agenciaDTO.setNombre(oferta.getAgencia().getNombre());
 			
-			medioPagoDTO.setCodigo(oferta.getMedioPago().getCodigo());
-			medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
-			medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
+			//medioPagoDTO.setCodigo(oferta.getMedioPago().getCodigo());
+			//medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
+			//medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
 			
-			destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
-			destinoDTO.setNombre(oferta.getDestino().getNombre());
-			
-			establecimientoDTO.setCiudad(oferta.getEstablecimiento().getCiudad());
-			establecimientoDTO.setCodigo_establecimiento(oferta.getEstablecimiento().getCodigo_establecimiento());
-			establecimientoDTO.setDescripcion(oferta.getEstablecimiento().getDescripcion());
-			establecimientoDTO.setDireccion(oferta.getEstablecimiento().getDireccion());
-			establecimientoDTO.setEstablecimiento_id(oferta.getEstablecimiento().getEstablecimiento_id());
-			establecimientoDTO.setEstado(oferta.getEstablecimiento().getEstado());
-			establecimientoDTO.setEstrellas(oferta.getEstablecimiento().getEstrellas());
-			establecimientoDTO.setHotel(oferta.getEstablecimiento().getHotel());
-			establecimientoDTO.setMapa(oferta.getEstablecimiento().getMapa());
-			establecimientoDTO.setNombre(oferta.getEstablecimiento().getNombre());
+			//destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
+			//destinoDTO.setNombre(oferta.getDestino().getNombre());
 			
 			ofertaDTO.setOferta_id(oferta.getOferta_id());
 			ofertaDTO.setAgenciaDTO(agenciaDTO);
 			ofertaDTO.setDestinoDTO(destinoDTO);
-			ofertaDTO.setEstablecimientoDTO(establecimientoDTO);
 			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
 			ofertaDTO.setFecha_desde(oferta.getFecha_desde());
 			ofertaDTO.setFecha_hasta(oferta.getFecha_hasta());
@@ -75,11 +62,66 @@ public class MapperService{
 			ofertaDTO.setCant_personas(oferta.getCant_personas());
 			ofertaDTO.setCupo(oferta.getCupo());
 			ofertaDTO.setServicios(oferta.getServicios());
+			ofertaDTO.setPrecio(oferta.getPrecio());
+			ofertaDTO.setNombre(oferta.getNombre());
+			listOfertaPaqueteDTO.add(ofertaDTO);
+		}
+		return listOfertaPaqueteDTO;
+	}
+	public List<OfertaDTO> obtenerListOfertaHoteleraDTO(List<Oferta> ofertas) {
+		List<OfertaDTO> listOfertaHoteleraDTO = new ArrayList<OfertaDTO>();
+		OfertaDTO ofertaDTO;
+		OfertaTipoDTO ofertaTipoDTO;
+	    DestinoDTO destinoDTO;
+	    MedioPagoDTO medioPagoDTO;
+	    EstablecimientoDTO establecimientoDTO;
+
+		for (Oferta oferta : ofertas) {
+			ofertaDTO = new OfertaDTO();
+			destinoDTO = new DestinoDTO();
+			establecimientoDTO=new EstablecimientoDTO();
+			medioPagoDTO=new MedioPagoDTO();
+			ofertaTipoDTO=new OfertaTipoDTO();
+			
+			//chequear esto que lo hace explotar cuando me intenta traer todo, algun campo es null
+			//ofertaTipoDTO.setNombre(oferta.getOfertaTipo().getNombre());
+			//ofertaTipoDTO.setOferta_tipo_id(oferta.getOfertaTipo().getOferta_tipo_id());
+			
+			//medioPagoDTO.setCodigo(oferta.getMedioPago().getCodigo());
+			//medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
+			//medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
+			
+			//destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
+			//destinoDTO.setNombre(oferta.getDestino().getNombre());
+			
+			//establecimientoDTO.setCiudad(oferta.getEstablecimiento().getCiudad());
+			//establecimientoDTO.setCodigo_establecimiento(oferta.getEstablecimiento().getCodigo_establecimiento());
+			//establecimientoDTO.setDescripcion(oferta.getEstablecimiento().getDescripcion());
+			//establecimientoDTO.setDireccion(oferta.getEstablecimiento().getDireccion());
+			//establecimientoDTO.setEstablecimiento_id(oferta.getEstablecimiento().getEstablecimiento_id());
+			//establecimientoDTO.setEstado(oferta.getEstablecimiento().getEstado());
+			//establecimientoDTO.setEstrellas(oferta.getEstablecimiento().getEstrellas());
+			//establecimientoDTO.setHotel(oferta.getEstablecimiento().getHotel());
+			//establecimientoDTO.setMapa(oferta.getEstablecimiento().getMapa());
+			//establecimientoDTO.setNombre(oferta.getEstablecimiento().getNombre());
+			
+			ofertaDTO.setOferta_id(oferta.getOferta_id());
+			ofertaDTO.setDestinoDTO(destinoDTO);
+			ofertaDTO.setEstablecimientoDTO(establecimientoDTO);
+			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
+			ofertaDTO.setFecha_desde(oferta.getFecha_desde());
+			ofertaDTO.setFecha_hasta(oferta.getFecha_hasta());
+			ofertaDTO.setMedioPagoDTO(medioPagoDTO);
+			ofertaDTO.setPoliticas(oferta.getPoliticas());
+			ofertaDTO.setServicios(oferta.getServicios());
+			ofertaDTO.setCant_personas(oferta.getCant_personas());
+			ofertaDTO.setCupo(oferta.getCupo());
+			ofertaDTO.setServicios(oferta.getServicios());
 			ofertaDTO.setTipo_habitacion(oferta.getTipo_habitacion());
 			ofertaDTO.setPrecio(oferta.getPrecio());
 			ofertaDTO.setNombre(oferta.getNombre());
-			listOfertaDTO.add(ofertaDTO);
+			listOfertaHoteleraDTO.add(ofertaDTO);
 		}
-		return listOfertaDTO;
+		return listOfertaHoteleraDTO;
 	}
 }

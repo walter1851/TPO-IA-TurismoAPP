@@ -44,7 +44,7 @@ public class ProducerOfertaHoteleraRest {
 	@GET
 	@Path("ofertahotelera/grabar/{idOfertaHotelera}/{nombreOfertaHotelera}/{precio}/{cupo}/{medioDePago}/{tipoHabitacion}/{idEstablecimiento}/{uidBackOffice}/{nombreEstablecimiento}/{direccionEstablecimiento}/{idCiudad}/{nombreCiudad}/{idHotel}/{nombreHotel}/{urlFotoHotel}/{descripcionEstablecimiento}/{mapaLatitud}/{mapaLongitud}/{urlFotoEstablecimiento}/{cantEstrellas}/{fechaDesde}/{fechaHasta}/{politicaCancelacion}/{servicios}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarOfertaPaquete(@PathParam("idOfertaHotelera") String idOfertaHotelera,
+	public Response buscarOfertaHotelera(@PathParam("idOfertaHotelera") String idOfertaHotelera,
 			@PathParam("nombreOfertaHotelera") String nombreOfertaHotelera, @PathParam("precio") float precio,
 			@PathParam("cupo") int cupo, @PathParam("medioDePago") String medioDePago,
 			@PathParam("tipoHabitacion") String tipoHabitacion,

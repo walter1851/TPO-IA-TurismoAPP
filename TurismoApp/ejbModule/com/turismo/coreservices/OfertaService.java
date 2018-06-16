@@ -62,7 +62,9 @@ public class OfertaService {
 		 String politicaCancelacion=ofertaPaqueteMensaje.getPoliticaCancelacion();
 		 String servicios=ofertaPaqueteMensaje.getServicios();
 		 List<String> mediosDePagoStrings=ofertaPaqueteMensaje.getMediosDePago();
-		Destino destino = destinoDAO.buscarDestinoPorNombre(nombreCiudadDestino);
+		//Destino destino = destinoDAO.buscarDestinoPorNombre(nombreCiudadDestino);
+		 //lo creamos por el momento, despues ver que hacer con el csv
+		 Destino destino = destinoDAO.nuevoDestino(nombreCiudadDestino);
 		Agencia agencia = agenciaService.guardarAgencia(idAgencia, direccionAgencia, nombreAgencia);
 		//convierto la fecha a localdatetime
 		LocalDateTime fDesdeConverted=convertStringToLocalDateTime(fechaDesde);
