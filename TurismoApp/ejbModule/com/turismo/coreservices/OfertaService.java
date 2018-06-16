@@ -78,7 +78,7 @@ public class OfertaService {
 		}
 			//Genero nueva oferta tipo si no existe
 		OfertaTipo nuevaOfertaTipo=new OfertaTipo();
-		nuevaOfertaTipo.setNombre("ofertaHotelera");
+		nuevaOfertaTipo.setNombre("ofertaPaquete");
 		Oferta nuevaOferta = ofertaDAO.nuevaOfertaPaquete(nombrePaquete, cupo, fDesdeConverted, fHastaConverted, precio,
 				politicaCancelacion, servicios,destino, foto,medioPagoObject, cantPersonas, agencia, nuevaOfertaTipo);
 		LocalDateTime fechaPivote = fDesdeConverted;

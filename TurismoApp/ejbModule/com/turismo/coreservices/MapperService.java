@@ -8,49 +8,50 @@ import javax.ejb.Stateless;
 import com.turismo.dto.AgenciaDTO;
 import com.turismo.dto.DestinoDTO;
 import com.turismo.dto.EstablecimientoDTO;
+import com.turismo.dto.HotelDTO;
 import com.turismo.dto.MedioPagoDTO;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.dto.OfertaTipoDTO;
 import com.turismo.entities.Oferta;
-
-
+import com.turismo.exceptions.OfertaHoteleraException;
+import com.turismo.exceptions.OfertaPaqueteException;
 
 @Stateless
 @LocalBean
-public class MapperService{
-	public List<OfertaDTO> obtenerListOfertaPaqueteDTO(List<Oferta> ofertas) {
+public class MapperService {
+	public List<OfertaDTO> obtenerListOfertaPaqueteDTO(List<Oferta> ofertas) throws OfertaPaqueteException {
+		try {
 		List<OfertaDTO> listOfertaPaqueteDTO = new ArrayList<OfertaDTO>();
 		OfertaDTO ofertaDTO;
 		OfertaTipoDTO ofertaTipoDTO;
-	    DestinoDTO destinoDTO;
-	    MedioPagoDTO medioPagoDTO;
+		DestinoDTO destinoDTO;
+		MedioPagoDTO medioPagoDTO;
 		AgenciaDTO agenciaDTO;
 
 		for (Oferta oferta : ofertas) {
 			ofertaDTO = new OfertaDTO();
 			destinoDTO = new DestinoDTO();
-			medioPagoDTO=new MedioPagoDTO();
-			agenciaDTO=new AgenciaDTO();
-			ofertaTipoDTO=new OfertaTipoDTO();
-			
-			//chequear esto que lo hace explotar cuando me intenta traer todo, algun campo es null
-			//ofertaTipoDTO.setNombre(oferta.getOfertaTipo().getNombre());
-			//ofertaTipoDTO.setOferta_tipo_id(oferta.getOfertaTipo().getOferta_tipo_id());
-			
-			//agenciaDTO.setAgencia_id(oferta.getAgencia().getAgencia_id());
-			//agenciaDTO.setCodigo_agencia(oferta.getAgencia().getCodigo_agencia());
-			//agenciaDTO.setDireccion(oferta.getAgencia().getDireccion());
-			//agenciaDTO.setNombre(oferta.getAgencia().getNombre());
-			
-			//medioPagoDTO.setCodigo(oferta.getMedioPago().getCodigo());
-			//medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
-			//medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
-			
-			//destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
-			//destinoDTO.setNombre(oferta.getDestino().getNombre());
-			
+			medioPagoDTO = new MedioPagoDTO();
+			agenciaDTO = new AgenciaDTO();
+			ofertaTipoDTO = new OfertaTipoDTO();
+
+			ofertaTipoDTO.setNombre(oferta.getOfertaTipo().getNombre());
+			ofertaTipoDTO.setOferta_tipo_id(oferta.getOfertaTipo().getOferta_tipo_id());
+
+			agenciaDTO.setAgencia_id(oferta.getAgencia().getAgencia_id());
+			agenciaDTO.setCodigo_agencia(oferta.getAgencia().getCodigo_agencia());
+			agenciaDTO.setDireccion(oferta.getAgencia().getDireccion());
+			agenciaDTO.setNombre(oferta.getAgencia().getNombre());
+
+			medioPagoDTO.setCodigo(oferta.getMedioPago().getCodigo());
+			medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
+			medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
+
+			destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
+			destinoDTO.setNombre(oferta.getDestino().getNombre());
+
 			ofertaDTO.setOferta_id(oferta.getOferta_id());
-			ofertaDTO.setAgenciaDTO(agenciaDTO);
+			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
 			ofertaDTO.setDestinoDTO(destinoDTO);
 			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
 			ofertaDTO.setFecha_desde(oferta.getFecha_desde());
@@ -67,44 +68,54 @@ public class MapperService{
 			listOfertaPaqueteDTO.add(ofertaDTO);
 		}
 		return listOfertaPaqueteDTO;
+		}catch(Exception e) {
+			throw new OfertaPaqueteException("No se puede mapear OfertaPaquete a OfertaPaqueteDTO: "+ e.getMessage());
+		}
 	}
-	public List<OfertaDTO> obtenerListOfertaHoteleraDTO(List<Oferta> ofertas) {
+
+	public List<OfertaDTO> obtenerListOfertaHoteleraDTO(List<Oferta> ofertas) throws OfertaHoteleraException {
+		try {
 		List<OfertaDTO> listOfertaHoteleraDTO = new ArrayList<OfertaDTO>();
 		OfertaDTO ofertaDTO;
 		OfertaTipoDTO ofertaTipoDTO;
-	    DestinoDTO destinoDTO;
-	    MedioPagoDTO medioPagoDTO;
-	    EstablecimientoDTO establecimientoDTO;
+		DestinoDTO destinoDTO;
+		MedioPagoDTO medioPagoDTO;
+		EstablecimientoDTO establecimientoDTO;
+		HotelDTO hotelDTO;
 
 		for (Oferta oferta : ofertas) {
 			ofertaDTO = new OfertaDTO();
 			destinoDTO = new DestinoDTO();
-			establecimientoDTO=new EstablecimientoDTO();
-			medioPagoDTO=new MedioPagoDTO();
-			ofertaTipoDTO=new OfertaTipoDTO();
+			establecimientoDTO = new EstablecimientoDTO();
+			medioPagoDTO = new MedioPagoDTO();
+			ofertaTipoDTO = new OfertaTipoDTO();
+			hotelDTO= new HotelDTO();
+
+			ofertaTipoDTO.setNombre(oferta.getOfertaTipo().getNombre());
+			ofertaTipoDTO.setOferta_tipo_id(oferta.getOfertaTipo().getOferta_tipo_id());
+
+			medioPagoDTO.setCodigo(oferta.getMedioPago().getCodigo());
+			medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
+			medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
+
+			destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
+			destinoDTO.setNombre(oferta.getDestino().getNombre());
 			
-			//chequear esto que lo hace explotar cuando me intenta traer todo, algun campo es null
-			//ofertaTipoDTO.setNombre(oferta.getOfertaTipo().getNombre());
-			//ofertaTipoDTO.setOferta_tipo_id(oferta.getOfertaTipo().getOferta_tipo_id());
-			
-			//medioPagoDTO.setCodigo(oferta.getMedioPago().getCodigo());
-			//medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
-			//medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
-			
-			//destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
-			//destinoDTO.setNombre(oferta.getDestino().getNombre());
-			
-			//establecimientoDTO.setCiudad(oferta.getEstablecimiento().getCiudad());
-			//establecimientoDTO.setCodigo_establecimiento(oferta.getEstablecimiento().getCodigo_establecimiento());
-			//establecimientoDTO.setDescripcion(oferta.getEstablecimiento().getDescripcion());
-			//establecimientoDTO.setDireccion(oferta.getEstablecimiento().getDireccion());
-			//establecimientoDTO.setEstablecimiento_id(oferta.getEstablecimiento().getEstablecimiento_id());
-			//establecimientoDTO.setEstado(oferta.getEstablecimiento().getEstado());
-			//establecimientoDTO.setEstrellas(oferta.getEstablecimiento().getEstrellas());
-			//establecimientoDTO.setHotel(oferta.getEstablecimiento().getHotel());
-			//establecimientoDTO.setMapa(oferta.getEstablecimiento().getMapa());
-			//establecimientoDTO.setNombre(oferta.getEstablecimiento().getNombre());
-			
+			hotelDTO.setHotel_id(oferta.getEstablecimiento().getHotel().getHotel_id());
+			hotelDTO.setNombre(oferta.getEstablecimiento().getHotel().getNombre());
+			hotelDTO.setCodigo_hotel(oferta.getEstablecimiento().getHotel().getCodigo_hotel());
+
+			establecimientoDTO.setCiudad(oferta.getEstablecimiento().getCiudad());
+			establecimientoDTO.setCodigo_establecimiento(oferta.getEstablecimiento().getCodigo_establecimiento());
+			establecimientoDTO.setDescripcion(oferta.getEstablecimiento().getDescripcion());
+			establecimientoDTO.setDireccion(oferta.getEstablecimiento().getDireccion());
+			establecimientoDTO.setEstablecimiento_id(oferta.getEstablecimiento().getEstablecimiento_id());
+			establecimientoDTO.setEstado(oferta.getEstablecimiento().getEstado());
+			establecimientoDTO.setEstrellas(oferta.getEstablecimiento().getEstrellas());
+			establecimientoDTO.setHotelDTO(hotelDTO);
+			establecimientoDTO.setMapa(oferta.getEstablecimiento().getMapa());
+			establecimientoDTO.setNombre(oferta.getEstablecimiento().getNombre());
+
 			ofertaDTO.setOferta_id(oferta.getOferta_id());
 			ofertaDTO.setDestinoDTO(destinoDTO);
 			ofertaDTO.setEstablecimientoDTO(establecimientoDTO);
@@ -123,5 +134,8 @@ public class MapperService{
 			listOfertaHoteleraDTO.add(ofertaDTO);
 		}
 		return listOfertaHoteleraDTO;
+		}catch(Exception e) {
+			throw new OfertaHoteleraException("No se puede mapear OfertaHotelera a OfertaHoteleraDTO: "+ e.getMessage());
+		}
 	}
 }
