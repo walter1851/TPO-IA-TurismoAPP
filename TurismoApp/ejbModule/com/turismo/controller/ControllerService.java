@@ -19,12 +19,12 @@ public class ControllerService{
 	@EJB
 	private ReservaService reservaService;
 	
-	public List<OfertaDTO> buscarOfertaPaquete(String destino,int cantPersonas,String fDesde, String fHasta) throws OfertaPaqueteException{
-		return busquedaOfertaService.buscarOfertaPaquete(destino, cantPersonas, fDesde, fHasta);
+	public List<OfertaDTO> buscarOfertaPaquete(int destinoId,int cantPersonas,String fDesde, String fHasta) throws OfertaPaqueteException{
+		return busquedaOfertaService.buscarOfertaPaquete(destinoId, cantPersonas, fDesde, fHasta);
 	}
 
-	public List<OfertaDTO> buscarOfertaHotelera(String destino,int cantPersonas,String fDesde, String fHasta, String tipoHabitacion) throws OfertaHoteleraException {
-		return busquedaOfertaService.buscarOfertaHotelera(destino, cantPersonas, fDesde, fHasta, tipoHabitacion);
+	public List<OfertaDTO> buscarOfertaHotelera(int destinoId,int cantPersonas,String fDesde, String fHasta, String tipoHabitacion) throws OfertaHoteleraException {
+		return busquedaOfertaService.buscarOfertaHotelera(destinoId, cantPersonas, fDesde, fHasta, tipoHabitacion);
 	}
 	public void reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException {
 		reservaService.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantPersonas, nombre, apellido, dni, medioPagoId,mailUsuario);

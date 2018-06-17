@@ -22,13 +22,13 @@ public class OfertaHoteleraServicioRest {
 	private ControllerService facade;
 
 	@GET
-	@Path("buscar/{destino}/{cantPersonas}/{fDesde}/{fHasta}/{tipoHabitacion}")
+	@Path("buscar/{destinoId}/{cantPersonas}/{fDesde}/{fHasta}/{tipoHabitacion}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarOfertaHotelera(@PathParam("destino") String destino, @PathParam("cantPersonas") int cantPersonas,
+	public Response buscarOfertaHotelera(@PathParam("destinoId") int destinoId, @PathParam("cantPersonas") int cantPersonas,
 			@PathParam("fDesde") String fDesde, @PathParam("fHasta") String fHasta,
 			@PathParam("tipoHabitacion") String tipoHabitacion) {
 		try {
-			List<OfertaDTO> ofertas = facade.buscarOfertaHotelera(destino, cantPersonas, fDesde, fHasta,
+			List<OfertaDTO> ofertas = facade.buscarOfertaHotelera(destinoId, cantPersonas, fDesde, fHasta,
 					tipoHabitacion);
 			return Response.ok(new WebResponse(ofertas)).build();
 		} catch (OfertaHoteleraException e) {

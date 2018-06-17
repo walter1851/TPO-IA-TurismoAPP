@@ -22,12 +22,12 @@ public class OfertaPaqueteServicioRest {
 	@EJB
 	private ControllerService facade;
 	@GET
-	@Path("buscar/{destino}/{cantPersonas}/{fDesde}/{fHasta}")
+	@Path("buscar/{destinoId}/{cantPersonas}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarOfertaPaquete(@PathParam("destino") String destino, @PathParam("cantPersonas") int cantPersonas,
+	public Response buscarOfertaPaquete(@PathParam("destinoId") int destinoId, @PathParam("cantPersonas") int cantPersonas,
 			@PathParam("fDesde") String fDesde, @PathParam("fHasta") String fHasta) {
 		try {
-			List<OfertaDTO> ofertas = facade.buscarOfertaPaquete(destino, cantPersonas, fDesde, fHasta);
+			List<OfertaDTO> ofertas = facade.buscarOfertaPaquete(destinoId, cantPersonas, fDesde, fHasta);
 			return Response.ok(new WebResponse(ofertas)).build();
 		} catch (OfertaPaqueteException e) {
 			// logearerror(e.getMessage());

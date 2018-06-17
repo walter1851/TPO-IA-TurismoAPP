@@ -36,7 +36,7 @@ public class BusquedaService{
 	@EJB
 	private MapperService mapperService;
 
-	public List<OfertaDTO> buscarOfertaPaquete(String destino, int cantPersonas, String fDesde, String fHasta)
+	public List<OfertaDTO> buscarOfertaPaquete(int destinoId, int cantPersonas, String fDesde, String fHasta)
 			throws OfertaPaqueteException {
 		List<Oferta> ofertasPaquete = null;
 		LocalDateTime fDesdeConverted;
@@ -48,18 +48,18 @@ public class BusquedaService{
 			throw new OfertaPaqueteException("El formato de la fecha no es el correcto");
 		}
 		if (validarBusqueda(fDesdeConverted, fHastaConverted))
-			ofertasPaquete = ofertaDao.buscarOfertasPaquete(destino, cantPersonas, fDesdeConverted, fHastaConverted);
+			ofertasPaquete = ofertaDao.buscarOfertasPaquete(destinoId, cantPersonas, fDesdeConverted, fHastaConverted);
 		else
 			throw new OfertaPaqueteException("La fecha de inicio es mayor que la final o la fecha actual no se encuentra dentro de dicho rangos");
 		
 		if (ofertasPaquete.isEmpty())
-			throw new OfertaPaqueteException("No se encontraron paquetes para el destino " + destino + " desde el "
+			throw new OfertaPaqueteException("No se encontraron paquetes para el destino id: " + destinoId + " desde el "
 					+ fDesde + " Hasta el " + fHasta);
 		else
 			return mapperService.obtenerListOfertaPaqueteDTO(ofertasPaquete);
 	}
 
-	public List<OfertaDTO> buscarOfertaHotelera(String destino, int cantPersonas, String fDesde, String fHasta,
+	public List<OfertaDTO> buscarOfertaHotelera(int destinoId, int cantPersonas, String fDesde, String fHasta,
 			String tipoHabitacion) throws OfertaHoteleraException {
 		List<Oferta> ofertasHoteleras = null;
 		LocalDateTime fDesdeConverted;
@@ -71,12 +71,12 @@ public class BusquedaService{
 			throw new OfertaHoteleraException("El formato de la fecha no es el correcto");
 		}
 		if (validarBusqueda(fDesdeConverted, fHastaConverted))
-			ofertasHoteleras = ofertaDao.buscarOfertasHotelera(destino, cantPersonas, fDesdeConverted, fHastaConverted);
+			ofertasHoteleras = ofertaDao.buscarOfertasHotelera(destinoId, cantPersonas, fDesdeConverted, fHastaConverted);
 		else
 			throw new OfertaHoteleraException("La fecha de inicio es mayor que la final o la fecha actual no se encuentra dentro de dicho rangos");
 		
 		if (ofertasHoteleras.isEmpty())
-			throw new OfertaHoteleraException("No se encontraron paquetes para el destino " + destino + " desde el "
+			throw new OfertaHoteleraException("No se encontraron paquetes para el destino " + destinoId + " desde el "
 					+ fDesde + " Hasta el " + fHasta);
 		else
 			return mapperService.obtenerListOfertaHoteleraDTO(ofertasHoteleras);
