@@ -7,6 +7,7 @@ import com.turismo.dao.EstablecimientoDAO;
 import com.turismo.dao.HotelDAO;
 import com.turismo.dao.ImagenDAO;
 import com.turismo.entities.Establecimiento;
+import com.turismo.entities.Estado;
 import com.turismo.entities.Hotel;
 import com.turismo.entities.Imagen;
 
@@ -20,7 +21,7 @@ public class EstablecimientoService {
 	@EJB
 	private ImagenDAO imagenDAO;
 
-	public Establecimiento guardarEstablecimiento(String nombre, String direccion, String ciudad, String estado,
+	public Establecimiento guardarEstablecimiento(String nombre, String direccion, String ciudad, Estado estado,
 			String descripcion, String estrellas, String mapa, String codigo_establecimiento, String idHotel,
 			String nombreHotel, String urlFotoHotel) {
 		Hotel hotel = buscarHotel(idHotel);

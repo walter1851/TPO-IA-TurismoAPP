@@ -9,6 +9,7 @@ import javax.persistence.Query;
 
 import com.turismo.entities.Destino;
 import com.turismo.entities.Establecimiento;
+import com.turismo.entities.Estado;
 import com.turismo.entities.Hotel;
 
 @Stateless
@@ -17,7 +18,7 @@ public class EstablecimientoDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public Establecimiento nuevoEstablecimiento(String nombre, String direccion, String ciudad, String estado, String descripcion,
+	public Establecimiento nuevoEstablecimiento(String nombre, String direccion, String ciudad, Estado estado, String descripcion,
 			String estrellas, String mapa, String codigo_establecimiento, Hotel hotel) {
 		Establecimiento establecimiento = new Establecimiento();
 		establecimiento.setNombre(nombre);

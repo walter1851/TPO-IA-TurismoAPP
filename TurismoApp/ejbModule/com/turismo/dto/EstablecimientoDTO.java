@@ -5,7 +5,7 @@ public class EstablecimientoDTO {
 	private String nombre;
 	private String direccion;
 	private String ciudad;
-	private String estado;
+	private EstadoDTO estado;
 	private String descripcion;
 	private String estrellas;
 	private String mapa;
@@ -35,10 +35,10 @@ public class EstablecimientoDTO {
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
 	}
-	public String getEstado() {
+	public EstadoDTO getEstado() {
 		return estado;
 	}
-	public void setEstado(String estado) {
+	public void setEstado(EstadoDTO estado) {
 		this.estado = estado;
 	}
 	public String getDescripcion() {

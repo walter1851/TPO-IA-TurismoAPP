@@ -1,24 +1,13 @@
 package com.turismo.coreservices;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
-import org.dozer.DozerBeanMapperBuilder;
-import org.dozer.Mapper;
-
 import com.turismo.dao.OfertaDAO;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.entities.Oferta;
@@ -35,7 +24,7 @@ public class BusquedaService{
 	private OfertaDAO ofertaDao;
 	@EJB
 	private MapperService mapperService;
-
+	
 	public List<OfertaDTO> buscarOfertaPaquete(int destinoId, int cantPersonas, String fDesde, String fHasta)
 			throws OfertaPaqueteException {
 		List<Oferta> ofertasPaquete = null;
@@ -56,7 +45,7 @@ public class BusquedaService{
 			throw new OfertaPaqueteException("No se encontraron paquetes para el destino id: " + destinoId + " desde el "
 					+ fDesde + " Hasta el " + fHasta);
 		else
-			return mapperService.obtenerListOfertaPaqueteDTO(ofertasPaquete);
+			return mapperService.obtenerListaOfertaPaqueteDTO(ofertasPaquete);
 	}
 
 	public List<OfertaDTO> buscarOfertaHotelera(int destinoId, int cantPersonas, String fDesde, String fHasta,
@@ -79,7 +68,7 @@ public class BusquedaService{
 			throw new OfertaHoteleraException("No se encontraron paquetes para el destino " + destinoId + " desde el "
 					+ fDesde + " Hasta el " + fHasta);
 		else
-			return mapperService.obtenerListOfertaHoteleraDTO(ofertasHoteleras);
+			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}
 
 	private Boolean validarBusqueda(LocalDateTime fDesde, LocalDateTime fHasta) {

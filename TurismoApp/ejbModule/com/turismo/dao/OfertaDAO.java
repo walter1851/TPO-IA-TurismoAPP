@@ -28,7 +28,7 @@ public class OfertaDAO {
 
 	public Oferta nuevaOfertaHotelera(String nombre, int cupo, LocalDateTime fecha_desde, LocalDateTime fecha_hasta,
 			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
-			String foto_paquete, MedioPago medioPago, int cant_personas, Establecimiento establecimiento,
+			String foto_paquete, MedioPago medioPago, Establecimiento establecimiento,
 			OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
 		oferta.setNombre(nombre);
@@ -42,7 +42,6 @@ public class OfertaDAO {
 		oferta.setDestino(destino);
 		oferta.setFoto_paquete(foto_paquete);
 		oferta.setMedioPago(medioPago);
-		oferta.setCant_personas(cant_personas);
 		oferta.setEstablecimiento(establecimiento);
 		oferta.setAgencia(null);
 		oferta.setOfertaTipo(ofertaTipo);

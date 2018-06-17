@@ -14,6 +14,7 @@ import com.turismo.dao.OfertaDAO;
 import com.turismo.entities.Agencia;
 import com.turismo.entities.Destino;
 import com.turismo.entities.Establecimiento;
+import com.turismo.entities.Estado;
 import com.turismo.entities.MedioPago;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaTipo;
@@ -103,8 +104,6 @@ public class OfertaService {
 		String nombreOfertaHotelera = ofertaHoteleraMensaje.getNombreOfertaHotelera();
 		float precio = ofertaHoteleraMensaje.getPrecio();// precio de la habitacion
 		int cupo = ofertaHoteleraMensaje.getCupo();
-		// FALTA CANT PERSONAS?
-		int cantPeronas = 3;
 		String mediosDePago = ofertaHoteleraMensaje.getMediosDePago();
 		String tipoHabitacion = ofertaHoteleraMensaje.getTipoHabitacion(); // SIMPLE, DOBLE, TRIPLE
 		// Establecimiento
@@ -134,7 +133,7 @@ public class OfertaService {
 		if (destino==null)
 			throw new OfertaHoteleraException("No existe el destino con el id: "+idCiudad);
 		Establecimiento establecimiento = establecimientoService.guardarEstablecimiento(nombreEstablecimiento,
-				direccionEstablecimiento, nombreCiudad, nombreCiudad, descripcionEstablecimiento,
+				direccionEstablecimiento, nombreCiudad, Estado.ACTIVO, descripcionEstablecimiento,
 				Integer.toString(cantEstrellas), "lat: " + mapaLatitud + " long: " + mapaLongitud, idEstablecimiento,
 				idHotel, nombreHotel, urlFotoHotel);
 		// convierto la fecha a localdatetime
@@ -145,7 +144,7 @@ public class OfertaService {
 		OfertaTipo ofertaTipo = OfertaTipo.OFERTA_HOTELERA;
 		Oferta nuevaOferta = ofertaDAO.nuevaOfertaHotelera(nombreOfertaHotelera, cupo, fDesdeConverted, fHastaConverted,
 				precio, tipoHabitacion, politicaCancelacion, servicios, destino, urlFotoEstablecimiento,
-				medioPagoObject, cantPeronas, establecimiento, ofertaTipo);
+				medioPagoObject, establecimiento, ofertaTipo);
 		LocalDateTime fechaPivote = fDesdeConverted;
 		// igual a cero significa q son iguales
 		// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias

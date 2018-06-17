@@ -19,7 +19,7 @@ public class Establecimiento {
 	private String nombre;
 	private String direccion;
 	private String ciudad;
-	private String estado;
+	private Estado estado;
 	private String descripcion;
 	private String estrellas;
 	private String mapa;
@@ -52,10 +52,10 @@ public class Establecimiento {
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
 	}
-	public String getEstado() {
+	public Estado getEstado() {
 		return estado;
 	}
-	public void setEstado(String estado) {
+	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
 	public String getDescripcion() {
