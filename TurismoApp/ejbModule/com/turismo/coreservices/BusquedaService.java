@@ -27,7 +27,7 @@ public class BusquedaService{
 	
 	public List<OfertaDTO> buscarOfertaPaquete(int destinoId, int cantPersonas, String fDesde, String fHasta)
 			throws OfertaPaqueteException {
-		List<Oferta> ofertasPaquete = null;
+		List<Oferta> ofertasPaquete;
 		LocalDateTime fDesdeConverted;
 		LocalDateTime fHastaConverted;
 		try {
@@ -43,13 +43,12 @@ public class BusquedaService{
 		
 		if (ofertasPaquete.isEmpty())
 			throw new OfertaPaqueteException("No se encontraron paquetes para el destino id: " + destinoId + " desde el "
-					+ fDesde + " Hasta el " + fHasta);
+					+ fDesde + " Hasta el " + fHasta+ " cant personas: "+cantPersonas);
 		else
 			return mapperService.obtenerListaOfertaPaqueteDTO(ofertasPaquete);
 	}
 
-	public List<OfertaDTO> buscarOfertaHotelera(int destinoId, int cantPersonas, String fDesde, String fHasta,
-			String tipoHabitacion) throws OfertaHoteleraException {
+	public List<OfertaDTO> buscarOfertaHotelera(int destinoId, String fDesde, String fHasta,String tipoHabitacion) throws OfertaHoteleraException {
 		List<Oferta> ofertasHoteleras = null;
 		LocalDateTime fDesdeConverted;
 		LocalDateTime fHastaConverted;
@@ -60,13 +59,13 @@ public class BusquedaService{
 			throw new OfertaHoteleraException("El formato de la fecha no es el correcto");
 		}
 		if (validarBusqueda(fDesdeConverted, fHastaConverted))
-			ofertasHoteleras = ofertaDao.buscarOfertasHotelera(destinoId, cantPersonas, fDesdeConverted, fHastaConverted);
+			ofertasHoteleras = ofertaDao.buscarOfertasHotelera(destinoId, tipoHabitacion, fDesdeConverted, fHastaConverted);
 		else
 			throw new OfertaHoteleraException("La fecha de inicio es mayor que la final o la fecha actual no se encuentra dentro de dicho rangos");
 		
 		if (ofertasHoteleras.isEmpty())
-			throw new OfertaHoteleraException("No se encontraron paquetes para el destino " + destinoId + " desde el "
-					+ fDesde + " Hasta el " + fHasta);
+			throw new OfertaHoteleraException("No se encontraron hoteles para el destino id: " + destinoId + " desde el "
+					+ fDesde + " Hasta el " + fHasta+" tipo habitacion: "+tipoHabitacion);
 		else
 			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}

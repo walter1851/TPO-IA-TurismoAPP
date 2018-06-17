@@ -23,11 +23,11 @@ public class ControllerService{
 		return busquedaOfertaService.buscarOfertaPaquete(destinoId, cantPersonas, fDesde, fHasta);
 	}
 
-	public List<OfertaDTO> buscarOfertaHotelera(int destinoId,int cantPersonas,String fDesde, String fHasta, String tipoHabitacion) throws OfertaHoteleraException {
-		return busquedaOfertaService.buscarOfertaHotelera(destinoId, cantPersonas, fDesde, fHasta, tipoHabitacion);
+	public List<OfertaDTO> buscarOfertaHotelera(int destinoId,String fDesde, String fHasta, String tipoHabitacion) throws OfertaHoteleraException {
+		return busquedaOfertaService.buscarOfertaHotelera(destinoId, fDesde, fHasta, tipoHabitacion);
 	}
-	public void reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantPersonas,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException {
-		reservaService.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantPersonas, nombre, apellido, dni, medioPagoId,mailUsuario);
+	public void reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantHabitaciones,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException {
+		reservaService.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantHabitaciones, nombre, apellido, dni, medioPagoId,mailUsuario);
 	}
 	public void reservarPaquete(int ofertaid,String fDesde,String fHasta,int cantPersonas,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException {
 		reservaService.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPagoId,mailUsuario);

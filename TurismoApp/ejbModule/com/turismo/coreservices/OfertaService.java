@@ -18,7 +18,6 @@ import com.turismo.entities.Estado;
 import com.turismo.entities.MedioPago;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaTipo;
-import com.turismo.entities.OfertaTipoELIMINAR;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
 import com.turismo.exceptions.ReservaException;

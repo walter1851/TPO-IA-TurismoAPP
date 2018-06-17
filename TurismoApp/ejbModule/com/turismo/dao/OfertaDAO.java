@@ -9,6 +9,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.RollbackException;
+import javax.persistence.TemporalType;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -18,7 +19,6 @@ import com.turismo.entities.Establecimiento;
 import com.turismo.entities.MedioPago;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaTipo;
-import com.turismo.entities.OfertaTipoELIMINAR;
 
 @Stateless
 @LocalBean
@@ -107,45 +107,34 @@ public class OfertaDAO {
 		}
 	}
 
-	// OJO CAMBIAR EL OR POR AND y ver porque no encuentra nada
+	// OJO VER LO QUE ESTA PASANDO CON LAS FECHAS, porque no lo toma?
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasHotelera(int destinoId, int cantPersonas, LocalDateTime fDesde,
+	public List<Oferta> buscarOfertasHotelera(int destinoId, String tipo_Habitacion, LocalDateTime fDesde,
 			LocalDateTime fHasta) {
-		try {
-			// Despues comparamos bien el tema de las fechas, por el momento lo dejo asi
-			// para probar
 			Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o "
-					+ " INNER JOIN o.destino d" + " INNER JOIN o.ofertaTipo ot " + "WHERE d.destino_id = :destinoId"
-					+ " OR o.cant_personas = :cantPersonas" + " OR o.fecha_desde <= :fDesde"
-					+ " OR o.fecha_hasta >= :fHasta" + " OR ot.nombre = :tipoDeOferta");
+					+ " INNER JOIN o.destino d" + " WHERE d.destino_id = :destinoId"
+					+ " AND o.tipo_habitacion = :tipo_Habitacion" + /*" AND (o.fecha_desde <= :fDesde"
+					+ " OR o.fecha_hasta >= :fHasta)" +*/ " AND OfertaTipo = :tipoDeOferta");
 			ofertasHotelerasQuery.setParameter("destinoId", destinoId);
-			ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
-			ofertasHotelerasQuery.setParameter("fDesde", fDesde);
-			ofertasHotelerasQuery.setParameter("fHasta", fHasta);
-			ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_HOTELERA);
+			ofertasHotelerasQuery.setParameter("tipo_Habitacion", tipo_Habitacion);
+			//ofertasHotelerasQuery.setParameter("fDesde", fDesde); hay q usar TemporalType.DATE??
+			//ofertasHotelerasQuery.setParameter("fHasta", fHasta);
+			ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_HOTELERA.name());
 			return ofertasHotelerasQuery.getResultList();
-		} catch (RollbackException exp) {
-			return null;
-		}
 	}
-
-	// OJO CAMBIAR EL OR POR AND y ver porque no encuentra nada
 	@SuppressWarnings("unchecked")
+	// OJO CAMBIAR EL OR POR AND y ver porque no encuentra la fecha
 	public List<Oferta> buscarOfertasPaquete(int destinoId, int cantPersonas, LocalDateTime fDesde,
-			LocalDateTime fHasta) {
-		try {
+			LocalDateTime fHasta){
 			Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o "
-					+ " INNER JOIN o.destino d" + " INNER JOIN o.ofertaTipo ot " + "WHERE d.destino_id = :destinoId"
-					+ " OR o.cant_personas = :cantPersonas" + " OR o.fecha_desde <= :fDesde"
-					+ " OR o.fecha_hasta >= :fHasta" + " OR ot.nombre = :tipoDeOferta");
+					+ " INNER JOIN o.destino d" +" WHERE d.destino_id = :destinoId"
+					+ " AND o.cant_personas <= :cantPersonas" + /*" AND (o.fecha_desde <= :fDesde"
+					+ " AND o.fecha_hasta >= :fHasta)" +*/ " AND OfertaTipo = :tipoDeOferta");
 			ofertasHotelerasQuery.setParameter("destinoId", destinoId);
 			ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
-			ofertasHotelerasQuery.setParameter("fDesde", fDesde);
-			ofertasHotelerasQuery.setParameter("fHasta", fHasta);
-			ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_PAQUETE);
+			//ofertasHotelerasQuery.setParameter("fDesde", fDesde);
+			//ofertasHotelerasQuery.setParameter("fHasta", fHasta);
+			ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_PAQUETE.name());
 			return ofertasHotelerasQuery.getResultList();
-		} catch (RollbackException exp) {
-			return null;
-		}
 	}
 }

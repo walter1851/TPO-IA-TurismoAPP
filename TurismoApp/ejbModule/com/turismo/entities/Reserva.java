@@ -15,6 +15,7 @@ public class Reserva {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int reserva_id;
+	private float montoTotal;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "oferta_id")
 	private Oferta oferta;
@@ -23,8 +24,16 @@ public class Reserva {
 	private MedioPago medioPago;
 	private int usuario_id;
 	private String nombre;
+	private String apellido;
+	public String getApellido() {
+		return apellido;
+	}
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
 	private String email;
 	private String dni;
+	
 	public int getUsuario_id() {
 		return usuario_id;
 	}
@@ -66,5 +75,11 @@ public class Reserva {
 	}
 	public void setMedioPago(MedioPago medioPago) {
 		this.medioPago = medioPago;
+	}
+	public float getMontoTotal() {
+		return montoTotal;
+	}
+	public void setMontoTotal(float montoTotal) {
+		this.montoTotal = montoTotal;
 	}
 }

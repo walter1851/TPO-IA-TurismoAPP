@@ -28,6 +28,7 @@ public class ReservaService {
 
 	public boolean reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException {
+		float montoTotal=0;
 		// valido el formato de las fechas
 		LocalDateTime fDesdeConverted;
 		LocalDateTime fHastaConverted;
@@ -40,7 +41,7 @@ public class ReservaService {
 		boolean reservaOK = false;
 		boolean formatoFechaOK = validarFechaReserva(fDesdeConverted, fHastaConverted);
 		// obtengo todos los bloques que coinciden para validar la disponiblidad
-		List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloques(ofertaid, fDesdeConverted, fHastaConverted, cantPersonas);
+		List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted, fHastaConverted, cantPersonas);
 		boolean hayDisponibilidad = this.validarDisponibilidad(bloques);
 		// consulto al backoffice si puedo reservar
 		boolean puedoReservar = true
@@ -60,19 +61,22 @@ public class ReservaService {
 			for (OfertaBloque ofertaBloque : bloques) {
 				// Descontamos uno al cupo
 				ofertaBloque.setCupo(ofertaBloque.getCupo() - 1);
-				if (!ofertaBloqueDAO.actualizarBloque(ofertaBloque))
+				if (ofertaBloqueDAO.actualizarBloque(ofertaBloque))
+					montoTotal=montoTotal+ofertaBloque.getOferta().getPrecio();
+				else
 					cupoActualizado = false;
 			}
 			if (cupoActualizado)
-				reservaOK = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre, emailUsuario, dni);
+				reservaOK = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre, apellido,emailUsuario, dni,montoTotal);
 			else
 				throw new ReservaException("No se pudo actualizar el cupo.");
 		}
 		return reservaOK;
 	}
 
-	public boolean reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion, int cantPersonas,
+	public boolean reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion, int cantHabitaciones,
 			String nombre, String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException {
+		float montoTotal=0;
 		// valido el formato de las fechas
 		LocalDateTime fDesdeConverted;
 		LocalDateTime fHastaConverted;
@@ -85,9 +89,7 @@ public class ReservaService {
 		boolean reservaOK = false;
 		// valido el formato de las fechas
 		boolean formatoFechaOK = validarFechaReserva(fDesdeConverted, fHastaConverted);
-		// obtengo todos los bloques que coinciden para validar la disponiblidad
-		List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloques(ofertaid, fDesdeConverted, fHastaConverted, cantPersonas,
-				tipoHabitacion);
+		List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(ofertaid, fDesdeConverted, fHastaConverted,tipoHabitacion);
 		boolean hayDisponibilidad = this.validarDisponibilidad(bloques);
 		// consulto al backoffice si puedo reservar
 		boolean puedoReservar = true/* completar despues */;
@@ -96,26 +98,28 @@ public class ReservaService {
 			throw new ReservaException("La fecha ingresada no tiene el formato adecuado.");
 		if (!hayDisponibilidad)
 			throw new ReservaException("No hay disponibilidad desde la fecha " + fDesde + " hasta " + fHasta
-					+ " para la cantidad de " + cantPersonas + " persona/s");
+					+ " para la cant de habitaciones: " + cantHabitaciones);
 		if (!puedoReservar)
 			throw new ReservaException("No hay autorizacion del backoffice para reservar");
 
 		if (formatoFechaOK && hayDisponibilidad && puedoReservar) {
 			boolean cupoActualizado = true;
 			for (OfertaBloque ofertaBloque : bloques) {
-				// Descontamos uno al cupo
-				ofertaBloque.setCupo(ofertaBloque.getCupo() - 1);
-				if (!ofertaBloqueDAO.actualizarBloque(ofertaBloque))
+				// Descontamos el cupo segun la cantidad de habitaciones
+				int cantDescontarCupo=1*cantHabitaciones;
+				ofertaBloque.setCupo(ofertaBloque.getCupo() - cantDescontarCupo);
+				if (ofertaBloqueDAO.actualizarBloque(ofertaBloque))
+					montoTotal=montoTotal+ofertaBloque.getOferta().getPrecio();
+				else
 					cupoActualizado = false;
 			}
-			if (cupoActualizado)
-				reservaOK = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre, emailUsuario, dni);
+			if (cupoActualizado) 
+				reservaOK = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre,apellido, emailUsuario, dni,montoTotal);
 			else
 				throw new ReservaException("No se pudo actualizar el cupo.");
 		}
 		return reservaOK;
 	}
-
 	private boolean validarDisponibilidad(List<OfertaBloque> bloques) {
 		// Verfico que exista cupo mayor o igual a uno para cada uno de los bloques
 		if (bloques.isEmpty())

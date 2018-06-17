@@ -21,8 +21,8 @@ public class ReservaDAO{
 	@EJB
 	private MedioPagoDAO medioPagoDAO;
 
-	public boolean crearReserva(int oferta_id, int usuario_id, int id_medio_pago, String nombre, String email,
-			String dni) {
+	public boolean crearReserva(int oferta_id, int usuario_id, int id_medio_pago, String nombre, String apellido, String email,
+			String dni,float montoTotal) {
 		try {
 			Oferta oferta=ofertaDAO.buscarPorIdOferta(oferta_id);
 			Reserva reserva = new Reserva();
@@ -30,8 +30,10 @@ public class ReservaDAO{
 			reserva.setUsuario_id(usuario_id);
 			reserva.setMedioPago(medioPagoDAO.buscarPorIdMedioPago(id_medio_pago));
 			reserva.setNombre(nombre);
+			reserva.setApellido(apellido);
 			reserva.setEmail(email);
 			reserva.setDni(dni);
+			reserva.setMontoTotal(montoTotal);
 			entityManager.persist(reserva);
 			return true;
 		} catch (Exception e) {
