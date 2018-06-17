@@ -3,14 +3,10 @@ package com.turismo.integraciones.qconsumer;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
 import javax.ejb.MessageDriven;
-import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
-
-import com.turismo.coreservices.AgenciaService;
 import com.turismo.coreservices.OfertaService;
-import com.turismo.entities.Agencia;
 
 /**
  * Message-Driven Bean implementation class for: OfertaQueueListener

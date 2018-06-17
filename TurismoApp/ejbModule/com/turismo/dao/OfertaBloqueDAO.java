@@ -1,18 +1,13 @@
 package com.turismo.dao;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
-
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
-import com.turismo.entities.Agencia;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaBloque;
 

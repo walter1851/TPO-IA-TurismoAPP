@@ -30,7 +30,7 @@ public class ReservaServicioRest {
 		try {
 			ReservaDTO reservaDTO=facade.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantHabitaciones, nombre, apellido, dni,
 					medioPagoId, mailUsuario);
-			return Response.ok(new WebResponse(reservaDTO,"SE REGISTRO UNA RESERVA")).build();
+			return Response.ok(new WebResponse(reservaDTO,"SE REGISTRO UNA RESERVA HOTELERA")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
 			return Response.ok(new WebResponse(e,"ERROR")).build();
@@ -47,7 +47,7 @@ public class ReservaServicioRest {
 		try {
 			ReservaDTO reservaDTO=facade.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPagoId,
 					mailUsuario);
-			return Response.ok(new WebResponse(reservaDTO,"SE REGISTRO UNA RESERVA")).build();
+			return Response.ok(new WebResponse(reservaDTO,"SE REGISTRO UNA RESERVA DE PAQUETE")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
 			return Response.ok(new WebResponse(e,"ERROR")).build();

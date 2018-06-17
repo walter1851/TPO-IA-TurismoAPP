@@ -14,9 +14,7 @@ import com.turismo.dto.ReservaDTO;
 import com.turismo.entities.OfertaBloque;
 import com.turismo.entities.OfertaTipo;
 import com.turismo.entities.Reserva;
-import com.turismo.exceptions.OfertaPaqueteException;
 import com.turismo.exceptions.ReservaException;
-import com.turismo.integraciones.backoffice.autorizacion.BackOfficeAutorizacion;
 
 @Stateless
 @LocalBean
@@ -47,12 +45,10 @@ public class ReservaService {
 		boolean formatoFechaOK = validarFechaReserva(fDesdeConverted, fHastaConverted);
 		List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted, fHastaConverted,
 				cantPersonas);
-
 		boolean hayDisponibilidad;
-		if (bloques == null) {
+		if (bloques.isEmpty())
 			hayDisponibilidad = false;
-			throw new ReservaException("No se encontraron bloques para la oferta paquete seleccionada");
-		} else
+		else
 			hayDisponibilidad = this.validarDispPaquete(bloques);
 		// consulto al backoffice si puedo reservar
 		boolean puedoReservar = true
@@ -115,10 +111,9 @@ public class ReservaService {
 				fHastaConverted, tipoHabitacion);
 
 		boolean hayDisponibilidad;
-		if (bloques == null) {
+		if (bloques.isEmpty())
 			hayDisponibilidad = false;
-			throw new ReservaException("No se encontraron bloques para la oferta hotelera seleccionada");
-		} else
+		else
 			hayDisponibilidad = this.validarDispHabitaciones(bloques, cantHabitaciones);
 		// consulto al backoffice si puedo reservar
 		boolean puedoReservar = true/* completar despues c backoffice */;

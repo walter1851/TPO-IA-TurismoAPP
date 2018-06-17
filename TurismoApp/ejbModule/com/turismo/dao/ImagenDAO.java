@@ -7,11 +7,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-
 import com.turismo.entities.Establecimiento;
 import com.turismo.entities.Hotel;
 import com.turismo.entities.Imagen;
-import com.turismo.entities.MedioPago;
 
 @Stateless
 @LocalBean
