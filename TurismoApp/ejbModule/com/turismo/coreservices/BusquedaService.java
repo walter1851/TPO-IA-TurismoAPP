@@ -15,6 +15,10 @@ import java.util.Locale;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+
+import org.dozer.DozerBeanMapperBuilder;
+import org.dozer.Mapper;
+
 import com.turismo.dao.OfertaDAO;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.entities.Oferta;

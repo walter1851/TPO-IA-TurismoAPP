@@ -16,5 +16,6 @@
 	<classpathentry kind="lib" path="D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/jackson JAR/jackson-core-2.9.1.jar"/>
 	<classpathentry kind="lib" path="D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/jackson JAR/jackson-databind-2.9.1.jar"/>
 	<classpathentry kind="lib" path="D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/jackson JAR/jackson-jaxrs-json-provider-2.9.0.jar"/>
+	<classpathentry kind="lib" path="D:/Uade 2018/Integracion de aplicaciones - Ingenieria sistemas II/dozer-core-6.1.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

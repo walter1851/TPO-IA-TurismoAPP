@@ -5,6 +5,10 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+
+import org.dozer.DozerBeanMapperBuilder;
+import org.dozer.Mapper;
+
 import com.turismo.dto.AgenciaDTO;
 import com.turismo.dto.DestinoDTO;
 import com.turismo.dto.EstablecimientoDTO;
@@ -18,9 +22,13 @@ import com.turismo.exceptions.OfertaPaqueteException;
 
 @Stateless
 @LocalBean
-public class MapperService {
+public class MapperService{
+	private static Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 	public List<OfertaDTO> obtenerListOfertaPaqueteDTO(List<Oferta> ofertas) throws OfertaPaqueteException {
+		return (List<OfertaDTO>) mapper.map(ofertas, Oferta.class);
+		/*
 		try {
+			
 			List<OfertaDTO> listOfertaPaqueteDTO = new ArrayList<OfertaDTO>();
 			OfertaDTO ofertaDTO;
 			OfertaTipoDTO ofertaTipoDTO;
@@ -67,10 +75,11 @@ public class MapperService {
 			return listOfertaPaqueteDTO;
 		} catch (Exception e) {
 			throw new OfertaPaqueteException("No se puede mapear list OfertaPaquete a list OfertaPaqueteDTO: " + e.getMessage());
-		}
+		}*/
 	}
 
 	public List<OfertaDTO> obtenerListOfertaHoteleraDTO(List<Oferta> ofertas) throws OfertaHoteleraException {
+		/*
 		try {
 			List<OfertaDTO> listOfertaHoteleraDTO = new ArrayList<OfertaDTO>();
 			for (Oferta oferta : ofertas) {
@@ -129,6 +138,8 @@ public class MapperService {
 		} catch (Exception e) {
 			throw new OfertaHoteleraException(
 					"No se puede mapear list OfertaHotelera a list OfertaHoteleraDTO. Detalle: " + e.getMessage());
-		}
-	}
+		}*/
+		return (List<OfertaDTO>) mapper.map(ofertas, Oferta.class);
+	}	
+		
 }
