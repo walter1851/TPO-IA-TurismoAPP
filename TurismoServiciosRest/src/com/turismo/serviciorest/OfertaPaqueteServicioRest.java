@@ -28,7 +28,7 @@ public class OfertaPaqueteServicioRest {
 			@PathParam("fDesde") String fDesde, @PathParam("fHasta") String fHasta) {
 		try {
 			List<OfertaDTO> ofertas = facade.buscarOfertaPaquete(destinoId, cantPersonas, fDesde, fHasta);
-			return Response.ok(new WebResponse(ofertas)).build();
+			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON: "+ofertas.size()+" PAQUETES")).build();
 		} catch (OfertaPaqueteException e) {
 			// logearerror(e.getMessage());
 			return Response.ok(new WebResponse(false, e.getMessage())).build();

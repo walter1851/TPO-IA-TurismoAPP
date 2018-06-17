@@ -21,7 +21,7 @@ public class ReservaDAO{
 	@EJB
 	private MedioPagoDAO medioPagoDAO;
 
-	public boolean crearReserva(int oferta_id, int usuario_id, int id_medio_pago, String nombre, String apellido, String email,
+	public Reserva crearReserva(int oferta_id, int usuario_id, int id_medio_pago, String nombre, String apellido, String email,
 			String dni,float montoTotal) {
 		try {
 			Oferta oferta=ofertaDAO.buscarPorIdOferta(oferta_id);
@@ -35,9 +35,9 @@ public class ReservaDAO{
 			reserva.setDni(dni);
 			reserva.setMontoTotal(montoTotal);
 			entityManager.persist(reserva);
-			return true;
+			return reserva;
 		} catch (Exception e) {
-			return false;
+			return null;
 		}
 	}
 

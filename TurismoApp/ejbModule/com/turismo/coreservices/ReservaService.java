@@ -10,7 +10,10 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.ReservaDAO;
+import com.turismo.dto.ReservaDTO;
 import com.turismo.entities.OfertaBloque;
+import com.turismo.entities.OfertaTipo;
+import com.turismo.entities.Reserva;
 import com.turismo.exceptions.OfertaPaqueteException;
 import com.turismo.exceptions.ReservaException;
 import com.turismo.integraciones.backoffice.autorizacion.BackOfficeAutorizacion;
@@ -22,13 +25,15 @@ public class ReservaService {
 	private ReservaDAO reservaDAO;
 	@EJB
 	private OfertaBloqueDAO ofertaBloqueDAO;
-	/*
 	@EJB
-	private BackOfficeAutorizacion backOfficeAutorizador;*/
+	private MapperService mapperService;
+	/*
+	 * @EJB private BackOfficeAutorizacion backOfficeAutorizador;
+	 */
 
-	public boolean reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
+	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException {
-		float montoTotal=0;
+		float montoTotal = 0;
 		// valido el formato de las fechas
 		LocalDateTime fDesdeConverted;
 		LocalDateTime fHastaConverted;
@@ -36,13 +41,19 @@ public class ReservaService {
 			fDesdeConverted = convertStringToLocalDateTime(fDesde);
 			fHastaConverted = convertStringToLocalDateTime(fHasta);
 		} catch (ParseException e) {
-			throw new ReservaException("El formato de la fechas involucradas en la reserva no es el correcto");
+			throw new ReservaException(
+					"El formato de la fechas ingresadas no es valido. Ejemplo fecha valida: 2018-04-05T12:30-02:00");
 		}
-		boolean reservaOK = false;
 		boolean formatoFechaOK = validarFechaReserva(fDesdeConverted, fHastaConverted);
-		// obtengo todos los bloques que coinciden para validar la disponiblidad
-		List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted, fHastaConverted, cantPersonas);
-		boolean hayDisponibilidad = this.validarDisponibilidad(bloques);
+		List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted, fHastaConverted,
+				cantPersonas);
+
+		boolean hayDisponibilidad;
+		if (bloques == null) {
+			hayDisponibilidad = false;
+			throw new ReservaException("No se encontraron bloques para la oferta paquete seleccionada");
+		} else
+			hayDisponibilidad = this.validarDispPaquete(bloques);
 		// consulto al backoffice si puedo reservar
 		boolean puedoReservar = true
 		/* completar despues */;
@@ -56,27 +67,38 @@ public class ReservaService {
 		if (!puedoReservar)
 			throw new ReservaException("No hay autorizacion del backoffice para reservar");
 
+		Reserva nuevaReservaPaquete = null;
 		if (formatoFechaOK && hayDisponibilidad && puedoReservar) {
+			boolean hayConsistencia = true;
 			boolean cupoActualizado = true;
 			for (OfertaBloque ofertaBloque : bloques) {
+				// valido que sea consistente el id que me pasan con la oferta paquete.
+				if (!ofertaBloque.getOferta().getOfertaTipo().equals(OfertaTipo.OFERTA_PAQUETE))
+					hayConsistencia = false;
 				// Descontamos uno al cupo
 				ofertaBloque.setCupo(ofertaBloque.getCupo() - 1);
 				if (ofertaBloqueDAO.actualizarBloque(ofertaBloque))
-					montoTotal=montoTotal+ofertaBloque.getOferta().getPrecio();
+					montoTotal = montoTotal + (ofertaBloque.getOferta().getPrecio() * cantPersonas);
 				else
 					cupoActualizado = false;
 			}
-			if (cupoActualizado)
-				reservaOK = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre, apellido,emailUsuario, dni,montoTotal);
-			else
-				throw new ReservaException("No se pudo actualizar el cupo.");
+			if (cupoActualizado && hayConsistencia)
+				nuevaReservaPaquete = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre, apellido, emailUsuario,
+						dni, montoTotal);
+			if (!hayConsistencia)
+				throw new ReservaException("El id de oferta enviado, no corresponde a una oferta paquete valida.");
+			if (!cupoActualizado)
+				throw new ReservaException("No se pudo actualizar el cupo en la base de datos.");
+			if (nuevaReservaPaquete == null)
+				throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
 		}
-		return reservaOK;
+		return mapperService.obtenerReservaDTO(nuevaReservaPaquete);
 	}
 
-	public boolean reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion, int cantHabitaciones,
-			String nombre, String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException {
-		float montoTotal=0;
+	public ReservaDTO reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion,
+			int cantHabitaciones, String nombre, String apellido, String dni, int medioPagoID, String emailUsuario)
+			throws ReservaException {
+		float montoTotal = 0;
 		// valido el formato de las fechas
 		LocalDateTime fDesdeConverted;
 		LocalDateTime fHastaConverted;
@@ -84,15 +106,22 @@ public class ReservaService {
 			fDesdeConverted = convertStringToLocalDateTime(fDesde);
 			fHastaConverted = convertStringToLocalDateTime(fHasta);
 		} catch (ParseException e) {
-			throw new ReservaException("El formato de la fechas involucradas en la reserva no es el correcto");
+			throw new ReservaException(
+					"El formato de la fechas involucradas en la reserva no es el correcto. Ejemplo fecha valida: 2018-04-05T12:30-02:00");
 		}
-		boolean reservaOK = false;
 		// valido el formato de las fechas
 		boolean formatoFechaOK = validarFechaReserva(fDesdeConverted, fHastaConverted);
-		List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(ofertaid, fDesdeConverted, fHastaConverted,tipoHabitacion);
-		boolean hayDisponibilidad = this.validarDisponibilidad(bloques);
+		List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(ofertaid, fDesdeConverted,
+				fHastaConverted, tipoHabitacion);
+
+		boolean hayDisponibilidad;
+		if (bloques == null) {
+			hayDisponibilidad = false;
+			throw new ReservaException("No se encontraron bloques para la oferta hotelera seleccionada");
+		} else
+			hayDisponibilidad = this.validarDispHabitaciones(bloques, cantHabitaciones);
 		// consulto al backoffice si puedo reservar
-		boolean puedoReservar = true/* completar despues */;
+		boolean puedoReservar = true/* completar despues c backoffice */;
 
 		if (!formatoFechaOK)
 			throw new ReservaException("La fecha ingresada no tiene el formato adecuado.");
@@ -102,32 +131,57 @@ public class ReservaService {
 		if (!puedoReservar)
 			throw new ReservaException("No hay autorizacion del backoffice para reservar");
 
+		Reserva nuevaReservaHotelera = null;
 		if (formatoFechaOK && hayDisponibilidad && puedoReservar) {
+			boolean hayConsistencia = true;
 			boolean cupoActualizado = true;
 			for (OfertaBloque ofertaBloque : bloques) {
+				// valido que sea consistente el id que me pasan con la ofertaHotelera, y no de
+				// paquete.
+				if (!ofertaBloque.getOferta().getOfertaTipo().equals(OfertaTipo.OFERTA_HOTELERA))
+					hayConsistencia = false;
 				// Descontamos el cupo segun la cantidad de habitaciones
-				int cantDescontarCupo=1*cantHabitaciones;
+				int cantDescontarCupo = 1 * cantHabitaciones;
 				ofertaBloque.setCupo(ofertaBloque.getCupo() - cantDescontarCupo);
 				if (ofertaBloqueDAO.actualizarBloque(ofertaBloque))
-					montoTotal=montoTotal+ofertaBloque.getOferta().getPrecio();
+					montoTotal = montoTotal + (ofertaBloque.getOferta().getPrecio() * cantHabitaciones);
 				else
 					cupoActualizado = false;
 			}
-			if (cupoActualizado) 
-				reservaOK = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre,apellido, emailUsuario, dni,montoTotal);
-			else
-				throw new ReservaException("No se pudo actualizar el cupo.");
+			if (cupoActualizado && hayConsistencia)
+				nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre, apellido, emailUsuario,
+						dni, montoTotal);
+			if (!cupoActualizado)
+				throw new ReservaException("No se pudo actualizar el cupo en la base de datos.");
+			if (!hayConsistencia)
+				throw new ReservaException("El id de oferta enviado, no corresponde a una oferta hotelera valida.");
+			if (nuevaReservaHotelera == null)
+				throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
 		}
-		return reservaOK;
+		return mapperService.obtenerReservaDTO(nuevaReservaHotelera);
 	}
-	private boolean validarDisponibilidad(List<OfertaBloque> bloques) {
-		// Verfico que exista cupo mayor o igual a uno para cada uno de los bloques
+
+	private boolean validarDispHabitaciones(List<OfertaBloque> bloques, int cantHabitaciones) {
 		if (bloques.isEmpty())
 			return false;
 		else {
 			boolean disponibilidad = true;
 			for (OfertaBloque ofertaBloque : bloques) {
-				if (ofertaBloque.getCupo() == 0) {
+				if ((ofertaBloque.getCupo() - (cantHabitaciones * 1)) < 0) {
+					disponibilidad = false;
+				}
+			}
+			return disponibilidad;
+		}
+	}
+
+	private boolean validarDispPaquete(List<OfertaBloque> bloques) {
+		if (bloques.isEmpty())
+			return false;
+		else {
+			boolean disponibilidad = true;
+			for (OfertaBloque ofertaBloque : bloques) {
+				if ((ofertaBloque.getCupo() - 1) < 0) {
 					disponibilidad = false;
 				}
 			}

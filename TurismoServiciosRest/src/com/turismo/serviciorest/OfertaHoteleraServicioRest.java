@@ -29,10 +29,10 @@ public class OfertaHoteleraServicioRest {
 			@PathParam("fHasta") String fHasta) {
 		try {
 			List<OfertaDTO> ofertas = facade.buscarOfertaHotelera(destinoId, fDesde, fHasta, tipoHabitacion);
-			return Response.ok(new WebResponse(ofertas)).build();
+			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON: "+ofertas.size()+" OFERTAS HOTELERAS")).build();
 		} catch (OfertaHoteleraException e) {
 			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(false, e.getMessage())).build();
+			return Response.ok(new WebResponse(e,"ERROR")).build();
 		}
 	}
 }

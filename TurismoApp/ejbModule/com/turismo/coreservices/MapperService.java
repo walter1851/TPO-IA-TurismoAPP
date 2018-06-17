@@ -13,12 +13,21 @@ import com.turismo.dto.HotelDTO;
 import com.turismo.dto.MedioPagoDTO;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.dto.OfertaTipoDTO;
+import com.turismo.dto.ReservaDTO;
 import com.turismo.entities.Oferta;
+import com.turismo.entities.Reserva;
 import com.turismo.exceptions.OfertaHoteleraException;
 
 @Stateless
 @LocalBean
 public class MapperService {
+	public ReservaDTO obtenerReservaDTO(Reserva reserva) {
+		ReservaDTO reservaDTO=new ReservaDTO();
+		reservaDTO.setApellido(reserva.getApellido());
+		reservaDTO.setMontoTotal(reserva.getMontoTotal());
+		reservaDTO.setNombre(reserva.getNombre());
+		return reservaDTO;
+	}
 	public List<OfertaDTO> obtenerListaOfertaPaqueteDTO(List<Oferta> ofertas){
 		List<OfertaDTO> listOfertaPaqueteDTO = new ArrayList<OfertaDTO>();
 		for (Oferta oferta : ofertas) {

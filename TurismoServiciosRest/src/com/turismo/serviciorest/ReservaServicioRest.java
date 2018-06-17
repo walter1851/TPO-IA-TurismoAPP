@@ -10,6 +10,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import com.turismo.controller.ControllerService;
+import com.turismo.dto.ReservaDTO;
 import com.turismo.serviciorest.response.WebResponse;
 
 @Path("/reserva")
@@ -19,7 +20,7 @@ public class ReservaServicioRest {
 	private ControllerService facade;
 	//CAMBIAR POR METODO POST
 	@GET
-	@Path("reservarhotel/{ofertaid}/{fDesde}/{fHasta}/{tipoHabitacion}/{canthabitaciones}/{nombre}/{apellido}/{dni}/{medioPago}/{mailUsuario}")
+	@Path("reservarhotel/{ofertaid}/{fDesde}/{fHasta}/{tipoHabitacion}/{canthabitaciones}/{nombre}/{apellido}/{dni}/{medioPagoId}/{mailUsuario}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response reservarHotel(@PathParam("ofertaid") int ofertaid, @PathParam("fDesde") String fDesde,
 			@PathParam("fHasta") String fHasta, @PathParam("tipoHabitacion") String tipoHabitacion,
@@ -27,29 +28,29 @@ public class ReservaServicioRest {
 			@PathParam("apellido") String apellido, @PathParam("dni") String dni,
 			@PathParam("medioPagoId") int medioPagoId, @PathParam("mailUsuario") String mailUsuario) {
 		try {
-			facade.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantHabitaciones, nombre, apellido, dni,
+			ReservaDTO reservaDTO=facade.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantHabitaciones, nombre, apellido, dni,
 					medioPagoId, mailUsuario);
-			return Response.ok(new WebResponse(true, "ok")).build();
+			return Response.ok(new WebResponse(reservaDTO,"SE REGISTRO UNA RESERVA")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(false, e.getMessage())).build();
+			return Response.ok(new WebResponse(e,"ERROR")).build();
 		}
 	}
 	//CAMBIAR POR METODO POST
 	@GET
-	@Path("reservarpaquete/{ofertaid}/{fDesde}/{fHasta}/{cantPersonas}/{nombre}/{apellido}/{dni}/{medioPago}/{mailUsuario}")
+	@Path("reservarpaquete/{ofertaid}/{fDesde}/{fHasta}/{cantPersonas}/{nombre}/{apellido}/{dni}/{medioPagoId}/{mailUsuario}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response reservarPaquete(@PathParam("ofertaid") int ofertaid, @PathParam("fDesde") String fDesde,
 			@PathParam("fHasta") String fHasta, @PathParam("cantPersonas") int cantPersonas,
 			@PathParam("nombre") String nombre, @PathParam("apellido") String apellido, @PathParam("dni") String dni,
 			@PathParam("medioPagoId") int medioPagoId, @PathParam("mailUsuario") String mailUsuario) {
 		try {
-			facade.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPagoId,
+			ReservaDTO reservaDTO=facade.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPagoId,
 					mailUsuario);
-			return Response.ok(new WebResponse(true, "ok")).build();
+			return Response.ok(new WebResponse(reservaDTO,"SE REGISTRO UNA RESERVA")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(false, e.getMessage())).build();
+			return Response.ok(new WebResponse(e,"ERROR")).build();
 		}
 	}
 }
