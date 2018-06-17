@@ -23,9 +23,9 @@ import com.turismo.exceptions.OfertaPaqueteException;
 @Stateless
 @LocalBean
 public class MapperService{
-	private static Mapper mapper = DozerBeanMapperBuilder.buildDefault();
+	//private static Mapper mapper = DozerBeanMapperBuilder.buildDefault();
 	public List<OfertaDTO> obtenerListOfertaPaqueteDTO(List<Oferta> ofertas) throws OfertaPaqueteException {
-		return (List<OfertaDTO>) mapper.map(ofertas, Oferta.class);
+		return null;//(List<OfertaDTO>) mapper.map(ofertas, Oferta.class);
 		/*
 		try {
 			
@@ -139,7 +139,7 @@ public class MapperService{
 			throw new OfertaHoteleraException(
 					"No se puede mapear list OfertaHotelera a list OfertaHoteleraDTO. Detalle: " + e.getMessage());
 		}*/
-		return (List<OfertaDTO>) mapper.map(ofertas, Oferta.class);
+		return null;//(List<OfertaDTO>) mapper.map(ofertas, Oferta.class);
 	}	
 		
 }

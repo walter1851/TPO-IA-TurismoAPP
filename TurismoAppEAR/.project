@@ -3,8 +3,8 @@
 	<name>TurismoAppEAR</name>
 	<comment></comment>
 	<projects>
-		<project>TurismoApp</project>
 		<project>TurismoServiciosRest</project>
+		<project>TurismoApp</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
