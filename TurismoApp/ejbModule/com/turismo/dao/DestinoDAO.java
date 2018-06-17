@@ -25,7 +25,7 @@ public class DestinoDAO {
 	public Destino buscarPorIdDestino(int destinoId) {
 		try {
 			return entityManager.find(Destino.class, destinoId);
-		} catch (NoResultException nre) {
+		} catch (Exception nre) {
 			return null;
 		}
 	}

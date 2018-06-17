@@ -24,7 +24,7 @@ public class OfertaPaqueteMensaje {
 	private String descripcion;
 	private String politicaCancelacion;
 	private String servicios;
-	private List<String> mediosDePago;
+	private String mediosDePago;
 
 	public String getIdPaquete() {
 		return idPaquete;
@@ -170,11 +170,11 @@ public class OfertaPaqueteMensaje {
 		this.servicios = servicios;
 	}
 
-	public List<String> getMediosDePago() {
+	public String getMediosDePago() {
 		return mediosDePago;
 	}
 
-	public void setMediosDePago(List<String> mediosDePago) {
+	public void setMediosDePago(String mediosDePago) {
 		this.mediosDePago = mediosDePago;
 	}
 }

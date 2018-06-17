@@ -15,7 +15,27 @@ import com.turismo.entities.Agencia;
 /**
  * Message-Driven Bean implementation class for: OfertaQueueListener
  */
-//cambiar la ruta, por la cola remota
+/*
+@MessageDriven(
+		activationConfig = { 
+				@ActivationConfigProperty(
+				propertyName = "destination", 
+				propertyValue = "jms/queue/ofertaPaquete"), 
+				@ActivationConfigProperty(
+						propertyName = "destinationType", 
+							propertyValue = "javax.jms.Queue"),
+				@ActivationConfigProperty(propertyName = "user", 
+				propertyValue = "integracion"), 
+				@ActivationConfigProperty(propertyName = "password", 
+				propertyValue = "integracion"),
+				@ActivationConfigProperty(propertyName = "connectionParameters", 
+				propertyValue = "host=192.168.130.104;port=8080; http-upgrade-enabled=true"),
+				@ActivationConfigProperty(propertyName = "connectorClassName",
+        		propertyValue = "org.hornetq.core.remoting.impl.netty.NettyConnectorFactory")
+		}, 
+		mappedName = "jms/queue/ofertaPaquete")
+*/
+//COLA LOCAL SOLO TESTING (BORRAR ANTES DE ENTREGAR TP)
 @MessageDriven(
 		activationConfig = { @ActivationConfigProperty(
 				propertyName = "destination", propertyValue = "java:/jms/queue/OfertaPaqueteQueue"), @ActivationConfigProperty(
@@ -29,10 +49,7 @@ private OfertaService ofertaService;
         // TODO Auto-generated constructor stub
     }
 	
-	/**
-     * @see MessageListener#onMessage(Message)
-     */
-    public void onMessage(Message message) {
+ public void onMessage(Message message) {
     	try {
 
 			String jsonString = ((TextMessage) message).getText();

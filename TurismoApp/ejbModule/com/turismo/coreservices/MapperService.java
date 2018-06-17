@@ -21,121 +21,114 @@ import com.turismo.exceptions.OfertaPaqueteException;
 public class MapperService {
 	public List<OfertaDTO> obtenerListOfertaPaqueteDTO(List<Oferta> ofertas) throws OfertaPaqueteException {
 		try {
-		List<OfertaDTO> listOfertaPaqueteDTO = new ArrayList<OfertaDTO>();
-		OfertaDTO ofertaDTO;
-		OfertaTipoDTO ofertaTipoDTO;
-		DestinoDTO destinoDTO;
-		MedioPagoDTO medioPagoDTO;
-		AgenciaDTO agenciaDTO;
+			List<OfertaDTO> listOfertaPaqueteDTO = new ArrayList<OfertaDTO>();
+			OfertaDTO ofertaDTO;
+			OfertaTipoDTO ofertaTipoDTO;
+			DestinoDTO destinoDTO;
+			MedioPagoDTO medioPagoDTO;
+			AgenciaDTO agenciaDTO;
 
-		for (Oferta oferta : ofertas) {
-			ofertaDTO = new OfertaDTO();
-			destinoDTO = new DestinoDTO();
-			medioPagoDTO = new MedioPagoDTO();
-			agenciaDTO = new AgenciaDTO();
-			ofertaTipoDTO = new OfertaTipoDTO();
+			for (Oferta oferta : ofertas) {
+				ofertaDTO = new OfertaDTO();
+				destinoDTO = new DestinoDTO();
+				medioPagoDTO = new MedioPagoDTO();
+				agenciaDTO = new AgenciaDTO();
 
-			ofertaTipoDTO.setNombre(oferta.getOfertaTipo().getNombre());
-			ofertaTipoDTO.setOferta_tipo_id(oferta.getOfertaTipo().getOferta_tipo_id());
+				ofertaTipoDTO=OfertaTipoDTO.valueOf(oferta.getOfertaTipo().toString());
+				agenciaDTO.setAgencia_id(oferta.getAgencia().getAgencia_id());
+				agenciaDTO.setCodigo_agencia(oferta.getAgencia().getCodigo_agencia());
+				agenciaDTO.setDireccion(oferta.getAgencia().getDireccion());
+				agenciaDTO.setNombre(oferta.getAgencia().getNombre());
 
-			agenciaDTO.setAgencia_id(oferta.getAgencia().getAgencia_id());
-			agenciaDTO.setCodigo_agencia(oferta.getAgencia().getCodigo_agencia());
-			agenciaDTO.setDireccion(oferta.getAgencia().getDireccion());
-			agenciaDTO.setNombre(oferta.getAgencia().getNombre());
+				medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
+				medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
 
-			medioPagoDTO.setCodigo(oferta.getMedioPago().getCodigo());
-			medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
-			medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
+				destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
+				destinoDTO.setNombre(oferta.getDestino().getNombre());
 
-			destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
-			destinoDTO.setNombre(oferta.getDestino().getNombre());
-
-			ofertaDTO.setOferta_id(oferta.getOferta_id());
-			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
-			ofertaDTO.setDestinoDTO(destinoDTO);
-			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
-			ofertaDTO.setFecha_desde(oferta.getFecha_desde());
-			ofertaDTO.setFecha_hasta(oferta.getFecha_hasta());
-			ofertaDTO.setMedioPagoDTO(medioPagoDTO);
-			ofertaDTO.setFoto_paquete(oferta.getFoto_paquete());
-			ofertaDTO.setPoliticas(oferta.getPoliticas());
-			ofertaDTO.setServicios(oferta.getServicios());
-			ofertaDTO.setCant_personas(oferta.getCant_personas());
-			ofertaDTO.setCupo(oferta.getCupo());
-			ofertaDTO.setServicios(oferta.getServicios());
-			ofertaDTO.setPrecio(oferta.getPrecio());
-			ofertaDTO.setNombre(oferta.getNombre());
-			listOfertaPaqueteDTO.add(ofertaDTO);
-		}
-		return listOfertaPaqueteDTO;
-		}catch(Exception e) {
-			throw new OfertaPaqueteException("No se puede mapear OfertaPaquete a OfertaPaqueteDTO: "+ e.getMessage());
+				ofertaDTO.setOferta_id(oferta.getOferta_id());
+				ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
+				ofertaDTO.setDestinoDTO(destinoDTO);
+				ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
+				ofertaDTO.setFecha_desde(oferta.getFecha_desde());
+				ofertaDTO.setFecha_hasta(oferta.getFecha_hasta());
+				ofertaDTO.setMedioPagoDTO(medioPagoDTO);
+				ofertaDTO.setFoto_paquete(oferta.getFoto_paquete());
+				ofertaDTO.setPoliticas(oferta.getPoliticas());
+				ofertaDTO.setServicios(oferta.getServicios());
+				ofertaDTO.setCant_personas(oferta.getCant_personas());
+				ofertaDTO.setCupo(oferta.getCupo());
+				ofertaDTO.setServicios(oferta.getServicios());
+				ofertaDTO.setPrecio(oferta.getPrecio());
+				ofertaDTO.setNombre(oferta.getNombre());
+				ofertaDTO.setDescripcionPaquete(oferta.getDescriptionPaquete());
+				listOfertaPaqueteDTO.add(ofertaDTO);
+			}
+			return listOfertaPaqueteDTO;
+		} catch (Exception e) {
+			throw new OfertaPaqueteException("No se puede mapear list OfertaPaquete a list OfertaPaqueteDTO: " + e.getMessage());
 		}
 	}
 
 	public List<OfertaDTO> obtenerListOfertaHoteleraDTO(List<Oferta> ofertas) throws OfertaHoteleraException {
 		try {
-		List<OfertaDTO> listOfertaHoteleraDTO = new ArrayList<OfertaDTO>();
-		OfertaDTO ofertaDTO;
-		OfertaTipoDTO ofertaTipoDTO;
-		DestinoDTO destinoDTO;
-		MedioPagoDTO medioPagoDTO;
-		EstablecimientoDTO establecimientoDTO;
-		HotelDTO hotelDTO;
+			List<OfertaDTO> listOfertaHoteleraDTO = new ArrayList<OfertaDTO>();
+			for (Oferta oferta : ofertas) {
+				OfertaDTO ofertaDTO;
+				OfertaTipoDTO ofertaTipoDTO;
+				DestinoDTO destinoDTO;
+				MedioPagoDTO medioPagoDTO;
+				EstablecimientoDTO establecimientoDTO;
+				HotelDTO hotelDTO;
+				ofertaDTO = new OfertaDTO();
+				destinoDTO = new DestinoDTO();
+				establecimientoDTO = new EstablecimientoDTO();
+				medioPagoDTO = new MedioPagoDTO();
+				hotelDTO = new HotelDTO();
 
-		for (Oferta oferta : ofertas) {
-			ofertaDTO = new OfertaDTO();
-			destinoDTO = new DestinoDTO();
-			establecimientoDTO = new EstablecimientoDTO();
-			medioPagoDTO = new MedioPagoDTO();
-			ofertaTipoDTO = new OfertaTipoDTO();
-			hotelDTO= new HotelDTO();
+				ofertaTipoDTO=OfertaTipoDTO.valueOf(oferta.getOfertaTipo().toString());
 
-			ofertaTipoDTO.setNombre(oferta.getOfertaTipo().getNombre());
-			ofertaTipoDTO.setOferta_tipo_id(oferta.getOfertaTipo().getOferta_tipo_id());
+				medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
+				medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
 
-			medioPagoDTO.setCodigo(oferta.getMedioPago().getCodigo());
-			medioPagoDTO.setMedio_de_pago_id(oferta.getMedioPago().getMedio_de_pago_id());
-			medioPagoDTO.setNombre(oferta.getMedioPago().getNombre());
+				destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
+				destinoDTO.setNombre(oferta.getDestino().getNombre());
 
-			destinoDTO.setDestino_id(oferta.getDestino().getDestino_id());
-			destinoDTO.setNombre(oferta.getDestino().getNombre());
-			
-			hotelDTO.setHotel_id(oferta.getEstablecimiento().getHotel().getHotel_id());
-			hotelDTO.setNombre(oferta.getEstablecimiento().getHotel().getNombre());
-			hotelDTO.setCodigo_hotel(oferta.getEstablecimiento().getHotel().getCodigo_hotel());
+				hotelDTO.setHotel_id(oferta.getEstablecimiento().getHotel().getHotel_id());
+				hotelDTO.setNombre(oferta.getEstablecimiento().getHotel().getNombre());
+				hotelDTO.setCodigo_hotel(oferta.getEstablecimiento().getHotel().getCodigo_hotel());
 
-			establecimientoDTO.setCiudad(oferta.getEstablecimiento().getCiudad());
-			establecimientoDTO.setCodigo_establecimiento(oferta.getEstablecimiento().getCodigo_establecimiento());
-			establecimientoDTO.setDescripcion(oferta.getEstablecimiento().getDescripcion());
-			establecimientoDTO.setDireccion(oferta.getEstablecimiento().getDireccion());
-			establecimientoDTO.setEstablecimiento_id(oferta.getEstablecimiento().getEstablecimiento_id());
-			establecimientoDTO.setEstado(oferta.getEstablecimiento().getEstado());
-			establecimientoDTO.setEstrellas(oferta.getEstablecimiento().getEstrellas());
-			establecimientoDTO.setHotelDTO(hotelDTO);
-			establecimientoDTO.setMapa(oferta.getEstablecimiento().getMapa());
-			establecimientoDTO.setNombre(oferta.getEstablecimiento().getNombre());
-
-			ofertaDTO.setOferta_id(oferta.getOferta_id());
-			ofertaDTO.setDestinoDTO(destinoDTO);
-			ofertaDTO.setEstablecimientoDTO(establecimientoDTO);
-			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
-			ofertaDTO.setFecha_desde(oferta.getFecha_desde());
-			ofertaDTO.setFecha_hasta(oferta.getFecha_hasta());
-			ofertaDTO.setMedioPagoDTO(medioPagoDTO);
-			ofertaDTO.setPoliticas(oferta.getPoliticas());
-			ofertaDTO.setServicios(oferta.getServicios());
-			ofertaDTO.setCant_personas(oferta.getCant_personas());
-			ofertaDTO.setCupo(oferta.getCupo());
-			ofertaDTO.setServicios(oferta.getServicios());
-			ofertaDTO.setTipo_habitacion(oferta.getTipo_habitacion());
-			ofertaDTO.setPrecio(oferta.getPrecio());
-			ofertaDTO.setNombre(oferta.getNombre());
-			listOfertaHoteleraDTO.add(ofertaDTO);
-		}
-		return listOfertaHoteleraDTO;
-		}catch(Exception e) {
-			throw new OfertaHoteleraException("No se puede mapear OfertaHotelera a OfertaHoteleraDTO: "+ e.getMessage());
+				establecimientoDTO.setCiudad(oferta.getEstablecimiento().getCiudad());
+				establecimientoDTO.setCodigo_establecimiento(oferta.getEstablecimiento().getCodigo_establecimiento());
+				establecimientoDTO.setDescripcion(oferta.getEstablecimiento().getDescripcion());
+				establecimientoDTO.setDireccion(oferta.getEstablecimiento().getDireccion());
+				establecimientoDTO.setEstablecimiento_id(oferta.getEstablecimiento().getEstablecimiento_id());
+				establecimientoDTO.setEstado(oferta.getEstablecimiento().getEstado());
+				establecimientoDTO.setEstrellas(oferta.getEstablecimiento().getEstrellas());
+				establecimientoDTO.setHotelDTO(hotelDTO);
+				establecimientoDTO.setMapa(oferta.getEstablecimiento().getMapa());
+				establecimientoDTO.setNombre(oferta.getEstablecimiento().getNombre());
+				ofertaDTO.setOferta_id(oferta.getOferta_id());
+				ofertaDTO.setDestinoDTO(destinoDTO);
+				ofertaDTO.setEstablecimientoDTO(establecimientoDTO);
+				ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
+				ofertaDTO.setFecha_desde(oferta.getFecha_desde());
+				ofertaDTO.setFecha_hasta(oferta.getFecha_hasta());
+				ofertaDTO.setMedioPagoDTO(medioPagoDTO);
+				ofertaDTO.setPoliticas(oferta.getPoliticas());
+				ofertaDTO.setServicios(oferta.getServicios());
+				ofertaDTO.setCant_personas(oferta.getCant_personas());
+				ofertaDTO.setCupo(oferta.getCupo());
+				ofertaDTO.setServicios(oferta.getServicios());
+				ofertaDTO.setTipo_habitacion(oferta.getTipo_habitacion());
+				ofertaDTO.setPrecio(oferta.getPrecio());
+				ofertaDTO.setNombre(oferta.getNombre());
+				listOfertaHoteleraDTO.add(ofertaDTO);
+			}
+			return listOfertaHoteleraDTO;
+		} catch (Exception e) {
+			throw new OfertaHoteleraException(
+					"No se puede mapear list OfertaHotelera a list OfertaHoteleraDTO. Detalle: " + e.getMessage());
 		}
 	}
 }

@@ -27,7 +27,7 @@ public class ReservaService {
 	private BackOfficeAutorizacion backOfficeAutorizador;*/
 
 	public boolean reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
-			String apellido, String dni, String medioPago, String emailUsuario) throws ReservaException {
+			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException {
 		// valido el formato de las fechas
 		LocalDateTime fDesdeConverted;
 		LocalDateTime fHastaConverted;
@@ -64,7 +64,7 @@ public class ReservaService {
 					cupoActualizado = false;
 			}
 			if (cupoActualizado)
-				reservaOK = reservaDAO.crearReserva(ofertaid, 1, medioPago, nombre, emailUsuario, dni);
+				reservaOK = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre, emailUsuario, dni);
 			else
 				throw new ReservaException("No se pudo actualizar el cupo.");
 		}
@@ -72,7 +72,7 @@ public class ReservaService {
 	}
 
 	public boolean reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion, int cantPersonas,
-			String nombre, String apellido, String dni, String medioPago, String emailUsuario) throws ReservaException {
+			String nombre, String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException {
 		// valido el formato de las fechas
 		LocalDateTime fDesdeConverted;
 		LocalDateTime fHastaConverted;
@@ -109,7 +109,7 @@ public class ReservaService {
 					cupoActualizado = false;
 			}
 			if (cupoActualizado)
-				reservaOK = reservaDAO.crearReserva(ofertaid, 1, medioPago, nombre, emailUsuario, dni);
+				reservaOK = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre, emailUsuario, dni);
 			else
 				throw new ReservaException("No se pudo actualizar el cupo.");
 		}

@@ -21,14 +21,14 @@ public class ReservaDAO{
 	@EJB
 	private MedioPagoDAO medioPagoDAO;
 
-	public boolean crearReserva(int oferta_id, int usuario_id, String medioPago, String nombre, String email,
+	public boolean crearReserva(int oferta_id, int usuario_id, int id_medio_pago, String nombre, String email,
 			String dni) {
 		try {
 			Oferta oferta=ofertaDAO.buscarPorIdOferta(oferta_id);
 			Reserva reserva = new Reserva();
 			reserva.setOferta(oferta);
 			reserva.setUsuario_id(usuario_id);
-			reserva.setMedioPago(medioPagoDAO.buscarPorCodigoMedioPago(medioPago));
+			reserva.setMedioPago(medioPagoDAO.buscarPorIdMedioPago(id_medio_pago));
 			reserva.setNombre(nombre);
 			reserva.setEmail(email);
 			reserva.setDni(dni);

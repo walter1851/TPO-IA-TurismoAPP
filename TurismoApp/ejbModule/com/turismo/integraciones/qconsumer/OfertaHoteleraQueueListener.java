@@ -12,13 +12,37 @@ import com.turismo.coreservices.OfertaService;
 /**
  * Message-Driven Bean implementation class for: OfertaHoteleraQueueListener
  */
-//cambiar la ruta, por la cola remota
+
+//COLA LOCAL (SOLO TESTING) BORRAR
 @MessageDriven(
 		activationConfig = { @ActivationConfigProperty(
 				propertyName = "destination", propertyValue = "java:/jms/queue/OfertaHoteleraQueue"), @ActivationConfigProperty(
 				propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 		}, 
 		mappedName = "java:/jms/queue/OfertaHoteleraQueue")
+ 
+
+//COLA REMOTA
+/*
+@MessageDriven(
+		activationConfig = { 
+				@ActivationConfigProperty(
+				propertyName = "destination", 
+				propertyValue = "jms/queue/ofertaHotelera"), 
+				@ActivationConfigProperty(
+						propertyName = "destinationType", 
+							propertyValue = "javax.jms.Queue"),
+				@ActivationConfigProperty(propertyName = "user", 
+				propertyValue = "integracion"), 
+				@ActivationConfigProperty(propertyName = "password", 
+				propertyValue = "integracion"),
+				@ActivationConfigProperty(propertyName = "connectionParameters", 
+				propertyValue = "host=192.168.130.104;port=8080; http-upgrade-enabled=true"),
+				@ActivationConfigProperty(propertyName = "connectorClassName",
+        		propertyValue = "org.hornetq.core.remoting.impl.netty.NettyConnectorFactory")
+		}, 
+		mappedName = "jms/queue/ofertaHotelera")
+*/
 public class OfertaHoteleraQueueListener implements MessageListener {
 	@EJB
 	private OfertaService ofertaService;

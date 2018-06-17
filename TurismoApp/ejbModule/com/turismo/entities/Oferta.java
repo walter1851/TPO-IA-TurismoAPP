@@ -2,6 +2,8 @@ package com.turismo.entities;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,10 +32,8 @@ public class Oferta {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="destino_id")
 	private Destino destino;
-	/*NOTA: Despues buscamos un tipo de dato para foto_paquete, 
-	probe con InputStream pero hibernate dice
-	que no puede mapear ese tipo de dato*/
 	private String foto_paquete;
+	private String descriptionPaquete;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="medio_de_pago_id")
 	private MedioPago medioPago;
@@ -44,9 +44,11 @@ public class Oferta {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="agencia_id")
 	private Agencia agencia;
-	@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="oferta_tipo_id")
-	private OfertaTipo ofertaTipo;
+	/*@ManyToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name="oferta_tipo_id")*/
+	@Enumerated(EnumType.STRING)
+	OfertaTipo ofertaTipo;
+	//private OfertaTipoELIMINAR ofertaTipo;
 	public int getOferta_id() {
 		return oferta_id;
 	}
@@ -142,5 +144,11 @@ public class Oferta {
 	}
 	public void setOfertaTipo(OfertaTipo ofertaTipo) {
 		this.ofertaTipo = ofertaTipo;
+	}
+	public String getDescriptionPaquete() {
+		return descriptionPaquete;
+	}
+	public void setDescriptionPaquete(String descriptionPaquete) {
+		this.descriptionPaquete = descriptionPaquete;
 	}
 }

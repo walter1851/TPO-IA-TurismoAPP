@@ -37,9 +37,7 @@ public class ProducerOfertaPaqueteQ {
 			ofertaPaqueteMensaje.setIdAgencia(idAgencia);
 			ofertaPaqueteMensaje.setIdCiudadDestino(idCiudadDestino);
 			ofertaPaqueteMensaje.setIdPaquete(idPaquete);
-			List<String> nuevaListaMediosPago=new ArrayList<String>();
-			nuevaListaMediosPago.add(mediosDePago);
-			ofertaPaqueteMensaje.setMediosDePago(nuevaListaMediosPago);
+			ofertaPaqueteMensaje.setMediosDePago(mediosDePago);
 			ofertaPaqueteMensaje.setNombreAgencia(nombreAgencia);
 			ofertaPaqueteMensaje.setNombreCiudadDestino(nombreCiudadDestino);
 			ofertaPaqueteMensaje.setNombrePaquete(nombrePaquete);

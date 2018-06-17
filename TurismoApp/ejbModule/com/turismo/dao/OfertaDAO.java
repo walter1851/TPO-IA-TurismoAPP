@@ -18,6 +18,7 @@ import com.turismo.entities.Establecimiento;
 import com.turismo.entities.MedioPago;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaTipo;
+import com.turismo.entities.OfertaTipoELIMINAR;
 
 @Stateless
 @LocalBean
@@ -49,7 +50,7 @@ public class OfertaDAO{
 		return oferta;
 	}
 	public Oferta nuevaOfertaPaquete(String nombre, int cupo, LocalDateTime fecha_desde, LocalDateTime fecha_hasta, float precio, String politicas, String servicios, Destino destino, String foto_paquete,
-			MedioPago medioPago, int cant_personas,Agencia agencia, OfertaTipo ofertaTipo) {
+			String descripcionPaquete,MedioPago medioPago, int cant_personas,Agencia agencia, OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
 		oferta.setNombre(nombre);
 		oferta.setCupo(cupo);
@@ -67,6 +68,7 @@ public class OfertaDAO{
 		oferta.setAgencia(agencia);
 		oferta.setOfertaTipo(ofertaTipo);
 		oferta.setDestino(destino);
+		oferta.setDescriptionPaquete(descripcionPaquete);
 		entityManager.persist(oferta);
 		return oferta;
 	}

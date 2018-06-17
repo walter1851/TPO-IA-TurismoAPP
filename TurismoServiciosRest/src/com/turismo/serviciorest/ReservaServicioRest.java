@@ -3,7 +3,6 @@ package com.turismo.serviciorest;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -26,10 +25,10 @@ public class ReservaServicioRest {
 			@PathParam("fHasta") String fHasta, @PathParam("tipoHabitacion") String tipoHabitacion,
 			@PathParam("cantPersonas") int cantPersonas, @PathParam("nombre") String nombre,
 			@PathParam("apellido") String apellido, @PathParam("dni") String dni,
-			@PathParam("medioPago") String medioPago, @PathParam("mailUsuario") String mailUsuario) {
+			@PathParam("medioPagoId") int medioPagoId, @PathParam("mailUsuario") String mailUsuario) {
 		try {
 			facade.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantPersonas, nombre, apellido, dni,
-					medioPago, mailUsuario);
+					medioPagoId, mailUsuario);
 			return Response.ok(new WebResponse(true, "ok")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
@@ -43,9 +42,9 @@ public class ReservaServicioRest {
 	public Response reservarPaquete(@PathParam("ofertaid") int ofertaid, @PathParam("fDesde") String fDesde,
 			@PathParam("fHasta") String fHasta, @PathParam("cantPersonas") int cantPersonas,
 			@PathParam("nombre") String nombre, @PathParam("apellido") String apellido, @PathParam("dni") String dni,
-			@PathParam("medioPago") String medioPago, @PathParam("mailUsuario") String mailUsuario) {
+			@PathParam("medioPagoId") int medioPagoId, @PathParam("mailUsuario") String mailUsuario) {
 		try {
-			facade.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPago,
+			facade.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPagoId,
 					mailUsuario);
 			return Response.ok(new WebResponse(true, "ok")).build();
 		} catch (Exception e) {

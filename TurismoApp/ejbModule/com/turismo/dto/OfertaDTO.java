@@ -15,10 +15,14 @@ public class OfertaDTO {
 	private String politicas;
 	private String servicios;
 	private DestinoDTO destinoDTO;
-	/*NOTA: Despues buscamos un tipo de dato para foto_paquete, 
-	probe con InputStream pero hibernate dice
-	que no puede mapear ese tipo de dato*/
 	private String foto_paquete;
+	private String descripcionPaquete;
+	public String getDescripcionPaquete() {
+		return descripcionPaquete;
+	}
+	public void setDescripcionPaquete(String descripcionPaquete) {
+		this.descripcionPaquete = descripcionPaquete;
+	}
 	private MedioPagoDTO medioPagoDTO;
 	private int cant_personas;
 	private EstablecimientoDTO establecimientoDTO;

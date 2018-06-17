@@ -43,9 +43,7 @@ public class ProducerOfertaHoteleraQ {
 			ofertaHoteleraMensaje.setIdOfertaHotelera(idOfertaHotelera);
 			ofertaHoteleraMensaje.setMapaLatitud(mapaLatitud);
 			ofertaHoteleraMensaje.setMapaLongitud(mapaLongitud);
-			List<String> nuevaListaMediosPago=new ArrayList<String>();
-			nuevaListaMediosPago.add(mediosDePago);
-			ofertaHoteleraMensaje.setMediosDePago(nuevaListaMediosPago);
+			ofertaHoteleraMensaje.setMediosDePago(mediosDePago);
 			ofertaHoteleraMensaje.setNombreCiudad(nombreCiudad);
 			ofertaHoteleraMensaje.setNombreEstablecimiento(nombreEstablecimiento);
 			ofertaHoteleraMensaje.setNombreHotel(nombreHotel);

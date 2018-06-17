@@ -12,8 +12,7 @@ public class OfertaHoteleraMensaje {
 	private String nombreOfertaHotelera;
 	private float precio;// precio de la habitacion
 	private int cupo;
-	// FALTA CANT PERSONAS?
-	private List<String> mediosDePago;
+	private String mediosDePago;
 	private String tipoHabitacion; // SIMPLE, DOBLE, TRIPLE
 	// Establecimiento
 	private String idEstablecimiento;
@@ -70,11 +69,11 @@ public class OfertaHoteleraMensaje {
 		this.cupo = cupo;
 	}
 
-	public List<String> getMediosDePago() {
+	public String getMediosDePago() {
 		return mediosDePago;
 	}
 
-	public void setMediosDePago(List<String> mediosDePago) {
+	public void setMediosDePago(String mediosDePago) {
 		this.mediosDePago = mediosDePago;
 	}
 
