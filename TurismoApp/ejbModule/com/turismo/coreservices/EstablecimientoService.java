@@ -22,7 +22,7 @@ public class EstablecimientoService {
 	private ImagenDAO imagenDAO;
 
 	public Establecimiento guardarEstablecimiento(String nombre, String direccion, String ciudad, Estado estado,
-			String descripcion, int estrellas, String mapa, int codigo_establecimiento, int idHotel,
+			String descripcion, int estrellas, String latitud, String longitud, int codigo_establecimiento, int idHotel,
 			String nombreHotel, String urlFotoHotel) {
 		Hotel hotel = buscarHotel(idHotel);
 		Establecimiento establecimiento = buscarEstablecimiento(codigo_establecimiento);
@@ -34,7 +34,7 @@ public class EstablecimientoService {
 
 		if (establecimiento == null)
 			establecimiento = establecimientoDAO.nuevoEstablecimiento(nombre, direccion, ciudad, estado, descripcion,
-					estrellas, mapa, codigo_establecimiento, hotel);
+					estrellas, latitud,longitud, codigo_establecimiento, hotel);
 		// else
 		// Actualizar establecimiento
 

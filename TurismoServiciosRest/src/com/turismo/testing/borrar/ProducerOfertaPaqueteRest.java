@@ -24,11 +24,11 @@ public class ProducerOfertaPaqueteRest {
 	@EJB
 	private ProducerOfertaPaqueteQ testingQueue;
 	@GET
-	@Path("ofertapaquete/grabar/{idPaquete}/{nombrePaquete}/{idCiudadDestino}/{nombreCiudadDestino}/{cupo}/{cantPersonas}/{idAgencia}/{nombreAgencia}/{direccionAgencia}/{estadoAgencia}/{foto}/{fechaDesde}/{fechaHasta}/{estado}/{precio}/{descripcion}/{politicaCancelacion}/{servicios}/{mediosDePago}")
+	@Path("ofertapaquete/grabar/{idPaquete}/{nombrePaquete}/{idCiudadDestino}//{cupo}/{cantPersonas}/{idAgencia}/{nombreAgencia}/{direccionAgencia}/{estadoAgencia}/{foto}/{fechaDesde}/{fechaHasta}/{estado}/{precio}/{descripcion}/{politicaCancelacion}/{servicios}/{mediosDePago}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarOfertaPaquete(@PathParam("idPaquete") int idPaquete,
 			@PathParam("nombrePaquete") String nombrePaquete, @PathParam("idCiudadDestino") int idCiudadDestino,
-			@PathParam("nombreCiudadDestino") String nombreCiudadDestino,@PathParam("cupo") int cupo,
+			@PathParam("cupo") int cupo,
 			@PathParam("cantPersonas") int cantPersonas, @PathParam("idAgencia") int idAgencia,
 			@PathParam("nombreAgencia") String nombreAgencia,
 			@PathParam("direccionAgencia") String direccionAgencia, @PathParam("estadoAgencia") String estadoAgencia,
@@ -39,7 +39,7 @@ public class ProducerOfertaPaqueteRest {
 			@PathParam("servicios") String servicios,
 			@PathParam("mediosDePago") String mediosDePago) {
 		try {
-			testingQueue.sendMessage(idPaquete, nombrePaquete, idCiudadDestino, nombreCiudadDestino, cupo, cantPersonas,
+			testingQueue.sendMessage(idPaquete, nombrePaquete, idCiudadDestino, cupo, cantPersonas,
 					idAgencia, nombreAgencia, direccionAgencia, estadoAgencia, foto,
 					fechaDesde, fechaHasta, estado, precio, descripcion, politicaCancelacion,
 					servicios, mediosDePago);

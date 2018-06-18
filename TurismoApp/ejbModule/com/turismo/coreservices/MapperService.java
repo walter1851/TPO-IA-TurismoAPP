@@ -100,7 +100,9 @@ public class MapperService {
 			establecimientoDTO.setEstablecimiento_id(oferta.getEstablecimiento().getEstablecimiento_id());
 			establecimientoDTO.setEstrellas(oferta.getEstablecimiento().getEstrellas());
 			establecimientoDTO.setHotelDTO(hotelDTO);
-			establecimientoDTO.setMapa(oferta.getEstablecimiento().getMapa());
+			establecimientoDTO.setLatitud(oferta.getEstablecimiento().getLatitud());
+			establecimientoDTO.setLongitud(oferta.getEstablecimiento().getLongitud());
+			
 			establecimientoDTO.setNombre(oferta.getEstablecimiento().getNombre());
 			ofertaDTO.setOferta_id(oferta.getOferta_id());
 			ofertaDTO.setDestinoDTO(destinoDTO);

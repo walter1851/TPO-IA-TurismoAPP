@@ -42,17 +42,17 @@ public class ProducerOfertaHoteleraRest {
 	 * politicas private List<String> servicios;
 	 */
 	@GET
-	@Path("ofertahotelera/grabar/{idOfertaHotelera}/{nombreOfertaHotelera}/{precio}/{cupo}/{medioDePago}/{tipoHabitacion}/{idEstablecimiento}/{uidBackOffice}/{nombreEstablecimiento}/{direccionEstablecimiento}/{idCiudad}/{nombreCiudad}/{idHotel}/{nombreHotel}/{urlFotoHotel}/{descripcionEstablecimiento}/{mapaLatitud}/{mapaLongitud}/{urlFotoEstablecimiento}/{cantEstrellas}/{fechaDesde}/{fechaHasta}/{politicaCancelacion}/{servicios}")
+	@Path("ofertahotelera/grabar/{idOfertaHotelera}/{nombreOfertaHotelera}/{precio}/{cupo}/{medioDePago}/{tipoHabitacion}/{idEstablecimiento}/{uidBackOffice}/{nombreEstablecimiento}/{direccionEstablecimiento}/{idCiudad}/{idHotel}/{nombreHotel}/{urlFotoHotel}/{descripcionEstablecimiento}/{mapaLatitud}/{mapaLongitud}/{urlFotoEstablecimiento}/{cantEstrellas}/{fechaDesde}/{fechaHasta}/{politicaCancelacion}/{servicios}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarOfertaHotelera(@PathParam("idOfertaHotelera") int idOfertaHotelera,
 			@PathParam("nombreOfertaHotelera") String nombreOfertaHotelera, @PathParam("precio") float precio,
 			@PathParam("cupo") int cupo, @PathParam("medioDePago") String medioDePago,
-			@PathParam("tipoHabitacion") String tipoHabitacion,
-			@PathParam("idEstablecimiento") int idEstablecimiento, @PathParam("uidBackOffice") String uidBackOffice,
+			@PathParam("tipoHabitacion") String tipoHabitacion, @PathParam("idEstablecimiento") int idEstablecimiento,
+			@PathParam("uidBackOffice") String uidBackOffice,
 			@PathParam("nombreEstablecimiento") String nombreEstablecimiento,
 			@PathParam("direccionEstablecimiento") String direccionEstablecimiento, @PathParam("idCiudad") int idCiudad,
-			@PathParam("nombreCiudad") String nombreCiudad, @PathParam("idHotel") int idHotel,
-			@PathParam("nombreHotel") String nombreHotel, @PathParam("urlFotoHotel") String urlFotoHotel,
+			@PathParam("idHotel") int idHotel, @PathParam("nombreHotel") String nombreHotel,
+			@PathParam("urlFotoHotel") String urlFotoHotel,
 			@PathParam("descripcionEstablecimiento") String descripcionEstablecimiento,
 			@PathParam("mapaLatitud") String mapaLatitud, @PathParam("mapaLongitud") String mapaLongitud,
 			@PathParam("urlFotoEstablecimiento") String urlFotoEstablecimiento,
@@ -62,9 +62,8 @@ public class ProducerOfertaHoteleraRest {
 		try {
 			testingQueue.sendMessage(idOfertaHotelera, nombreOfertaHotelera, precio, cupo, medioDePago, tipoHabitacion,
 					idEstablecimiento, uidBackOffice, nombreEstablecimiento, direccionEstablecimiento, idCiudad,
-					nombreCiudad, idHotel, nombreHotel, urlFotoHotel, descripcionEstablecimiento, mapaLatitud,
-					mapaLongitud, urlFotoEstablecimiento, cantEstrellas, fechaDesde, fechaHasta, politicaCancelacion,
-					servicios);
+					idHotel, nombreHotel, urlFotoHotel, descripcionEstablecimiento, mapaLatitud, mapaLongitud,
+					urlFotoEstablecimiento, cantEstrellas, fechaDesde, fechaHasta, politicaCancelacion, servicios);
 			return Response.ok(new WebResponse(true, "Se grabo en la cola la oferta hotelera")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());

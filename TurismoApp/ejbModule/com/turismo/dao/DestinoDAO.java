@@ -27,10 +27,18 @@ public class DestinoDAO {
 			return null;
 		}
 	}
-
+	public Destino buscarDestinoPorCodigo(int codigoDestino) {
+		try {
+			Query destinoQuery = entityManager.createQuery("SELECT d FROM destino d " + "WHERE d.codigo_destino = :codigo_destino");
+			destinoQuery.setParameter("codigo_destino", codigoDestino);
+			return (Destino) destinoQuery.getSingleResult();
+		} catch (NoResultException nre) {
+			return null;
+		}
+	}
 	public Destino buscarDestinoPorNombre(String nombreDestino) {
 		try {
-			Query destinoQuery = entityManager.createQuery("SELECT d FROM destino d " + "WHERE d.nombre = :nombre ");
+			Query destinoQuery = entityManager.createQuery("SELECT d FROM destino d " + "WHERE d.nombre = :nombre");
 			destinoQuery.setParameter("nombre", nombreDestino);
 			return (Destino) destinoQuery.getSingleResult();
 		} catch (NoResultException nre) {

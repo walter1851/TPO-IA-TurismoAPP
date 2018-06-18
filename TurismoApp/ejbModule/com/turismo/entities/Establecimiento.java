@@ -22,7 +22,20 @@ public class Establecimiento {
 	private Estado estado;
 	private String descripcion;
 	private int estrellas;
-	private String mapa;
+	private String latitud;
+	private String longitud;
+	public String getLatitud() {
+		return latitud;
+	}
+	public void setLatitud(String latitud) {
+		this.latitud = latitud;
+	}
+	public String getLongitud() {
+		return longitud;
+	}
+	public void setLongitud(String longitud) {
+		this.longitud = longitud;
+	}
 	@Column(unique = true)
 	private int codigo_establecimiento;
 	@ManyToOne(cascade = CascadeType.ALL)
@@ -69,12 +82,6 @@ public class Establecimiento {
 	}
 	public void setEstrellas(int estrellas) {
 		this.estrellas = estrellas;
-	}
-	public String getMapa() {
-		return mapa;
-	}
-	public void setMapa(String mapa) {
-		this.mapa = mapa;
 	}
 	public int getCodigo_establecimiento() {
 		return codigo_establecimiento;

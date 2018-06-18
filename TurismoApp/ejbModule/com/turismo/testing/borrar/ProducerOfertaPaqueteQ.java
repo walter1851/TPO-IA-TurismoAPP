@@ -19,7 +19,7 @@ public class ProducerOfertaPaqueteQ {
 	@Inject
 	@JMSConnectionFactory("java:/ConnectionFactory")
 	JMSContext context;
-	public void sendMessage(int idPaquete, String nombrePaquete,int idCiudadDestino,String nombreCiudadDestino,int cupo,
+	public void sendMessage(int idPaquete, String nombrePaquete,int codigo_ciudadDestino,int cupo,
 			int cantPersonas, int idAgencia,String nombreAgencia,String direccionAgencia,String estadoAgencia,String foto,
 			String fechaDesde,String fechaHasta,String estado,float precio, String descripcion, String politicaCancelacion,String servicios,String mediosDePago) {
 			
@@ -30,8 +30,7 @@ public class ProducerOfertaPaqueteQ {
 			agenciaMensaje.setNombre(nombreAgencia);
 			
 			CiudadMensaje ciudadDestino= new CiudadMensaje();
-			ciudadDestino.setId(idCiudadDestino);
-			ciudadDestino.setNombre(nombreCiudadDestino);
+			ciudadDestino.setCodigo_ciudad(codigo_ciudadDestino);
 			
 			OfertaPaqueteMensaje ofertaPaqueteMensaje=new OfertaPaqueteMensaje();
 			ofertaPaqueteMensaje.setAgencia(agenciaMensaje);

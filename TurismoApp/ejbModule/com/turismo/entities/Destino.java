@@ -1,5 +1,6 @@
 package com.turismo.entities;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +14,8 @@ public class Destino {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int destino_id;
 	private String nombre;
+	@Column(unique = true)
+	private int codigo_destino;
 	public int getDestino_id() {
 		return destino_id;
 	}

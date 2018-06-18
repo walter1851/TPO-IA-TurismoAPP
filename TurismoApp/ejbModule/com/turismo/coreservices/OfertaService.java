@@ -43,8 +43,8 @@ public class OfertaService {
 		try {
 			int idPaquete = ofertaPaqueteMensaje.getId();
 			String nombrePaquete = ofertaPaqueteMensaje.getNombre();
-			int idCiudadDestino = ofertaPaqueteMensaje.getCiudadDestino().getId();
-			String nombreCiudadDestino = ofertaPaqueteMensaje.getCiudadDestino().getNombre();
+			int codigo_ciudadDestino = ofertaPaqueteMensaje.getCiudadDestino().getCodigo_ciudad();
+			//String nombreCiudadDestino = ofertaPaqueteMensaje.getCiudadDestino().getNombre();
 			int cupo = ofertaPaqueteMensaje.getCupo();
 			int cantPersonas = ofertaPaqueteMensaje.getCantPersonas();
 			// AGENCIA
@@ -64,9 +64,9 @@ public class OfertaService {
 			String politicaCancelacion = ofertaPaqueteMensaje.getPoliticas();
 			String servicios = ofertaPaqueteMensaje.getServicios();
 			String mediosDePago = ofertaPaqueteMensaje.getMediosDePago();
-			Destino destino = destinoDAO.buscarPorIdDestino(idCiudadDestino);
+			Destino destino = destinoDAO.buscarDestinoPorCodigo(codigo_ciudadDestino);
 			if (destino == null)
-				throw new OfertaPaqueteException("No existe el destino con el id: " + idCiudadDestino);
+				throw new OfertaPaqueteException("No existe el destino con el id externo: " + codigo_ciudadDestino);
 			Agencia agencia = agenciaService.guardarAgencia(nombreAgencia,direccionAgencia,idAgencia);
 			// convierto la fecha a localdatetime
 			LocalDateTime fDesdeConverted = convertStringToLocalDateTime(fechaDesde);
@@ -115,8 +115,8 @@ public class OfertaService {
 			String uidBackOffice = ofertaHoteleraMensaje.getEstablecimiento().getUid(); // Id recibido del backoffice
 			String nombreEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getNombre();
 			String direccionEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getDireccion();
-			int idCiudad = ofertaHoteleraMensaje.getEstablecimiento().getCiudad().getId();
-			String nombreCiudad = ofertaHoteleraMensaje.getEstablecimiento().getCiudad().getNombre();
+			int idCiudad = ofertaHoteleraMensaje.getEstablecimiento().getCiudad().getCodigo_ciudad();
+			//String nombreCiudad = ofertaHoteleraMensaje.getEstablecimiento().getCiudad().getNombre();
 			// Hotel
 			int idHotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getId();
 			String nombreHotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getNombre();
@@ -132,12 +132,12 @@ public class OfertaService {
 			String fechaHasta = ofertaHoteleraMensaje.getFechaHasta();// Ej: 2007-04-05T12:30-02:00
 			String politicaCancelacion = ofertaHoteleraMensaje.getPoliticas();// Texto con las politicas
 			String servicios = ofertaHoteleraMensaje.getServicios();
-			Destino destino = destinoDAO.buscarPorIdDestino(idCiudad);
+			Destino destino = destinoDAO.buscarDestinoPorCodigo(idCiudad);
 			if (destino == null)
 				throw new OfertaHoteleraException("No existe el destino con el id: " + idCiudad);
 			Establecimiento establecimiento = establecimientoService.guardarEstablecimiento(nombreEstablecimiento,
-					direccionEstablecimiento, nombreCiudad, Estado.ACTIVO, descripcionEstablecimiento,
-					cantEstrellas, "lat: " + mapaLatitud + " long: " + mapaLongitud,
+					direccionEstablecimiento,destino.getNombre(), Estado.ACTIVO, descripcionEstablecimiento,
+					cantEstrellas, mapaLatitud,mapaLongitud,
 					idEstablecimiento, idHotel, nombreHotel, urlFotoHotel);
 			// convierto la fecha a localdatetime
 			LocalDateTime fDesdeConverted = convertStringToLocalDateTime(fechaDesde);

@@ -22,6 +22,7 @@ public class Imagen {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
+	
 	public int getImagen_id() {
 		return imagen_id;
 	}

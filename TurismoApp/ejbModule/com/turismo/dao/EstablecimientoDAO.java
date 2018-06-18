@@ -17,7 +17,7 @@ public class EstablecimientoDAO{
 	private EntityManager entityManager;
 
 	public Establecimiento nuevoEstablecimiento(String nombre, String direccion, String ciudad, Estado estado, String descripcion,
-			int estrellas, String mapa, int codigo_establecimiento, Hotel hotel) {
+			int estrellas, String latitud,String longitud, int codigo_establecimiento, Hotel hotel) {
 		Establecimiento establecimiento = new Establecimiento();
 		establecimiento.setNombre(nombre);
 		establecimiento.setDireccion(direccion);
@@ -25,7 +25,8 @@ public class EstablecimientoDAO{
 		establecimiento.setEstado(estado);
 		establecimiento.setDescripcion(descripcion);
 		establecimiento.setEstrellas(estrellas);
-		establecimiento.setMapa(mapa);
+		establecimiento.setLatitud(latitud);
+		establecimiento.setLongitud(longitud);
 		establecimiento.setCodigo_establecimiento(codigo_establecimiento);
 		establecimiento.setHotel(hotel);
 		entityManager.persist(establecimiento);

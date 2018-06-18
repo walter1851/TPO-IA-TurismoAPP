@@ -31,7 +31,7 @@ public class ProducerOfertaHoteleraQ {
 
 	public void sendMessage(int idOfertaHotelera, String nombreOfertaHotelera,float precio,int cupo
 			, String mediosDePago,String tipoHabitacion,int idEstablecimiento,String uidBackOffice,String nombreEstablecimiento,String direccionEstablecimiento,
-			int idCiudad,String nombreCiudad,int idHotel,String nombreHotel,String urlFotoHotel,
+			int codigo_ciudad,int idHotel,String nombreHotel,String urlFotoHotel,
 			String descripcionEstablecimiento,String mapaLatitud,String mapaLongitud,String urlFotoEstablecimiento,int cantEstrellas,
 			String fechaDesde,String fechaHasta,String politicaCancelacion,String servicios) {
 			OfertaHoteleraMensaje ofertaHoteleraMensaje=new OfertaHoteleraMensaje();
@@ -57,8 +57,8 @@ public class ProducerOfertaHoteleraQ {
 			establecimientoMensaje.setMapa(mapaMensaje);
 			
 			CiudadMensaje ciudadMensaje=new CiudadMensaje();
-			ciudadMensaje.setId(idCiudad);
-			ciudadMensaje.setNombre(nombreCiudad);
+			ciudadMensaje.setCodigo_ciudad(codigo_ciudad);
+			//ciudadMensaje.setNombre(nombreCiudad);
 			establecimientoMensaje.setCiudad(ciudadMensaje);
 			
 			ofertaHoteleraMensaje.setNombre(nombreOfertaHotelera);

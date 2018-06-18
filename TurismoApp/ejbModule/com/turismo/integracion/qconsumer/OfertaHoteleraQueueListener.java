@@ -23,7 +23,7 @@ import com.turismo.integraciones.qconsumer.mensajes.OfertaHoteleraMensaje;
 		mappedName = "java:/jms/queue/OfertaHoteleraQueue")
  
 
-//COLA REMOTA
+//COLA REMOTA GRUPO DEL SABADO
 /*
 @MessageDriven(
 		activationConfig = { 
