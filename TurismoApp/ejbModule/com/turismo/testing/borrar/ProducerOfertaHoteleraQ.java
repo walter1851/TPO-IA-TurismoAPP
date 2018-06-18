@@ -11,9 +11,13 @@ import javax.jms.JMSContext;
 import javax.jms.Queue;
 import javax.jms.TextMessage;
 
-import com.turismo.integraciones.qconsumer.JsonConverter;
-import com.turismo.integraciones.qconsumer.OfertaHoteleraMensaje;
-import com.turismo.integraciones.qconsumer.OfertaPaqueteMensaje;
+import com.turismo.integracion.qconsumer.JsonConverter;
+import com.turismo.integraciones.qconsumer.mensajes.CiudadMensaje;
+import com.turismo.integraciones.qconsumer.mensajes.EstablecimientoMensaje;
+import com.turismo.integraciones.qconsumer.mensajes.HotelMensaje;
+import com.turismo.integraciones.qconsumer.mensajes.MapaMensaje;
+import com.turismo.integraciones.qconsumer.mensajes.OfertaHoteleraMensaje;
+import com.turismo.integraciones.qconsumer.mensajes.OfertaPaqueteMensaje;
 
 @Stateless
 public class ProducerOfertaHoteleraQ {
@@ -31,30 +35,40 @@ public class ProducerOfertaHoteleraQ {
 			String descripcionEstablecimiento,String mapaLatitud,String mapaLongitud,String urlFotoEstablecimiento,int cantEstrellas,
 			String fechaDesde,String fechaHasta,String politicaCancelacion,String servicios) {
 			OfertaHoteleraMensaje ofertaHoteleraMensaje=new OfertaHoteleraMensaje();
-			ofertaHoteleraMensaje.setCantEstrellas(cantEstrellas);
+			
+			EstablecimientoMensaje establecimientoMensaje=new EstablecimientoMensaje();
+			establecimientoMensaje.setId(idEstablecimiento);
+			establecimientoMensaje.setNombre(nombreEstablecimiento);
+			establecimientoMensaje.setEstrellas(cantEstrellas);
+			establecimientoMensaje.setDescripcion(descripcionEstablecimiento);
+			establecimientoMensaje.setDireccion(direccionEstablecimiento);
+			establecimientoMensaje.setFotoestablecimiento(urlFotoEstablecimiento);
+			establecimientoMensaje.setUid(uidBackOffice);
+			CiudadMensaje ciudadMensaje=new CiudadMensaje();
+			ciudadMensaje.setId(idCiudad);
+			ciudadMensaje.setNombre(nombreCiudad);
+			establecimientoMensaje.setCiudad(ciudadMensaje);
+			
+			ofertaHoteleraMensaje.setNombre(nombreOfertaHotelera);
+			ofertaHoteleraMensaje.setIdOfertaHotelera(idOfertaHotelera);
+			ofertaHoteleraMensaje.setEstablecimiento(establecimientoMensaje);
 			ofertaHoteleraMensaje.setCupo(cupo);
-			ofertaHoteleraMensaje.setDescripcionEstablecimiento(descripcionEstablecimiento);
-			ofertaHoteleraMensaje.setDireccionEstablecimiento(direccionEstablecimiento);
 			ofertaHoteleraMensaje.setFechaDesde(fechaDesde);
 			ofertaHoteleraMensaje.setFechaHasta(fechaHasta);
-			ofertaHoteleraMensaje.setIdCiudad(idCiudad);
-			ofertaHoteleraMensaje.setIdEstablecimiento(idEstablecimiento);
-			ofertaHoteleraMensaje.setIdHotel(idHotel);
-			ofertaHoteleraMensaje.setIdOfertaHotelera(idOfertaHotelera);
-			ofertaHoteleraMensaje.setMapaLatitud(mapaLatitud);
-			ofertaHoteleraMensaje.setMapaLongitud(mapaLongitud);
+			HotelMensaje hotelMensaje=new HotelMensaje();
+			hotelMensaje.setId(Integer.parseInt(idHotel));
+			hotelMensaje.setNombre(nombreHotel);
+			hotelMensaje.setFotoHotel(urlFotoHotel);
+	
+			MapaMensaje mapaMensaje=new MapaMensaje();
+			mapaMensaje.setLat(mapaLatitud);
+			mapaMensaje.setLon(mapaLongitud);
+			
 			ofertaHoteleraMensaje.setMediosDePago(mediosDePago);
-			ofertaHoteleraMensaje.setNombreCiudad(nombreCiudad);
-			ofertaHoteleraMensaje.setNombreEstablecimiento(nombreEstablecimiento);
-			ofertaHoteleraMensaje.setNombreHotel(nombreHotel);
-			ofertaHoteleraMensaje.setNombreOfertaHotelera(nombreOfertaHotelera);
-			ofertaHoteleraMensaje.setPoliticaCancelacion(politicaCancelacion);
+			ofertaHoteleraMensaje.setPoliticas(politicaCancelacion);
 			ofertaHoteleraMensaje.setPrecio(precio);
 			ofertaHoteleraMensaje.setServicios(servicios);
 			ofertaHoteleraMensaje.setTipoHabitacion(tipoHabitacion);
-			ofertaHoteleraMensaje.setUidBackOffice(uidBackOffice);
-			ofertaHoteleraMensaje.setUrlFotoEstablecimiento(urlFotoEstablecimiento);
-			ofertaHoteleraMensaje.setUrlFotoHotel(urlFotoHotel);
 			
 		try {
 			String jsonMensaje = JsonConverter.convertToJson(ofertaHoteleraMensaje);

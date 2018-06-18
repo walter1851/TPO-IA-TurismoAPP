@@ -10,8 +10,8 @@ import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.Queue;
 
-import com.turismo.integraciones.qconsumer.JsonConverter;
-import com.turismo.integraciones.qconsumer.OfertaPaqueteMensaje;
+import com.turismo.integracion.qconsumer.JsonConverter;
+import com.turismo.integraciones.qconsumer.mensajes.OfertaPaqueteMensaje;
 
 @Stateless
 public class ProducerOfertaPaqueteQ {

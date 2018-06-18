@@ -1,4 +1,4 @@
-package com.turismo.integraciones.backoffice.logging;
+package com.turismo.integracion.backoffice.logging;
 
 import java.io.Serializable;
 import java.util.Date;

@@ -1,4 +1,4 @@
-package com.turismo.integraciones.qconsumer;
+package com.turismo.integracion.qconsumer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonConverter {

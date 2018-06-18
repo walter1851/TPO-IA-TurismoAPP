@@ -1,4 +1,4 @@
-package com.turismo.integraciones.backoffice.autorizacion;
+package com.turismo.integracion.backoffice.autorizacion;
 
 
 import java.net.MalformedURLException;

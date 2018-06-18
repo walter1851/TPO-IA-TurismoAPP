@@ -1,4 +1,4 @@
-package com.turismo.integraciones.qconsumer;
+package com.turismo.integraciones.qconsumer.mensajes;
 
 import java.time.LocalDate;
 import java.util.List;

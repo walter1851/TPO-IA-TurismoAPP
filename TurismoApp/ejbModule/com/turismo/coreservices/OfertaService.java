@@ -20,8 +20,8 @@ import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaTipo;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
-import com.turismo.integraciones.qconsumer.OfertaHoteleraMensaje;
-import com.turismo.integraciones.qconsumer.OfertaPaqueteMensaje;
+import com.turismo.integraciones.qconsumer.mensajes.OfertaHoteleraMensaje;
+import com.turismo.integraciones.qconsumer.mensajes.OfertaPaqueteMensaje;
 
 @Stateless
 @LocalBean
@@ -99,33 +99,32 @@ public class OfertaService {
 
 	public void guardarOfertaHotelera(OfertaHoteleraMensaje ofertaHoteleraMensaje) throws OfertaHoteleraException {
 		String idOfertaHotelera = ofertaHoteleraMensaje.getIdOfertaHotelera();
-		String nombreOfertaHotelera = ofertaHoteleraMensaje.getNombreOfertaHotelera();
+		String nombreOfertaHotelera = ofertaHoteleraMensaje.getNombre();
 		float precio = ofertaHoteleraMensaje.getPrecio();// precio de la habitacion
 		int cupo = ofertaHoteleraMensaje.getCupo();
 		String mediosDePago = ofertaHoteleraMensaje.getMediosDePago();
 		String tipoHabitacion = ofertaHoteleraMensaje.getTipoHabitacion(); // SIMPLE, DOBLE, TRIPLE
 		// Establecimiento
-		String idEstablecimiento = ofertaHoteleraMensaje.getIdEstablecimiento();
-		String uidBackOffice = ofertaHoteleraMensaje.getUidBackOffice(); // Id recibido del backoffice
-		String nombreEstablecimiento = ofertaHoteleraMensaje.getNombreEstablecimiento();
-		String direccionEstablecimiento = ofertaHoteleraMensaje.getDireccionEstablecimiento();
-		String idCiudad = ofertaHoteleraMensaje.getIdCiudad();
-		String nombreCiudad = ofertaHoteleraMensaje.getNombreCiudad();
+		String idEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getId();
+		String uidBackOffice = ofertaHoteleraMensaje.getEstablecimiento().getUid(); // Id recibido del backoffice
+		String nombreEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getNombre();
+		String direccionEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getDireccion();
+		String idCiudad = ofertaHoteleraMensaje.getEstablecimiento().getCiudad().getId();
+		String nombreCiudad = ofertaHoteleraMensaje.getEstablecimiento().getCiudad().getNombre();
 		// Hotel
-		String idHotel = ofertaHoteleraMensaje.getIdHotel();
-		String nombreHotel = ofertaHoteleraMensaje.getNombreHotel();
-		String urlFotoHotel = ofertaHoteleraMensaje.getUrlFotoHotel();
+		String idHotel = String.valueOf(ofertaHoteleraMensaje.getEstablecimiento().getHotel().getId());
+		String nombreHotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getNombre();
+		String urlFotoHotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getFotoHotel();
 		// Establecimiento
-		String descripcionEstablecimiento = ofertaHoteleraMensaje.getDescripcionEstablecimiento();
-		String mapaLatitud = ofertaHoteleraMensaje.getMapaLatitud();
-		String mapaLongitud = ofertaHoteleraMensaje.getMapaLongitud();
-		String urlFotoEstablecimiento = ofertaHoteleraMensaje.getUrlFotoEstablecimiento();// Esto es una foto sola, no
-																							// es un array
-		int cantEstrellas = ofertaHoteleraMensaje.getCantEstrellas();// de 1 a 5
+		String descripcionEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getDescripcion();
+		String mapaLatitud = ofertaHoteleraMensaje.getEstablecimiento().getMapa().getLat();
+		String mapaLongitud = ofertaHoteleraMensaje.getEstablecimiento().getMapa().getLon();
+		String urlFotoEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getFotoestablecimiento();// Esto es una foto sola, no
+		int cantEstrellas = ofertaHoteleraMensaje.getEstablecimiento().getEstrellas();// de 1 a 5
 		// Campos oferta hotelera
 		String fechaDesde = ofertaHoteleraMensaje.getFechaDesde();// Ej: 2007-04-05T12:30-02:00
 		String fechaHasta = ofertaHoteleraMensaje.getFechaHasta();// Ej: 2007-04-05T12:30-02:00
-		String politicaCancelacion = ofertaHoteleraMensaje.getPoliticaCancelacion();// Texto con las politicas
+		String politicaCancelacion = ofertaHoteleraMensaje.getPoliticas();// Texto con las politicas
 		String servicios = ofertaHoteleraMensaje.getServicios();
 		Destino destino = destinoDAO.buscarPorIdDestino(Integer.parseInt(idCiudad));
 		if (destino==null)
