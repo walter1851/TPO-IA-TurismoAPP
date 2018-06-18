@@ -1,5 +1,6 @@
 package com.turismo.dao;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -21,7 +22,7 @@ public class OfertaDAO {
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public Oferta nuevaOfertaHotelera(String nombre, int cupo, LocalDateTime fecha_desde, LocalDateTime fecha_hasta,
+	public Oferta nuevaOfertaHotelera(String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta,
 			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
 			String foto_paquete, MedioPago medioPago, Establecimiento establecimiento, OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
@@ -44,7 +45,7 @@ public class OfertaDAO {
 		return oferta;
 	}
 
-	public Oferta nuevaOfertaPaquete(String nombre, int cupo, LocalDateTime fecha_desde, LocalDateTime fecha_hasta,
+	public Oferta nuevaOfertaPaquete(String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta,
 			float precio, String politicas, String servicios, Destino destino, String foto_paquete,
 			String descripcionPaquete, MedioPago medioPago, int cant_personas, Agencia agencia, OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
@@ -69,8 +70,8 @@ public class OfertaDAO {
 		return oferta;
 	}
 
-	public void actualizarOferta(int oferta_id, String nombre, int cupo, LocalDateTime fecha_desde,
-			LocalDateTime fecha_hasta, float precio, String tipo_habitacion, String politicas, String servicios,
+	public void actualizarOferta(int oferta_id, String nombre, int cupo, LocalDate fecha_desde,
+			LocalDate fecha_hasta, float precio, String tipo_habitacion, String politicas, String servicios,
 			Destino destino, String foto_paquete, MedioPago medioPago, int cant_personas,
 			Establecimiento establecimiento, Agencia agencia, OfertaTipo ofertaTipo) {
 		Oferta oferta = buscarPorIdOferta(oferta_id);
@@ -102,8 +103,8 @@ public class OfertaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasHotelera(int destinoId, String tipo_Habitacion, LocalDateTime fDesde,
-			LocalDateTime fHasta) {
+	public List<Oferta> buscarOfertasHotelera(int destinoId, String tipo_Habitacion, LocalDate fDesde,
+			LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
 				+ " WHERE d.destino_id = :destinoId" + " AND o.tipo_habitacion = :tipo_Habitacion"
 				+ " AND o.fecha_desde <= :fDesde" + " OR o.fecha_hasta >= :fHasta" + " AND OfertaTipo = :tipoDeOferta");
@@ -116,8 +117,8 @@ public class OfertaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasPaquete(int destinoId, int cantPersonas, LocalDateTime fDesde,
-			LocalDateTime fHasta) {
+	public List<Oferta> buscarOfertasPaquete(int destinoId, int cantPersonas, LocalDate fDesde,
+			LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager
 				.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.destino_id = :destinoId"
 						+ " AND o.cant_personas <= :cantPersonas" + " AND o.fecha_desde <= :fDesde"

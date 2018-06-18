@@ -1,5 +1,6 @@
 package com.turismo.coreservices;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -69,15 +70,15 @@ public class OfertaService {
 				throw new OfertaPaqueteException("No existe el destino con el id externo: " + codigo_ciudadDestino);
 			Agencia agencia = agenciaService.guardarAgencia(nombreAgencia,direccionAgencia,idAgencia);
 			// convierto la fecha a localdatetime
-			LocalDateTime fDesdeConverted = convertStringToLocalDateTime(fechaDesde);
-			LocalDateTime fHastaConverted = convertStringToLocalDateTime(fechaHasta);
+			LocalDate fDesdeConverted = convertStringToLocalDate(fechaDesde);
+			LocalDate fHastaConverted = convertStringToLocalDate(fechaHasta);
 			MedioPago medioPagoObject = medioPagoDAO.nuevoMedioPago(mediosDePago);
 
 			OfertaTipo ofertaTipo = OfertaTipo.OFERTA_PAQUETE;
 			Oferta nuevaOferta = ofertaDAO.nuevaOfertaPaquete(nombrePaquete, cupo, fDesdeConverted, fHastaConverted,
 					precio, politicaCancelacion, servicios, destino, descripcionPaquete, foto, medioPagoObject,
 					cantPersonas, agencia, ofertaTipo);
-			LocalDateTime fechaPivote = fDesdeConverted;
+			LocalDate fechaPivote = fDesdeConverted;
 			// igual a cero significa q son iguales
 			// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias
 			int count = 0; // contador para prevenir que procese eternamente
@@ -93,12 +94,12 @@ public class OfertaService {
 		}
 	}
 
-	private LocalDateTime convertStringToLocalDateTime(String stringFecha) {
+	private LocalDate convertStringToLocalDate(String stringFecha) {
 		// Estamos validando que la fecha tenga el formato correcto
 		// ejemplo 2018-06-20T12:30-02:00
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 		// ISO_OFFSET_DATE_TIME Date Time with Offset 2011-12-03T10:15:30+01:00'
-		LocalDateTime dateTime = LocalDateTime.parse(stringFecha, formatter);
+		LocalDate dateTime = LocalDate.parse(stringFecha, formatter);
 		return dateTime;
 	}
 
@@ -140,15 +141,15 @@ public class OfertaService {
 					cantEstrellas, mapaLatitud,mapaLongitud,
 					idEstablecimiento, idHotel, nombreHotel, urlFotoHotel);
 			// convierto la fecha a localdatetime
-			LocalDateTime fDesdeConverted = convertStringToLocalDateTime(fechaDesde);
-			LocalDateTime fHastaConverted = convertStringToLocalDateTime(fechaHasta);
+			LocalDate fDesdeConverted = convertStringToLocalDate(fechaDesde);
+			LocalDate fHastaConverted = convertStringToLocalDate(fechaHasta);
 			// Genero medios de pago
 			MedioPago medioPagoObject = medioPagoDAO.nuevoMedioPago(mediosDePago);
 			OfertaTipo ofertaTipo = OfertaTipo.OFERTA_HOTELERA;
 			Oferta nuevaOferta = ofertaDAO.nuevaOfertaHotelera(nombreOfertaHotelera, cupo, fDesdeConverted,
 					fHastaConverted, precio, tipoHabitacion, politicaCancelacion, servicios, destino,
 					urlFotoEstablecimiento, medioPagoObject, establecimiento, ofertaTipo);
-			LocalDateTime fechaPivote = fDesdeConverted;
+			LocalDate fechaPivote = fDesdeConverted;
 			// igual a cero significa q son iguales
 			// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias
 			int count = 0; // contador para prevenir que procese eternamente

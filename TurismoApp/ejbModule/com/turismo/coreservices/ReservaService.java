@@ -1,6 +1,7 @@
 package com.turismo.coreservices;
 
 import java.text.ParseException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -198,8 +199,11 @@ public class ReservaService {
 		 * Estamos validando que fDesde no sea mayor que fHasta y que la fecha actual se
 		 * encuentre dentro de dichos rangos
 		 */
-		LocalDateTime fechaActual = LocalDateTime.now();
-		if (fDesde.isBefore(fechaActual) && fHasta.isAfter(fechaActual) && fDesde.isBefore(fHasta))
+		LocalDate onlyDateFechaActual = LocalDateTime.now().toLocalDate();
+		LocalDate onlyDateDesde = fDesde.toLocalDate();
+		LocalDate onlyDateHasta = fHasta.toLocalDate();
+		if (onlyDateDesde.compareTo(onlyDateFechaActual) >= 0 && onlyDateHasta.compareTo(onlyDateFechaActual) >= 0
+				&& onlyDateHasta.compareTo(onlyDateDesde) >= 0)
 			return true;
 		else
 			return false;

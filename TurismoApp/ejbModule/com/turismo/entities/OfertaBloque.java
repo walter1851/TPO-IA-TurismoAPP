@@ -1,5 +1,6 @@
 package com.turismo.entities;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import javax.persistence.CascadeType;
@@ -20,7 +21,7 @@ public class OfertaBloque {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="oferta_id")
 	private Oferta oferta;
-	private LocalDateTime fecha_bloque;
+	private LocalDate fecha_bloque;
 	private int cupo;
 	public int getOferta_bloque_id() {
 		return oferta_bloque_id;
@@ -34,10 +35,10 @@ public class OfertaBloque {
 	public void setOferta(Oferta oferta) {
 		this.oferta = oferta;
 	}
-	public LocalDateTime getFecha_Bloque() {
+	public LocalDate getFecha_Bloque() {
 		return fecha_bloque;
 	}
-	public void setFecha_Bloque(LocalDateTime fecha_Bloque) {
+	public void setFecha_Bloque(LocalDate fecha_Bloque) {
 		this.fecha_bloque = fecha_Bloque;
 	}
 	public int getCupo() {

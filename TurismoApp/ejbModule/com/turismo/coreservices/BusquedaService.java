@@ -1,5 +1,6 @@
 package com.turismo.coreservices;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -25,14 +26,14 @@ public class BusquedaService{
 	@EJB
 	private MapperService mapperService;
 	
-	public List<OfertaDTO> buscarOfertaPaquete(int destinoId, int cantPersonas, String fDesde, String fHasta)
+	public List<OfertaDTO> buscarOfertaPaquete(int destinoId, int cantPersonas, String fDesdeString, String fHastaString)
 			throws OfertaPaqueteException {
 		List<Oferta> ofertasPaquete;
-		LocalDateTime fDesdeConverted;
-		LocalDateTime fHastaConverted;
+		LocalDate fDesdeConverted;
+		LocalDate fHastaConverted;
 		try {
-			fDesdeConverted = convertStringToLocalDateTime(fDesde);
-			fHastaConverted = convertStringToLocalDateTime(fHasta);
+			fDesdeConverted = convertStringToLocalDate(fDesdeString);
+			fHastaConverted = convertStringToLocalDate(fHastaString);
 		} catch (DateTimeParseException e) {
 			throw new OfertaPaqueteException("El formato de la fecha no es el correcto");
 		}
@@ -43,18 +44,18 @@ public class BusquedaService{
 		
 		if (ofertasPaquete.isEmpty())
 			throw new OfertaPaqueteException("No se encontraron paquetes para el destino id: " + destinoId + " desde el "
-					+ fDesde + " Hasta el " + fHasta+ " cant personas: "+cantPersonas);
+					+ fDesdeConverted + " Hasta el " + fHastaConverted+ " cant personas: "+cantPersonas);
 		else
 			return mapperService.obtenerListaOfertaPaqueteDTO(ofertasPaquete);
 	}
 
 	public List<OfertaDTO> buscarOfertaHotelera(int destinoId, String fDesde, String fHasta,String tipoHabitacion) throws OfertaHoteleraException {
 		List<Oferta> ofertasHoteleras = null;
-		LocalDateTime fDesdeConverted;
-		LocalDateTime fHastaConverted;
+		LocalDate fDesdeConverted;
+		LocalDate fHastaConverted;
 		try {
-			fDesdeConverted = convertStringToLocalDateTime(fDesde);
-			fHastaConverted = convertStringToLocalDateTime(fHasta);
+			fDesdeConverted = convertStringToLocalDate(fDesde);
+			fHastaConverted = convertStringToLocalDate(fHasta);
 		} catch (DateTimeParseException e) {
 			throw new OfertaHoteleraException("El formato de la fecha no es el correcto");
 		}
@@ -70,23 +71,23 @@ public class BusquedaService{
 			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}
 
-	private Boolean validarBusqueda(LocalDateTime fDesde, LocalDateTime fHasta) {
-		/*
-		 * Estamos validando que fDesde no sea mayor que fHasta y que la fecha actual se
+	private Boolean validarBusqueda(LocalDate onlyDateDesde, LocalDate onlyDateHasta) {
+		 /* Estamos validando que fDesde no sea mayor que fHasta y que la fecha actual se
 		 * encuentre dentro de dichos rangos
 		 */
-		LocalDateTime fechaActual = LocalDateTime.now();
-		if (fDesde.isBefore(fechaActual) && fHasta.isAfter(fechaActual) && fDesde.isBefore(fHasta))
+		LocalDate onlyDateFechaActual = LocalDate.now();
+		if (onlyDateDesde.compareTo(onlyDateFechaActual) >= 0 && onlyDateHasta.compareTo(onlyDateFechaActual) >= 0
+				&& onlyDateHasta.compareTo(onlyDateDesde) >= 0)
 			return true;
 		else
 			return false;
 	}
-	private LocalDateTime convertStringToLocalDateTime(String stringFecha) {
+	private LocalDate convertStringToLocalDate(String stringFecha) {
 		//Estamos validando que la fecha tenga el formato correcto
 		//ejemplo 2018-06-20T12:30-02:00
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 		//ISO_OFFSET_DATE_TIME	Date Time with Offset	2011-12-03T10:15:30+01:00'
-		LocalDateTime dateTime = LocalDateTime.parse(stringFecha, formatter);
-		return dateTime;
+		LocalDate onlyDate = LocalDate.parse(stringFecha, formatter);
+		return onlyDate;
 	}
 }
