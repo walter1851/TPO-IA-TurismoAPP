@@ -1,5 +1,7 @@
 package com.turismo.dao;
 
+import java.time.LocalDate;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -19,7 +21,7 @@ public class ReservaDAO{
 	@EJB
 	private MedioPagoDAO medioPagoDAO;
 
-	public Reserva crearReserva(int oferta_id, int usuario_id, int id_medio_pago, String nombre, String apellido, String email,
+	public Reserva crearReserva(int oferta_id, int usuario_id, LocalDate fCheckIN, LocalDate fChechOUT,int id_medio_pago, String nombre, String apellido, String email,
 			String dni,float montoTotal) {
 		try {
 			Oferta oferta=ofertaDAO.buscarPorIdOferta(oferta_id);
@@ -32,6 +34,8 @@ public class ReservaDAO{
 			reserva.setEmail(email);
 			reserva.setDni(dni);
 			reserva.setMontoTotal(montoTotal);
+			reserva.setFechaCheckIn(fCheckIN);
+			reserva.setFechaCheckOut(fChechOUT);
 			entityManager.persist(reserva);
 			return reserva;
 		} catch (Exception e) {
@@ -39,8 +43,8 @@ public class ReservaDAO{
 		}
 	}
 
-	public boolean actualizarReserva(int reserva_id, int oferta_id, int usuario_id, int medio_de_pago_id, String nombre,
-			String email, String dni) {
+	public boolean actualizarReserva(int reserva_id, LocalDate fCheckIN, LocalDate fChechOUT,int oferta_id, int usuario_id, int medio_de_pago_id, String nombre,
+			String email, String dni, float montoTotal) {
 		try {
 			Oferta oferta = ofertaDAO.buscarPorIdOferta(oferta_id);
 			Reserva reserva = buscarPorIdReserva(reserva_id);
@@ -49,6 +53,9 @@ public class ReservaDAO{
 			reserva.setMedioPago(medioPagoDAO.buscarPorIdMedioPago(medio_de_pago_id));
 			reserva.setNombre(nombre);
 			reserva.setEmail(email);
+			reserva.setMontoTotal(montoTotal);
+			reserva.setFechaCheckIn(fCheckIN);
+			reserva.setFechaCheckOut(fChechOUT);
 			entityManager.merge(reserva);
 			return true;
 		} catch (Exception e) {

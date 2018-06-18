@@ -2,7 +2,6 @@ package com.turismo.coreservices;
 
 import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -32,13 +31,14 @@ public class ReservaService {
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException {
+		ReservaDTO nuevaReservaDTO=null;
 		float montoTotal = 0;
 		// valido el formato de las fechas
-		LocalDateTime fDesdeConverted;
-		LocalDateTime fHastaConverted;
+		LocalDate fDesdeConverted;
+		LocalDate fHastaConverted;
 		try {
-			fDesdeConverted = convertStringToLocalDateTime(fDesde);
-			fHastaConverted = convertStringToLocalDateTime(fHasta);
+			fDesdeConverted = convertStringToLocalDate(fDesde);
+			fHastaConverted = convertStringToLocalDate(fHasta);
 		} catch (ParseException e) {
 			throw new ReservaException(
 					"El formato de la fechas ingresadas no es valido. Ejemplo fecha valida: 2018-04-05T12:30-02:00");
@@ -59,7 +59,7 @@ public class ReservaService {
 		if (!formatoFechaOK)
 			throw new ReservaException("La fecha ingresada no tiene el formato adecuado.");
 		if (!hayDisponibilidad)
-			throw new ReservaException("No hay disponibilidad desde la fecha " + fDesde + " hasta " + fHasta
+			throw new ReservaException("No hay disponibilidad desde la fecha " + fDesdeConverted.toString() + " hasta " + fDesdeConverted.toString()
 					+ " para la cantidad de " + cantPersonas + " persona/s");
 		if (!puedoReservar)
 			throw new ReservaException("No hay autorizacion del backoffice para reservar");
@@ -79,9 +79,11 @@ public class ReservaService {
 				else
 					cupoActualizado = false;
 			}
-			if (cupoActualizado && hayConsistencia)
-				nuevaReservaPaquete = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre, apellido, emailUsuario,
+			if (cupoActualizado && hayConsistencia) {
+				nuevaReservaPaquete = reservaDAO.crearReserva(ofertaid,1,fDesdeConverted,fHastaConverted, medioPagoID, nombre, apellido, emailUsuario,
 						dni, montoTotal);
+				nuevaReservaDTO=mapperService.obtenerReservaDTO(nuevaReservaPaquete);
+			}
 			if (!hayConsistencia)
 				throw new ReservaException("El id de oferta enviado, no corresponde a una oferta paquete valida.");
 			if (!cupoActualizado)
@@ -89,19 +91,20 @@ public class ReservaService {
 			if (nuevaReservaPaquete == null)
 				throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
 		}
-		return mapperService.obtenerReservaDTO(nuevaReservaPaquete);
+		return nuevaReservaDTO;
 	}
 
 	public ReservaDTO reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion,
 			int cantHabitaciones, String nombre, String apellido, String dni, int medioPagoID, String emailUsuario)
 			throws ReservaException {
+		ReservaDTO nuevaReservaDTO=null;
 		float montoTotal = 0;
 		// valido el formato de las fechas
-		LocalDateTime fDesdeConverted;
-		LocalDateTime fHastaConverted;
+		LocalDate fDesdeConverted;
+		LocalDate fHastaConverted;
 		try {
-			fDesdeConverted = convertStringToLocalDateTime(fDesde);
-			fHastaConverted = convertStringToLocalDateTime(fHasta);
+			fDesdeConverted = convertStringToLocalDate(fDesde);
+			fHastaConverted = convertStringToLocalDate(fHasta);
 		} catch (ParseException e) {
 			throw new ReservaException(
 					"El formato de la fechas involucradas en la reserva no es el correcto. Ejemplo fecha valida: 2018-04-05T12:30-02:00");
@@ -122,12 +125,11 @@ public class ReservaService {
 		if (!formatoFechaOK)
 			throw new ReservaException("La fecha ingresada no tiene el formato adecuado.");
 		if (!hayDisponibilidad)
-			throw new ReservaException("No hay disponibilidad desde la fecha " + fDesde + " hasta " + fHasta
-					+ " para la cant de habitaciones: " + cantHabitaciones);
+			throw new ReservaException("No hay disponibilidad desde la fecha: " + fDesdeConverted.toString() + " hasta: " + fHastaConverted.toString()
+					+ " para la cantidad de habitaciones: " + cantHabitaciones);
 		if (!puedoReservar)
 			throw new ReservaException("No hay autorizacion del backoffice para reservar");
 
-		Reserva nuevaReservaHotelera = null;
 		if (formatoFechaOK && hayDisponibilidad && puedoReservar) {
 			boolean hayConsistencia = true;
 			boolean cupoActualizado = true;
@@ -144,9 +146,12 @@ public class ReservaService {
 				else
 					cupoActualizado = false;
 			}
-			if (cupoActualizado && hayConsistencia)
-				nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, 1, medioPagoID, nombre, apellido, emailUsuario,
+			Reserva nuevaReservaHotelera = null;
+			if (cupoActualizado && hayConsistencia) {
+				nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, 1,fDesdeConverted,fHastaConverted, medioPagoID, nombre, apellido, emailUsuario,
 						dni, montoTotal);
+				nuevaReservaDTO=mapperService.obtenerReservaDTO(nuevaReservaHotelera);
+			}
 			if (!cupoActualizado)
 				throw new ReservaException("No se pudo actualizar el cupo en la base de datos.");
 			if (!hayConsistencia)
@@ -154,7 +159,7 @@ public class ReservaService {
 			if (nuevaReservaHotelera == null)
 				throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
 		}
-		return mapperService.obtenerReservaDTO(nuevaReservaHotelera);
+		return nuevaReservaDTO;
 	}
 
 	private boolean validarDispHabitaciones(List<OfertaBloque> bloques, int cantHabitaciones) {
@@ -185,23 +190,21 @@ public class ReservaService {
 		}
 	}
 
-	private LocalDateTime convertStringToLocalDateTime(String stringFecha) throws ParseException {
+	private LocalDate convertStringToLocalDate(String stringFecha) throws ParseException {
 		// Estamos validando que la fecha tenga el formato correcto
 		// ejemplo 2018-06-20T12:30-02:00
 		DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 		// ISO_OFFSET_DATE_TIME Date Time with Offset 2011-12-03T10:15:30+01:00'
-		LocalDateTime dateTime = LocalDateTime.parse(stringFecha, formatter);
+		LocalDate dateTime = LocalDate.parse(stringFecha, formatter);
 		return dateTime;
 	}
 
-	private boolean validarFechaReserva(LocalDateTime fDesde, LocalDateTime fHasta) {
+	private boolean validarFechaReserva(LocalDate onlyDateDesde, LocalDate onlyDateHasta) {
 		/*
 		 * Estamos validando que fDesde no sea mayor que fHasta y que la fecha actual se
 		 * encuentre dentro de dichos rangos
 		 */
-		LocalDate onlyDateFechaActual = LocalDateTime.now().toLocalDate();
-		LocalDate onlyDateDesde = fDesde.toLocalDate();
-		LocalDate onlyDateHasta = fHasta.toLocalDate();
+		LocalDate onlyDateFechaActual = LocalDate.now();
 		if (onlyDateDesde.compareTo(onlyDateFechaActual) >= 0 && onlyDateHasta.compareTo(onlyDateFechaActual) >= 0
 				&& onlyDateHasta.compareTo(onlyDateDesde) >= 0)
 			return true;

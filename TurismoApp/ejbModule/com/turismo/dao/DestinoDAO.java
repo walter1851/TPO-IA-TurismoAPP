@@ -32,7 +32,7 @@ public class DestinoDAO {
 			Query destinoQuery = entityManager.createQuery("SELECT d FROM Destino d " + "WHERE codigo_destino = :codigoDestino");
 			destinoQuery.setParameter("codigoDestino", codigoDestino);
 			return (Destino) destinoQuery.getSingleResult();
-		} catch (NoResultException nre) {
+		} catch (Exception nre) {
 			return null;
 		}
 	}

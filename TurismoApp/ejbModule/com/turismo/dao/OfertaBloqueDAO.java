@@ -47,10 +47,13 @@ public class OfertaBloqueDAO{
 		}
 	}
 	@SuppressWarnings("unchecked")
-	public List<OfertaBloque> buscarBloquesDePaquetes(int ofertaId,LocalDateTime fDesde, LocalDateTime fHasta, int cantPersonas) {
+	/*Entiendo que esta validacion no hace falta hacerla:
+	 * " AND o.fecha_desde <= :fDesde AND o.fecha_hasta >= :fHasta"
+	 * */
+	public List<OfertaBloque> buscarBloquesDePaquetes(int ofertaId,LocalDate fDesde, LocalDate fHasta, int cantPersonas) {
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + " WHERE o.cant_personas >= :cantPersonas "
-						+ "AND o.oferta_id = :ofertaId "+" AND o.fecha_desde <= :fDesde AND o.fecha_hasta >= :fHasta");
+						+ "AND o.oferta_id = :ofertaId "+" AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta");
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);
 		bloqueQuery.setParameter("cantPersonas", cantPersonas);
@@ -58,10 +61,13 @@ public class OfertaBloqueDAO{
 		return bloqueQuery.getResultList();
 	}
 	@SuppressWarnings("unchecked")
-	public List<OfertaBloque> buscarBloquesDeHoteleria(int ofertaId,LocalDateTime fDesde, LocalDateTime fHasta,String tipoHabitacion) {
+	/*Entiendo que esta validacion no hace falta hacerla:
+	 * " AND o.fecha_desde <= :fDesde AND o.fecha_hasta >= :fHasta"
+	 * */
+	public List<OfertaBloque> buscarBloquesDeHoteleria(int ofertaId,LocalDate fDesde, LocalDate fHasta,String tipoHabitacion) {
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + "WHERE o.oferta_id = :ofertaId " + 
-		"AND o.tipo_habitacion=:tipoHabitacion "+" AND o.fecha_desde <= :fDesde AND o.fecha_hasta >= :fHasta");
+		"AND o.tipo_habitacion=:tipoHabitacion "+" AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta");
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);
 		bloqueQuery.setParameter("ofertaId", ofertaId);

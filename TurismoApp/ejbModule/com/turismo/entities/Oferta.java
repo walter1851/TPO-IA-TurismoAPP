@@ -43,11 +43,8 @@ public class Oferta {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="agencia_id")
 	private Agencia agencia;
-	/*@ManyToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name="oferta_tipo_id")*/
 	@Enumerated(EnumType.STRING)
 	OfertaTipo ofertaTipo;
-	//private OfertaTipoELIMINAR ofertaTipo;
 	public int getOferta_id() {
 		return oferta_id;
 	}

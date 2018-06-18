@@ -48,7 +48,6 @@ public class BusquedaService{
 		else
 			return mapperService.obtenerListaOfertaPaqueteDTO(ofertasPaquete);
 	}
-
 	public List<OfertaDTO> buscarOfertaHotelera(int destinoId, String fDesde, String fHasta,String tipoHabitacion) throws OfertaHoteleraException {
 		List<Oferta> ofertasHoteleras = null;
 		LocalDate fDesdeConverted;
