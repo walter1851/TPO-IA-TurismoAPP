@@ -41,7 +41,7 @@ public class ImagenDAO{
 	}
 	public Imagen buscarImagenPorURL(String url) {
 		try {
-			Query imagenQuery = entityManager.createQuery("SELECT i FROM Imagen i " + "WHERE i.url = :url ");
+			Query imagenQuery = entityManager.createQuery("SELECT i FROM Imagen i " + "WHERE url = :url ");
 			imagenQuery.setParameter("url", url);
 			return (Imagen) imagenQuery.getSingleResult();
 		} catch (NoResultException nre) {

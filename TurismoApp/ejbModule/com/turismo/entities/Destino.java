@@ -22,6 +22,12 @@ public class Destino {
 	public void setDestino_id(int destino_id) {
 		this.destino_id = destino_id;
 	}
+	public int getCodigo_destino() {
+		return codigo_destino;
+	}
+	public void setCodigo_destino(int codigo_destino) {
+		this.codigo_destino = codigo_destino;
+	}
 	public String getNombre() {
 		return nombre;
 	}

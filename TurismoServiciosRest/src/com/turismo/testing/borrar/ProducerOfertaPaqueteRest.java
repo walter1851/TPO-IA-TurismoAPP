@@ -24,7 +24,7 @@ public class ProducerOfertaPaqueteRest {
 	@EJB
 	private ProducerOfertaPaqueteQ testingQueue;
 	@GET
-	@Path("ofertapaquete/grabar/{idPaquete}/{nombrePaquete}/{idCiudadDestino}//{cupo}/{cantPersonas}/{idAgencia}/{nombreAgencia}/{direccionAgencia}/{estadoAgencia}/{foto}/{fechaDesde}/{fechaHasta}/{estado}/{precio}/{descripcion}/{politicaCancelacion}/{servicios}/{mediosDePago}")
+	@Path("ofertapaquete/grabar/{idPaquete}/{nombrePaquete}/{idCiudadDestino}/{cupo}/{cantPersonas}/{idAgencia}/{nombreAgencia}/{direccionAgencia}/{estadoAgencia}/{foto}/{fechaDesde}/{fechaHasta}/{estado}/{precio}/{descripcion}/{politicaCancelacion}/{servicios}/{mediosDePago}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarOfertaPaquete(@PathParam("idPaquete") int idPaquete,
 			@PathParam("nombrePaquete") String nombrePaquete, @PathParam("idCiudadDestino") int idCiudadDestino,

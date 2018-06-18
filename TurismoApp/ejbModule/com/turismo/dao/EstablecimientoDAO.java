@@ -47,7 +47,7 @@ public class EstablecimientoDAO{
 	public Establecimiento buscarPorCodigoEstablecimiento(int codigo_establecimiento) {
 		try {
 			Query establecimientoQuery = entityManager.createQuery(
-					"SELECT e FROM establecimiento e " + "WHERE e.codigo_establecimiento = :codigo_establecimiento ");
+					"SELECT e FROM establecimiento e " + "WHERE codigo_establecimiento = :codigo_establecimiento ");
 			establecimientoQuery.setParameter("codigo_establecimiento", codigo_establecimiento);
 			return (Establecimiento) establecimientoQuery.getSingleResult();
 		} catch (Exception nre) {

@@ -30,7 +30,7 @@ public class HotelDAO{
 	}
 	public Hotel buscarPorCodigoHotel(int codigoHotel) {
 		try {
-			Query hotelQuery = entityManager.createQuery("SELECT h FROM Hotel h " + "WHERE h.codigo_hotel = :codigoHotel ");
+			Query hotelQuery = entityManager.createQuery("SELECT h FROM Hotel h " + "WHERE codigo_hotel = :codigoHotel ");
 			hotelQuery.setParameter("codigoHotel", codigoHotel);
 			return (Hotel) hotelQuery.getSingleResult();
 		} catch (NoResultException nre) {

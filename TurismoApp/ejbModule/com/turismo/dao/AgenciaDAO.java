@@ -43,7 +43,7 @@ public class AgenciaDAO{
 	public Agencia buscarPorCodigoAgencia(int codigo_agencia) {
 		try {
 			Query agenciaQuery = entityManager
-					.createQuery("SELECT a FROM agencia a " + "WHERE a.codigo_agencia = :codigo_agencia ");
+					.createQuery("SELECT a FROM agencia a " + "WHERE codigo_agencia = :codigo_agencia ");
 			agenciaQuery.setParameter("codigo_agencia", codigo_agencia);
 			return (Agencia) agenciaQuery.getSingleResult();
 		} catch (Exception nre) {
