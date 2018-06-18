@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class OfertaHoteleraMensaje {
 	@JsonProperty("id")
-	private String idOfertaHotelera;
+	private int idOfertaHotelera;
 	private String nombre;
 	private float precio;// precio de la habitacion
 	private int cupo;
@@ -15,10 +15,10 @@ public class OfertaHoteleraMensaje {
 	private String fechaHasta;// Ej: 2007-04-05T12:30-02:00
 	private String politicas;// Texto con las politicas
 	private String servicios;
-	public String getIdOfertaHotelera() {
+	public int getIdOfertaHotelera() {
 		return idOfertaHotelera;
 	}
-	public void setIdOfertaHotelera(String idOfertaHotelera) {
+	public void setIdOfertaHotelera(int idOfertaHotelera) {
 		this.idOfertaHotelera = idOfertaHotelera;
 	}
 	public String getNombre() {

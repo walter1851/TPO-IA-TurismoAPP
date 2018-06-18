@@ -17,7 +17,7 @@ public class EstablecimientoDAO{
 	private EntityManager entityManager;
 
 	public Establecimiento nuevoEstablecimiento(String nombre, String direccion, String ciudad, Estado estado, String descripcion,
-			String estrellas, String mapa, String codigo_establecimiento, Hotel hotel) {
+			int estrellas, String mapa, int codigo_establecimiento, Hotel hotel) {
 		Establecimiento establecimiento = new Establecimiento();
 		establecimiento.setNombre(nombre);
 		establecimiento.setDireccion(direccion);
@@ -43,7 +43,7 @@ public class EstablecimientoDAO{
 		}
 	}
 
-	public Establecimiento buscarPorCodigoEstablecimiento(String codigo_establecimiento) {
+	public Establecimiento buscarPorCodigoEstablecimiento(int codigo_establecimiento) {
 		try {
 			Query establecimientoQuery = entityManager.createQuery(
 					"SELECT e FROM establecimiento e " + "WHERE e.codigo_establecimiento = :codigo_establecimiento ");

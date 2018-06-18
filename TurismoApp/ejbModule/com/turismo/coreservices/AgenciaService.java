@@ -12,7 +12,7 @@ public class AgenciaService{
 	@EJB
 	private AgenciaDAO agenciaDao;
 
-	public Agencia guardarAgencia(String nombre,String direccion,String codigo_agencia) {
+	public Agencia guardarAgencia(String nombre,String direccion,int codigo_agencia) {
 		Agencia agenciaFromDatabase=buscarAgencia(codigo_agencia);
 		if (agenciaFromDatabase==null) 
 			return agenciaDao.nuevaAgencia(nombre,direccion,codigo_agencia);
@@ -20,7 +20,7 @@ public class AgenciaService{
 			return agenciaFromDatabase;
 	}
 
-	private Agencia buscarAgencia(String codigo_agencia) {
+	private Agencia buscarAgencia(int codigo_agencia) {
 		return agenciaDao.buscarPorCodigoAgencia(codigo_agencia);
 
 	}

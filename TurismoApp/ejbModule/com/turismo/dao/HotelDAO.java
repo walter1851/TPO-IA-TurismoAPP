@@ -14,7 +14,7 @@ public class HotelDAO{
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 	
-	public Hotel nuevoHotel(String nombre, String codigo_hotel) {
+	public Hotel nuevoHotel(String nombre, int codigo_hotel) {
 		Hotel hotel = new Hotel();
 		hotel.setNombre(nombre);
 		hotel.setCodigo_hotel(codigo_hotel);
@@ -22,13 +22,13 @@ public class HotelDAO{
 		return hotel;
 	}
 
-	public void actualizarHotel(int hotel_id,String nombre,String codigo_hotel) {
+	public void actualizarHotel(int hotel_id,String nombre,int codigo_hotel) {
 		Hotel hotel=buscarPorIdHotel(hotel_id);
 				hotel.setNombre(nombre);
 				hotel.setCodigo_hotel(codigo_hotel);
 				entityManager.merge(hotel);
 	}
-	public Hotel buscarPorCodigoHotel(String codigoHotel) {
+	public Hotel buscarPorCodigoHotel(int codigoHotel) {
 		try {
 			Query hotelQuery = entityManager.createQuery("SELECT h FROM Hotel h " + "WHERE h.codigo_hotel = :codigoHotel ");
 			hotelQuery.setParameter("codigoHotel", codigoHotel);

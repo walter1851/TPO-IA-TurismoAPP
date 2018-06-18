@@ -1,8 +1,4 @@
 package com.turismo.testing.borrar;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -11,6 +7,8 @@ import javax.jms.JMSContext;
 import javax.jms.Queue;
 
 import com.turismo.integracion.qconsumer.JsonConverter;
+import com.turismo.integraciones.qconsumer.mensajes.AgenciaMensaje;
+import com.turismo.integraciones.qconsumer.mensajes.CiudadMensaje;
 import com.turismo.integraciones.qconsumer.mensajes.OfertaPaqueteMensaje;
 
 @Stateless
@@ -21,27 +19,34 @@ public class ProducerOfertaPaqueteQ {
 	@Inject
 	@JMSConnectionFactory("java:/ConnectionFactory")
 	JMSContext context;
-	public void sendMessage(String idPaquete, String nombrePaquete,String idCiudadDestino,String nombreCiudadDestino,int cupo,
-			int cantPersonas, String idAgencia,String nombreAgencia,String direccionAgencia,String estadoAgencia,String foto,
+	public void sendMessage(int idPaquete, String nombrePaquete,int idCiudadDestino,String nombreCiudadDestino,int cupo,
+			int cantPersonas, int idAgencia,String nombreAgencia,String direccionAgencia,String estadoAgencia,String foto,
 			String fechaDesde,String fechaHasta,String estado,float precio, String descripcion, String politicaCancelacion,String servicios,String mediosDePago) {
+			
+			AgenciaMensaje agenciaMensaje=new AgenciaMensaje();
+			agenciaMensaje.setId(idAgencia);
+			agenciaMensaje.setDireccion(direccionAgencia);
+			agenciaMensaje.setEstado(estadoAgencia);
+			agenciaMensaje.setNombre(nombreAgencia);
+			
+			CiudadMensaje ciudadDestino= new CiudadMensaje();
+			ciudadDestino.setId(idCiudadDestino);
+			ciudadDestino.setNombre(nombreCiudadDestino);
+			
 			OfertaPaqueteMensaje ofertaPaqueteMensaje=new OfertaPaqueteMensaje();
+			ofertaPaqueteMensaje.setAgencia(agenciaMensaje);
+			ofertaPaqueteMensaje.setCiudadDestino(ciudadDestino);
+			ofertaPaqueteMensaje.setId(idPaquete);
+			ofertaPaqueteMensaje.setNombre(nombrePaquete);
 			ofertaPaqueteMensaje.setCantPersonas(cantPersonas);
 			ofertaPaqueteMensaje.setCupo(cupo);
 			ofertaPaqueteMensaje.setDescripcion(descripcion);
-			ofertaPaqueteMensaje.setDireccionAgencia(direccionAgencia);
 			ofertaPaqueteMensaje.setEstado(estado);
-			ofertaPaqueteMensaje.setEstadoAgencia(estadoAgencia);
 			ofertaPaqueteMensaje.setFechaDesde(fechaDesde);
 			ofertaPaqueteMensaje.setFechaHasta(fechaHasta);
 			ofertaPaqueteMensaje.setFoto(foto);
-			ofertaPaqueteMensaje.setIdAgencia(idAgencia);
-			ofertaPaqueteMensaje.setIdCiudadDestino(idCiudadDestino);
-			ofertaPaqueteMensaje.setIdPaquete(idPaquete);
 			ofertaPaqueteMensaje.setMediosDePago(mediosDePago);
-			ofertaPaqueteMensaje.setNombreAgencia(nombreAgencia);
-			ofertaPaqueteMensaje.setNombreCiudadDestino(nombreCiudadDestino);
-			ofertaPaqueteMensaje.setNombrePaquete(nombrePaquete);
-			ofertaPaqueteMensaje.setPoliticaCancelacion(politicaCancelacion);
+			ofertaPaqueteMensaje.setPoliticas(politicaCancelacion);
 			ofertaPaqueteMensaje.setPrecio(precio);
 			ofertaPaqueteMensaje.setServicios(servicios);
 		try {

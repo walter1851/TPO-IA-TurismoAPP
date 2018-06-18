@@ -21,10 +21,10 @@ public class Establecimiento {
 	private String ciudad;
 	private Estado estado;
 	private String descripcion;
-	private String estrellas;
+	private int estrellas;
 	private String mapa;
 	@Column(unique = true)
-	private String codigo_establecimiento;
+	private int codigo_establecimiento;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
@@ -64,10 +64,10 @@ public class Establecimiento {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public String getEstrellas() {
+	public int getEstrellas() {
 		return estrellas;
 	}
-	public void setEstrellas(String estrellas) {
+	public void setEstrellas(int estrellas) {
 		this.estrellas = estrellas;
 	}
 	public String getMapa() {
@@ -76,10 +76,10 @@ public class Establecimiento {
 	public void setMapa(String mapa) {
 		this.mapa = mapa;
 	}
-	public String getCodigo_establecimiento() {
+	public int getCodigo_establecimiento() {
 		return codigo_establecimiento;
 	}
-	public void setCodigo_establecimiento(String codigo_establecimiento) {
+	public void setCodigo_establecimiento(int codigo_establecimiento) {
 		this.codigo_establecimiento = codigo_establecimiento;
 	}
 	public Hotel getHotel() {

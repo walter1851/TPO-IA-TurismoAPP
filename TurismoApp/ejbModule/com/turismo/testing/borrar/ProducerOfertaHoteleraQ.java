@@ -29,12 +29,21 @@ public class ProducerOfertaHoteleraQ {
 	@JMSConnectionFactory("java:/ConnectionFactory")
 	JMSContext context;
 
-	public void sendMessage(String idOfertaHotelera, String nombreOfertaHotelera,float precio,int cupo
-			, String mediosDePago,String tipoHabitacion,String idEstablecimiento,String uidBackOffice,String nombreEstablecimiento,String direccionEstablecimiento,
-			String idCiudad,String nombreCiudad,String idHotel,String nombreHotel,String urlFotoHotel,
+	public void sendMessage(int idOfertaHotelera, String nombreOfertaHotelera,float precio,int cupo
+			, String mediosDePago,String tipoHabitacion,int idEstablecimiento,String uidBackOffice,String nombreEstablecimiento,String direccionEstablecimiento,
+			int idCiudad,String nombreCiudad,int idHotel,String nombreHotel,String urlFotoHotel,
 			String descripcionEstablecimiento,String mapaLatitud,String mapaLongitud,String urlFotoEstablecimiento,int cantEstrellas,
 			String fechaDesde,String fechaHasta,String politicaCancelacion,String servicios) {
 			OfertaHoteleraMensaje ofertaHoteleraMensaje=new OfertaHoteleraMensaje();
+			
+			MapaMensaje mapaMensaje=new MapaMensaje();
+			mapaMensaje.setLat(mapaLatitud);
+			mapaMensaje.setLon(mapaLongitud);
+			
+			HotelMensaje hotelMensaje=new HotelMensaje();
+			hotelMensaje.setId(idHotel);
+			hotelMensaje.setNombre(nombreHotel);
+			hotelMensaje.setFotoHotel(urlFotoHotel);
 			
 			EstablecimientoMensaje establecimientoMensaje=new EstablecimientoMensaje();
 			establecimientoMensaje.setId(idEstablecimiento);
@@ -44,6 +53,9 @@ public class ProducerOfertaHoteleraQ {
 			establecimientoMensaje.setDireccion(direccionEstablecimiento);
 			establecimientoMensaje.setFotoestablecimiento(urlFotoEstablecimiento);
 			establecimientoMensaje.setUid(uidBackOffice);
+			establecimientoMensaje.setHotel(hotelMensaje);
+			establecimientoMensaje.setMapa(mapaMensaje);
+			
 			CiudadMensaje ciudadMensaje=new CiudadMensaje();
 			ciudadMensaje.setId(idCiudad);
 			ciudadMensaje.setNombre(nombreCiudad);
@@ -55,14 +67,9 @@ public class ProducerOfertaHoteleraQ {
 			ofertaHoteleraMensaje.setCupo(cupo);
 			ofertaHoteleraMensaje.setFechaDesde(fechaDesde);
 			ofertaHoteleraMensaje.setFechaHasta(fechaHasta);
-			HotelMensaje hotelMensaje=new HotelMensaje();
-			hotelMensaje.setId(Integer.parseInt(idHotel));
-			hotelMensaje.setNombre(nombreHotel);
-			hotelMensaje.setFotoHotel(urlFotoHotel);
+			
 	
-			MapaMensaje mapaMensaje=new MapaMensaje();
-			mapaMensaje.setLat(mapaLatitud);
-			mapaMensaje.setLon(mapaLongitud);
+			
 			
 			ofertaHoteleraMensaje.setMediosDePago(mediosDePago);
 			ofertaHoteleraMensaje.setPoliticas(politicaCancelacion);
@@ -74,7 +81,6 @@ public class ProducerOfertaHoteleraQ {
 			String jsonMensaje = JsonConverter.convertToJson(ofertaHoteleraMensaje);
 			context.createProducer().send(testQueue, jsonMensaje);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
