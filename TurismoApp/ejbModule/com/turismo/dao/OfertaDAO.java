@@ -23,8 +23,7 @@ public class OfertaDAO {
 
 	public Oferta nuevaOfertaHotelera(String nombre, int cupo, LocalDateTime fecha_desde, LocalDateTime fecha_hasta,
 			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
-			String foto_paquete, MedioPago medioPago, Establecimiento establecimiento,
-			OfertaTipo ofertaTipo) {
+			String foto_paquete, MedioPago medioPago, Establecimiento establecimiento, OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
 		oferta.setNombre(nombre);
 		oferta.setCupo(cupo);
@@ -102,34 +101,32 @@ public class OfertaDAO {
 		}
 	}
 
-	// OJO VER LO QUE ESTA PASANDO CON LAS FECHAS, porque no lo toma?
 	@SuppressWarnings("unchecked")
 	public List<Oferta> buscarOfertasHotelera(int destinoId, String tipo_Habitacion, LocalDateTime fDesde,
 			LocalDateTime fHasta) {
-			Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o "
-					+ " INNER JOIN o.destino d" + " WHERE d.destino_id = :destinoId"
-					+ " AND o.tipo_habitacion = :tipo_Habitacion" + /*" AND (o.fecha_desde <= :fDesde"
-					+ " OR o.fecha_hasta >= :fHasta)" +*/ " AND OfertaTipo = :tipoDeOferta");
-			ofertasHotelerasQuery.setParameter("destinoId", destinoId);
-			ofertasHotelerasQuery.setParameter("tipo_Habitacion", tipo_Habitacion);
-			//ofertasHotelerasQuery.setParameter("fDesde", fDesde); hay q usar TemporalType.DATE??
-			//ofertasHotelerasQuery.setParameter("fHasta", fHasta);
-			ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_HOTELERA.name());
-			return ofertasHotelerasQuery.getResultList();
+		Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
+				+ " WHERE d.destino_id = :destinoId" + " AND o.tipo_habitacion = :tipo_Habitacion"
+				+ " AND o.fecha_desde <= :fDesde" + " OR o.fecha_hasta >= :fHasta" + " AND OfertaTipo = :tipoDeOferta");
+		ofertasHotelerasQuery.setParameter("destinoId", destinoId);
+		ofertasHotelerasQuery.setParameter("tipo_Habitacion", tipo_Habitacion);
+		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
+		ofertasHotelerasQuery.setParameter("fHasta", fHasta);
+		ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_HOTELERA.name());
+		return ofertasHotelerasQuery.getResultList();
 	}
+
 	@SuppressWarnings("unchecked")
-	// OJO CAMBIAR EL OR POR AND y ver porque no encuentra la fecha
 	public List<Oferta> buscarOfertasPaquete(int destinoId, int cantPersonas, LocalDateTime fDesde,
-			LocalDateTime fHasta){
-			Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o "
-					+ " INNER JOIN o.destino d" +" WHERE d.destino_id = :destinoId"
-					+ " AND o.cant_personas <= :cantPersonas" + /*" AND (o.fecha_desde <= :fDesde"
-					+ " AND o.fecha_hasta >= :fHasta)" +*/ " AND OfertaTipo = :tipoDeOferta");
-			ofertasHotelerasQuery.setParameter("destinoId", destinoId);
-			ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
-			//ofertasHotelerasQuery.setParameter("fDesde", fDesde);
-			//ofertasHotelerasQuery.setParameter("fHasta", fHasta);
-			ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_PAQUETE.name());
-			return ofertasHotelerasQuery.getResultList();
+			LocalDateTime fHasta) {
+		Query ofertasHotelerasQuery = entityManager
+				.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.destino_id = :destinoId"
+						+ " AND o.cant_personas <= :cantPersonas" + " AND o.fecha_desde <= :fDesde"
+						+ " AND o.fecha_hasta >= :fHasta" + " AND OfertaTipo = :tipoDeOferta");
+		ofertasHotelerasQuery.setParameter("destinoId", destinoId);
+		ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
+		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
+		ofertasHotelerasQuery.setParameter("fHasta", fHasta);
+		ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_PAQUETE.name());
+		return ofertasHotelerasQuery.getResultList();
 	}
 }

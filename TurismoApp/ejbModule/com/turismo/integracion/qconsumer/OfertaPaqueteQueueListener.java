@@ -7,7 +7,7 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import com.turismo.coreservices.OfertaService;
-import com.turismo.integraciones.qconsumer.mensajes.OfertaPaqueteMensaje;
+import com.turismo.integracion.qconsumer.mensajes.OfertaPaqueteMensaje;
 
 /**
  * Message-Driven Bean implementation class for: OfertaQueueListener

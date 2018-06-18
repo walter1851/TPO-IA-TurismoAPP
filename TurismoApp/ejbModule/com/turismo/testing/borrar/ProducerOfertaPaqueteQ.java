@@ -7,9 +7,9 @@ import javax.jms.JMSContext;
 import javax.jms.Queue;
 
 import com.turismo.integracion.qconsumer.JsonConverter;
-import com.turismo.integraciones.qconsumer.mensajes.AgenciaMensaje;
-import com.turismo.integraciones.qconsumer.mensajes.CiudadMensaje;
-import com.turismo.integraciones.qconsumer.mensajes.OfertaPaqueteMensaje;
+import com.turismo.integracion.qconsumer.mensajes.AgenciaMensaje;
+import com.turismo.integracion.qconsumer.mensajes.CiudadMensaje;
+import com.turismo.integracion.qconsumer.mensajes.OfertaPaqueteMensaje;
 
 @Stateless
 public class ProducerOfertaPaqueteQ {

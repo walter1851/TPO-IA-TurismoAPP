@@ -1,4 +1,4 @@
-package com.turismo.integraciones.qconsumer.mensajes;
+package com.turismo.integracion.qconsumer.mensajes;
 
 public class OfertaPaqueteMensaje {
 	private int id;

@@ -8,7 +8,7 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import com.turismo.coreservices.OfertaService;
-import com.turismo.integraciones.qconsumer.mensajes.OfertaHoteleraMensaje;
+import com.turismo.integracion.qconsumer.mensajes.OfertaHoteleraMensaje;
 
 /**
  * Message-Driven Bean implementation class for: OfertaHoteleraQueueListener
