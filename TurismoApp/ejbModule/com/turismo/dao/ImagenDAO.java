@@ -26,7 +26,7 @@ public class ImagenDAO{
 	}
 	public Imagen nuevaImagen(String url, Establecimiento establecimiento, Hotel hotel) {
 		Imagen imagen= new Imagen();
-		imagen.setUrl(url);
+		imagen.setImagenBase64(url);
 		imagen.setEstablecimiento(establecimiento);
 		imagen.setHotel(hotel);
 		entityManager.persist(imagen);
@@ -34,7 +34,7 @@ public class ImagenDAO{
 	}
 	public void actualizarImagen(int imagen_id,String url,Establecimiento establecimiento, Hotel hotel) {
 		Imagen imagen= buscarPorIdImagen(imagen_id);
-		imagen.setUrl(url);
+		imagen.setImagenBase64(url);
 		imagen.setEstablecimiento(establecimiento);
 		imagen.setHotel(hotel);
 		entityManager.merge(imagen);

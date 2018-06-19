@@ -1,10 +1,11 @@
-package com.turismo.integracion.qconsumer.mensajes;
+package com.turismo.queue.consumer.mensajes;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class CiudadMensaje {
-	@JsonProperty("id")
+	@JsonProperty("codigo_ciudad")
 	private int codigo_ciudad;
+	//SE SUPONE QUE EL NOMBRE NO ES NECESARIO
 	//private String nombre;
 
 	public int getCodigo_ciudad() {

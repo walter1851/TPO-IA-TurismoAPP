@@ -48,12 +48,14 @@ public class OfertaBloqueDAO{
 	}
 	@SuppressWarnings("unchecked")
 	/*Entiendo que esta validacion no hace falta hacerla:
-	 * " AND o.fecha_desde <= :fDesde AND o.fecha_hasta >= :fHasta"
+	 * 
+	 * " AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta"
+	 * 
 	 * */
 	public List<OfertaBloque> buscarBloquesDePaquetes(int ofertaId,LocalDate fDesde, LocalDate fHasta, int cantPersonas) {
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + " WHERE o.cant_personas >= :cantPersonas "
-						+ "AND o.oferta_id = :ofertaId "+" AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta");
+						+ "AND o.oferta_id = :ofertaId "+" AND o.fecha_desde <= :fDesde AND o.fecha_hasta >= :fHasta");
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);
 		bloqueQuery.setParameter("cantPersonas", cantPersonas);

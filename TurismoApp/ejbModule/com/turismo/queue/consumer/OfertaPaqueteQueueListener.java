@@ -1,4 +1,4 @@
-package com.turismo.integracion.qconsumer;
+package com.turismo.queue.consumer;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
@@ -7,17 +7,18 @@ import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 import com.turismo.coreservices.OfertaService;
-import com.turismo.integracion.qconsumer.mensajes.OfertaPaqueteMensaje;
+import com.turismo.queue.consumer.mensajes.OfertaPaqueteMensaje;
 
 /**
  * Message-Driven Bean implementation class for: OfertaQueueListener
  */
 /*
+ * GRUPO 11 jona.medina@gmail.com
 @MessageDriven(
 		activationConfig = { 
 				@ActivationConfigProperty(
 				propertyName = "destination", 
-				propertyValue = "jms/queue/ofertaPaquete"), 
+				propertyValue = "jms/queue/OP11Queue"), 
 				@ActivationConfigProperty(
 						propertyName = "destinationType", 
 							propertyValue = "javax.jms.Queue"),

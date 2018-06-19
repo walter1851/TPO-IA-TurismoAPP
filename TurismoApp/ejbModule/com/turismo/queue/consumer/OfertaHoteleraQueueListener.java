@@ -1,4 +1,4 @@
-package com.turismo.integracion.qconsumer;
+package com.turismo.queue.consumer;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
@@ -8,23 +8,23 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import com.turismo.coreservices.OfertaService;
-import com.turismo.integracion.qconsumer.mensajes.OfertaHoteleraMensaje;
+import com.turismo.queue.consumer.mensajes.OfertaHoteleraMensaje;
 
 /**
  * Message-Driven Bean implementation class for: OfertaHoteleraQueueListener
  */
 
 //COLA LOCAL (SOLO TESTING) BORRAR
+/*
 @MessageDriven(
 		activationConfig = { @ActivationConfigProperty(
 				propertyName = "destination", propertyValue = "java:/jms/queue/OfertaHoteleraQueue"), @ActivationConfigProperty(
 				propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 		}, 
 		mappedName = "java:/jms/queue/OfertaHoteleraQueue")
- 
+ */
 
-//COLA REMOTA GRUPO DEL SABADO
-/*
+//COLA REMOTA GRUPO DEL SABADO GRUPO 6
 @MessageDriven(
 		activationConfig = { 
 				@ActivationConfigProperty(
@@ -38,19 +38,17 @@ import com.turismo.integracion.qconsumer.mensajes.OfertaHoteleraMensaje;
 				@ActivationConfigProperty(propertyName = "password", 
 				propertyValue = "integracion"),
 				@ActivationConfigProperty(propertyName = "connectionParameters", 
-				propertyValue = "host=192.168.130.104;port=8080; http-upgrade-enabled=true"),
+				propertyValue = "host=172.20.10.2;port=8080; http-upgrade-enabled=true"),
 				@ActivationConfigProperty(propertyName = "connectorClassName",
         		propertyValue = "org.hornetq.core.remoting.impl.netty.NettyConnectorFactory")
 		}, 
 		mappedName = "jms/queue/ofertaHotelera")
-*/
 public class OfertaHoteleraQueueListener implements MessageListener {
 	@EJB
 	private OfertaService ofertaService;
     public OfertaHoteleraQueueListener() {
         // TODO Auto-generated constructor stub
     }
-	
 	/**
      * @see MessageListener#onMessage(Message)
      */

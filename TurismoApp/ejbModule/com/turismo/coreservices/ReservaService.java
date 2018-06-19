@@ -1,5 +1,6 @@
 package com.turismo.coreservices;
 
+import java.rmi.RemoteException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -8,6 +9,9 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.xml.rpc.ServiceException;
+
+import com.turismo.backoffice.logging.*;
 import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.ReservaDAO;
 import com.turismo.dto.ReservaDTO;
@@ -25,12 +29,11 @@ public class ReservaService {
 	private OfertaBloqueDAO ofertaBloqueDAO;
 	@EJB
 	private MapperService mapperService;
-	/*
-	 * @EJB private BackOfficeAutorizacion backOfficeAutorizador;
-	 */
+	//@EJB 
+	//private SOAPService soapService;
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
-			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException {
+			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException, RemoteException, ServiceException {
 		ReservaDTO nuevaReservaDTO=null;
 		float montoTotal = 0;
 		// valido el formato de las fechas
@@ -51,11 +54,11 @@ public class ReservaService {
 			hayDisponibilidad = false;
 		else
 			hayDisponibilidad = this.validarDispPaquete(bloques);
-		// consulto al backoffice si puedo reservar
-		boolean puedoReservar = true
+		// consulto al backoffice si puedo reservar	
 		/* completar despues */;
 		// backOfficeAutorizador.getServicioPrestadorAutorizadoPort().getPrestadorAutorizado(1);
-
+		//boolean puedoReservar = soapService.getSOAPPort().estaAutorizado(1);
+		boolean puedoReservar = true;
 		if (!formatoFechaOK)
 			throw new ReservaException("La fecha ingresada no tiene el formato adecuado.");
 		if (!hayDisponibilidad)

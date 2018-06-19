@@ -21,8 +21,8 @@ import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaTipo;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
-import com.turismo.integracion.qconsumer.mensajes.OfertaHoteleraMensaje;
-import com.turismo.integracion.qconsumer.mensajes.OfertaPaqueteMensaje;
+import com.turismo.queue.consumer.mensajes.OfertaHoteleraMensaje;
+import com.turismo.queue.consumer.mensajes.OfertaPaqueteMensaje;
 
 @Stateless
 @LocalBean

@@ -5,6 +5,7 @@
 	<projects>
 		<project>TurismoServiciosRest</project>
 		<project>TurismoApp</project>
+		<project>TurismoClienteSOAP</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -15,7 +15,8 @@ public class Imagen {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int imagen_id;
-	private String url;
+	//cambiar nombre por imagenBase64
+	private String imagenBase64;
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "establecimiento_id")
 	private Establecimiento establecimiento;
@@ -29,11 +30,11 @@ public class Imagen {
 	public void setImagen_id(int imagen_id) {
 		this.imagen_id = imagen_id;
 	}
-	public String getUrl() {
-		return url;
+	public String getImagenBase64() {
+		return imagenBase64;
 	}
-	public void setUrl(String url) {
-		this.url = url;
+	public void setImagenBase64(String url) {
+		this.imagenBase64 = url;
 	}
 	public Establecimiento getEstablecimiento() {
 		return establecimiento;

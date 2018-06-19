@@ -11,13 +11,13 @@ import javax.jms.JMSContext;
 import javax.jms.Queue;
 import javax.jms.TextMessage;
 
-import com.turismo.integracion.qconsumer.JsonConverter;
-import com.turismo.integracion.qconsumer.mensajes.CiudadMensaje;
-import com.turismo.integracion.qconsumer.mensajes.EstablecimientoMensaje;
-import com.turismo.integracion.qconsumer.mensajes.HotelMensaje;
-import com.turismo.integracion.qconsumer.mensajes.MapaMensaje;
-import com.turismo.integracion.qconsumer.mensajes.OfertaHoteleraMensaje;
-import com.turismo.integracion.qconsumer.mensajes.OfertaPaqueteMensaje;
+import com.turismo.queue.consumer.JsonConverter;
+import com.turismo.queue.consumer.mensajes.CiudadMensaje;
+import com.turismo.queue.consumer.mensajes.EstablecimientoMensaje;
+import com.turismo.queue.consumer.mensajes.HotelMensaje;
+import com.turismo.queue.consumer.mensajes.MapaMensaje;
+import com.turismo.queue.consumer.mensajes.OfertaHoteleraMensaje;
+import com.turismo.queue.consumer.mensajes.OfertaPaqueteMensaje;
 
 @Stateless
 public class ProducerOfertaHoteleraQ {
