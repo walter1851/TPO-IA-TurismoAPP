@@ -58,7 +58,7 @@ public class ReservaService {
 							+ LocalDate.now().toString());
 		if (!hayDisponibilidad)
 			throw new ReservaException("No hay disponibilidad desde la fecha " + fDesdeConverted.toString() + " hasta "
-					+ fDesdeConverted.toString() + " para la cantidad de " + cantPersonas + " persona/s");
+					+ fHastaConverted.toString() + " para la cantidad " + cantPersonas + " persona/s. Tenga en cuenta que el rango de fechas involucrado en el paquete debe estar contenido en las fechas ingresadas.");
 		if (!puedoReservar)
 			throw new ReservaException("No hay autorizacion del backoffice para reservar");
 		Reserva nuevaReservaPaquete = null;

@@ -5,6 +5,13 @@ import java.time.LocalDate;
 
 public class OfertaDTO {
 	private int oferta_id;
+	private int codigo_oferta;
+	public int getCodigo_oferta() {
+		return codigo_oferta;
+	}
+	public void setCodigo_oferta(int codigo_oferta) {
+		this.codigo_oferta = codigo_oferta;
+	}
 	private String nombre;
 	private int cupo;
 	private LocalDate fecha_desde;
@@ -16,6 +23,7 @@ public class OfertaDTO {
 	private DestinoDTO destinoDTO;
 	private String foto_paquete;
 	private String descripcionPaquete;
+	
 	public String getDescripcionPaquete() {
 		return descripcionPaquete;
 	}

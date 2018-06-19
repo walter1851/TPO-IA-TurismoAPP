@@ -33,6 +33,7 @@ public class ProducerOfertaPaqueteQ {
 			ciudadDestino.setCodigo_ciudad(codigo_ciudadDestino);
 			
 			OfertaPaqueteMensaje ofertaPaqueteMensaje=new OfertaPaqueteMensaje();
+			ofertaPaqueteMensaje.setId(idPaquete);
 			ofertaPaqueteMensaje.setAgencia(agenciaMensaje);
 			ofertaPaqueteMensaje.setCiudadDestino(ciudadDestino);
 			ofertaPaqueteMensaje.setId(idPaquete);

@@ -1,8 +1,6 @@
 package com.turismo.entities;
 
 import java.time.LocalDate;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,10 +18,10 @@ public class Reserva {
 	private LocalDate fechaCheckIn;
 	private LocalDate fechaCheckOut;
 	private float montoTotal;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "oferta_id")
 	private Oferta oferta;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "medio_de_pago_id")
 	private MedioPago medioPago;
 	private int usuario_id;

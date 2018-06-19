@@ -18,7 +18,7 @@ public class OfertaBloque {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int oferta_bloque_id;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="oferta_id")
 	private Oferta oferta;
 	private LocalDate fecha_bloque;

@@ -1,6 +1,4 @@
 package com.turismo.entities;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,10 +15,10 @@ public class Imagen {
 	private int imagen_id;
 	//cambiar nombre por imagenBase64
 	private String imagenBase64;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "establecimiento_id")
 	private Establecimiento establecimiento;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
 	

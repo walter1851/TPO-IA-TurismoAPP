@@ -61,16 +61,13 @@ public class ProducerOfertaHoteleraQ {
 			//ciudadMensaje.setNombre(nombreCiudad);
 			establecimientoMensaje.setCiudad(ciudadMensaje);
 			
+			ofertaHoteleraMensaje.setIdOfertaHotelera(idOfertaHotelera);
 			ofertaHoteleraMensaje.setNombre(nombreOfertaHotelera);
 			ofertaHoteleraMensaje.setIdOfertaHotelera(idOfertaHotelera);
 			ofertaHoteleraMensaje.setEstablecimiento(establecimientoMensaje);
 			ofertaHoteleraMensaje.setCupo(cupo);
 			ofertaHoteleraMensaje.setFechaDesde(fechaDesde);
 			ofertaHoteleraMensaje.setFechaHasta(fechaHasta);
-			
-	
-			
-			
 			ofertaHoteleraMensaje.setMediosDePago(mediosDePago);
 			ofertaHoteleraMensaje.setPoliticas(politicaCancelacion);
 			ofertaHoteleraMensaje.setPrecio(precio);

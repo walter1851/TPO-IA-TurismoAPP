@@ -1,6 +1,7 @@
 package com.turismo.entities;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -12,7 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name="ofertas") 
@@ -20,6 +20,8 @@ public class Oferta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int oferta_id;
+	@Column(unique = true)
+	private int codigo_oferta;
 	private String nombre;
 	private int cupo;
 	private LocalDate fecha_desde;
@@ -28,23 +30,30 @@ public class Oferta {
 	private String tipo_habitacion;
 	private String politicas;
 	private String servicios;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="destino_id")
 	private Destino destino;
 	private String foto_paquete;
 	private String descriptionPaquete;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="medio_de_pago_id")
 	private MedioPago medioPago;
 	private int cant_personas;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="establecimiento_id")
 	private Establecimiento establecimiento;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name="agencia_id")
 	private Agencia agencia;
 	@Enumerated(EnumType.STRING)
 	OfertaTipo ofertaTipo;
+	
+	public int getCodigo_oferta() {
+		return codigo_oferta;
+	}
+	public void setCodigo_oferta(int codigo_oferta) {
+		this.codigo_oferta = codigo_oferta;
+	}
 	public int getOferta_id() {
 		return oferta_id;
 	}
