@@ -1,4 +1,4 @@
-package com.turismo.queue.consumer.mensajes;
+package com.turismo.qconsumer.mensajes;
 
 public class OfertaPaqueteMensaje {
 	private int id;

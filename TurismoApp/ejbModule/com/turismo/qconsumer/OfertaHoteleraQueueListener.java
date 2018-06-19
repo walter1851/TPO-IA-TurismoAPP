@@ -1,4 +1,4 @@
-package com.turismo.queue.consumer;
+package com.turismo.qconsumer;
 
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.EJB;
@@ -8,7 +8,7 @@ import javax.jms.MessageListener;
 import javax.jms.TextMessage;
 
 import com.turismo.coreservices.OfertaService;
-import com.turismo.queue.consumer.mensajes.OfertaHoteleraMensaje;
+import com.turismo.qconsumer.mensajes.OfertaHoteleraMensaje;
 
 /**
  * Message-Driven Bean implementation class for: OfertaHoteleraQueueListener

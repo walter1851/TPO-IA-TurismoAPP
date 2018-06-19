@@ -1,4 +1,4 @@
-package com.turismo.queue.consumer;
+package com.turismo.qconsumer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class JsonConverter {

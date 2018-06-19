@@ -11,7 +11,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.xml.rpc.ServiceException;
 
-import com.turismo.backoffice.logging.*;
+import com.turismo.backoffice.autorizacion.*;
 import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.ReservaDAO;
 import com.turismo.dto.ReservaDTO;

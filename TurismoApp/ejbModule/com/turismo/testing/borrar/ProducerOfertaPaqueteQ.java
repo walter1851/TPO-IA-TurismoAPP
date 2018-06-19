@@ -6,10 +6,10 @@ import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.Queue;
 
-import com.turismo.queue.consumer.JsonConverter;
-import com.turismo.queue.consumer.mensajes.AgenciaMensaje;
-import com.turismo.queue.consumer.mensajes.CiudadMensaje;
-import com.turismo.queue.consumer.mensajes.OfertaPaqueteMensaje;
+import com.turismo.qconsumer.JsonConverter;
+import com.turismo.qconsumer.mensajes.AgenciaMensaje;
+import com.turismo.qconsumer.mensajes.CiudadMensaje;
+import com.turismo.qconsumer.mensajes.OfertaPaqueteMensaje;
 
 @Stateless
 public class ProducerOfertaPaqueteQ {

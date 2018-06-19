@@ -1,4 +1,4 @@
-package com.turismo.queue.consumer.mensajes;
+package com.turismo.qconsumer.mensajes;
 
 public class AgenciaMensaje {
 		private int id;
