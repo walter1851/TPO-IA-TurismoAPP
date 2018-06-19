@@ -3,9 +3,9 @@
 	<name>TurismoAppEAR</name>
 	<comment></comment>
 	<projects>
-		<project>TurismoServiciosRest</project>
 		<project>TurismoApp</project>
 		<project>TurismoClienteSOAP</project>
+		<project>TurismoServiciosREST</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
