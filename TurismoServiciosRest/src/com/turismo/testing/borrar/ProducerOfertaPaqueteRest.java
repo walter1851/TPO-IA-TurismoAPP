@@ -17,6 +17,7 @@ import com.turismo.controller.ControllerService;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.exceptions.OfertaPaqueteException;
 import com.turismo.serviciorest.response.WebResponse;
+import com.turismo.testing.qproducer.ProducerOfertaPaqueteQ;
 
 @Path("/backoffice")
 @Stateless

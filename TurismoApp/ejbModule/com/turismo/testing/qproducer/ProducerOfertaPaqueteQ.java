@@ -1,4 +1,4 @@
-package com.turismo.testing.borrar;
+package com.turismo.testing.qproducer;
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;

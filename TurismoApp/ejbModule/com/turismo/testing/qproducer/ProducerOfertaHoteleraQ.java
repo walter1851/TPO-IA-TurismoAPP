@@ -1,4 +1,4 @@
-package com.turismo.testing.borrar;
+package com.turismo.testing.qproducer;
 
 import java.util.ArrayList;
 import java.util.List;
