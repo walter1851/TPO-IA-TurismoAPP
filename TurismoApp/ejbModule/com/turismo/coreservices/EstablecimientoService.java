@@ -29,19 +29,14 @@ public class EstablecimientoService {
 		Imagen imagen = buscarImagen(urlFotoHotel);
 		if (hotel == null)
 			hotel = hotelDAO.nuevoHotel(nombreHotel, idHotel);
-		// else
-		// Actualizar hotel
 
 		if (establecimiento == null)
 			establecimiento = establecimientoDAO.nuevoEstablecimiento(nombre, direccion, ciudad, estado, descripcion,
 					estrellas, latitud,longitud, codigo_establecimiento, hotel);
-		// else
-		// Actualizar establecimiento
 
 		if (imagen == null)
 			imagen = imagenDAO.nuevaImagen(urlFotoHotel, establecimiento, hotel);
-		// else
-		// Actualizar establecimiento
+
 		return establecimiento;
 	}
 

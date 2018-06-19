@@ -33,7 +33,7 @@ public class HotelDAO{
 			Query hotelQuery = entityManager.createQuery("SELECT h FROM Hotel h " + "WHERE codigo_hotel = :codigoHotel ");
 			hotelQuery.setParameter("codigoHotel", codigoHotel);
 			return (Hotel) hotelQuery.getSingleResult();
-		} catch (NoResultException nre) {
+		} catch (Exception nre) {
 			return null;
 		}
 	}

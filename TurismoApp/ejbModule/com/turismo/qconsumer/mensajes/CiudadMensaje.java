@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class CiudadMensaje {
 	@JsonProperty("codigo_ciudad")
 	private int codigo_ciudad;
+	
 	//SE SUPONE QUE EL NOMBRE NO ES NECESARIO
 	//private String nombre;
 

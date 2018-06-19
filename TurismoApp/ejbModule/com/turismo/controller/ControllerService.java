@@ -12,6 +12,7 @@ import com.turismo.coreservices.BusquedaService;
 import com.turismo.coreservices.ReservaService;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.dto.ReservaDTO;
+import com.turismo.exceptions.ConversionFechaException;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
 import com.turismo.exceptions.ReservaException;
@@ -23,17 +24,17 @@ public class ControllerService{
 	@EJB
 	private ReservaService reservaService;
 	
-	public List<OfertaDTO> buscarOfertaPaquete(int destinoId,int cantPersonas,String fDesde, String fHasta) throws OfertaPaqueteException{
+	public List<OfertaDTO> buscarOfertaPaquete(int destinoId,int cantPersonas,String fDesde, String fHasta) throws OfertaPaqueteException, ConversionFechaException{
 		return busquedaOfertaService.buscarOfertaPaquete(destinoId, cantPersonas, fDesde, fHasta);
 	}
 
-	public List<OfertaDTO> buscarOfertaHotelera(int destinoId,String fDesde, String fHasta, String tipoHabitacion) throws OfertaHoteleraException {
+	public List<OfertaDTO> buscarOfertaHotelera(int destinoId,String fDesde, String fHasta, String tipoHabitacion) throws OfertaHoteleraException, ConversionFechaException {
 		return busquedaOfertaService.buscarOfertaHotelera(destinoId, fDesde, fHasta, tipoHabitacion);
 	}
-	public ReservaDTO reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantHabitaciones,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException {
+	public ReservaDTO reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantHabitaciones,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException, ConversionFechaException {
 		return reservaService.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantHabitaciones, nombre, apellido, dni, medioPagoId,mailUsuario);
 	}
-	public ReservaDTO reservarPaquete(int ofertaid,String fDesde,String fHasta,int cantPersonas,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException, RemoteException, ServiceException {
+	public ReservaDTO reservarPaquete(int ofertaid,String fDesde,String fHasta,int cantPersonas,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException, RemoteException, ServiceException, ConversionFechaException {
 		return reservaService.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPagoId,mailUsuario);
 	}
 }

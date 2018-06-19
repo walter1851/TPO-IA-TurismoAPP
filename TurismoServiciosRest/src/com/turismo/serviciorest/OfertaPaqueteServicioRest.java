@@ -29,7 +29,7 @@ public class OfertaPaqueteServicioRest {
 		try {
 			List<OfertaDTO> ofertas = facade.buscarOfertaPaquete(destinoId, cantPersonas, fDesde, fHasta);
 			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON: "+ofertas.size()+" PAQUETES")).build();
-		} catch (OfertaPaqueteException e) {
+		} catch (Exception e) {
 			// logearerror(e.getMessage());
 			return Response.ok(new WebResponse(false, e.getMessage())).build();
 		}
