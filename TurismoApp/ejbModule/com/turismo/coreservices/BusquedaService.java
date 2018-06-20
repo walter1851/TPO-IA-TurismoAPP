@@ -29,7 +29,7 @@ public class BusquedaService{
 	@EJB
 	private MapperService mapperService;
 	
-	public List<OfertaDTO> buscarOfertaPaquete(int destinoId, int cantPersonas, String fDesdeString, String fHastaString)
+	public List<OfertaDTO> buscarOfertaPaquete(int codigoDestino, int cantPersonas, String fDesdeString, String fHastaString)
 			throws OfertaPaqueteException, ConversionFechaException {
 		List<Oferta> ofertasPaquete;
 		LocalDate fDesdeConverted;
@@ -41,17 +41,17 @@ public class BusquedaService{
 			throw new OfertaPaqueteException("El formato de la fecha no es el correcto");
 		}
 		if (validarRangoFechaPaquete(fDesdeConverted, fHastaConverted))
-			ofertasPaquete = ofertaDao.buscarOfertasPaquete(destinoId, cantPersonas, fDesdeConverted, fHastaConverted);
+			ofertasPaquete = ofertaDao.buscarOfertasPaquete(codigoDestino, cantPersonas, fDesdeConverted, fHastaConverted);
 		else
 			throw new OfertaPaqueteException("La fecha de inicio es mayor que la final o la fecha actual no se encuentra dentro de dicho rangos");
 		
 		if (ofertasPaquete.isEmpty())
-			throw new OfertaPaqueteException("No se encontraron paquetes para el destino id: " + destinoId + " desde el "
+			throw new OfertaPaqueteException("No se encontraron paquetes para el destino id: " + codigoDestino + " desde el "
 					+ fDesdeConverted + " Hasta el " + fHastaConverted+ " cant personas: "+cantPersonas);
 		else
 			return mapperService.obtenerListaOfertaPaqueteDTO(ofertasPaquete);
 	}
-	public List<OfertaDTO> buscarOfertaHotelera(int destinoId, String fDesde, String fHasta,String tipoHabitacion) throws OfertaHoteleraException, ConversionFechaException {
+	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino, String fDesde, String fHasta,String tipoHabitacion) throws OfertaHoteleraException, ConversionFechaException {
 		List<Oferta> ofertasHoteleras = null;
 		LocalDate fDesdeConverted;
 		LocalDate fHastaConverted;
@@ -62,12 +62,12 @@ public class BusquedaService{
 			throw new OfertaHoteleraException("El formato de la fecha no es el correcto");
 		}
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted))
-			ofertasHoteleras = ofertaDao.buscarOfertasHotelera(destinoId, tipoHabitacion, fDesdeConverted, fHastaConverted);
+			ofertasHoteleras = ofertaDao.buscarOfertasHotelera(codigoDestino, tipoHabitacion, fDesdeConverted, fHastaConverted);
 		else
 			throw new OfertaHoteleraException("La fecha de inicio es mayor que la final o la fecha actual no se encuentra dentro de dicho rangos");
 		
 		if (ofertasHoteleras.isEmpty())
-			throw new OfertaHoteleraException("No se encontraron hoteles para el destino id: " + destinoId + " desde el "
+			throw new OfertaHoteleraException("No se encontraron hoteles para el destino id: " + codigoDestino + " desde el "
 					+ fDesde + " Hasta el " + fHasta+" tipo habitacion: "+tipoHabitacion);
 		else
 			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);

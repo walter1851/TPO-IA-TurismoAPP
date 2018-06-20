@@ -23,10 +23,10 @@ public class EstablecimientoService {
 
 	public Establecimiento guardarEstablecimiento(String nombre, String direccion, String ciudad, Estado estado,
 			String descripcion, int estrellas, String latitud, String longitud, int codigo_establecimiento, int idHotel,
-			String nombreHotel, String urlFotoHotel) {
+			String nombreHotel, String imagenBase64) {
 		Hotel hotel = buscarHotel(idHotel);
 		Establecimiento establecimiento = buscarEstablecimiento(codigo_establecimiento);
-		Imagen imagen = buscarImagen(urlFotoHotel);
+		Imagen imagen = buscarImagen(imagenBase64);
 		if (hotel == null)
 			hotel = hotelDAO.nuevoHotel(nombreHotel, idHotel);
 
@@ -35,7 +35,7 @@ public class EstablecimientoService {
 					estrellas, latitud,longitud, codigo_establecimiento, hotel);
 
 		if (imagen == null)
-			imagen = imagenDAO.nuevaImagen(urlFotoHotel, establecimiento, hotel);
+			imagen = imagenDAO.nuevaImagen(imagenBase64, establecimiento, hotel);
 
 		return establecimiento;
 	}
@@ -51,8 +51,8 @@ public class EstablecimientoService {
 		return establecimientoFromDatabase;
 	}
 
-	private Imagen buscarImagen(String url) {
-		Imagen imagenFromDatabase = imagenDAO.buscarImagenPorURL(url);
+	private Imagen buscarImagen(String imagenBase64) {
+		Imagen imagenFromDatabase = imagenDAO.buscarImagenPorURL(imagenBase64);
 		return imagenFromDatabase;
 	}
 }

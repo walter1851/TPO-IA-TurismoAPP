@@ -24,25 +24,25 @@ public class ImagenDAO{
 			return null;
 		}
 	}
-	public Imagen nuevaImagen(String url, Establecimiento establecimiento, Hotel hotel) {
+	public Imagen nuevaImagen(String imagenBase64, Establecimiento establecimiento, Hotel hotel) {
 		Imagen imagen= new Imagen();
-		imagen.setImagenBase64(url);
+		imagen.setImagenBase64(imagenBase64);
 		imagen.setEstablecimiento(establecimiento);
 		imagen.setHotel(hotel);
 		entityManager.persist(imagen);
 		return imagen;
 	}
-	public void actualizarImagen(int imagen_id,String url,Establecimiento establecimiento, Hotel hotel) {
+	public void actualizarImagen(int imagen_id,String imagenBase64,Establecimiento establecimiento, Hotel hotel) {
 		Imagen imagen= buscarPorIdImagen(imagen_id);
-		imagen.setImagenBase64(url);
+		imagen.setImagenBase64(imagenBase64);
 		imagen.setEstablecimiento(establecimiento);
 		imagen.setHotel(hotel);
 		entityManager.merge(imagen);
 	}
-	public Imagen buscarImagenPorURL(String url) {
+	public Imagen buscarImagenPorURL(String imagenBase64) {
 		try {
-			Query imagenQuery = entityManager.createQuery("SELECT i FROM Imagen i " + "WHERE url = :url ");
-			imagenQuery.setParameter("url", url);
+			Query imagenQuery = entityManager.createQuery("SELECT i FROM Imagen i " + "WHERE imagenBase64 = :imagenBase64 ");
+			imagenQuery.setParameter("imagenBase64", imagenBase64);
 			return (Imagen) imagenQuery.getSingleResult();
 		} catch (NoResultException nre) {
 			return null;

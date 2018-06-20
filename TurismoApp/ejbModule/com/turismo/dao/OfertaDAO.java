@@ -1,7 +1,6 @@
 package com.turismo.dao;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -114,12 +113,12 @@ public class OfertaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasHotelera(int destinoId, String tipo_Habitacion, LocalDate fDesde,
+	public List<Oferta> buscarOfertasHotelera(int codigo_destino, String tipo_Habitacion, LocalDate fDesde,
 			LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
-				+ " WHERE d.destino_id = :destinoId" + " AND o.tipo_habitacion = :tipo_Habitacion"
+				+ " WHERE d.codigo_destino = :codigo_destino" + " AND o.tipo_habitacion = :tipo_Habitacion"
 				+ " AND o.fecha_desde <= :fDesde" + " OR o.fecha_hasta >= :fHasta" + " AND OfertaTipo = :tipoDeOferta");
-		ofertasHotelerasQuery.setParameter("destinoId", destinoId);
+		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("tipo_Habitacion", tipo_Habitacion);
 		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
 		ofertasHotelerasQuery.setParameter("fHasta", fHasta);
@@ -128,13 +127,13 @@ public class OfertaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasPaquete(int destinoId, int cantPersonas, LocalDate fDesde,
+	public List<Oferta> buscarOfertasPaquete(int codigo_destino, int cantPersonas, LocalDate fDesde,
 			LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager
-				.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.destino_id = :destinoId"
+				.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.codigo_destino = :codigo_destino"
 						+ " AND o.cant_personas <= :cantPersonas" + " AND o.fecha_desde >= :fDesde"
 						+ " AND o.fecha_hasta <= :fHasta" + " AND OfertaTipo = :tipoDeOferta");
-		ofertasHotelerasQuery.setParameter("destinoId", destinoId);
+		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
 		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
 		ofertasHotelerasQuery.setParameter("fHasta", fHasta);

@@ -38,9 +38,10 @@ public class Establecimiento {
 	}
 	@Column(unique = true)
 	private int codigo_establecimiento;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne
 	@JoinColumn(name = "hotel_id")
 	private Hotel hotel;
+	
 	public int getEstablecimiento_id() {
 		return establecimiento_id;
 	}
