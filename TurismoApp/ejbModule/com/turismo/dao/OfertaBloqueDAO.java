@@ -11,6 +11,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaBloque;
+import com.turismo.entities.TipoHabitacion;
 
 @Stateless
 @LocalBean
@@ -69,11 +70,11 @@ public class OfertaBloqueDAO{
 	public List<OfertaBloque> buscarBloquesDeHoteleria(int ofertaId,LocalDate fDesde, LocalDate fHasta,String tipoHabitacion) {
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + "WHERE o.oferta_id = :ofertaId " + 
-		"AND o.tipo_habitacion=:tipoHabitacion "+" AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta");
+		"AND TipoHabitacion=:tipoHabitacion "+" AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta");
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);
 		bloqueQuery.setParameter("ofertaId", ofertaId);
-		bloqueQuery.setParameter("tipoHabitacion", tipoHabitacion);
+		bloqueQuery.setParameter("tipoHabitacion",  TipoHabitacion.valueOf(tipoHabitacion).name());
 		return bloqueQuery.getResultList();
 	}
 }

@@ -17,7 +17,7 @@ public class OfertaDTO {
 	private LocalDate fecha_desde;
 	private LocalDate fecha_hasta;
 	private float precio;
-	private String tipo_habitacion;
+	private TipoHabitacionDTO tipo_habitacion;
 	private String politicas;
 	private String servicios;
 	private DestinoDTO destinoDTO;
@@ -71,10 +71,10 @@ public class OfertaDTO {
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
-	public String getTipo_habitacion() {
+	public TipoHabitacionDTO getTipo_habitacion() {
 		return tipo_habitacion;
 	}
-	public void setTipo_habitacion(String tipo_habitacion) {
+	public void setTipo_habitacion(TipoHabitacionDTO tipo_habitacion) {
 		this.tipo_habitacion = tipo_habitacion;
 	}
 	public String getPoliticas() {

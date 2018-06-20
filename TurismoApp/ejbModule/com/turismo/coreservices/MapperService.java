@@ -13,6 +13,7 @@ import com.turismo.dto.MedioPagoDTO;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.dto.OfertaTipoDTO;
 import com.turismo.dto.ReservaDTO;
+import com.turismo.dto.TipoHabitacionDTO;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.Reserva;
 import com.turismo.exceptions.OfertaHoteleraException;
@@ -106,8 +107,8 @@ public class MapperService {
 			establecimientoDTO.setHotelDTO(hotelDTO);
 			establecimientoDTO.setLatitud(oferta.getEstablecimiento().getLatitud());
 			establecimientoDTO.setLongitud(oferta.getEstablecimiento().getLongitud());
-			
 			establecimientoDTO.setNombre(oferta.getEstablecimiento().getNombre());
+			
 			ofertaDTO.setOferta_id(oferta.getOferta_id());
 			ofertaDTO.setDestinoDTO(destinoDTO);
 			ofertaDTO.setEstablecimientoDTO(establecimientoDTO);
@@ -119,7 +120,8 @@ public class MapperService {
 			ofertaDTO.setServicios(oferta.getServicios());
 			ofertaDTO.setCupo(oferta.getCupo());
 			ofertaDTO.setServicios(oferta.getServicios());
-			ofertaDTO.setTipo_habitacion(oferta.getTipo_habitacion());
+			TipoHabitacionDTO tipoHabitacionDTO = TipoHabitacionDTO.valueOf(oferta.getTipo_habitacion().name());
+			ofertaDTO.setTipo_habitacion(tipoHabitacionDTO);
 			ofertaDTO.setPrecio(oferta.getPrecio());
 			ofertaDTO.setNombre(oferta.getNombre());
 			listOfertaHoteleraDTO.add(ofertaDTO);

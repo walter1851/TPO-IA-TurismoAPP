@@ -26,7 +26,8 @@ public class Oferta {
 	private LocalDate fecha_desde;
 	private LocalDate fecha_hasta;
 	private float precio;
-	private String tipo_habitacion;
+	@Enumerated(EnumType.STRING)
+	private TipoHabitacion tipoHabitacion;
 	private String politicas;
 	private String servicios;
 	@ManyToOne
@@ -89,11 +90,11 @@ public class Oferta {
 	public void setPrecio(float precio) {
 		this.precio = precio;
 	}
-	public String getTipo_habitacion() {
-		return tipo_habitacion;
+	public TipoHabitacion getTipo_habitacion() {
+		return tipoHabitacion;
 	}
-	public void setTipo_habitacion(String tipo_habitacion) {
-		this.tipo_habitacion = tipo_habitacion;
+	public void setTipo_habitacion(TipoHabitacion tipo_habitacion) {
+		this.tipoHabitacion = tipo_habitacion;
 	}
 	public String getPoliticas() {
 		return politicas;

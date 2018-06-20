@@ -16,6 +16,7 @@ import com.turismo.entities.Establecimiento;
 import com.turismo.entities.MedioPago;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaTipo;
+import com.turismo.entities.TipoHabitacion;
 import com.turismo.exceptions.ConversionFechaException;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
@@ -42,10 +43,10 @@ public class OfertaService {
 
 	public void guardarOfertaPaquete(OfertaPaqueteMensaje ofertaPaqueteMensaje)
 			throws OfertaPaqueteException, ConversionFechaException {
-		// try {
 		int codigo_paquete = ofertaPaqueteMensaje.getId();
 		String nombrePaquete = ofertaPaqueteMensaje.getNombre();
 		int codigo_ciudadDestino = ofertaPaqueteMensaje.getCiudadDestino().getCodigo_ciudad();
+		//No hay q guardar el nombre de la ciudad
 		// String nombreCiudadDestino =
 		// ofertaPaqueteMensaje.getCiudadDestino().getNombre();
 		int cupo = ofertaPaqueteMensaje.getCupo();
@@ -57,7 +58,6 @@ public class OfertaService {
 		// Preguntar si es necesario guardar, entiendo que no.
 		// String estadoAgencia=ofertaPaqueteMensaje.getEstadoAgencia(); // INACTIVO,
 		// ACTIVO
-		// Oferta Paquete
 		String foto = ofertaPaqueteMensaje.getFoto();
 		String fechaDesde = ofertaPaqueteMensaje.getFechaDesde(); // Ej: 2007-04-05T12:30-02:00
 		String fechaHasta = ofertaPaqueteMensaje.getFechaHasta(); // Ej: 2007-04-05T12:30-02:00
@@ -71,8 +71,6 @@ public class OfertaService {
 		Destino destino = destinoDAO.buscarDestinoPorCodigo(codigo_ciudadDestino);
 		Oferta oferta = ofertaDAO.buscarPorCodigoOferta(codigo_paquete);
 		if (destino != null && oferta == null) {
-			// Guardo la agencia, el servicio AgenciaService se encarga de guardar solo si
-			// no existe el codigo externo, en caso de existir lo devuelve de la base
 			Agencia agencia = agenciaService.guardarAgencia(nombreAgencia, direccionAgencia, codigo_agencia);
 			// convierto la fecha a localdate
 			LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fechaDesde);
@@ -115,22 +113,15 @@ public class OfertaService {
 			throw new OfertaPaqueteException(
 					"Persistencia desde la cola oferta paquete: No se guardo la oferta paquete con id externo: "
 							+ codigo_paquete + " porque dicho codigo ya existe en la BD.");
-		/*
-		 * } catch (NullPointerException npe) { throw new OfertaPaqueteException(
-		 * "Se consumieron datos de la cola de oferta paquete y cuando se intento guardar en nuestra BD genero un NullPointerException. Detalle: "
-		 * + npe.getMessage()); }
-		 */
 	}
 
 	public void guardarOfertaHotelera(OfertaHoteleraMensaje ofertaHoteleraMensaje)
 			throws OfertaHoteleraException, ConversionFechaException {
-		// try {
 		int codigoOfertaHotelera = ofertaHoteleraMensaje.getIdOfertaHotelera();
 		String nombreOfertaHotelera = ofertaHoteleraMensaje.getNombre();
 		float precio = ofertaHoteleraMensaje.getPrecio();// precio de la habitacion
 		int cupo = ofertaHoteleraMensaje.getCupo();
 		String mediosDePago = ofertaHoteleraMensaje.getMediosDePago();
-		String tipoHabitacion = ofertaHoteleraMensaje.getTipoHabitacion(); // SIMPLE, DOBLE, TRIPLE
 		// Establecimiento
 		int codigo_Establecimiento = ofertaHoteleraMensaje.getEstablecimiento().getId();
 		// Entiendo que no hace falta guardarlo
@@ -155,7 +146,8 @@ public class OfertaService {
 		String servicios = ofertaHoteleraMensaje.getServicios();
 		Destino destino = destinoDAO.buscarDestinoPorCodigo(codigo_ciudad);
 		Oferta oferta = ofertaDAO.buscarPorCodigoOferta(codigoOfertaHotelera);
-		if (destino != null && oferta == null) {
+		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(ofertaHoteleraMensaje.getTipoHabitacion()); // SIMPLE, DOBLE, TRIPLE
+		if (destino != null && oferta == null && tipoHabitacion!=null) {
 			Establecimiento establecimiento = establecimientoService.guardarEstablecimiento(nombreEstablecimiento,
 					direccionEstablecimiento, destino.getNombre(), descripcionEstablecimiento, cantEstrellas,
 					mapaLatitud, mapaLongitud, codigo_Establecimiento, codigo_hotel, nombreHotel, urlFotoHotel);
@@ -200,11 +192,9 @@ public class OfertaService {
 			throw new OfertaHoteleraException(
 					"Persistencia desde la cola oferta hotelera: No se guardo la oferta hotelera con codigo: "
 							+ codigoOfertaHotelera + ", porque dicho codigo ya existe en la BD.");
-		// } catch (NullPointerException npe) {
-		// throw new OfertaHoteleraException(
-		// "Se consumieron datos de la cola de oferta HOTELERA y cuando se intento
-		// guardar en nuestra BD genero un NullPointerException. Detalle: "
-		// + npe.getMessage());
-		// }
+		if (tipoHabitacion == null)
+			throw new OfertaHoteleraException(
+					"Problema para parsear el tipo de habitacion consumido de la cola de oferta hotelera. El valor que no puede ser parseado es : "
+							+ ofertaHoteleraMensaje.getTipoHabitacion());
 	}
 }
