@@ -9,14 +9,14 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.xml.rpc.ServiceException;
 import com.turismo.dao.OfertaBloqueDAO;
-import com.turismo.dao.OfertaDAO;
 import com.turismo.dao.ReservaDAO;
 import com.turismo.dto.ReservaDTO;
-import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaBloque;
 import com.turismo.entities.OfertaTipo;
 import com.turismo.entities.Reserva;
 import com.turismo.exceptions.ConversionFechaException;
+import com.turismo.exceptions.OfertaHoteleraException;
+import com.turismo.exceptions.OfertaPaqueteException;
 import com.turismo.exceptions.ReservaException;
 
 @Stateless
@@ -29,23 +29,21 @@ public class ReservaService {
 	@EJB
 	private MapperService mapperService;
 	@EJB
-	private OfertaDAO ofertaDAO;
-	@EJB
 	BusquedaService busquedaService;
-	//@EJB
-	//private SOAPService soapService;
+	// @EJB
+	// private SOAPService soapService;
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
-			String apellido, String dni, int medioPagoID, String emailUsuario)
-			throws ReservaException, RemoteException, ServiceException, ConversionFechaException {
+			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException, RemoteException,
+			ServiceException, ConversionFechaException, OfertaPaqueteException {
 		ReservaDTO nuevaReservaDTO = null;
 		boolean puedoReservar = true;
 		boolean hayDisponibilidad = true;
 		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaPaquete(fDesdeConverted, fHastaConverted);
-		Oferta ofertaExistente = ofertaDAO.buscarPorIdOferta(ofertaid);
-		if (ofertaExistente != null) {
+		boolean ofertaExistente = busquedaService.existeOfertaPaquete(ofertaid);
+		if (ofertaExistente) {
 			// consulto al backoffice si puedo reservar, le paso el codigo externo de la
 			// agencia (al ser paquete)
 			// backOfficeAutorizador.getServicioPrestadorAutorizadoPort().getPrestadorAutorizado(1);
@@ -54,12 +52,12 @@ public class ReservaService {
 					fHastaConverted, cantPersonas);
 			hayDisponibilidad = this.validarDisponibilidadPaquete(bloques);
 			Reserva nuevaReservaPaquete = null;
-			float montoTotal = 0;
-			if (formatoFechaOK && hayDisponibilidad && puedoReservar)
-				montoTotal = montoTotal + (ofertaDAO.buscarPorIdOferta(ofertaid).getPrecio() * cantPersonas);
-			if (actualizarCupoBloquesPaquete(bloques))
-				nuevaReservaPaquete = reservaDAO.crearReserva(ofertaid, 1, fDesdeConverted, fHastaConverted,
-						medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
+			if (formatoFechaOK && hayDisponibilidad && puedoReservar) {
+				float montoTotal = busquedaService.calcularPrecioTotalPaquete(ofertaid, cantPersonas);
+				if (actualizarCupoBloquesPaquete(bloques))
+					nuevaReservaPaquete = reservaDAO.crearReserva(ofertaid, 1, fDesdeConverted, fHastaConverted,
+							medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
+			}
 			if (nuevaReservaPaquete == null)
 				throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
 			else
@@ -75,7 +73,7 @@ public class ReservaService {
 			throw new ReservaException("No hay disponibilidad desde la fecha " + fDesdeConverted.toString() + " hasta "
 					+ fHastaConverted.toString() + " para la cantidad " + cantPersonas
 					+ " persona/s. Tenga en cuenta que el rango de fechas involucrado en el paquete debe estar contenido en las fechas ingresadas.");
-		if (ofertaExistente == null)
+		if (!ofertaExistente)
 			throw new ReservaException(
 					"El id de oferta (id interno): " + ofertaid + " no existe en la base de datos. ");
 		if (!puedoReservar)
@@ -106,7 +104,7 @@ public class ReservaService {
 
 	public ReservaDTO reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion,
 			int cantHabitaciones, String nombre, String apellido, String dni, int medioPagoID, String emailUsuario)
-			throws ReservaException, ConversionFechaException {
+			throws ReservaException, ConversionFechaException, OfertaHoteleraException {
 		ReservaDTO nuevaReservaDTO = null;
 		boolean puedoReservar = true;
 		boolean hayDisponibilidad = true;
@@ -116,8 +114,8 @@ public class ReservaService {
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
 		int cantDiasHotel = fHastaConverted.compareTo(fDesdeConverted);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaHotelera(fDesdeConverted, fHastaConverted);
-		Oferta ofertaExistente = ofertaDAO.buscarPorIdOferta(ofertaid);
-		if (ofertaExistente != null) {
+		boolean ofertaExistente = busquedaService.existeOfertaHotelera(ofertaid);
+		if (ofertaExistente) {
 			// consulto al backoffice si puedo reservar, le paso el codigo externo del
 			// establecimiento (al ser hotel)
 			puedoReservar = true/* completar despues c backoffice */;
@@ -128,7 +126,7 @@ public class ReservaService {
 			if (formatoFechaOK && hayDisponibilidad && puedoReservar)
 				cupoActualizado = actualizarCupoBloquesHotelero(bloques, cantHabitaciones);
 			if (cupoActualizado) {
-				float montoTotal = ofertaExistente.getPrecio() * cantHabitaciones * cantDiasHotel;
+				float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid, cantHabitaciones, cantDiasHotel);
 				nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, 1, fDesdeConverted, fHastaConverted,
 						medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
 				nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaHotelera);
@@ -146,7 +144,7 @@ public class ReservaService {
 							+ fHastaConverted.toString() + " para la cantidad de habitaciones: " + cantHabitaciones);
 		if (!puedoReservar)
 			throw new ReservaException("No hay autorizacion del backoffice para reservar");
-		if (ofertaExistente == null)
+		if (!ofertaExistente)
 			throw new ReservaException(
 					"El id de oferta (id interno): " + ofertaid + " no existe en la base de datos. ");
 		if (nuevaReservaHotelera == null)
@@ -192,6 +190,7 @@ public class ReservaService {
 			return disponibilidad;
 		}
 	}
+
 	private boolean validarDisponibilidadPaquete(List<OfertaBloque> bloques) {
 		if (bloques.isEmpty())
 			return false;
