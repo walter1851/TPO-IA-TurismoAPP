@@ -9,7 +9,7 @@ public enum LoggingAccion {
 	BUSQUEDA_OFERTA_PAQUETE(6, "Buscar Oferta Paquete"),
 	VISUALIZAR_DETALLE_OFERTA_HOTELERA(7, "Ver Detalle Oferta Hotelera"),
 	VISUALIZAR_DETALLE_OFERTA_PAQUETE(8, "Ver Detalle Oferta Paquete"),
-	ERROR(10, "ERROR");
+	ERROR(9, "ERROR");
 	
 	private Integer idAccion;
 	

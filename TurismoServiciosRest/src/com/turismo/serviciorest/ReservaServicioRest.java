@@ -18,6 +18,9 @@ import com.turismo.serviciorest.response.WebResponse;
 public class ReservaServicioRest {
 	@EJB
 	private ControllerService facade;
+	//@EJB
+	//private BackOfficeLogging loggingBackOffice;
+	
 	//CAMBIAR POR METODO POST
 	@GET
 	@Path("reservarhotel/{ofertaid}/{fDesde}/{fHasta}/{tipoHabitacion}/{canthabitaciones}/{nombre}/{apellido}/{dni}/{medioPagoId}/{mailUsuario}")

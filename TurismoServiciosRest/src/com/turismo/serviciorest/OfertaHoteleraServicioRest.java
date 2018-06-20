@@ -10,6 +10,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import com.turismo.backoffice.logging.BackOfficeLogging;
+import com.turismo.backoffice.logging.LoggingAccion;
 import com.turismo.controller.ControllerService;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.serviciorest.response.*;
@@ -19,6 +22,8 @@ import com.turismo.serviciorest.response.*;
 public class OfertaHoteleraServicioRest {
 	@EJB
 	private ControllerService facade;
+	//@EJB
+	//private BackOfficeLogging loggingBackOffice;
 
 	@GET
 	@Path("buscar/{codigoDestino}/{tipoHabitacion}/{fDesde}/{fHasta}")
@@ -28,9 +33,10 @@ public class OfertaHoteleraServicioRest {
 			@PathParam("fHasta") String fHasta){
 		try {
 			List<OfertaDTO> ofertas = facade.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion);
+			//this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_HOTELERA);
 			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON: "+ofertas.size()+" OFERTAS HOTELERAS")).build();
 		} catch (Exception e) {
-			// logearerror(e.getMessage());
+			//this.loggingBackOffice.error(e.getMessage());
 			return Response.ok(new WebResponse(e,"ERROR")).build();
 		}
 	}
