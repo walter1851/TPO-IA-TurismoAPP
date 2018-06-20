@@ -12,8 +12,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.turismo.controller.ControllerService;
 import com.turismo.dto.OfertaDTO;
-import com.turismo.exceptions.ConversionFechaException;
-import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.serviciorest.response.*;
 
 @Path("/ofertahotelera")

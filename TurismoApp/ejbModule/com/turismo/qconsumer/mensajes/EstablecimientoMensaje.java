@@ -11,6 +11,7 @@ public class EstablecimientoMensaje {
 	private MapaMensaje mapa;
 	private String fotoestablecimiento;// Esto es una foto sola, no es un array
 	private int estrellas;// de 1 a 5
+	
 	public int getId() {
 		return id;
 	}

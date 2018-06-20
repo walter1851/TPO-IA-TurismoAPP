@@ -34,6 +34,7 @@ public class ReservaService {
 	private OfertaDAO ofertaDAO;
 	@EJB
 	BusquedaService busquedaService;
+	//INYECTAR SOAP CLIENTE
 	// @EJB
 	// private SOAPService soapService;
 
@@ -48,12 +49,13 @@ public class ReservaService {
 		boolean formatoFechaOK = busquedaService.validarRangoFechaPaquete(fDesdeConverted, fHastaConverted);
 		Oferta ofertaExistente = ofertaDAO.buscarPorIdOferta(ofertaid);
 		if (ofertaExistente != null) {
+			// consulto al backoffice si puedo reservar, le paso el codigo externo de la
+			// agencia (al ser paquete)
+			// backOfficeAutorizador.getServicioPrestadorAutorizadoPort().getPrestadorAutorizado(1);
+			// boolean puedoReservar = soapService.getSOAPPort().estaAutorizado(1);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted,
 					fHastaConverted, cantPersonas);
 			hayDisponibilidad = this.validarDisponibilidadPaquete(bloques);
-			// consulto al backoffice si puedo reservar
-			// backOfficeAutorizador.getServicioPrestadorAutorizadoPort().getPrestadorAutorizado(1);
-			// boolean puedoReservar = soapService.getSOAPPort().estaAutorizado(1);
 			Reserva nuevaReservaPaquete = null;
 			float montoTotal = 0;
 			if (formatoFechaOK && hayDisponibilidad && puedoReservar)
@@ -115,11 +117,12 @@ public class ReservaService {
 		// valido el formato de las fechas
 		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
-		int cantDiasHotel = fDesdeConverted.compareTo(fHastaConverted);
+		int cantDiasHotel = fHastaConverted.compareTo(fDesdeConverted);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaHotelera(fDesdeConverted, fHastaConverted);
 		Oferta ofertaExistente = ofertaDAO.buscarPorIdOferta(ofertaid);
-		// consulto al backoffice si puedo reservar
 		if (ofertaExistente != null) {
+			// consulto al backoffice si puedo reservar, le paso el codigo externo del
+			// establecimiento (al ser hotel)
 			puedoReservar = true/* completar despues c backoffice */;
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(ofertaid, fDesdeConverted,
 					fHastaConverted, tipoHabitacion);
@@ -192,7 +195,6 @@ public class ReservaService {
 			return disponibilidad;
 		}
 	}
-
 	private boolean validarDisponibilidadPaquete(List<OfertaBloque> bloques) {
 		if (bloques.isEmpty())
 			return false;
@@ -206,5 +208,4 @@ public class ReservaService {
 			return disponibilidad;
 		}
 	}
-
 }

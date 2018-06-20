@@ -1,23 +1,17 @@
 package com.turismo.testing.qproducer;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.Queue;
-import javax.jms.TextMessage;
-
 import com.turismo.qconsumer.JsonConverter;
 import com.turismo.qconsumer.mensajes.CiudadMensaje;
 import com.turismo.qconsumer.mensajes.EstablecimientoMensaje;
 import com.turismo.qconsumer.mensajes.HotelMensaje;
 import com.turismo.qconsumer.mensajes.MapaMensaje;
 import com.turismo.qconsumer.mensajes.OfertaHoteleraMensaje;
-import com.turismo.qconsumer.mensajes.OfertaPaqueteMensaje;
 
 @Stateless
 public class ProducerOfertaHoteleraQ {

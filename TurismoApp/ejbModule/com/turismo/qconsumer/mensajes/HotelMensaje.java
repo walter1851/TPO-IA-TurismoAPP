@@ -4,6 +4,7 @@ public class HotelMensaje {
 	private int id;
 	private String nombre;
 	private String fotoHotel;
+	
 	public int getId() {
 		return id;
 	}

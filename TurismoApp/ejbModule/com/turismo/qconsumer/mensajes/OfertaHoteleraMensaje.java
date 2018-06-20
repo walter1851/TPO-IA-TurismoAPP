@@ -15,6 +15,7 @@ public class OfertaHoteleraMensaje {
 	private String fechaHasta;// Ej: 2007-04-05T12:30-02:00
 	private String politicas;// Texto con las politicas
 	private String servicios;
+	
 	public int getIdOfertaHotelera() {
 		return idOfertaHotelera;
 	}

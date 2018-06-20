@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
@@ -21,9 +22,10 @@ public class OfertaDAO {
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
-	public Oferta nuevaOfertaHotelera(int codigoOfertaHotelera,String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta,
-			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
-			String foto_paquete, MedioPago medioPago, Establecimiento establecimiento, OfertaTipo ofertaTipo) {
+	public Oferta nuevaOfertaHotelera(int codigoOfertaHotelera, String nombre, int cupo, LocalDate fecha_desde,
+			LocalDate fecha_hasta, float precio, String tipo_habitacion, String politicas, String servicios,
+			Destino destino, String foto_paquete, MedioPago medioPago, Establecimiento establecimiento,
+			OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
 		oferta.setCodigo_oferta(codigoOfertaHotelera);
 		oferta.setNombre(nombre);
@@ -45,9 +47,10 @@ public class OfertaDAO {
 		return oferta;
 	}
 
-	public Oferta nuevaOfertaPaquete(int codigo_paquete,String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta,
-			float precio, String politicas, String servicios, Destino destino, String foto_paquete,
-			String descripcionPaquete, MedioPago medioPago, int cant_personas, Agencia agencia, OfertaTipo ofertaTipo) {
+	public Oferta nuevaOfertaPaquete(int codigo_paquete, String nombre, int cupo, LocalDate fecha_desde,
+			LocalDate fecha_hasta, float precio, String politicas, String servicios, Destino destino,
+			String foto_paquete, String descripcionPaquete, MedioPago medioPago, int cant_personas, Agencia agencia,
+			OfertaTipo ofertaTipo) {
 		Oferta oferta = new Oferta();
 		oferta.setCodigo_oferta(codigo_paquete);
 		oferta.setNombre(nombre);
@@ -71,10 +74,10 @@ public class OfertaDAO {
 		return oferta;
 	}
 
-	public void actualizarOferta(int oferta_id, String nombre, int cupo, LocalDate fecha_desde,
-			LocalDate fecha_hasta, float precio, String tipo_habitacion, String politicas, String servicios,
-			Destino destino, String foto_paquete, MedioPago medioPago, int cant_personas,
-			Establecimiento establecimiento, Agencia agencia, OfertaTipo ofertaTipo) {
+	public void actualizarOferta(int oferta_id, String nombre, int cupo, LocalDate fecha_desde, LocalDate fecha_hasta,
+			float precio, String tipo_habitacion, String politicas, String servicios, Destino destino,
+			String foto_paquete, MedioPago medioPago, int cant_personas, Establecimiento establecimiento,
+			Agencia agencia, OfertaTipo ofertaTipo) {
 		Oferta oferta = buscarPorIdOferta(oferta_id);
 		oferta.setNombre(nombre);
 		oferta.setCupo(cupo);
@@ -96,18 +99,19 @@ public class OfertaDAO {
 	}
 	public Oferta buscarPorCodigoOferta(int codigo_oferta) {
 		try {
-			Query ofertaQuery = entityManager.createQuery(
-					"SELECT o FROM oferta o " + "WHERE codigo_oferta = :codigo_oferta ");
+			Query ofertaQuery = entityManager
+					.createQuery("SELECT o FROM Oferta o " + "WHERE codigo_oferta = :codigo_oferta ");
 			ofertaQuery.setParameter("codigo_oferta", codigo_oferta);
 			return (Oferta) ofertaQuery.getSingleResult();
-		} catch (Exception nre) {
+		} catch (NoResultException nre) {
 			return null;
 		}
 	}
+
 	public Oferta buscarPorIdOferta(int idOferta) {
 		try {
 			return entityManager.find(Oferta.class, idOferta);
-		} catch (Exception nre) {
+		} catch (NoResultException nre) {
 			return null;
 		}
 	}
@@ -127,10 +131,9 @@ public class OfertaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasPaquete(int codigo_destino, int cantPersonas, LocalDate fDesde,
-			LocalDate fHasta) {
-		Query ofertasHotelerasQuery = entityManager
-				.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.codigo_destino = :codigo_destino"
+	public List<Oferta> buscarOfertasPaquete(int codigo_destino, int cantPersonas, LocalDate fDesde, LocalDate fHasta) {
+		Query ofertasHotelerasQuery = entityManager.createQuery(
+				"SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.codigo_destino = :codigo_destino"
 						+ " AND o.cant_personas <= :cantPersonas" + " AND o.fecha_desde >= :fDesde"
 						+ " AND o.fecha_hasta <= :fHasta" + " AND OfertaTipo = :tipoDeOferta");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);

@@ -16,6 +16,7 @@ public class Hotel {
 	private String nombre;
 	@Column(unique = true)
 	private int codigo_hotel;
+	
 	public int getHotel_id() {
 		return hotel_id;
 	}

@@ -3,6 +3,7 @@ package com.turismo.qconsumer.mensajes;
 public class MapaMensaje {
 	private String lat;
 	private String lon;
+	
 	public String getLat() {
 		return lat;
 	}

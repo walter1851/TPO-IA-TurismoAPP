@@ -1,13 +1,13 @@
 package com.turismo.dao;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaBloque;
@@ -26,7 +26,7 @@ public class OfertaBloqueDAO{
 		ofertaBloque.setCupo(cupo);
 		entityManager.persist(ofertaBloque);
 		return true;
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			return false;
 		}
 	}
@@ -34,7 +34,7 @@ public class OfertaBloqueDAO{
 		try {
 			entityManager.merge(ofertaBloque);
 		return true;
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			return false;
 		}
 	}

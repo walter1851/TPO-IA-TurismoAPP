@@ -8,6 +8,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
+
 import com.turismo.entities.Oferta;
 import com.turismo.entities.Reserva;
 
@@ -38,7 +40,7 @@ public class ReservaDAO{
 			reserva.setFechaCheckOut(fChechOUT);
 			entityManager.persist(reserva);
 			return reserva;
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			return null;
 		}
 	}
@@ -58,7 +60,7 @@ public class ReservaDAO{
 			reserva.setFechaCheckOut(fChechOUT);
 			entityManager.merge(reserva);
 			return true;
-		} catch (Exception e) {
+		} catch (PersistenceException e) {
 			return false;
 		}
 	}

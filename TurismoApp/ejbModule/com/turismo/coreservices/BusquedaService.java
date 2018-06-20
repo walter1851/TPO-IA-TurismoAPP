@@ -1,12 +1,9 @@
 package com.turismo.coreservices;
 
-import java.text.ParseException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -16,7 +13,6 @@ import com.turismo.entities.Oferta;
 import com.turismo.exceptions.ConversionFechaException;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
-import com.turismo.exceptions.ReservaException;
 
 /**
  * Session Bean implementation class BusquedaOfertaPaqueteService

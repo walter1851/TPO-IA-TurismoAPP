@@ -1,6 +1,5 @@
 package com.turismo.entities;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,11 +18,16 @@ public class Establecimiento {
 	private String nombre;
 	private String direccion;
 	private String ciudad;
-	private Estado estado;
 	private String descripcion;
 	private int estrellas;
 	private String latitud;
 	private String longitud;
+	@Column(unique = true)
+	private int codigo_establecimiento;
+	@ManyToOne
+	@JoinColumn(name = "hotel_id")
+	private Hotel hotel;
+	
 	public String getLatitud() {
 		return latitud;
 	}
@@ -36,12 +40,6 @@ public class Establecimiento {
 	public void setLongitud(String longitud) {
 		this.longitud = longitud;
 	}
-	@Column(unique = true)
-	private int codigo_establecimiento;
-	@ManyToOne
-	@JoinColumn(name = "hotel_id")
-	private Hotel hotel;
-	
 	public int getEstablecimiento_id() {
 		return establecimiento_id;
 	}
@@ -65,12 +63,6 @@ public class Establecimiento {
 	}
 	public void setCiudad(String ciudad) {
 		this.ciudad = ciudad;
-	}
-	public Estado getEstado() {
-		return estado;
-	}
-	public void setEstado(Estado estado) {
-		this.estado = estado;
 	}
 	public String getDescripcion() {
 		return descripcion;

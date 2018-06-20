@@ -10,7 +10,8 @@ public class OfertaPaqueteMensaje {
 	private String foto;
 	private String fechaDesde; // Ej: 2007-04-05T12:30-02:00
 	private String fechaHasta; // Ej: 2007-04-05T12:30-02:00
-	private String estado; // INACTIVO, ACTIVO
+	//El estado no va
+	//private String estado; // INACTIVO, ACTIVO
 	private float precio;
 	private String descripcion;
 	private String politicas;
@@ -70,12 +71,6 @@ public class OfertaPaqueteMensaje {
 	}
 	public void setFechaHasta(String fechaHasta) {
 		this.fechaHasta = fechaHasta;
-	}
-	public String getEstado() {
-		return estado;
-	}
-	public void setEstado(String estado) {
-		this.estado = estado;
 	}
 	public float getPrecio() {
 		return precio;

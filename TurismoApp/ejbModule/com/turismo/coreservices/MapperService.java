@@ -8,7 +8,6 @@ import javax.ejb.Stateless;
 import com.turismo.dto.AgenciaDTO;
 import com.turismo.dto.DestinoDTO;
 import com.turismo.dto.EstablecimientoDTO;
-import com.turismo.dto.EstadoDTO;
 import com.turismo.dto.HotelDTO;
 import com.turismo.dto.MedioPagoDTO;
 import com.turismo.dto.OfertaDTO;
@@ -94,8 +93,10 @@ public class MapperService {
 			hotelDTO.setNombre(oferta.getEstablecimiento().getHotel().getNombre());
 			hotelDTO.setCodigo_hotel(oferta.getEstablecimiento().getHotel().getCodigo_hotel());
 
-			EstadoDTO estadoDTO = EstadoDTO.valueOf(oferta.getEstablecimiento().getEstado().name());
+			/* El estado no hace falta. Con SOAP, se consulta al back si esta autorizado o no.
+			 * EstadoDTO estadoDTO = EstadoDTO.valueOf(oferta.getEstablecimiento().getEstado().name());
 			establecimientoDTO.setEstado(estadoDTO);
+			*/
 			establecimientoDTO.setCiudad(oferta.getEstablecimiento().getCiudad());
 			establecimientoDTO.setCodigo_establecimiento(oferta.getEstablecimiento().getCodigo_establecimiento());
 			establecimientoDTO.setDescripcion(oferta.getEstablecimiento().getDescripcion());

@@ -7,7 +7,6 @@ import com.turismo.dao.EstablecimientoDAO;
 import com.turismo.dao.HotelDAO;
 import com.turismo.dao.ImagenDAO;
 import com.turismo.entities.Establecimiento;
-import com.turismo.entities.Estado;
 import com.turismo.entities.Hotel;
 import com.turismo.entities.Imagen;
 
@@ -21,38 +20,22 @@ public class EstablecimientoService {
 	@EJB
 	private ImagenDAO imagenDAO;
 
-	public Establecimiento guardarEstablecimiento(String nombre, String direccion, String ciudad, Estado estado,
-			String descripcion, int estrellas, String latitud, String longitud, int codigo_establecimiento, int idHotel,
+	public Establecimiento guardarEstablecimiento(String nombre, String direccion, String ciudad, String descripcion, int estrellas, String latitud, String longitud, int codigo_establecimiento, int codigo_hotel,
 			String nombreHotel, String imagenBase64) {
-		Hotel hotel = buscarHotel(idHotel);
-		Establecimiento establecimiento = buscarEstablecimiento(codigo_establecimiento);
-		Imagen imagen = buscarImagen(imagenBase64);
+		Hotel hotel = hotelDAO.buscarPorCodigoHotel(codigo_hotel);
+		Establecimiento establecimiento = establecimientoDAO.buscarPorCodigoEstablecimiento(codigo_establecimiento);
+		Imagen imagen =  imagenDAO.buscarImagenPorURL(imagenBase64);
+		
 		if (hotel == null)
-			hotel = hotelDAO.nuevoHotel(nombreHotel, idHotel);
+			hotel = hotelDAO.nuevoHotel(nombreHotel, codigo_hotel);
 
 		if (establecimiento == null)
-			establecimiento = establecimientoDAO.nuevoEstablecimiento(nombre, direccion, ciudad, estado, descripcion,
+			establecimiento = establecimientoDAO.nuevoEstablecimiento(nombre, direccion, ciudad, descripcion,
 					estrellas, latitud,longitud, codigo_establecimiento, hotel);
 
 		if (imagen == null)
 			imagen = imagenDAO.nuevaImagen(imagenBase64, establecimiento, hotel);
 
 		return establecimiento;
-	}
-
-	private Hotel buscarHotel(int codigo_hotel) {
-		Hotel hotelFromDatabase = hotelDAO.buscarPorCodigoHotel(codigo_hotel);
-		return hotelFromDatabase;
-	}
-
-	private Establecimiento buscarEstablecimiento(int codigo_establecimiento) {
-		Establecimiento establecimientoFromDatabase = establecimientoDAO
-				.buscarPorCodigoEstablecimiento(codigo_establecimiento);
-		return establecimientoFromDatabase;
-	}
-
-	private Imagen buscarImagen(String imagenBase64) {
-		Imagen imagenFromDatabase = imagenDAO.buscarImagenPorURL(imagenBase64);
-		return imagenFromDatabase;
 	}
 }

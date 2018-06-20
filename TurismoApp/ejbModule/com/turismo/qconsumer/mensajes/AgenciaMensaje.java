@@ -4,7 +4,8 @@ public class AgenciaMensaje {
 		private int id;
 		private String nombre;
 		private String direccion;
-		private String estado; // INACTIVO, ACTIVO
+		//EL ESTADO NO VA
+		//private String estado; // INACTIVO, ACTIVO
 		
 		public int getId() {
 			return id;
@@ -24,11 +25,4 @@ public class AgenciaMensaje {
 		public void setDireccion(String direccion) {
 			this.direccion = direccion;
 		}
-		public String getEstado() {
-			return estado;
-		}
-		public void setEstado(String estado) {
-			this.estado = estado;
-		}
-		
 }

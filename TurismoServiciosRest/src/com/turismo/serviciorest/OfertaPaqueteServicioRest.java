@@ -10,10 +10,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import com.turismo.controller.ControllerService;
 import com.turismo.dto.OfertaDTO;
-import com.turismo.exceptions.OfertaPaqueteException;
 import com.turismo.serviciorest.response.WebResponse;
 //LISTO
 @Path("/ofertapaquete")

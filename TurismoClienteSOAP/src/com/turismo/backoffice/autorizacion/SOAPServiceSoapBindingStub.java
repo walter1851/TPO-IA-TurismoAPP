@@ -8,7 +8,7 @@
 package com.turismo.backoffice.autorizacion;
 
 public class SOAPServiceSoapBindingStub extends org.apache.axis.client.Stub implements com.turismo.backoffice.autorizacion.SOAP {
-    private java.util.Vector cachedSerClasses = new java.util.Vector();
+	private java.util.Vector cachedSerClasses = new java.util.Vector();
     private java.util.Vector cachedSerQNames = new java.util.Vector();
     private java.util.Vector cachedSerFactories = new java.util.Vector();
     private java.util.Vector cachedDeserFactories = new java.util.Vector();

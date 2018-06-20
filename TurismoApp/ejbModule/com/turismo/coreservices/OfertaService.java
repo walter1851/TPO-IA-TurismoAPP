@@ -1,8 +1,6 @@
 package com.turismo.coreservices;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -15,7 +13,6 @@ import com.turismo.dao.OfertaDAO;
 import com.turismo.entities.Agencia;
 import com.turismo.entities.Destino;
 import com.turismo.entities.Establecimiento;
-import com.turismo.entities.Estado;
 import com.turismo.entities.MedioPago;
 import com.turismo.entities.Oferta;
 import com.turismo.entities.OfertaTipo;
@@ -54,7 +51,7 @@ public class OfertaService {
 		int cupo = ofertaPaqueteMensaje.getCupo();
 		int cantPersonas = ofertaPaqueteMensaje.getCantPersonas();
 		// AGENCIA
-		int idAgencia = ofertaPaqueteMensaje.getAgencia().getId();
+		int codigo_agencia = ofertaPaqueteMensaje.getAgencia().getId();
 		String nombreAgencia = ofertaPaqueteMensaje.getAgencia().getNombre();
 		String direccionAgencia = ofertaPaqueteMensaje.getAgencia().getDireccion();
 		// Preguntar si es necesario guardar, entiendo que no.
@@ -76,7 +73,7 @@ public class OfertaService {
 		if (destino != null && oferta == null) {
 			// Guardo la agencia, el servicio AgenciaService se encarga de guardar solo si
 			// no existe el codigo externo, en caso de existir lo devuelve de la base
-			Agencia agencia = agenciaService.guardarAgencia(nombreAgencia, direccionAgencia, idAgencia);
+			Agencia agencia = agenciaService.guardarAgencia(nombreAgencia, direccionAgencia, codigo_agencia);
 			// convierto la fecha a localdate
 			LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fechaDesde);
 			LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fechaHasta);
@@ -117,7 +114,7 @@ public class OfertaService {
 		if (oferta != null)
 			throw new OfertaPaqueteException(
 					"Persistencia desde la cola oferta paquete: No se guardo la oferta paquete con id externo: "
-							+ codigo_paquete + " porque dicho codigo ya existe en la BD." + codigo_ciudadDestino);
+							+ codigo_paquete + " porque dicho codigo ya existe en la BD.");
 		/*
 		 * } catch (NullPointerException npe) { throw new OfertaPaqueteException(
 		 * "Se consumieron datos de la cola de oferta paquete y cuando se intento guardar en nuestra BD genero un NullPointerException. Detalle: "
@@ -135,12 +132,14 @@ public class OfertaService {
 		String mediosDePago = ofertaHoteleraMensaje.getMediosDePago();
 		String tipoHabitacion = ofertaHoteleraMensaje.getTipoHabitacion(); // SIMPLE, DOBLE, TRIPLE
 		// Establecimiento
-		int idEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getId();
-		String uidBackOffice = ofertaHoteleraMensaje.getEstablecimiento().getUid(); // Id recibido del backoffice
+		int codigo_Establecimiento = ofertaHoteleraMensaje.getEstablecimiento().getId();
+		// Entiendo que no hace falta guardarlo
+		// String uidBackOffice = ofertaHoteleraMensaje.getEstablecimiento().getUid();
+		// // Id recibido del backoffice
 		String nombreEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getNombre();
 		String direccionEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getDireccion();
-		int idCiudad = ofertaHoteleraMensaje.getEstablecimiento().getCiudad().getCodigo_ciudad();
-		int idHotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getId();
+		int codigo_ciudad = ofertaHoteleraMensaje.getEstablecimiento().getCiudad().getCodigo_ciudad();
+		int codigo_hotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getId();
 		String nombreHotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getNombre();
 		String urlFotoHotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getFotoHotel();
 		// Establecimiento
@@ -154,12 +153,12 @@ public class OfertaService {
 		String fechaHasta = ofertaHoteleraMensaje.getFechaHasta();// Ej: 2007-04-05T12:30-02:00
 		String politicaCancelacion = ofertaHoteleraMensaje.getPoliticas();// Texto con las politicas
 		String servicios = ofertaHoteleraMensaje.getServicios();
-		Destino destino = destinoDAO.buscarDestinoPorCodigo(idCiudad);
+		Destino destino = destinoDAO.buscarDestinoPorCodigo(codigo_ciudad);
 		Oferta oferta = ofertaDAO.buscarPorCodigoOferta(codigoOfertaHotelera);
 		if (destino != null && oferta == null) {
 			Establecimiento establecimiento = establecimientoService.guardarEstablecimiento(nombreEstablecimiento,
-					direccionEstablecimiento, destino.getNombre(), Estado.ACTIVO, descripcionEstablecimiento,
-					cantEstrellas, mapaLatitud, mapaLongitud, idEstablecimiento, idHotel, nombreHotel, urlFotoHotel);
+					direccionEstablecimiento, destino.getNombre(), descripcionEstablecimiento, cantEstrellas,
+					mapaLatitud, mapaLongitud, codigo_Establecimiento, codigo_hotel, nombreHotel, urlFotoHotel);
 			// convierto la fecha a localdate
 			LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fechaDesde);
 			LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fechaHasta);
@@ -196,11 +195,11 @@ public class OfertaService {
 		}
 		if (destino == null)
 			throw new OfertaHoteleraException("No se guardo la oferta hotelera id:" + codigoOfertaHotelera
-					+ " desde la cola porque no existe el destino con el id externo: " + idCiudad);
+					+ " desde la cola porque no existe el destino con el id externo: " + codigo_ciudad);
 		if (oferta != null)
 			throw new OfertaHoteleraException(
-					"Persistencia desde la cola oferta hotelera: No se guardo la oferta hotelera con id externo: "
-							+ codigoOfertaHotelera + " porque dicho codigo ya existe en la BD." + idCiudad);
+					"Persistencia desde la cola oferta hotelera: No se guardo la oferta hotelera con codigo: "
+							+ codigoOfertaHotelera + ", porque dicho codigo ya existe en la BD.");
 		// } catch (NullPointerException npe) {
 		// throw new OfertaHoteleraException(
 		// "Se consumieron datos de la cola de oferta HOTELERA y cuando se intento

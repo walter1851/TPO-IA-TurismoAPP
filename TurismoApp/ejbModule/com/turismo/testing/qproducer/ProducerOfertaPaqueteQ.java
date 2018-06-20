@@ -26,7 +26,8 @@ public class ProducerOfertaPaqueteQ {
 			AgenciaMensaje agenciaMensaje=new AgenciaMensaje();
 			agenciaMensaje.setId(idAgencia);
 			agenciaMensaje.setDireccion(direccionAgencia);
-			agenciaMensaje.setEstado(estadoAgencia);
+			//El estado no va
+			//agenciaMensaje.setEstado(estadoAgencia);
 			agenciaMensaje.setNombre(nombreAgencia);
 			
 			CiudadMensaje ciudadDestino= new CiudadMensaje();
@@ -41,7 +42,8 @@ public class ProducerOfertaPaqueteQ {
 			ofertaPaqueteMensaje.setCantPersonas(cantPersonas);
 			ofertaPaqueteMensaje.setCupo(cupo);
 			ofertaPaqueteMensaje.setDescripcion(descripcion);
-			ofertaPaqueteMensaje.setEstado(estado);
+			//El estado no va
+			//ofertaPaqueteMensaje.setEstado(estado);
 			ofertaPaqueteMensaje.setFechaDesde(fechaDesde);
 			ofertaPaqueteMensaje.setFechaHasta(fechaHasta);
 			ofertaPaqueteMensaje.setFoto(foto);
