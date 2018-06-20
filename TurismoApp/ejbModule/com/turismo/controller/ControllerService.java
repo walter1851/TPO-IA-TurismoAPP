@@ -39,8 +39,8 @@ public class ControllerService{
 	public float calcularPrecioTotalPaquete(int ofertaId, int cantidadPersonas) throws OfertaPaqueteException {
 		return busquedaOfertaService.calcularPrecioTotalPaquete(ofertaId, cantidadPersonas);
 	}
-	public float calcularPrecioTotalHotel(int ofertaId, int cantidadHabitaciones,int cantDias) throws OfertaHoteleraException {
-		return busquedaOfertaService.calcularPrecioTotalHotel(ofertaId, cantidadHabitaciones, cantDias);
+	public float calcularPrecioTotalHotel(int ofertaId, int cantidadHabitaciones,String fDesde, String fHasta) throws OfertaHoteleraException, ConversionFechaException {
+		return busquedaOfertaService.calcularPrecioTotalHotel(ofertaId, cantidadHabitaciones, fDesde, fHasta);
 	}
 	public List<OfertaDTO> buscarOtrosPaquetesMismoDestino(int codigo_paquete_a_excluir, int codigo_destino,
 			int cantPersonas, String fDesdeString, String fHastaString) throws ConversionFechaException{

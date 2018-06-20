@@ -67,14 +67,23 @@ public class BusquedaService {
 		float montoTotal = -1;
 		if (existeOfertaPaquete(ofertaId))
 			montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantidadPersonas;
+		if (montoTotal < 0)
+			throw new OfertaPaqueteException(
+					"Se produjo un error grave en el calculo de monto total del paquete. Dicho valor es menor a cero.");
 		return montoTotal;
 	}
 
-	public float calcularPrecioTotalHotel(int ofertaId, int cantidadHabitaciones, int cantDias)
-			throws OfertaHoteleraException {
+	public float calcularPrecioTotalHotel(int ofertaId, int cantidadHabitaciones, String fDesde, String fHasta)
+			throws OfertaHoteleraException, ConversionFechaException {
+		LocalDate fDesdeConverted = this.convertStringToLocalDate(fDesde);
+		LocalDate fHastaConverted = this.convertStringToLocalDate(fDesde);
+		int cantDiasHotel = fHastaConverted.compareTo(fDesdeConverted);
 		float montoTotal = -1;
 		if (existeOfertaHotelera(ofertaId))
-			montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantidadHabitaciones * cantDias;
+			montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantidadHabitaciones * cantDiasHotel;
+		if (montoTotal < 0)
+			throw new OfertaHoteleraException(
+					"Se produjo un error grave en el calculo del hospedaje. El monto total es menor a cero ");
 		return montoTotal;
 	}
 

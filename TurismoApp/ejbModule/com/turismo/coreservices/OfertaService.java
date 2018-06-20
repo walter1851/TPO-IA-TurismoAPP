@@ -162,7 +162,7 @@ public class OfertaService {
 				OfertaTipo ofertaTipo = OfertaTipo.OFERTA_HOTELERA;
 				Oferta nuevaOferta = ofertaDAO.nuevaOfertaHotelera(codigoOfertaHotelera, nombreOfertaHotelera, cupo,
 						fDesdeConverted, fHastaConverted, precio, tipoHabitacion, politicaCancelacion, servicios,
-						destino, urlFotoEstablecimiento, medioPagoObject, establecimiento, ofertaTipo);
+						destino, urlFotoEstablecimiento, medioPagoObject, establecimiento, ofertaTipo,tipoHabitacion.getMaxCantPersonas());
 				LocalDate fechaPivote = fDesdeConverted;
 				// igual a cero significa q son iguales
 				// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias

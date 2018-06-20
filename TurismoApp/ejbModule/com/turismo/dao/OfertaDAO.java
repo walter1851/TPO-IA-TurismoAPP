@@ -26,7 +26,7 @@ public class OfertaDAO {
 	public Oferta nuevaOfertaHotelera(int codigoOfertaHotelera, String nombre, int cupo, LocalDate fecha_desde,
 			LocalDate fecha_hasta, float precio, TipoHabitacion tipo_habitacion, String politicas, String servicios,
 			Destino destino, String foto_paquete, MedioPago medioPago, Establecimiento establecimiento,
-			OfertaTipo ofertaTipo) {
+			OfertaTipo ofertaTipo, int maxPersonasPorHabitacion) {
 		Oferta oferta = new Oferta();
 		oferta.setCodigo_oferta(codigoOfertaHotelera);
 		oferta.setNombre(nombre);
@@ -44,6 +44,7 @@ public class OfertaDAO {
 		oferta.setAgencia(null);
 		oferta.setOfertaTipo(ofertaTipo);
 		oferta.setDestino(destino);
+		oferta.setCant_personas(maxPersonasPorHabitacion);
 		entityManager.persist(oferta);
 		return oferta;
 	}

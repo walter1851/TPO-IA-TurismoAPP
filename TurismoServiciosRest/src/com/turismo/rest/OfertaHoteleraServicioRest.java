@@ -57,13 +57,13 @@ public class OfertaHoteleraServicioRest {
 		}
 	}
 	@GET
-	@Path("calculartotal/{ofertaId}/{cantHabitaciones}/{cantDias}")
+	@Path("calculartotal/{ofertaId}/{cantHabitaciones}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response calcularTotalEstadia(@PathParam("ofertaId") int ofertaId,
 		    @PathParam("cantHabitaciones") int cantHabitaciones,
-			@PathParam("cantDias") int cantDias){
+			@PathParam("fDesde") String fDesde,@PathParam("fHasta") String fHasta){
 		try {
-			float total= facade.calcularPrecioTotalHotel(ofertaId, cantHabitaciones, cantDias);
+			float total= facade.calcularPrecioTotalHotel(ofertaId, cantHabitaciones, fDesde, fHasta);
 			//this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_HOTELERA);
 			return Response.ok(new WebResponse(Float.toString(total),"Se calculo el total")).build();
 		} catch (Exception e) {

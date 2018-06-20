@@ -112,7 +112,6 @@ public class ReservaService {
 		// valido el formato de las fechas
 		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
-		int cantDiasHotel = fHastaConverted.compareTo(fDesdeConverted);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaHotelera(fDesdeConverted, fHastaConverted);
 		boolean ofertaExistente = busquedaService.existeOfertaHotelera(ofertaid);
 		if (ofertaExistente) {
@@ -126,7 +125,7 @@ public class ReservaService {
 			if (formatoFechaOK && hayDisponibilidad && puedoReservar)
 				cupoActualizado = actualizarCupoBloquesHotelero(bloques, cantHabitaciones);
 			if (cupoActualizado) {
-				float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid, cantHabitaciones, cantDiasHotel);
+				float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid, cantHabitaciones, fDesde,fHasta);
 				nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, 1, fDesdeConverted, fHastaConverted,
 						medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
 				nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaHotelera);

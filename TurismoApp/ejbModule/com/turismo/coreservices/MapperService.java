@@ -124,6 +124,7 @@ public class MapperService {
 			ofertaDTO.setTipo_habitacion(tipoHabitacionDTO);
 			ofertaDTO.setPrecio(oferta.getPrecio());
 			ofertaDTO.setNombre(oferta.getNombre());
+			ofertaDTO.setCant_personas(oferta.getCant_personas());
 			listOfertaHoteleraDTO.add(ofertaDTO);
 		}
 		return listOfertaHoteleraDTO;

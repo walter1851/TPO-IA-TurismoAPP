@@ -14,7 +14,6 @@ import com.turismo.controller.ControllerService;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.rest.response.WebResponse;
 
-//LISTO
 @Path("/ofertapaquete")
 @Stateless
 public class OfertaPaqueteServicioRest {
