@@ -1,4 +1,4 @@
-package com.turismo.serviciorest;
+package com.turismo.rest;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -11,7 +11,7 @@ import javax.ws.rs.core.Response;
 
 import com.turismo.controller.ControllerService;
 import com.turismo.dto.ReservaDTO;
-import com.turismo.serviciorest.response.WebResponse;
+import com.turismo.rest.response.WebResponse;
 
 @Path("/reserva")
 @Stateless

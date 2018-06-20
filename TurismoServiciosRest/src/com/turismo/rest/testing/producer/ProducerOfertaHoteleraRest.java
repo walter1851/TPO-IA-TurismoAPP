@@ -1,4 +1,4 @@
-package com.turismo.testing.borrar;
+package com.turismo.rest.testing.producer;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
@@ -8,7 +8,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import com.turismo.serviciorest.response.WebResponse;
+
+import com.turismo.rest.response.WebResponse;
 import com.turismo.testing.qproducer.ProducerOfertaHoteleraQ;
 
 @Path("/backoffice")

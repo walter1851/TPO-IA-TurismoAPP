@@ -1,4 +1,4 @@
-package com.turismo.serviciorest;
+package com.turismo.rest;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import com.turismo.controller.ControllerService;
 import com.turismo.dto.OfertaDTO;
-import com.turismo.serviciorest.response.WebResponse;
+import com.turismo.rest.response.WebResponse;
 
 //LISTO
 @Path("/ofertapaquete")

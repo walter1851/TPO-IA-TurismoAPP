@@ -8,8 +8,6 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.xml.rpc.ServiceException;
-
-//import com.turismo.backoffice.autorizacion.*;
 import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.OfertaDAO;
 import com.turismo.dao.ReservaDAO;
@@ -34,9 +32,8 @@ public class ReservaService {
 	private OfertaDAO ofertaDAO;
 	@EJB
 	BusquedaService busquedaService;
-	//INYECTAR SOAP CLIENTE
-	// @EJB
-	// private SOAPService soapService;
+	//@EJB
+	//private SOAPService soapService;
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, int medioPagoID, String emailUsuario)

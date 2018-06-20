@@ -1,4 +1,4 @@
-package com.turismo.serviciorest;
+package com.turismo.rest;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ import com.turismo.backoffice.logging.BackOfficeLogging;
 import com.turismo.backoffice.logging.LoggingAccion;
 import com.turismo.controller.ControllerService;
 import com.turismo.dto.OfertaDTO;
-import com.turismo.serviciorest.response.*;
+import com.turismo.rest.response.*;
 
 @Path("/ofertahotelera")
 @Stateless
