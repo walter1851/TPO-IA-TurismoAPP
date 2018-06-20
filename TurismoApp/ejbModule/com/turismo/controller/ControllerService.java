@@ -27,7 +27,6 @@ public class ControllerService{
 	public List<OfertaDTO> buscarOfertaPaquete(int codigoDestino,int cantPersonas,String fDesde, String fHasta) throws OfertaPaqueteException, ConversionFechaException{
 		return busquedaOfertaService.buscarOfertaPaquete(codigoDestino, cantPersonas, fDesde, fHasta);
 	}
-
 	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino,String fDesde, String fHasta, String tipoHabitacion) throws OfertaHoteleraException, ConversionFechaException {
 		return busquedaOfertaService.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion);
 	}
@@ -36,5 +35,19 @@ public class ControllerService{
 	}
 	public ReservaDTO reservarPaquete(int ofertaid,String fDesde,String fHasta,int cantPersonas,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException, RemoteException, ServiceException, ConversionFechaException, OfertaPaqueteException {
 		return reservaService.reservarPaquete(ofertaid, fDesde, fHasta, cantPersonas, nombre, apellido, dni, medioPagoId,mailUsuario);
+	}
+	public float calcularPrecioTotalPaquete(int ofertaId, int cantidadPersonas) throws OfertaPaqueteException {
+		return busquedaOfertaService.calcularPrecioTotalPaquete(ofertaId, cantidadPersonas);
+	}
+	public float calcularPrecioTotalHotel(int ofertaId, int cantidadHabitaciones,int cantDias) throws OfertaHoteleraException {
+		return busquedaOfertaService.calcularPrecioTotalHotel(ofertaId, cantidadHabitaciones, cantDias);
+	}
+	public List<OfertaDTO> buscarOtrosPaquetesMismoDestino(int codigo_paquete_a_excluir, int codigo_destino,
+			int cantPersonas, String fDesdeString, String fHastaString) throws ConversionFechaException{
+		return busquedaOfertaService.buscarOtrosPaquetesMismoDestino(codigo_paquete_a_excluir, codigo_destino, cantPersonas, fDesdeString, fHastaString);
+	}
+	public List<OfertaDTO> buscarOtrasOfertasMismoHotel(int codigo_destino, String tipo_Habitacion_a_excluir,
+			int codigo_Hotel, String fDesde, String fHasta) throws ConversionFechaException{
+		return busquedaOfertaService.buscarOtrasOfertasMismoHotel(codigo_destino, tipo_Habitacion_a_excluir, codigo_Hotel, fDesde, fHasta);
 	}
 }

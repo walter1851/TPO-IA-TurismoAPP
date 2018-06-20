@@ -37,4 +37,35 @@ public class OfertaPaqueteServicioRest {
 			return Response.ok(new WebResponse(false, e.getMessage())).build();
 		}
 	}
+	
+	@GET
+	@Path("buscarotros/{codigoPaqueteExcluir}/{codigoDestino}/{cantPersonas}/{fDesde}/{fHasta}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response buscarOfertaPaquete(@PathParam("codigoPaqueteExcluir") int codigoPaqueteExcluir,
+			@PathParam("codigoDestino") int codigoDestino,
+			@PathParam("cantPersonas") int cantPersonas, @PathParam("fDesde") String fDesde,
+			@PathParam("fHasta") String fHasta) {
+		try {
+			List<OfertaDTO> ofertas = facade.buscarOtrosPaquetesMismoDestino(codigoPaqueteExcluir, codigoDestino, cantPersonas, fDesde, fHasta);
+			return Response.ok(new WebResponse(ofertas, "ENCONTRADOS: " + ofertas.size() + " - DISTINTOS PAQUETES MISMO DESTINO")).build();
+		} catch (Exception e) {
+			// logearerror(e.getMessage());
+			return Response.ok(new WebResponse(false, e.getMessage())).build();
+		}
+	}
+	@GET
+	@Path("calculartotal/{ofertaId}/{cantHabitaciones}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response calcularTotalEstadia(@PathParam("ofertaId") int ofertaId,
+		    @PathParam("cantHabitaciones") int cantidadHabitaciones,
+			@PathParam("cantDias") int cantDias){
+		try {
+			float total= facade.calcularPrecioTotalPaquete(ofertaId, cantidadHabitaciones);
+			//this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_HOTELERA);
+			return Response.ok(new WebResponse(Float.toString(total),"Se calculo el total")).build();
+		} catch (Exception e) {
+			//this.loggingBackOffice.error(e.getMessage());
+			return Response.ok(new WebResponse(e,"ERROR")).build();
+		}
+	}
 }
