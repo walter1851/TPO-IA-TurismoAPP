@@ -8,6 +8,8 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.xml.rpc.ServiceException;
+
+import com.turismo.backoffice.autorizacion.SOAPService;
 import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.ReservaDAO;
 import com.turismo.dto.ReservaDTO;
@@ -30,8 +32,8 @@ public class ReservaService {
 	private MapperService mapperService;
 	@EJB
 	BusquedaService busquedaService;
-	// @EJB
-	// private SOAPService soapService;
+	@EJB
+	private SOAPService soapService;
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException, RemoteException,
@@ -47,7 +49,7 @@ public class ReservaService {
 			// consulto al backoffice si puedo reservar, le paso el codigo externo de la
 			// agencia (al ser paquete)
 			// backOfficeAutorizador.getServicioPrestadorAutorizadoPort().getPrestadorAutorizado(1);
-			// boolean puedoReservar = soapService.getSOAPPort().estaAutorizado(1);
+			//puedoReservar = soapService.getSOAPPort().estaAutorizado(1);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted,
 					fHastaConverted, cantPersonas);
 			hayDisponibilidad = this.validarDisponibilidadPaquete(bloques);
@@ -62,7 +64,7 @@ public class ReservaService {
 				throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
 			else
 				nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaPaquete);
-		}
+		}		
 		if (!formatoFechaOK)
 			throw new ReservaException(
 					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio "
