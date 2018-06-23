@@ -8,6 +8,7 @@ public class OfertaHoteleraMensaje {
 	private String nombre;
 	private float precio;// precio de la habitacion
 	private int cupo;
+	//private String estado;
 	private String mediosDePago;
 	private String tipoHabitacion; // SIMPLE, DOBLE, TRIPLE
 	private EstablecimientoMensaje establecimiento;

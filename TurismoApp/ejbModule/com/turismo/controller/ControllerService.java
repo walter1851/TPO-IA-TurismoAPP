@@ -27,8 +27,8 @@ public class ControllerService{
 	public List<OfertaDTO> buscarOfertaPaquete(int codigoDestino,int cantPersonas,String fDesde, String fHasta) throws OfertaPaqueteException, ConversionFechaException{
 		return busquedaOfertaService.buscarOfertaPaquete(codigoDestino, cantPersonas, fDesde, fHasta);
 	}
-	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino,String fDesde, String fHasta, String tipoHabitacion) throws OfertaHoteleraException, ConversionFechaException {
-		return busquedaOfertaService.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion);
+	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino,String fDesde, String fHasta, String tipoHabitacion,int cantPersonas) throws OfertaHoteleraException, ConversionFechaException {
+		return busquedaOfertaService.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion,cantPersonas);
 	}
 	public ReservaDTO reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantHabitaciones,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException, ConversionFechaException, OfertaHoteleraException, OfertaPaqueteException {
 		return reservaService.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantHabitaciones, nombre, apellido, dni, medioPagoId,mailUsuario);

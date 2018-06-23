@@ -5,7 +5,7 @@ public class AgenciaDTO {
 	private int agencia_id;
 	private String nombre;
 	private String direccion;
-	private int codigo_agencia;
+	private String codigo_agencia;
 	
 	public int getAgencia_id() {
 		return agencia_id;
@@ -25,10 +25,10 @@ public class AgenciaDTO {
 	public void setDireccion(String direccion) {
 		this.direccion = direccion;
 	}
-	public int getCodigo_agencia() {
+	public String getCodigo_agencia() {
 		return codigo_agencia;
 	}
-	public void setCodigo_agencia(int codigo_agencia) {
+	public void setCodigo_agencia(String codigo_agencia) {
 		this.codigo_agencia = codigo_agencia;
 	}
 	

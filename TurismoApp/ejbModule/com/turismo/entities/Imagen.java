@@ -1,4 +1,5 @@
 package com.turismo.entities;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,6 +15,7 @@ public class Imagen {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int imagen_id;
 	//cambiar nombre por imagenBase64
+	@Column(length=10000000)
 	private String imagenBase64;
 	@ManyToOne
 	@JoinColumn(name = "establecimiento_id")

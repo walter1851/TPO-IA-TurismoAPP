@@ -25,7 +25,7 @@ public class OfertaDAO {
 
 	public Oferta nuevaOfertaHotelera(int codigoOfertaHotelera, String nombre, int cupo, LocalDate fecha_desde,
 			LocalDate fecha_hasta, float precio, TipoHabitacion tipo_habitacion, String politicas, String servicios,
-			Destino destino, String foto_paquete, MedioPago medioPago, Establecimiento establecimiento,
+			Destino destino, MedioPago medioPago, Establecimiento establecimiento,
 			OfertaTipo ofertaTipo, int maxPersonasPorHabitacion) {
 		Oferta oferta = new Oferta();
 		oferta.setCodigo_oferta(codigoOfertaHotelera);
@@ -38,7 +38,6 @@ public class OfertaDAO {
 		oferta.setPoliticas(politicas);
 		oferta.setServicios(servicios);
 		oferta.setDestino(destino);
-		oferta.setFoto_paquete(foto_paquete);
 		oferta.setMedioPago(medioPago);
 		oferta.setEstablecimiento(establecimiento);
 		oferta.setAgencia(null);
@@ -120,15 +119,17 @@ public class OfertaDAO {
 
 	@SuppressWarnings("unchecked")
 	public List<Oferta> buscarOfertasHotelera(int codigo_destino, String tipo_Habitacion, LocalDate fDesde,
-			LocalDate fHasta) {
+			LocalDate fHasta, int cantPersonas) {
 		Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
 				+ " WHERE d.codigo_destino = :codigo_destino" + " AND TipoHabitacion = :tipo_Habitacion"
+				+ " AND o.cant_personas >= :cantPersonas"
 				+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" + " AND OfertaTipo = :tipoDeOferta");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("tipo_Habitacion", TipoHabitacion.valueOf(tipo_Habitacion).name());
 		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
 		ofertasHotelerasQuery.setParameter("fHasta", fHasta);
 		ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_HOTELERA.name());
+		ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
 		return ofertasHotelerasQuery.getResultList();
 	}
 	//Otras habitaciones disponibles del mismo hotel.
@@ -153,7 +154,7 @@ public class OfertaDAO {
 	public List<Oferta> buscarOfertasPaquete(int codigo_destino, int cantPersonas, LocalDate fDesde, LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery(
 				"SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.codigo_destino = :codigo_destino"
-						+ " AND o.cant_personas >= :cantPersonas" + " AND o.fecha_desde >= :fDesde"
+						+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde >= :fDesde"
 						+ " AND o.fecha_hasta <= :fHasta" + " AND OfertaTipo = :tipoDeOferta");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);

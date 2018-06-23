@@ -1,14 +1,14 @@
 package com.turismo.qconsumer.mensajes;
 
 public class HotelMensaje {
-	private int id;
+	private String id;
 	private String nombre;
 	private String fotoHotel;
 	
-	public int getId() {
+	public String getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	public String getNombre() {

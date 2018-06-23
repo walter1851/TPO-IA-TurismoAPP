@@ -108,6 +108,9 @@ public class MapperService {
 			establecimientoDTO.setLatitud(oferta.getEstablecimiento().getLatitud());
 			establecimientoDTO.setLongitud(oferta.getEstablecimiento().getLongitud());
 			establecimientoDTO.setNombre(oferta.getEstablecimiento().getNombre());
+			//List<String> fotosEstablecimiento=new ArrayList<String>();
+			//fotosEstablecimiento=oferta.getEstablecimiento().
+			//establecimientoDTO.setFotosEstablecimiento(fotosEstablecimiento);
 			
 			ofertaDTO.setOferta_id(oferta.getOferta_id());
 			ofertaDTO.setDestinoDTO(destinoDTO);

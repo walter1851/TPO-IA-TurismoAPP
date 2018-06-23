@@ -23,7 +23,7 @@ public class ProducerOfertaPaqueteRest {
 	public Response buscarOfertaPaquete(@PathParam("idPaquete") int idPaquete,
 			@PathParam("nombrePaquete") String nombrePaquete, @PathParam("idCiudadDestino") int idCiudadDestino,
 			@PathParam("cupo") int cupo,
-			@PathParam("cantPersonas") int cantPersonas, @PathParam("idAgencia") int idAgencia,
+			@PathParam("cantPersonas") int cantPersonas, @PathParam("idAgencia") String idAgencia,
 			@PathParam("nombreAgencia") String nombreAgencia,
 			@PathParam("direccionAgencia") String direccionAgencia, @PathParam("estadoAgencia") String estadoAgencia,
 			@PathParam("foto") String foto,

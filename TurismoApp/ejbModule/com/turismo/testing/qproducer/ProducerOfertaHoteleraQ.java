@@ -24,8 +24,8 @@ public class ProducerOfertaHoteleraQ {
 	JMSContext context;
 
 	public void sendMessage(int idOfertaHotelera, String nombreOfertaHotelera,float precio,int cupo
-			, String mediosDePago,String tipoHabitacion,int idEstablecimiento,String uidBackOffice,String nombreEstablecimiento,String direccionEstablecimiento,
-			int codigo_ciudad,int idHotel,String nombreHotel,String urlFotoHotel,
+			, String mediosDePago,String tipoHabitacion,String idEstablecimiento,String uidBackOffice,String nombreEstablecimiento,String direccionEstablecimiento,
+			int codigo_ciudad,String idHotel,String nombreHotel,String urlFotoHotel,
 			String descripcionEstablecimiento,String mapaLatitud,String mapaLongitud,String urlFotoEstablecimiento,int cantEstrellas,
 			String fechaDesde,String fechaHasta,String politicaCancelacion,String servicios) {
 			OfertaHoteleraMensaje ofertaHoteleraMensaje=new OfertaHoteleraMensaje();

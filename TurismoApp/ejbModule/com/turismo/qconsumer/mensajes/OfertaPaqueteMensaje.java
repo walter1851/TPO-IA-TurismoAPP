@@ -3,10 +3,11 @@ package com.turismo.qconsumer.mensajes;
 public class OfertaPaqueteMensaje {
 	private int id;
 	private String nombre;
-	private CiudadMensaje ciudadDestino;
+	private int ciudadDestino;
 	private int cupo;
 	private int cantPersonas;
 	private AgenciaMensaje agencia;
+	private String estado;
 	private String foto;
 	private String fechaDesde; // Ej: 2007-04-05T12:30-02:00
 	private String fechaHasta; // Ej: 2007-04-05T12:30-02:00
@@ -18,6 +19,18 @@ public class OfertaPaqueteMensaje {
 	private String servicios;
 	private String mediosDePago;
 	
+	public int getCiudadDestino() {
+		return ciudadDestino;
+	}
+	public void setCiudadDestino(int ciudadDestino) {
+		this.ciudadDestino = ciudadDestino;
+	}
+	public String getEstado() {
+		return estado;
+	}
+	public void setEstado(String estado) {
+		this.estado = estado;
+	}
 	public int getId() {
 		return id;
 	}
@@ -30,14 +43,21 @@ public class OfertaPaqueteMensaje {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
+	/*
 	public CiudadMensaje getCiudadDestino() {
 		return ciudadDestino;
 	}
 	public void setCiudadDestino(CiudadMensaje ciudadDestino) {
 		this.ciudadDestino = ciudadDestino;
-	}
+	}*/
 	public int getCupo() {
 		return cupo;
+	}
+	public int getCodigo_ciudad() {
+		return ciudadDestino;
+	}
+	public void setCodigo_ciudad(int codigo_ciudad) {
+		this.ciudadDestino = codigo_ciudad;
 	}
 	public void setCupo(int cupo) {
 		this.cupo = cupo;

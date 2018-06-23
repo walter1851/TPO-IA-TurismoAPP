@@ -15,7 +15,7 @@ public class Hotel {
 	private int hotel_id;
 	private String nombre;
 	@Column(unique = true)
-	private int codigo_hotel;
+	private String codigo_hotel;
 	
 	public int getHotel_id() {
 		return hotel_id;
@@ -29,10 +29,10 @@ public class Hotel {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public int getCodigo_hotel() {
+	public String getCodigo_hotel() {
 		return codigo_hotel;
 	}
-	public void setCodigo_hotel(int codigo_hotel) {
+	public void setCodigo_hotel(String codigo_hotel) {
 		this.codigo_hotel = codigo_hotel;
 	}
 	

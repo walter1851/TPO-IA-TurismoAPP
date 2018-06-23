@@ -125,14 +125,14 @@ public class BusquedaService {
 			return mapperService.obtenerListaOfertaPaqueteDTO(otrosPaquetesMismoDestino);
 	}
 
-	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino, String fDesde, String fHasta, String tipoHabitacion)
+	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino, String fDesde, String fHasta, String tipoHabitacion,int cantPersonas)
 			throws OfertaHoteleraException, ConversionFechaException {
 		LocalDate fDesdeConverted = convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
 		List<Oferta> ofertasHoteleras = null;
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted))
 			ofertasHoteleras = ofertaDAO.buscarOfertasHotelera(codigoDestino, tipoHabitacion, fDesdeConverted,
-					fHastaConverted);
+					fHastaConverted,cantPersonas);
 
 		if (ofertasHoteleras != null && ofertasHoteleras.isEmpty())
 			throw new OfertaHoteleraException("No se encontraron hoteles para el destino id: " + codigoDestino

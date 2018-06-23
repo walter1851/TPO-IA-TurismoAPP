@@ -19,7 +19,6 @@ public class Oferta {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int oferta_id;
-	@Column(unique = true)
 	private int codigo_oferta;
 	private String nombre;
 	private int cupo;
@@ -33,8 +32,10 @@ public class Oferta {
 	@ManyToOne
 	@JoinColumn(name="destino_id")
 	private Destino destino;
-	private String foto_paquete;
+	@Column(length=10000000)
 	private String descriptionPaquete;
+	@Column(length=10000000)
+	private String foto_paquete;
 	@ManyToOne
 	@JoinColumn(name="medio_de_pago_id")
 	private MedioPago medioPago;

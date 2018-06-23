@@ -15,7 +15,7 @@ import com.turismo.entities.Agencia;
 public class AgenciaDAO {
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
-	public Agencia nuevaAgencia(String nombre, String direccion, int codigo_agencia) {
+	public Agencia nuevaAgencia(String nombre, String direccion, String codigo_agencia) {
 		try {
 			Agencia agencia = new Agencia();
 			agencia.setNombre(nombre);
@@ -27,7 +27,7 @@ public class AgenciaDAO {
 			return null;
 		}
 	}
-	public boolean actualizarAgencia(int id, String nombre, String direccion, int codigo_agencia) {
+	public boolean actualizarAgencia(int id, String nombre, String direccion, String codigo_agencia) {
 		try {
 			Agencia agencia = buscarPorIdAgencia(id);
 			agencia.setNombre(nombre);
@@ -47,7 +47,7 @@ public class AgenciaDAO {
 		}
 	}
 
-	public Agencia buscarPorCodigoAgencia(int codigo_agencia) {
+	public Agencia buscarPorCodigoAgencia(String codigo_agencia) {
 		try {
 			Query agenciaQuery = entityManager
 					.createQuery("SELECT a FROM Agencia a " + "WHERE codigo_agencia = :codigo_agencia ");

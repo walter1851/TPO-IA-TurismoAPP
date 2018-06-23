@@ -55,7 +55,7 @@ public class OfertaPaqueteServicioRest {
 	@GET
 	@Path("calculartotal/{ofertaId}/{cantHabitaciones}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response calcularTotalEstadia(@PathParam("ofertaId") int ofertaId,
+	public Response calculartotal(@PathParam("ofertaId") int ofertaId,
 		    @PathParam("cantHabitaciones") int cantidadHabitaciones,
 			@PathParam("cantDias") int cantDias){
 		try {

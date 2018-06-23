@@ -1,6 +1,8 @@
 package com.turismo.coreservices;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
@@ -45,14 +47,14 @@ public class OfertaService {
 			throws OfertaPaqueteException, ConversionFechaException {
 		int codigo_paquete = ofertaPaqueteMensaje.getId();
 		String nombrePaquete = ofertaPaqueteMensaje.getNombre();
-		int codigo_ciudadDestino = ofertaPaqueteMensaje.getCiudadDestino().getCodigo_ciudad();
+		int codigo_ciudadDestino = ofertaPaqueteMensaje.getCodigo_ciudad();
 		//No hay q guardar el nombre de la ciudad
 		// String nombreCiudadDestino =
 		// ofertaPaqueteMensaje.getCiudadDestino().getNombre();
 		int cupo = ofertaPaqueteMensaje.getCupo();
 		int cantPersonas = ofertaPaqueteMensaje.getCantPersonas();
 		// AGENCIA
-		int codigo_agencia = ofertaPaqueteMensaje.getAgencia().getId();
+		String codigo_agencia = ofertaPaqueteMensaje.getAgencia().getId();
 		String nombreAgencia = ofertaPaqueteMensaje.getAgencia().getNombre();
 		String direccionAgencia = ofertaPaqueteMensaje.getAgencia().getDireccion();
 		// Preguntar si es necesario guardar, entiendo que no.
@@ -69,19 +71,18 @@ public class OfertaService {
 		String servicios = ofertaPaqueteMensaje.getServicios();
 		String mediosDePago = ofertaPaqueteMensaje.getMediosDePago();
 		Destino destino = destinoDAO.buscarDestinoPorCodigo(codigo_ciudadDestino);
-		Oferta oferta = ofertaDAO.buscarPorCodigoOferta(codigo_paquete);
+		Oferta oferta = null;//ofertaDAO.buscarPorCodigoOferta(codigo_paquete);
 		if (destino != null && oferta == null) {
 			Agencia agencia = agenciaService.guardarAgencia(nombreAgencia, direccionAgencia, codigo_agencia);
 			// convierto la fecha a localdate
 			LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fechaDesde);
 			LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fechaHasta);
-			boolean validarRangoFechaPaquete = busquedaService.validarRangoFechaPaquete(fDesdeConverted,
-					fHastaConverted);
+			boolean validarRangoFechaPaquete = true;//busquedaService.validarRangoFechaPaquete(fDesdeConverted,fHastaConverted);
 			if (validarRangoFechaPaquete) {
 				MedioPago medioPagoObject = medioPagoDAO.nuevoMedioPago(mediosDePago);
 				OfertaTipo ofertaTipo = OfertaTipo.OFERTA_PAQUETE;
 				Oferta nuevaOferta = ofertaDAO.nuevaOfertaPaquete(codigo_paquete, nombrePaquete, cupo, fDesdeConverted,
-						fHastaConverted, precio, politicaCancelacion, servicios, destino, descripcionPaquete, foto,
+						fHastaConverted, precio, politicaCancelacion, servicios, destino, foto,descripcionPaquete,
 						medioPagoObject, cantPersonas, agencia, ofertaTipo);
 				LocalDate fechaPivote = fDesdeConverted;
 				// igual a cero significa q son iguales
@@ -123,21 +124,22 @@ public class OfertaService {
 		int cupo = ofertaHoteleraMensaje.getCupo();
 		String mediosDePago = ofertaHoteleraMensaje.getMediosDePago();
 		// Establecimiento
-		int codigo_Establecimiento = ofertaHoteleraMensaje.getEstablecimiento().getId();
+		String codigo_Establecimiento = ofertaHoteleraMensaje.getEstablecimiento().getId();
 		// Entiendo que no hace falta guardarlo
 		// String uidBackOffice = ofertaHoteleraMensaje.getEstablecimiento().getUid();
 		// // Id recibido del backoffice
 		String nombreEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getNombre();
 		String direccionEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getDireccion();
 		int codigo_ciudad = ofertaHoteleraMensaje.getEstablecimiento().getCiudad().getCodigo_ciudad();
-		int codigo_hotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getId();
+		String codigo_hotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getId();
 		String nombreHotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getNombre();
-		String urlFotoHotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getFotoHotel();
+		String fotoHotel = ofertaHoteleraMensaje.getEstablecimiento().getHotel().getFotoHotel();
 		// Establecimiento
 		String descripcionEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getDescripcion();
 		String mapaLatitud = ofertaHoteleraMensaje.getEstablecimiento().getMapa().getLat();
 		String mapaLongitud = ofertaHoteleraMensaje.getEstablecimiento().getMapa().getLon();
-		String urlFotoEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getFotoestablecimiento();
+		List<String> fotosEstablecimiento = new ArrayList<String>();
+		fotosEstablecimiento.add(ofertaHoteleraMensaje.getEstablecimiento().getFotoestablecimiento());
 		int cantEstrellas = ofertaHoteleraMensaje.getEstablecimiento().getEstrellas();// de 1 a 5
 		// Campos oferta hotelera
 		String fechaDesde = ofertaHoteleraMensaje.getFechaDesde();// Ej: 2007-04-05T12:30-02:00
@@ -145,24 +147,24 @@ public class OfertaService {
 		String politicaCancelacion = ofertaHoteleraMensaje.getPoliticas();// Texto con las politicas
 		String servicios = ofertaHoteleraMensaje.getServicios();
 		Destino destino = destinoDAO.buscarDestinoPorCodigo(codigo_ciudad);
-		Oferta oferta = ofertaDAO.buscarPorCodigoOferta(codigoOfertaHotelera);
+		Oferta oferta = null;//ofertaDAO.buscarPorCodigoOferta(codigoOfertaHotelera);
 		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(ofertaHoteleraMensaje.getTipoHabitacion()); // SIMPLE, DOBLE, TRIPLE
 		if (destino != null && oferta == null && tipoHabitacion!=null) {
 			Establecimiento establecimiento = establecimientoService.guardarEstablecimiento(nombreEstablecimiento,
 					direccionEstablecimiento, destino.getNombre(), descripcionEstablecimiento, cantEstrellas,
-					mapaLatitud, mapaLongitud, codigo_Establecimiento, codigo_hotel, nombreHotel, urlFotoHotel);
+					mapaLatitud, mapaLongitud, codigo_Establecimiento, codigo_hotel, nombreHotel, fotoHotel,fotosEstablecimiento);
 			// convierto la fecha a localdate
 			LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fechaDesde);
 			LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fechaHasta);
-			boolean validarRangoFechaHotelera = busquedaService.validarRangoFechaHotelera(fDesdeConverted,
-					fHastaConverted);
+			boolean validarRangoFechaHotelera = true;//busquedaService.validarRangoFechaHotelera(fDesdeConverted,
+					//fHastaConverted);
 			if (validarRangoFechaHotelera) {
 				// Genero medios de pago
 				MedioPago medioPagoObject = medioPagoDAO.nuevoMedioPago(mediosDePago);
 				OfertaTipo ofertaTipo = OfertaTipo.OFERTA_HOTELERA;
 				Oferta nuevaOferta = ofertaDAO.nuevaOfertaHotelera(codigoOfertaHotelera, nombreOfertaHotelera, cupo,
 						fDesdeConverted, fHastaConverted, precio, tipoHabitacion, politicaCancelacion, servicios,
-						destino, urlFotoEstablecimiento, medioPagoObject, establecimiento, ofertaTipo,tipoHabitacion.getMaxCantPersonas());
+						destino, medioPagoObject, establecimiento, ofertaTipo,tipoHabitacion.getMaxCantPersonas());
 				LocalDate fechaPivote = fDesdeConverted;
 				// igual a cero significa q son iguales
 				// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias

@@ -26,13 +26,14 @@ public class OfertaHoteleraServicioRest {
 	//private BackOfficeLogging loggingBackOffice;
 
 	@GET
-	@Path("buscar/{codigoDestino}/{tipoHabitacion}/{fDesde}/{fHasta}")
+	@Path("buscar/{codigoDestino}/{tipoHabitacion}/{cantPersonas}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarOfertaHotelera(@PathParam("codigoDestino") int codigoDestino,
-			@PathParam("tipoHabitacion") String tipoHabitacion, @PathParam("fDesde") String fDesde,
-			@PathParam("fHasta") String fHasta){
+			@PathParam("tipoHabitacion") String tipoHabitacion, @PathParam("cantPersonas") int cantPersonas,
+			@PathParam("fDesde") String fDesde,@PathParam("fHasta") String fHasta
+			){
 		try {
-			List<OfertaDTO> ofertas = facade.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion);
+			List<OfertaDTO> ofertas = facade.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion,cantPersonas);
 			//this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_HOTELERA);
 			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON: "+ofertas.size()+" OFERTAS HOTELERAS")).build();
 		} catch (Exception e) {

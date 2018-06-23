@@ -1,5 +1,7 @@
 package com.turismo.dto;
 
+import java.util.List;
+
 public class EstablecimientoDTO {
 	private int establecimiento_id;
 	private String nombre;
@@ -9,9 +11,16 @@ public class EstablecimientoDTO {
 	private int estrellas;
 	private String latitud;
 	private String longitud;
-	private int codigo_establecimiento;
+	private String codigo_establecimiento;
 	private HotelDTO hotelDTO;
+	private List<String> fotosEstablecimiento;
 	
+	public List<String> getFotosEstablecimiento() {
+		return fotosEstablecimiento;
+	}
+	public void setFotosEstablecimiento(List<String> fotosEstablecimiento) {
+		this.fotosEstablecimiento = fotosEstablecimiento;
+	}
 	public String getLatitud() {
 		return latitud;
 	}
@@ -60,10 +69,10 @@ public class EstablecimientoDTO {
 	public void setEstrellas(int estrellas) {
 		this.estrellas = estrellas;
 	}
-	public int getCodigo_establecimiento() {
+	public String getCodigo_establecimiento() {
 		return codigo_establecimiento;
 	}
-	public void setCodigo_establecimiento(int codigo_establecimiento) {
+	public void setCodigo_establecimiento(String codigo_establecimiento) {
 		this.codigo_establecimiento = codigo_establecimiento;
 	}
 	public HotelDTO getHotelDTO() {

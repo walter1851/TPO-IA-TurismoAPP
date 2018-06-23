@@ -1,5 +1,7 @@
 package com.turismo.entities;
 
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,10 +24,11 @@ public class Establecimiento {
 	private int estrellas;
 	private String latitud;
 	private String longitud;
-	@Column(unique = true)
-	private int codigo_establecimiento;
+//	@Column(unique = true)
+	private String codigo_establecimiento;
 	@ManyToOne
 	@JoinColumn(name = "hotel_id")
+	
 	private Hotel hotel;
 	
 	public String getLatitud() {
@@ -76,10 +79,10 @@ public class Establecimiento {
 	public void setEstrellas(int estrellas) {
 		this.estrellas = estrellas;
 	}
-	public int getCodigo_establecimiento() {
+	public String getCodigo_establecimiento() {
 		return codigo_establecimiento;
 	}
-	public void setCodigo_establecimiento(int codigo_establecimiento) {
+	public void setCodigo_establecimiento(String codigo_establecimiento) {
 		this.codigo_establecimiento = codigo_establecimiento;
 	}
 	public Hotel getHotel() {

@@ -32,8 +32,8 @@ public class ReservaService {
 	private MapperService mapperService;
 	@EJB
 	BusquedaService busquedaService;
-	// @EJB
-	// private SOAPService soapService;
+	//@EJB
+    //private SOAPService soapService;
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException, RemoteException,
