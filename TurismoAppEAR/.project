@@ -4,8 +4,8 @@
 	<comment></comment>
 	<projects>
 		<project>TurismoApp</project>
-		<project>TurismoClienteSOAP</project>
 		<project>TurismoServiciosRest</project>
+		<project>TurismoClienteSOAP</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

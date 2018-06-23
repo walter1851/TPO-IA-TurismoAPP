@@ -11,6 +11,7 @@ import javax.xml.rpc.ServiceException;
 
 import com.turismo.backoffice.autorizacion.SOAPService;
 import com.turismo.dao.OfertaBloqueDAO;
+import com.turismo.dao.OfertaDAO;
 import com.turismo.dao.ReservaDAO;
 import com.turismo.dto.ReservaDTO;
 import com.turismo.entities.OfertaBloque;
@@ -32,8 +33,10 @@ public class ReservaService {
 	private MapperService mapperService;
 	@EJB
 	BusquedaService busquedaService;
-	//@EJB
+	@EJB
     //private SOAPService soapService;
+	//@EJB
+	private OfertaDAO ofertaDAO;
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException, RemoteException,
@@ -45,13 +48,14 @@ public class ReservaService {
 		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaPaquete(fDesdeConverted, fHastaConverted);
+		String codigo_agencia=ofertaDAO.buscarPorIdOferta(ofertaid).getAgencia().getCodigo_agencia();
 		boolean ofertaExistente = busquedaService.existeOfertaPaquete(ofertaid);
 		boolean cupoActualizado = false;
 		if (ofertaExistente) {
 			// consulto al backoffice si puedo reservar, le paso el codigo externo de la
 			// agencia (al ser paquete)
 			// backOfficeAutorizador.getServicioPrestadorAutorizadoPort().getPrestadorAutorizado(1);
-			// puedoReservar = soapService.getSOAPPort().estaAutorizado(1);
+			//puedoReservar = soapService.getSOAPPort().estaAutorizado(codigo_agencia);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted,
 					fHastaConverted, cantPersonas);
 			hayDisponibilidad = this.validarDisponibilidadPaquete(bloques);

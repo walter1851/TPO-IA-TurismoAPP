@@ -5,11 +5,11 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="TurismoClienteSOAP.war" deploy-path="/" handle="module:/resource/TurismoClienteSOAP/TurismoClienteSOAP">
+        <dependent-module archiveName="TurismoServiciosRest.war" deploy-path="/" handle="module:/resource/TurismoServiciosRest/TurismoServiciosRest">
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="TurismoServiciosRest.war" deploy-path="/" handle="module:/resource/TurismoServiciosRest/TurismoServiciosRest">
+        <dependent-module archiveName="TurismoClienteSOAP.war" deploy-path="/" handle="module:/resource/TurismoClienteSOAP/TurismoClienteSOAP">
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
