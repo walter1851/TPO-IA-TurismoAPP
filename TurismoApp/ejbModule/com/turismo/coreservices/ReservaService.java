@@ -34,8 +34,8 @@ public class ReservaService {
 	@EJB
 	BusquedaService busquedaService;
 	@EJB
-    //private SOAPService soapService;
-	//@EJB
+    private SOAPService soapService;
+	@EJB
 	private OfertaDAO ofertaDAO;
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
