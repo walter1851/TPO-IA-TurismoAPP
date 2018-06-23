@@ -32,12 +32,13 @@ public class ReservaService {
 	private MapperService mapperService;
 	@EJB
 	BusquedaService busquedaService;
-	//@EJB
-	//private SOAPService soapService;
+	// @EJB
+	// private SOAPService soapService;
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException, RemoteException,
 			ServiceException, ConversionFechaException, OfertaPaqueteException {
+		Reserva nuevaReservaPaquete = null;
 		ReservaDTO nuevaReservaDTO = null;
 		boolean puedoReservar = true;
 		boolean hayDisponibilidad = true;
@@ -45,32 +46,25 @@ public class ReservaService {
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaPaquete(fDesdeConverted, fHastaConverted);
 		boolean ofertaExistente = busquedaService.existeOfertaPaquete(ofertaid);
+		boolean cupoActualizado = false;
 		if (ofertaExistente) {
 			// consulto al backoffice si puedo reservar, le paso el codigo externo de la
 			// agencia (al ser paquete)
 			// backOfficeAutorizador.getServicioPrestadorAutorizadoPort().getPrestadorAutorizado(1);
-			//puedoReservar = soapService.getSOAPPort().estaAutorizado(1);
+			// puedoReservar = soapService.getSOAPPort().estaAutorizado(1);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted,
 					fHastaConverted, cantPersonas);
 			hayDisponibilidad = this.validarDisponibilidadPaquete(bloques);
-			Reserva nuevaReservaPaquete = null;
 			if (formatoFechaOK && hayDisponibilidad && puedoReservar) {
-				float montoTotal = busquedaService.calcularPrecioTotalPaquete(ofertaid, cantPersonas);
-				if (actualizarCupoBloquesPaquete(bloques))
+				cupoActualizado = actualizarCupoBloquesPaquete(bloques);
+				if (cupoActualizado) {
+					float montoTotal = busquedaService.calcularPrecioTotalPaquete(ofertaid, cantPersonas);
 					nuevaReservaPaquete = reservaDAO.crearReserva(ofertaid, 1, fDesdeConverted, fHastaConverted,
 							medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
+					nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaPaquete);
+				}
 			}
-			if (nuevaReservaPaquete == null)
-				throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
-			else
-				nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaPaquete);
-		}		
-		if (!formatoFechaOK)
-			throw new ReservaException(
-					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio "
-							+ fDesdeConverted.toString() + " es menor que la fecha de salida " + fHastaConverted
-							+ " , y que dicho rango se encuentre dentro de la fecha actual "
-							+ LocalDate.now().toString());
+		}
 		if (!hayDisponibilidad)
 			throw new ReservaException("No hay disponibilidad desde la fecha " + fDesdeConverted.toString() + " hasta "
 					+ fHastaConverted.toString() + " para la cantidad " + cantPersonas
@@ -80,6 +74,8 @@ public class ReservaService {
 					"El id de oferta (id interno): " + ofertaid + " no existe en la base de datos. ");
 		if (!puedoReservar)
 			throw new ReservaException("No hay autorizacion del backoffice para reservar");
+		if (cupoActualizado && nuevaReservaPaquete == null)
+			throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
 
 		return nuevaReservaDTO;
 	}
@@ -106,11 +102,12 @@ public class ReservaService {
 
 	public ReservaDTO reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion,
 			int cantHabitaciones, String nombre, String apellido, String dni, int medioPagoID, String emailUsuario)
-			throws ReservaException, ConversionFechaException, OfertaHoteleraException {
+			throws ReservaException, ConversionFechaException, OfertaHoteleraException, OfertaPaqueteException {
 		ReservaDTO nuevaReservaDTO = null;
+		Reserva nuevaReservaHotelera = null;
 		boolean puedoReservar = true;
 		boolean hayDisponibilidad = true;
-		Reserva nuevaReservaHotelera = null;
+		boolean cupoActualizado = false;
 		// valido el formato de las fechas
 		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
@@ -123,22 +120,15 @@ public class ReservaService {
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(ofertaid, fDesdeConverted,
 					fHastaConverted, tipoHabitacion);
 			hayDisponibilidad = this.validarDisponibilidadHotelera(bloques, cantHabitaciones);
-			boolean cupoActualizado = false;
 			if (formatoFechaOK && hayDisponibilidad && puedoReservar)
 				cupoActualizado = actualizarCupoBloquesHotelero(bloques, cantHabitaciones);
 			if (cupoActualizado) {
-				float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid, cantHabitaciones, fDesde,fHasta);
+				float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid, cantHabitaciones, fDesde, fHasta);
 				nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, 1, fDesdeConverted, fHastaConverted,
 						medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
 				nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaHotelera);
 			}
 		}
-		if (!formatoFechaOK)
-			throw new ReservaException(
-					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio "
-							+ fDesdeConverted.toString() + " es menor que la fecha de salida " + fHastaConverted
-							+ " , y que dicho rango se encuentre dentro de la fecha actual "
-							+ LocalDate.now().toString());
 		if (!hayDisponibilidad)
 			throw new ReservaException(
 					"No hay disponibilidad desde la fecha: " + fDesdeConverted.toString() + " hasta: "
@@ -148,7 +138,7 @@ public class ReservaService {
 		if (!ofertaExistente)
 			throw new ReservaException(
 					"El id de oferta (id interno): " + ofertaid + " no existe en la base de datos. ");
-		if (nuevaReservaHotelera == null)
+		if (cupoActualizado && nuevaReservaHotelera == null)
 			throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
 		return nuevaReservaDTO;
 	}

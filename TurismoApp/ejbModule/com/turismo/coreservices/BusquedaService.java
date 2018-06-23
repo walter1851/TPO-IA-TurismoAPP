@@ -14,6 +14,7 @@ import com.turismo.entities.OfertaTipo;
 import com.turismo.exceptions.ConversionFechaException;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
+import com.turismo.exceptions.ReservaException;
 
 /**
  * Session Bean implementation class BusquedaOfertaPaqueteService
@@ -32,11 +33,10 @@ public class BusquedaService {
 		boolean esOfertaHotelera;
 
 		if (ofertaExistente == null) {
-			existeIdOferta=false;
+			existeIdOferta = false;
 			throw new OfertaHoteleraException("la oferta id " + ofertaId + " no existe en la base de datos.");
-		}
-		else {
-			existeIdOferta=true;
+		} else {
+			existeIdOferta = true;
 			esOfertaHotelera = ofertaExistente.getOfertaTipo().equals(OfertaTipo.OFERTA_HOTELERA);
 			if (!esOfertaHotelera)
 				throw new OfertaHoteleraException("la oferta id " + ofertaId
@@ -44,17 +44,17 @@ public class BusquedaService {
 		}
 		return (existeIdOferta && esOfertaHotelera);
 	}
+
 	public boolean existeOfertaPaquete(int ofertaId) throws OfertaPaqueteException {
 		Oferta ofertaExistente = ofertaDAO.buscarPorIdOferta(ofertaId);
 		boolean existeIdOferta;
 		boolean esOfertaPaquete;
-		
+
 		if (ofertaExistente == null) {
-			existeIdOferta=false;
+			existeIdOferta = false;
 			throw new OfertaPaqueteException("la oferta id " + ofertaId + " no existe en la base de datos.");
-		}
-		else {
-			existeIdOferta=true;
+		} else {
+			existeIdOferta = true;
 			esOfertaPaquete = ofertaExistente.getOfertaTipo().equals(OfertaTipo.OFERTA_PAQUETE);
 			if (!esOfertaPaquete)
 				throw new OfertaPaqueteException("la oferta id " + ofertaId
@@ -69,31 +69,24 @@ public class BusquedaService {
 			montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantidadPersonas;
 		if (montoTotal < 0)
 			throw new OfertaPaqueteException(
-					"Se produjo un error grave en el calculo de monto total del paquete. Dicho valor es menor a cero.");
+					"Se produjo un error grave en el calculo de monto total del paquete. Se obtuvo un valor menor a cero.");
 		return montoTotal;
 	}
 
 	public float calcularPrecioTotalHotel(int ofertaId, int cantidadHabitaciones, String fDesde, String fHasta)
-			throws OfertaHoteleraException, ConversionFechaException {
+			throws OfertaHoteleraException, ConversionFechaException, OfertaPaqueteException {
+		float montoTotal = -1;
 		LocalDate fDesdeConverted = this.convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = this.convertStringToLocalDate(fDesde);
-		int cantDiasHotel = fHastaConverted.compareTo(fDesdeConverted);
-		float montoTotal = -1;
-		if (existeOfertaHotelera(ofertaId))
-			montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantidadHabitaciones * cantDiasHotel;
-		if (montoTotal < 0)
-			throw new OfertaHoteleraException(
-					"Se produjo un error grave en el calculo del hospedaje. El monto total es menor a cero ");
+		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
+			int cantDiasHotel = fHastaConverted.compareTo(fDesdeConverted);
+			if (existeOfertaHotelera(ofertaId))
+				montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantidadHabitaciones * cantDiasHotel;
+			if (montoTotal < 0)
+				throw new OfertaHoteleraException(
+						"Se produjo un error grave en el calculo del hospedaje. El monto total es menor a cero ");
+		}
 		return montoTotal;
-	}
-
-	public List<OfertaDTO> buscarOtrosPaquetesMismoDestino(int codigo_paquete_a_excluir, int codigo_destino,
-			int cantPersonas, String fDesdeString, String fHastaString) throws ConversionFechaException {
-		LocalDate fDesdeConverted = convertStringToLocalDate(fDesdeString);
-		LocalDate fHastaConverted = convertStringToLocalDate(fHastaString);
-		List<Oferta> otrosPaquetesMismoDestino = ofertaDAO.buscarOtrosPaquetesMismoDestino(codigo_paquete_a_excluir,
-				codigo_destino, cantPersonas, fDesdeConverted, fHastaConverted);
-		return mapperService.obtenerListaOfertaPaqueteDTO(otrosPaquetesMismoDestino);
 	}
 
 	public List<OfertaDTO> buscarOfertaPaquete(int codigoDestino, int cantPersonas, String fDesdeString,
@@ -101,15 +94,12 @@ public class BusquedaService {
 		LocalDate fDesdeConverted = convertStringToLocalDate(fDesdeString);
 		LocalDate fHastaConverted = convertStringToLocalDate(fHastaString);
 
-		List<Oferta> ofertasPaquete;
+		List<Oferta> ofertasPaquete = null;
 		if (validarRangoFechaPaquete(fDesdeConverted, fHastaConverted))
 			ofertasPaquete = ofertaDAO.buscarOfertasPaquete(codigoDestino, cantPersonas, fDesdeConverted,
 					fHastaConverted);
-		else
-			throw new OfertaPaqueteException(
-					"La fecha de inicio es mayor que la final o la fecha actual no se encuentra dentro de dicho rangos");
 
-		if (ofertasPaquete.isEmpty())
+		if (ofertasPaquete != null && ofertasPaquete.isEmpty())
 			throw new OfertaPaqueteException(
 					"No se encontraron paquetes para el destino id: " + codigoDestino + " desde el " + fDesdeConverted
 							+ " Hasta el " + fHastaConverted + " cant personas: " + cantPersonas);
@@ -117,54 +107,91 @@ public class BusquedaService {
 			return mapperService.obtenerListaOfertaPaqueteDTO(ofertasPaquete);
 	}
 
-	public List<OfertaDTO> buscarOtrasOfertasMismoHotel(int codigo_destino, String tipo_Habitacion_a_excluir,
-			int codigo_Hotel, String fDesde, String fHasta) throws ConversionFechaException {
-		LocalDate fDesdeConverted = convertStringToLocalDate(fDesde);
-		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
-		List<Oferta> ofertasHoteleras = ofertaDAO.buscarOtrasOfertasMismoHotel(codigo_destino,
-				tipo_Habitacion_a_excluir, codigo_Hotel, fDesdeConverted, fHastaConverted);
-		return mapperService.obtenerListaOfertaPaqueteDTO(ofertasHoteleras);
+	public List<OfertaDTO> buscarOtrosPaquetesMismoDestino(int codigo_paquete_a_excluir, int codigo_destino,
+			int cantPersonas, String fDesdeString, String fHastaString)
+			throws ConversionFechaException, OfertaPaqueteException {
+		List<Oferta> otrosPaquetesMismoDestino = null;
+		LocalDate fDesdeConverted = convertStringToLocalDate(fDesdeString);
+		LocalDate fHastaConverted = convertStringToLocalDate(fHastaString);
+		if (validarRangoFechaPaquete(fDesdeConverted, fHastaConverted)) {
+			otrosPaquetesMismoDestino = ofertaDAO.buscarOtrosPaquetesMismoDestino(codigo_paquete_a_excluir,
+					codigo_destino, cantPersonas, fDesdeConverted, fHastaConverted);
+		}
+		if (otrosPaquetesMismoDestino != null && otrosPaquetesMismoDestino.isEmpty())
+			throw new OfertaPaqueteException(
+					"No se encontraron paquetes para mismo destino. Codigo destino " + codigo_destino + " desde el "
+							+ fDesdeConverted + " Hasta el " + fHastaConverted + " cant personas: " + cantPersonas);
+		else
+			return mapperService.obtenerListaOfertaPaqueteDTO(otrosPaquetesMismoDestino);
 	}
 
 	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino, String fDesde, String fHasta, String tipoHabitacion)
 			throws OfertaHoteleraException, ConversionFechaException {
 		LocalDate fDesdeConverted = convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
-
-		List<Oferta> ofertasHoteleras;
+		List<Oferta> ofertasHoteleras = null;
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted))
 			ofertasHoteleras = ofertaDAO.buscarOfertasHotelera(codigoDestino, tipoHabitacion, fDesdeConverted,
 					fHastaConverted);
-		else
-			throw new OfertaHoteleraException(
-					"La fecha de inicio es mayor que la final o la fecha actual no se encuentra dentro de dicho rangos");
 
-		if (ofertasHoteleras.isEmpty())
+		if (ofertasHoteleras != null && ofertasHoteleras.isEmpty())
 			throw new OfertaHoteleraException("No se encontraron hoteles para el destino id: " + codigoDestino
 					+ " desde el " + fDesde + " Hasta el " + fHasta + " tipo habitacion: " + tipoHabitacion);
 		else
 			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}
 
-	public Boolean validarRangoFechaPaquete(LocalDate localDateDesde, LocalDate localDateHasta) {
-		LocalDate localDateFechaActual = LocalDate.now();
-		if (localDateDesde.compareTo(localDateFechaActual) >= 0 && localDateHasta.compareTo(localDateFechaActual) >= 0
-				&& localDateHasta.compareTo(localDateDesde) >= 0)
-			return true;
+	public List<OfertaDTO> buscarOtrasOfertasMismoHotel(int codigo_destino, String tipo_Habitacion_a_excluir,
+			int codigo_Hotel, String fDesde, String fHasta) throws ConversionFechaException, OfertaHoteleraException {
+		List<Oferta> ofertasHoteleras = null;
+		LocalDate fDesdeConverted = convertStringToLocalDate(fDesde);
+		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
+		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted))
+			ofertasHoteleras = ofertaDAO.buscarOtrasOfertasMismoHotel(codigo_destino, tipo_Habitacion_a_excluir,
+					codigo_Hotel, fDesdeConverted, fHastaConverted);
+		if (ofertasHoteleras != null && ofertasHoteleras.isEmpty())
+			throw new OfertaHoteleraException("No se encontraron otras ofertas para el mismo hotel.");
 		else
-			return false;
+			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}
 
-	public Boolean validarRangoFechaHotelera(LocalDate localDateDesde, LocalDate localDateHasta) {
+	public Boolean validarRangoFechaPaquete(LocalDate localDateDesde, LocalDate localDateHasta)
+			throws OfertaPaqueteException {
+		LocalDate localDateFechaActual = LocalDate.now();
+		boolean rangoValido;
+		if (localDateDesde.compareTo(localDateFechaActual) >= 0 && localDateHasta.compareTo(localDateFechaActual) >= 0
+				&& localDateHasta.compareTo(localDateDesde) >= 0)
+			rangoValido = true;
+		else
+			rangoValido = false;
+		if (!rangoValido)
+			throw new OfertaPaqueteException(
+					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio "
+							+ localDateDesde.toString() + " es menor o igual que la fecha de salida "
+							+ localDateHasta.toString() + " , y que dicho rango sea posterior a la fecha actual "
+							+ LocalDate.now().toString());
+		return rangoValido;
+	}
+
+	public Boolean validarRangoFechaHotelera(LocalDate localDateDesde, LocalDate localDateHasta)
+			throws OfertaHoteleraException {
 		/*
 		 * Estamos validando que fDesde no sea mayor que fHasta y que la fecha actual se
 		 * encuentre dentro de dichos rangos
 		 */
+		boolean rangoValido;
 		LocalDate localDateFechaActual = LocalDate.now();
 		if (localDateHasta.compareTo(localDateFechaActual) >= 0 && localDateHasta.compareTo(localDateDesde) >= 0)
-			return true;
+			rangoValido = true;
 		else
-			return false;
+			rangoValido = false;
+		if (!rangoValido)
+			throw new OfertaHoteleraException(
+					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio "
+							+ localDateDesde.toString() + " es menor o igual que la fecha de salida "
+							+ localDateHasta.toString() + " , y que dicho rango se encuentre dentro de la fecha actual "
+							+ LocalDate.now().toString());
+		return rangoValido;
 	}
 
 	public LocalDate convertStringToLocalDate(String stringFecha) throws ConversionFechaException {

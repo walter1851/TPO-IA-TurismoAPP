@@ -36,7 +36,7 @@ public class ReservaServicioRest {
 			return Response.ok(new WebResponse(reservaDTO,"SE REGISTRO UNA RESERVA HOTELERA")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(e,"ERROR")).build();
+			return Response.ok(new WebResponse(e.getMessage(),"ERROR")).build();
 		}
 	}
 	//CAMBIAR POR METODO POST
@@ -53,7 +53,7 @@ public class ReservaServicioRest {
 			return Response.ok(new WebResponse(reservaDTO,"SE REGISTRO UNA RESERVA DE PAQUETE")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(e,"ERROR")).build();
+			return Response.ok(new WebResponse(e.getMessage(),"ERROR")).build();
 		}
 	}
 }

@@ -30,7 +30,7 @@ public class ControllerService{
 	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino,String fDesde, String fHasta, String tipoHabitacion) throws OfertaHoteleraException, ConversionFechaException {
 		return busquedaOfertaService.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion);
 	}
-	public ReservaDTO reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantHabitaciones,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException, ConversionFechaException, OfertaHoteleraException {
+	public ReservaDTO reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantHabitaciones,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException, ConversionFechaException, OfertaHoteleraException, OfertaPaqueteException {
 		return reservaService.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantHabitaciones, nombre, apellido, dni, medioPagoId,mailUsuario);
 	}
 	public ReservaDTO reservarPaquete(int ofertaid,String fDesde,String fHasta,int cantPersonas,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException, RemoteException, ServiceException, ConversionFechaException, OfertaPaqueteException {
@@ -39,15 +39,15 @@ public class ControllerService{
 	public float calcularPrecioTotalPaquete(int ofertaId, int cantidadPersonas) throws OfertaPaqueteException {
 		return busquedaOfertaService.calcularPrecioTotalPaquete(ofertaId, cantidadPersonas);
 	}
-	public float calcularPrecioTotalHotel(int ofertaId, int cantidadHabitaciones,String fDesde, String fHasta) throws OfertaHoteleraException, ConversionFechaException {
+	public float calcularPrecioTotalHotel(int ofertaId, int cantidadHabitaciones,String fDesde, String fHasta) throws OfertaHoteleraException, ConversionFechaException, OfertaPaqueteException {
 		return busquedaOfertaService.calcularPrecioTotalHotel(ofertaId, cantidadHabitaciones, fDesde, fHasta);
 	}
 	public List<OfertaDTO> buscarOtrosPaquetesMismoDestino(int codigo_paquete_a_excluir, int codigo_destino,
-			int cantPersonas, String fDesdeString, String fHastaString) throws ConversionFechaException{
+			int cantPersonas, String fDesdeString, String fHastaString) throws ConversionFechaException, OfertaPaqueteException{
 		return busquedaOfertaService.buscarOtrosPaquetesMismoDestino(codigo_paquete_a_excluir, codigo_destino, cantPersonas, fDesdeString, fHastaString);
 	}
 	public List<OfertaDTO> buscarOtrasOfertasMismoHotel(int codigo_destino, String tipo_Habitacion_a_excluir,
-			int codigo_Hotel, String fDesde, String fHasta) throws ConversionFechaException{
+			int codigo_Hotel, String fDesde, String fHasta) throws ConversionFechaException, OfertaHoteleraException{
 		return busquedaOfertaService.buscarOtrasOfertasMismoHotel(codigo_destino, tipo_Habitacion_a_excluir, codigo_Hotel, fDesde, fHasta);
 	}
 }

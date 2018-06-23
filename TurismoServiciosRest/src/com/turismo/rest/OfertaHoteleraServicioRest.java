@@ -37,7 +37,7 @@ public class OfertaHoteleraServicioRest {
 			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON: "+ofertas.size()+" OFERTAS HOTELERAS")).build();
 		} catch (Exception e) {
 			//this.loggingBackOffice.error(e.getMessage());
-			return Response.ok(new WebResponse(e,"ERROR")).build();
+			return Response.ok(new WebResponse(e.getMessage(),"ERROR")).build();
 		}
 	}
 	@GET
@@ -53,7 +53,7 @@ public class OfertaHoteleraServicioRest {
 			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON "+ofertas.size()+" OFERTAS HOTELERAS PARA MISMO HOTEL y DISTINTO TIPO DE HABITACION")).build();
 		} catch (Exception e) {
 			//this.loggingBackOffice.error(e.getMessage());
-			return Response.ok(new WebResponse(e,"ERROR")).build();
+			return Response.ok(new WebResponse(e.getMessage(),"ERROR")).build();
 		}
 	}
 	@GET
@@ -68,7 +68,7 @@ public class OfertaHoteleraServicioRest {
 			return Response.ok(new WebResponse(Float.toString(total),"Se calculo el total")).build();
 		} catch (Exception e) {
 			//this.loggingBackOffice.error(e.getMessage());
-			return Response.ok(new WebResponse(e,"ERROR")).build();
+			return Response.ok(new WebResponse(e.getMessage(),"ERROR")).build();
 		}
 	}
 }

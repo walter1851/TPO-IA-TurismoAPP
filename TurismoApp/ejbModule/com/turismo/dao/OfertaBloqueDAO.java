@@ -56,12 +56,16 @@ public class OfertaBloqueDAO{
 	public List<OfertaBloque> buscarBloquesDePaquetes(int ofertaId,LocalDate fDesde, LocalDate fHasta, int cantPersonas) {
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + " WHERE o.cant_personas >= :cantPersonas "
-						+ "AND o.oferta_id = :ofertaId "+" AND o.fecha_desde >= :fDesde AND o.fecha_hasta <= :fHasta");
+						+ "AND o.oferta_id = :ofertaId "+" AND o.fecha_desde >= :fDesde AND o.fecha_hasta <= :fHasta"
+						+ " AND o.fecha_desde = :fDesde"
+						+ " AND o.fecha_hasta = :fHasta");
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);
 		bloqueQuery.setParameter("cantPersonas", cantPersonas);
 		bloqueQuery.setParameter("ofertaId", ofertaId);
 		return bloqueQuery.getResultList();
+		
+		
 	}
 	@SuppressWarnings("unchecked")
 	/*Entiendo que esta validacion no hace falta hacerla:
@@ -70,7 +74,8 @@ public class OfertaBloqueDAO{
 	public List<OfertaBloque> buscarBloquesDeHoteleria(int ofertaId,LocalDate fDesde, LocalDate fHasta,String tipoHabitacion) {
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + "WHERE o.oferta_id = :ofertaId " + 
-		"AND TipoHabitacion=:tipoHabitacion "+" AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta");
+		"AND TipoHabitacion=:tipoHabitacion "+" AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta"
+		+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" );
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);
 		bloqueQuery.setParameter("ofertaId", ofertaId);

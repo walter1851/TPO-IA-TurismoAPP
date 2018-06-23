@@ -33,7 +33,7 @@ public class OfertaPaqueteServicioRest {
 			return Response.ok(new WebResponse(ofertas, "SE ENCONTRARON: " + ofertas.size() + " PAQUETES")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(false, e.getMessage())).build();
+			return Response.ok(new WebResponse(e.getMessage(),"ERROR")).build();
 		}
 	}
 	
@@ -49,7 +49,7 @@ public class OfertaPaqueteServicioRest {
 			return Response.ok(new WebResponse(ofertas, "ENCONTRADOS: " + ofertas.size() + " - DISTINTOS PAQUETES MISMO DESTINO")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(false, e.getMessage())).build();
+			return Response.ok(new WebResponse(e.getMessage(),"ERROR")).build();
 		}
 	}
 	@GET
