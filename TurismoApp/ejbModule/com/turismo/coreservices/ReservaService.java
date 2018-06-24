@@ -7,9 +7,12 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.xml.rpc.ServiceException;
 
-import com.turismo.backoffice.autorizacion.SOAPService;
+import com.backoffice.servicios.SOAPService;
+//import com.backoffice.servicios.SOAPService;
+//import com.backoffice.servicios.SOAPService;
 import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.OfertaDAO;
 import com.turismo.dao.ReservaDAO;
@@ -34,9 +37,16 @@ public class ReservaService {
 	@EJB
 	BusquedaService busquedaService;
 	@EJB
-    private SOAPService soapService;
-	@EJB
 	private OfertaDAO ofertaDAO;
+	// @Inject
+	// private SOAPService soap;
+	// @EJB
+	// private BackOfficeAutorizador service;
+
+	private boolean prestadorEstaAutorizado(String codigo_prestador) {
+		SOAPService service = new SOAPService();
+		return service.getSOAPPort().estaAutorizado(codigo_prestador);
+	}
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,
 			String apellido, String dni, int medioPagoID, String emailUsuario) throws ReservaException, RemoteException,
@@ -48,18 +58,19 @@ public class ReservaService {
 		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaPaquete(fDesdeConverted, fHastaConverted);
-		String codigo_agencia=ofertaDAO.buscarPorIdOferta(ofertaid).getAgencia().getCodigo_agencia();
 		boolean ofertaExistente = busquedaService.existeOfertaPaquete(ofertaid);
 		boolean cupoActualizado = false;
+		boolean estaAutorizado=false;
+		String codigo_agencia="";
 		if (ofertaExistente) {
 			// consulto al backoffice si puedo reservar, le paso el codigo externo de la
 			// agencia (al ser paquete)
-			// backOfficeAutorizador.getServicioPrestadorAutorizadoPort().getPrestadorAutorizado(1);
-			//puedoReservar = soapService.getSOAPPort().estaAutorizado(codigo_agencia);
+			codigo_agencia = ofertaDAO.buscarPorIdOferta(ofertaid).getAgencia().getCodigo_agencia();
+			estaAutorizado = prestadorEstaAutorizado(codigo_agencia);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted,
 					fHastaConverted, cantPersonas);
 			hayDisponibilidad = this.validarDisponibilidadPaquete(bloques);
-			if (formatoFechaOK && hayDisponibilidad && puedoReservar) {
+			if (estaAutorizado&&formatoFechaOK && hayDisponibilidad && puedoReservar) {
 				cupoActualizado = actualizarCupoBloquesPaquete(bloques);
 				if (cupoActualizado) {
 					float montoTotal = busquedaService.calcularPrecioTotalPaquete(ofertaid, cantPersonas);
@@ -69,6 +80,9 @@ public class ReservaService {
 				}
 			}
 		}
+		if (!estaAutorizado)
+			throw new ReservaException(
+					"El codigo de prestador (codigo agencia) " + codigo_agencia + " no se encuentra autorizado por el backoffice. ");
 		if (!hayDisponibilidad)
 			throw new ReservaException("No hay disponibilidad desde la fecha " + fDesdeConverted.toString() + " hasta "
 					+ fHastaConverted.toString() + " para la cantidad " + cantPersonas

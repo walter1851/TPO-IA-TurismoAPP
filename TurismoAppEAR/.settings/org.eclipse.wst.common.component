@@ -9,7 +9,7 @@
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="TurismoClienteSOAP.war" deploy-path="/" handle="module:/resource/TurismoClienteSOAP/TurismoClienteSOAP">
+        <dependent-module archiveName="IA_TPO_BO_G05_EJB.war" deploy-path="/" handle="module:/resource/IA_TPO_BO_G05_EJB/IA_TPO_BO_G05_EJB">
             <dependent-object/>
             <dependency-type>uses</dependency-type>
         </dependent-module>

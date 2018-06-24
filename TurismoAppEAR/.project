@@ -5,7 +5,7 @@
 	<projects>
 		<project>TurismoApp</project>
 		<project>TurismoServiciosRest</project>
-		<project>TurismoClienteSOAP</project>
+		<project>IA_TPO_BO_G05_EJB</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
