@@ -40,8 +40,6 @@ public class ReservaService {
 	private OfertaDAO ofertaDAO;
 	// @Inject
 	// private SOAPService soap;
-	// @EJB
-	// private BackOfficeAutorizador service;
 
 	private boolean prestadorEstaAutorizado(String codigo_prestador) {
 		SOAPService service = new SOAPService();
@@ -53,24 +51,23 @@ public class ReservaService {
 			ServiceException, ConversionFechaException, OfertaPaqueteException {
 		Reserva nuevaReservaPaquete = null;
 		ReservaDTO nuevaReservaDTO = null;
-		boolean puedoReservar = true;
 		boolean hayDisponibilidad = true;
 		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaPaquete(fDesdeConverted, fHastaConverted);
 		boolean ofertaExistente = busquedaService.existeOfertaPaquete(ofertaid);
 		boolean cupoActualizado = false;
-		boolean estaAutorizado=false;
-		String codigo_agencia="";
+		boolean estaAutorizado = false;
+		String codigo_agencia = "";
 		if (ofertaExistente) {
-			// consulto al backoffice si puedo reservar, le paso el codigo externo de la
-			// agencia (al ser paquete)
+			// consulto al backoffice le paso el codigo externo de la agencia (al ser
+			// paquete)
 			codigo_agencia = ofertaDAO.buscarPorIdOferta(ofertaid).getAgencia().getCodigo_agencia();
 			estaAutorizado = prestadorEstaAutorizado(codigo_agencia);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted,
 					fHastaConverted, cantPersonas);
 			hayDisponibilidad = this.validarDisponibilidadPaquete(bloques);
-			if (estaAutorizado&&formatoFechaOK && hayDisponibilidad && puedoReservar) {
+			if (estaAutorizado && formatoFechaOK && hayDisponibilidad) {
 				cupoActualizado = actualizarCupoBloquesPaquete(bloques);
 				if (cupoActualizado) {
 					float montoTotal = busquedaService.calcularPrecioTotalPaquete(ofertaid, cantPersonas);
@@ -81,8 +78,8 @@ public class ReservaService {
 			}
 		}
 		if (!estaAutorizado)
-			throw new ReservaException(
-					"El codigo de prestador (codigo agencia) " + codigo_agencia + " no se encuentra autorizado por el backoffice. ");
+			throw new ReservaException("El codigo de prestador (codigo agencia) " + codigo_agencia
+					+ " no se encuentra autorizado por el backoffice. ");
 		if (!hayDisponibilidad)
 			throw new ReservaException("No hay disponibilidad desde la fecha " + fDesdeConverted.toString() + " hasta "
 					+ fHastaConverted.toString() + " para la cantidad " + cantPersonas
@@ -90,8 +87,6 @@ public class ReservaService {
 		if (!ofertaExistente)
 			throw new ReservaException(
 					"El id de oferta (id interno): " + ofertaid + " no existe en la base de datos. ");
-		if (!puedoReservar)
-			throw new ReservaException("No hay autorizacion del backoffice para reservar");
 		if (cupoActualizado && nuevaReservaPaquete == null)
 			throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
 
@@ -123,7 +118,7 @@ public class ReservaService {
 			throws ReservaException, ConversionFechaException, OfertaHoteleraException, OfertaPaqueteException {
 		ReservaDTO nuevaReservaDTO = null;
 		Reserva nuevaReservaHotelera = null;
-		boolean puedoReservar = true;
+		boolean estaAutorizado = true;
 		boolean hayDisponibilidad = true;
 		boolean cupoActualizado = false;
 		// valido el formato de las fechas
@@ -131,14 +126,17 @@ public class ReservaService {
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaHotelera(fDesdeConverted, fHastaConverted);
 		boolean ofertaExistente = busquedaService.existeOfertaHotelera(ofertaid);
+		String codigo_establecimiento = "";
 		if (ofertaExistente) {
-			// consulto al backoffice si puedo reservar, le paso el codigo externo del
-			// establecimiento (al ser hotel)
-			puedoReservar = true/* completar despues c backoffice */;
+			// consulto al backoffice, le paso el codigo externo del establecimiento (al ser
+			// hotel)
+			codigo_establecimiento = ofertaDAO.buscarPorIdOferta(ofertaid).getEstablecimiento()
+					.getCodigo_establecimiento();
+			estaAutorizado = prestadorEstaAutorizado(codigo_establecimiento);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(ofertaid, fDesdeConverted,
 					fHastaConverted, tipoHabitacion);
 			hayDisponibilidad = this.validarDisponibilidadHotelera(bloques, cantHabitaciones);
-			if (formatoFechaOK && hayDisponibilidad && puedoReservar)
+			if (formatoFechaOK && hayDisponibilidad && estaAutorizado)
 				cupoActualizado = actualizarCupoBloquesHotelero(bloques, cantHabitaciones);
 			if (cupoActualizado) {
 				float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid, cantHabitaciones, fDesde, fHasta);
@@ -151,8 +149,9 @@ public class ReservaService {
 			throw new ReservaException(
 					"No hay disponibilidad desde la fecha: " + fDesdeConverted.toString() + " hasta: "
 							+ fHastaConverted.toString() + " para la cantidad de habitaciones: " + cantHabitaciones);
-		if (!puedoReservar)
-			throw new ReservaException("No hay autorizacion del backoffice para reservar");
+		if (!estaAutorizado)
+			throw new ReservaException("El codigo de prestador (codigo del establecimiento al ser hotel) " + codigo_establecimiento
+					+ " no se encuentra autorizado por el backoffice. ");
 		if (!ofertaExistente)
 			throw new ReservaException(
 					"El id de oferta (id interno): " + ofertaid + " no existe en la base de datos. ");

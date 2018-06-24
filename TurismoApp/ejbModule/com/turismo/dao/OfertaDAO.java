@@ -123,7 +123,8 @@ public class OfertaDAO {
 		Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
 				+ " WHERE d.codigo_destino = :codigo_destino" + " AND TipoHabitacion = :tipo_Habitacion"
 				+ " AND o.cant_personas >= :cantPersonas"
-				+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" + " AND OfertaTipo = :tipoDeOferta");
+				+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" + " AND OfertaTipo = :tipoDeOferta"
+				+ " AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("tipo_Habitacion", TipoHabitacion.valueOf(tipo_Habitacion).name());
 		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
@@ -141,7 +142,8 @@ public class OfertaDAO {
 				+ " WHERE d.codigo_destino = :codigo_destino" 
 				+ " AND TipoHabitacion != :tipo_Habitacion_a_excluir"
 				+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" +
-				" AND OfertaTipo = :tipoDeOferta AND h.codigo_hotel = :codigo_hotel");
+				" AND OfertaTipo = :tipoDeOferta AND h.codigo_hotel = :codigo_hotel"
+				+ " AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("tipo_Habitacion_a_excluir", TipoHabitacion.valueOf(tipo_Habitacion_a_excluir).name());
 		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
@@ -155,7 +157,8 @@ public class OfertaDAO {
 		Query ofertasHotelerasQuery = entityManager.createQuery(
 				"SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.codigo_destino = :codigo_destino"
 						+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde >= :fDesde"
-						+ " AND o.fecha_hasta <= :fHasta" + " AND OfertaTipo = :tipoDeOferta");
+						+ " AND o.fecha_hasta <= :fHasta" + " AND OfertaTipo = :tipoDeOferta"
+						+ " AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
 		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
@@ -170,7 +173,8 @@ public class OfertaDAO {
 				"SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.codigo_destino = :codigo_destino"
 						+ " AND o.cant_personas <= :cantPersonas" + " AND o.fecha_desde >= :fDesde"
 						+ " AND o.fecha_hasta <= :fHasta" + " AND OfertaTipo = :tipoDeOferta"
-						+" AND o.codigo_oferta != :codigo_paquete_a_excluir");
+						+" AND o.codigo_oferta != :codigo_paquete_a_excluir"+
+						" AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
 		ofertasHotelerasQuery.setParameter("fDesde", fDesde);

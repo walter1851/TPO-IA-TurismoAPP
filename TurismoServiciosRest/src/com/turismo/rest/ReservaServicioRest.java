@@ -29,14 +29,7 @@ public class ReservaServicioRest {
 	private ControllerService facade;
 	//@EJB
 	//private BackOfficeLogging loggingBackOffice;
-	//@EJB
-	//private SOAPService soapService;
-	//BackOfficeAutorizadorService service;
-	/*
-	private boolean prestadorEstaAutorizado(String codigo_prestador) throws ServiceException {
-		SOAPService service = new SOAPService();
-		return service.getSOAPPort().estaAutorizado(codigo_prestador);
-	}*/
+	
 	//CAMBIAR POR METODO POST
 	@GET
 	@Path("reservarhotel/{ofertaid}/{fDesde}/{fHasta}/{tipoHabitacion}/{canthabitaciones}/{nombre}/{apellido}/{dni}/{medioPagoId}/{mailUsuario}")
@@ -74,8 +67,8 @@ public class ReservaServicioRest {
 	}
 
 	/*
-	//CAMBIAR POR METODO POST
-		@GET
+	//	BORRAR
+	 * @GET
 		@Path("prestadorautorizado/{codigo_prestador}")
 		@Produces(MediaType.APPLICATION_JSON)
 		public Response PrestadorAutorizado(@PathParam("codigo_prestador") String codigo_prestador) {
@@ -87,4 +80,9 @@ public class ReservaServicioRest {
 				return Response.ok(new WebResponse(e.getMessage(),"ERROR")).build();
 			}
 		}*/
+	/*
+	private boolean prestadorEstaAutorizado(String codigo_prestador) throws ServiceException {
+		SOAPService service = new SOAPService();
+		return service.getSOAPPort().estaAutorizado(codigo_prestador);
+	}*/
 }
