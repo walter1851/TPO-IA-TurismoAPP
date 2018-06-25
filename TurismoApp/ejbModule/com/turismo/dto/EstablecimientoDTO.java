@@ -3,12 +3,12 @@ package com.turismo.dto;
 import java.util.List;
 
 public class EstablecimientoDTO {
-	private int establecimiento_id;
+	private Integer establecimiento_id;
 	private String nombre;
 	private String direccion;
 	private String ciudad;
 	private String descripcion;
-	private int estrellas;
+	private Integer estrellas;
 	private String latitud;
 	private String longitud;
 	private String codigo_establecimiento;
@@ -33,10 +33,10 @@ public class EstablecimientoDTO {
 	public void setLongitud(String longitud) {
 		this.longitud = longitud;
 	}
-	public int getEstablecimiento_id() {
+	public Integer getEstablecimiento_id() {
 		return establecimiento_id;
 	}
-	public void setEstablecimiento_id(int establecimiento_id) {
+	public void setEstablecimiento_id(Integer establecimiento_id) {
 		this.establecimiento_id = establecimiento_id;
 	}
 	public String getNombre() {
@@ -63,10 +63,10 @@ public class EstablecimientoDTO {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public int getEstrellas() {
+	public Integer getEstrellas() {
 		return estrellas;
 	}
-	public void setEstrellas(int estrellas) {
+	public void setEstrellas(Integer estrellas) {
 		this.estrellas = estrellas;
 	}
 	public String getCodigo_establecimiento() {

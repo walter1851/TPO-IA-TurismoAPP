@@ -10,12 +10,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
-import com.turismo.backoffice.logging.BackOfficeLogging;
-import com.turismo.backoffice.logging.LoggingAccion;
 import com.turismo.controller.ControllerService;
 import com.turismo.dto.OfertaDTO;
-import com.turismo.rest.response.*;
+import com.turismo.rest.mensajes.*;
 
 @Path("/ofertahotelera")
 @Stateless

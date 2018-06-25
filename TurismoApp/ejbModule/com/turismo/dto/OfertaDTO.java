@@ -1,13 +1,10 @@
 package com.turismo.dto;
 
-import java.time.LocalDate;
-
-
 public class OfertaDTO {
-	private int oferta_id;
-	private int codigo_oferta;
+	private Integer oferta_id;
+	private Integer codigo_oferta;
 	private String nombre;
-	private int cupo;
+	private Integer cupo;
 	private String fecha_desde;
 	private String fecha_hasta;
 	private float precio;
@@ -18,15 +15,15 @@ public class OfertaDTO {
 	private String foto_paquete;
 	private String descripcionPaquete;
 	private MedioPagoDTO medioPagoDTO;
-	private int cant_personas;
+	private Integer cant_personas;
 	private EstablecimientoDTO establecimientoDTO;
 	private AgenciaDTO agenciaDTO;
 	private OfertaTipoDTO ofertaTipoDTO;
 	
-	public int getCodigo_oferta() {
+	public Integer getCodigo_oferta() {
 		return codigo_oferta;
 	}
-	public void setCodigo_oferta(int codigo_oferta) {
+	public void setCodigo_oferta(Integer codigo_oferta) {
 		this.codigo_oferta = codigo_oferta;
 	}
 	public String getDescripcionPaquete() {
@@ -35,10 +32,10 @@ public class OfertaDTO {
 	public void setDescripcionPaquete(String descripcionPaquete) {
 		this.descripcionPaquete = descripcionPaquete;
 	}
-	public int getOferta_id() {
+	public Integer getOferta_id() {
 		return oferta_id;
 	}
-	public void setOferta_id(int oferta_id) {
+	public void setOferta_id(Integer oferta_id) {
 		this.oferta_id = oferta_id;
 	}
 	public String getNombre() {
@@ -47,10 +44,10 @@ public class OfertaDTO {
 	public void setNombre(String nombre) {
 		this.nombre = nombre;
 	}
-	public int getCupo() {
+	public Integer getCupo() {
 		return cupo;
 	}
-	public void setCupo(int cupo) {
+	public void setCupo(Integer cupo) {
 		this.cupo = cupo;
 	}
 	public String getFecha_desde() {
@@ -107,10 +104,10 @@ public class OfertaDTO {
 	public void setMedioPagoDTO(MedioPagoDTO medioPagoDTO) {
 		this.medioPagoDTO = medioPagoDTO;
 	}
-	public int getCant_personas() {
+	public Integer getCant_personas() {
 		return cant_personas;
 	}
-	public void setCant_personas(int cant_personas) {
+	public void setCant_personas(Integer cant_personas) {
 		this.cant_personas = cant_personas;
 	}
 	public EstablecimientoDTO getEstablecimientoDTO() {

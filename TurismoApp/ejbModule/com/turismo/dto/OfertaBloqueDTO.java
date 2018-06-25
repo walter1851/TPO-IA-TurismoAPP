@@ -4,11 +4,11 @@ import java.time.LocalDate;
 
 
 public class OfertaBloqueDTO {
-	private int oferta_bloque_id;
+	private Integer oferta_bloque_id;
 	private OfertaDTO ofertaDTO;
 	private LocalDate fecha_bloque;
-	private int cupo;
-	public int getOferta_bloque_id() {
+	private Integer cupo;
+	public Integer getOferta_bloque_id() {
 		return oferta_bloque_id;
 	}
 	public void setOferta_bloque_id(int oferta_bloque_id) {
@@ -26,10 +26,10 @@ public class OfertaBloqueDTO {
 	public void setFecha_bloque(LocalDate fecha_bloque) {
 		this.fecha_bloque = fecha_bloque;
 	}
-	public int getCupo() {
+	public Integer getCupo() {
 		return cupo;
 	}
-	public void setCupo(int cupo) {
+	public void setCupo(Integer cupo) {
 		this.cupo = cupo;
 	}
 	

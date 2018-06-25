@@ -9,7 +9,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import com.turismo.rest.response.WebResponse;
+import com.turismo.rest.mensajes.WebResponse;
 import com.turismo.testing.qproducer.ProducerOfertaPaqueteQ;
 
 @Path("/backoffice")

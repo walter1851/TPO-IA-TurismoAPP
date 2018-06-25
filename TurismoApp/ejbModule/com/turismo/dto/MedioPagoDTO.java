@@ -1,9 +1,9 @@
 package com.turismo.dto;
 
 public class MedioPagoDTO {
-	private int medio_de_pago_id;
+	private Integer medio_de_pago_id;
 	private String nombre;
-	public int getMedio_de_pago_id() {
+	public Integer getMedio_de_pago_id() {
 		return medio_de_pago_id;
 	}
 	public void setMedio_de_pago_id(int medio_de_pago_id) {

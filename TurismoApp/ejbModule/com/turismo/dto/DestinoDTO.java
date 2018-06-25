@@ -1,12 +1,13 @@
 package com.turismo.dto;
 
 public class DestinoDTO {
-	private int destino_id;
+	private Integer destino_id;
 	private String nombre;
-	public int getDestino_id() {
+	
+	public Integer getDestino_id() {
 		return destino_id;
 	}
-	public void setDestino_id(int destino_id) {
+	public void setDestino_id(Integer destino_id) {
 		this.destino_id = destino_id;
 	}
 	public String getNombre() {

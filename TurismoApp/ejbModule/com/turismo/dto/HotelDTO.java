@@ -1,7 +1,7 @@
 package com.turismo.dto;
 
 public class HotelDTO {
-	private int hotel_id;
+	private Integer hotel_id;
 	private String nombre;
 	private String codigo_hotel;
 	private String fotoHotel;
@@ -14,7 +14,7 @@ public class HotelDTO {
 		this.fotoHotel = fotoHotel;
 	}
 
-	public int getHotel_id() {
+	public Integer getHotel_id() {
 		return hotel_id;
 	}
 

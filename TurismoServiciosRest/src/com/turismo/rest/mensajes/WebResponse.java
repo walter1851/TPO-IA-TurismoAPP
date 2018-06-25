@@ -1,4 +1,4 @@
-package com.turismo.rest.response;
+package com.turismo.rest.mensajes;
 
 public class WebResponse {
 	private Object dataObject;
