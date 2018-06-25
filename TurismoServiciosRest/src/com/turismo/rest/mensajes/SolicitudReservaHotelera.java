@@ -3,15 +3,12 @@ package com.turismo.rest.mensajes;
 import java.io.Serializable;
 
 public class SolicitudReservaHotelera implements Serializable {
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private Integer ofertaid;
 	private String fDesde;
 	private String fHasta;
 	private String tipoHabitacion; 
-	private Integer cantHabitaciones;
+	private Integer cantTotalPersonas;
 	private String nombre;
 	private String apellido;
 	private String dni;
@@ -42,11 +39,11 @@ public class SolicitudReservaHotelera implements Serializable {
 	public void setTipoHabitacion(String tipoHabitacion) {
 		this.tipoHabitacion = tipoHabitacion;
 	}
-	public Integer getCantHabitaciones() {
-		return cantHabitaciones;
+	public Integer getCantTotalPersonas() {
+		return cantTotalPersonas;
 	}
-	public void setCantHabitaciones(Integer cantHabitaciones) {
-		this.cantHabitaciones = cantHabitaciones;
+	public void setCantTotalPersonas(Integer cantTotalPersonas) {
+		this.cantTotalPersonas = cantTotalPersonas;
 	}
 	public String getNombre() {
 		return nombre;

@@ -7,10 +7,14 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+
+import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.OfertaDAO;
 import com.turismo.dto.OfertaDTO;
 import com.turismo.entities.Oferta;
+import com.turismo.entities.OfertaBloque;
 import com.turismo.entities.OfertaTipo;
+import com.turismo.entities.TipoHabitacion;
 import com.turismo.exceptions.ConversionFechaException;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
@@ -26,6 +30,8 @@ public class BusquedaService {
 	private OfertaDAO ofertaDAO;
 	@EJB
 	private MapperService mapperService;
+	@EJB
+	private OfertaBloqueDAO ofertaBloqueDAO;
 
 	public boolean existeOfertaHotelera(int ofertaId) throws OfertaHoteleraException {
 		Oferta ofertaExistente = ofertaDAO.buscarPorIdOferta(ofertaId);
@@ -77,7 +83,7 @@ public class BusquedaService {
 			throws OfertaHoteleraException, ConversionFechaException, OfertaPaqueteException {
 		float montoTotal = -1;
 		LocalDate fDesdeConverted = this.convertStringToLocalDate(fDesde);
-		LocalDate fHastaConverted = this.convertStringToLocalDate(fDesde);
+		LocalDate fHastaConverted = this.convertStringToLocalDate(fHasta);
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
 			int cantDiasHotel = fHastaConverted.compareTo(fDesdeConverted);
 			if (existeOfertaHotelera(ofertaId))
@@ -114,8 +120,8 @@ public class BusquedaService {
 		LocalDate fDesdeConverted = convertStringToLocalDate(fDesdeString);
 		LocalDate fHastaConverted = convertStringToLocalDate(fHastaString);
 		if (validarRangoFechaPaquete(fDesdeConverted, fHastaConverted)) {
-			otrosPaquetesMismoDestino = ofertaDAO.buscarOtrosPaquetesMismoDestino(id_paquete_a_excluir,
-					codigo_destino, cantPersonas, fDesdeConverted, fHastaConverted);
+			otrosPaquetesMismoDestino = ofertaDAO.buscarOtrosPaquetesMismoDestino(id_paquete_a_excluir, codigo_destino,
+					cantPersonas, fDesdeConverted, fHastaConverted);
 		}
 		if (otrosPaquetesMismoDestino != null && otrosPaquetesMismoDestino.isEmpty())
 			throw new OfertaPaqueteException(
@@ -125,18 +131,29 @@ public class BusquedaService {
 			return mapperService.obtenerListaOfertaPaqueteDTO(otrosPaquetesMismoDestino);
 	}
 
-	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino, String fDesde, String fHasta, String tipoHabitacion,int cantPersonas)
-			throws OfertaHoteleraException, ConversionFechaException {
+	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino, String fDesde, String fHasta, String tipoHabString,
+			int cantTotalPersonas) throws OfertaHoteleraException, ConversionFechaException {
 		LocalDate fDesdeConverted = convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
+		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(tipoHabString);
 		List<Oferta> ofertasHoteleras = null;
-		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted))
+		boolean hayDisponibilidad = false;
+		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
 			ofertasHoteleras = ofertaDAO.buscarOfertasHotelera(codigoDestino, tipoHabitacion, fDesdeConverted,
-					fHastaConverted,cantPersonas);
-
+					fHastaConverted);
+			for (Oferta oferta : ofertasHoteleras) {
+				List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(oferta.getOferta_id(),
+						fDesdeConverted, fHastaConverted, tipoHabitacion);
+				int cantHabitaciones = calcularTotalHabitaciones(cantTotalPersonas, tipoHabitacion);
+				hayDisponibilidad = this.validarDisponibilidadHotelera(bloques, cantHabitaciones);
+				if (!hayDisponibilidad)
+					ofertasHoteleras.remove(oferta);
+			}
+		}
 		if (ofertasHoteleras != null && ofertasHoteleras.isEmpty())
-			throw new OfertaHoteleraException("No se encontraron hoteles para el destino id: " + codigoDestino
-					+ " desde el " + fDesde + " Hasta el " + fHasta + " tipo habitacion: " + tipoHabitacion);
+			throw new OfertaHoteleraException(
+					"No se encontraron hoteles para el destino id: " + codigoDestino + " desde el " + fDesde
+							+ " Hasta el " + fHasta + " tipo habitacion: " + tipoHabitacion.getTipoHabitacion());
 		else
 			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}
@@ -181,7 +198,7 @@ public class BusquedaService {
 		 */
 		boolean rangoValido;
 		LocalDate localDateFechaActual = LocalDate.now();
-		if (localDateHasta.compareTo(localDateFechaActual) >= 0 && localDateHasta.compareTo(localDateDesde) >= 0)
+		if (localDateHasta.compareTo(localDateFechaActual) > 0 && localDateHasta.compareTo(localDateDesde) > 0)
 			rangoValido = true;
 		else
 			rangoValido = false;
@@ -206,5 +223,25 @@ public class BusquedaService {
 			throw new ConversionFechaException(
 					"El formato de la fechas ingresadas no es valido. Ejemplo fecha valida: 2018-04-05T12:30-02:00");
 		}
+	}
+
+	public boolean validarDisponibilidadHotelera(List<OfertaBloque> bloques, int cantHabitaciones) {
+		if (bloques.isEmpty())
+			return false;
+		else {
+			boolean disponibilidad = true;
+			for (OfertaBloque ofertaBloque : bloques) {
+				if ((ofertaBloque.getCupo() - (cantHabitaciones * 1)) < 0) {
+					disponibilidad = false;
+				}
+			}
+			return disponibilidad;
+		}
+	}
+
+	public int calcularTotalHabitaciones(int cantTotalPersonas, TipoHabitacion tipoHabitacion) {
+		float calculoAuxiliar = (float) cantTotalPersonas / tipoHabitacion.getMaxCantPersonas();
+		int cantHabitaciones = (int) Math.ceil(calculoAuxiliar);
+		return cantHabitaciones;
 	}
 }

@@ -118,19 +118,18 @@ public class OfertaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOfertasHotelera(int codigo_destino, String tipo_Habitacion, LocalDate fDesde,
-			LocalDate fHasta, int cantPersonas) {
+	//OJO esta faltando la cantidad total de personas para compararlo con el cupo. 
+	public List<Oferta> buscarOfertasHotelera(int codigo_destino, TipoHabitacion tipo_Habitacion, LocalDate fDesde,
+			LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
 				+ " WHERE d.codigo_destino = :codigo_destino" + " AND TipoHabitacion = :tipo_Habitacion"
-				+ " AND o.cant_personas >= :cantPersonas"
 				+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" + " AND OfertaTipo = :tipoDeOferta"
 				+ " AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
-		ofertasHotelerasQuery.setParameter("tipo_Habitacion", TipoHabitacion.valueOf(tipo_Habitacion).name());
+		ofertasHotelerasQuery.setParameter("tipo_Habitacion", tipo_Habitacion.getTipoHabitacion());
 		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
 		ofertasHotelerasQuery.setParameter("fHasta", fHasta);
 		ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_HOTELERA.name());
-		ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
 		return ofertasHotelerasQuery.getResultList();
 	}
 	//Otras habitaciones disponibles del mismo hotel.

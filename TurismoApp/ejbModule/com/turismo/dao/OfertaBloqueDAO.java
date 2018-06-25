@@ -69,19 +69,16 @@ public class OfertaBloqueDAO{
 		
 	}
 	@SuppressWarnings("unchecked")
-	/*Entiendo que esta validacion no hace falta hacerla:
-	 * " AND o.fecha_desde <= :fDesde AND o.fecha_hasta >= :fHasta"
-	 * */
-	public List<OfertaBloque> buscarBloquesDeHoteleria(int ofertaId,LocalDate fDesde, LocalDate fHasta,String tipoHabitacion) {
+
+	public List<OfertaBloque> buscarBloquesDeHoteleria(int ofertaId,LocalDate fDesde, LocalDate fHasta,TipoHabitacion tipoHabitacion) {
 		Query bloqueQuery = entityManager
 				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + "WHERE o.oferta_id = :ofertaId " + 
 		"AND TipoHabitacion=:tipoHabitacion "+" AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta"
-		+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" 
-		+ " AND o.cupo > 0");
+		+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" + " AND o.cupo > 0");
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);
 		bloqueQuery.setParameter("ofertaId", ofertaId);
-		bloqueQuery.setParameter("tipoHabitacion",  TipoHabitacion.valueOf(tipoHabitacion).name());
+		bloqueQuery.setParameter("tipoHabitacion",  tipoHabitacion.getTipoHabitacion());
 		return bloqueQuery.getResultList();
 	}
 }

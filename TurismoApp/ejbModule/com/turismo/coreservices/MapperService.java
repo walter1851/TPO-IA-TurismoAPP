@@ -26,8 +26,8 @@ public class MapperService {
 		reservaDTO.setApellido(reserva.getApellido());
 		reservaDTO.setMontoTotal(reserva.getMontoTotal());
 		reservaDTO.setNombre(reserva.getNombre());
-		reservaDTO.setFechaCheckIn(reserva.getFechaCheckIn());
-		reservaDTO.setFechaCheckOut(reserva.getFechaCheckOut());
+		reservaDTO.setFechaCheckIn(reserva.getFechaCheckIn().toString());
+		reservaDTO.setFechaCheckOut(reserva.getFechaCheckOut().toString());
 		return reservaDTO;
 	}
 	public List<OfertaDTO> obtenerListaOfertaPaqueteDTO(List<Oferta> ofertas){

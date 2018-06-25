@@ -23,7 +23,7 @@ public class ReservaDAO{
 	@EJB
 	private MedioPagoDAO medioPagoDAO;
 
-	public Reserva crearReserva(int oferta_id, int usuario_id, LocalDate fCheckIN, LocalDate fChechOUT,int id_medio_pago, String nombre, String apellido, String email,
+	public Reserva crearReserva(int oferta_id, LocalDate fCheckIN, LocalDate fChechOUT,int id_medio_pago, String nombre, String apellido, String email,
 			String dni,float montoTotal) {
 		try {
 			Oferta oferta=ofertaDAO.buscarPorIdOferta(oferta_id);

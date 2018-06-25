@@ -1,24 +1,22 @@
 package com.turismo.dto;
 
-import java.time.LocalDate;
-
 public class ReservaDTO {
 	private float montoTotal;
 	private String nombre;
 	private String apellido;
-	private LocalDate fechaCheckIn;
-	private LocalDate fechaCheckOut;
+	private String fechaCheckIn;
+	private String fechaCheckOut;
 
-	public LocalDate getFechaCheckIn() {
+	public String getFechaCheckIn() {
 		return fechaCheckIn;
 	}
-	public void setFechaCheckIn(LocalDate fechaCheckIn) {
+	public void setFechaCheckIn(String fechaCheckIn) {
 		this.fechaCheckIn = fechaCheckIn;
 	}
-	public LocalDate getFechaCheckOut() {
+	public String getFechaCheckOut() {
 		return fechaCheckOut;
 	}
-	public void setFechaCheckOut(LocalDate fechaCheckOut) {
+	public void setFechaCheckOut(String fechaCheckOut) {
 		this.fechaCheckOut = fechaCheckOut;
 	}
 	public float getMontoTotal() {

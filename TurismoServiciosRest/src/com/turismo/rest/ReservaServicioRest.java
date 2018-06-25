@@ -31,7 +31,7 @@ public class ReservaServicioRest {
 		try {
 			ReservaDTO reservaDTO = facade.reservarHotel(SolicitudReservaHotelera.getOfertaid(),
 					SolicitudReservaHotelera.getfDesde(), SolicitudReservaHotelera.getfHasta(),
-					SolicitudReservaHotelera.getTipoHabitacion(), SolicitudReservaHotelera.getCantHabitaciones(),
+					SolicitudReservaHotelera.getTipoHabitacion(), SolicitudReservaHotelera.getCantTotalPersonas(),
 					SolicitudReservaHotelera.getNombre(), SolicitudReservaHotelera.getApellido(),
 					SolicitudReservaHotelera.getDni(), SolicitudReservaHotelera.getMedioPagoId(),
 					SolicitudReservaHotelera.getMailUsuario());

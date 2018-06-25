@@ -18,6 +18,7 @@ import com.turismo.dto.ReservaDTO;
 import com.turismo.entities.OfertaBloque;
 import com.turismo.entities.OfertaTipo;
 import com.turismo.entities.Reserva;
+import com.turismo.entities.TipoHabitacion;
 import com.turismo.exceptions.ConversionFechaException;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
@@ -71,7 +72,7 @@ public class ReservaService {
 				cupoActualizado = actualizarCupoBloquesPaquete(bloques);
 				if (cupoActualizado) {
 					float montoTotal = busquedaService.calcularPrecioTotalPaquete(ofertaid, cantPersonas);
-					nuevaReservaPaquete = reservaDAO.crearReserva(ofertaid, 1, fDesdeConverted, fHastaConverted,
+					nuevaReservaPaquete = reservaDAO.crearReserva(ofertaid, fDesdeConverted, fHastaConverted,
 							medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
 					nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaPaquete);
 				}
@@ -113,8 +114,8 @@ public class ReservaService {
 		return cupoActualizado;
 	}
 
-	public ReservaDTO reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabitacion,
-			int cantHabitaciones, String nombre, String apellido, String dni, int medioPagoID, String emailUsuario)
+	public ReservaDTO reservarHotel(int ofertaid, String fDesde, String fHasta, String tipoHabString,
+			int cantTotalPersonas, String nombre, String apellido, String dni, int medioPagoID, String emailUsuario)
 			throws ReservaException, ConversionFechaException, OfertaHoteleraException, OfertaPaqueteException {
 		ReservaDTO nuevaReservaDTO = null;
 		Reserva nuevaReservaHotelera = null;
@@ -127,6 +128,9 @@ public class ReservaService {
 		boolean formatoFechaOK = busquedaService.validarRangoFechaHotelera(fDesdeConverted, fHastaConverted);
 		boolean ofertaExistente = busquedaService.existeOfertaHotelera(ofertaid);
 		String codigo_establecimiento = "";
+		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(tipoHabString);
+		float calculoAuxiliar = (float) cantTotalPersonas / tipoHabitacion.getMaxCantPersonas();
+		int cantHabitaciones = (int) Math.ceil(calculoAuxiliar);
 		if (ofertaExistente) {
 			// consulto al backoffice, le paso el codigo externo del establecimiento (al ser
 			// hotel)
@@ -135,13 +139,15 @@ public class ReservaService {
 			estaAutorizado = prestadorEstaAutorizado(codigo_establecimiento);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(ofertaid, fDesdeConverted,
 					fHastaConverted, tipoHabitacion);
-			hayDisponibilidad = this.validarDisponibilidadHotelera(bloques, cantHabitaciones);
+			// Ojo que aca falta la cantidad total de personas, hay que validar que (cant
+			// total personas) / (cant corresp a tipo hab) < cupo
+			hayDisponibilidad = busquedaService.validarDisponibilidadHotelera(bloques, cantHabitaciones);
 			if (formatoFechaOK && hayDisponibilidad && estaAutorizado)
 				cupoActualizado = actualizarCupoBloquesHotelero(bloques, cantHabitaciones);
 			if (cupoActualizado) {
 				float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid, cantHabitaciones, fDesde, fHasta);
-				nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, 1, fDesdeConverted, fHastaConverted,
-						medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
+				nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, fDesdeConverted, fHastaConverted, medioPagoID,
+						nombre, apellido, emailUsuario, dni, montoTotal);
 				nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaHotelera);
 			}
 		}
@@ -183,20 +189,6 @@ public class ReservaService {
 			throw new ReservaException(
 					"NO SE ACTUALIZARON LOS BLOQUES. ERROR GRAVE DE CONSISTENCIA. NO COINCIDE EL ID DE LA OFERTA HOTELERA CON EL TIPO DE OFERTA ASOCIADO EN LA BASE DE DATOS.");
 		return cupoActualizado && hayConsistencia;
-	}
-
-	private boolean validarDisponibilidadHotelera(List<OfertaBloque> bloques, int cantHabitaciones) {
-		if (bloques.isEmpty())
-			return false;
-		else {
-			boolean disponibilidad = true;
-			for (OfertaBloque ofertaBloque : bloques) {
-				if ((ofertaBloque.getCupo() - (cantHabitaciones * 1)) < 0) {
-					disponibilidad = false;
-				}
-			}
-			return disponibilidad;
-		}
 	}
 
 	private boolean validarDisponibilidadPaquete(List<OfertaBloque> bloques) {
