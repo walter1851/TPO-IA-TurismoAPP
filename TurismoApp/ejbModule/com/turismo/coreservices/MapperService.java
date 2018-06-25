@@ -55,8 +55,8 @@ public class MapperService {
 			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
 			ofertaDTO.setDestinoDTO(destinoDTO);
 			ofertaDTO.setMedioPagoDTO(medioPagoDTO);
-			ofertaDTO.setFecha_desde(oferta.getFecha_desde());
-			ofertaDTO.setFecha_hasta(oferta.getFecha_hasta());
+			ofertaDTO.setFecha_desde(oferta.getFecha_desde().toString());
+			ofertaDTO.setFecha_hasta(oferta.getFecha_hasta().toString());
 			ofertaDTO.setFoto_paquete(oferta.getFoto_paquete());
 			ofertaDTO.setPoliticas(oferta.getPoliticas());
 			ofertaDTO.setServicios(oferta.getServicios());
@@ -116,8 +116,8 @@ public class MapperService {
 			ofertaDTO.setDestinoDTO(destinoDTO);
 			ofertaDTO.setEstablecimientoDTO(establecimientoDTO);
 			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
-			ofertaDTO.setFecha_desde(oferta.getFecha_desde());
-			ofertaDTO.setFecha_hasta(oferta.getFecha_hasta());
+			ofertaDTO.setFecha_desde(oferta.getFecha_desde().toString());
+			ofertaDTO.setFecha_hasta(oferta.getFecha_hasta().toString());
 			ofertaDTO.setMedioPagoDTO(medioPagoDTO);
 			ofertaDTO.setPoliticas(oferta.getPoliticas());
 			ofertaDTO.setServicios(oferta.getServicios());

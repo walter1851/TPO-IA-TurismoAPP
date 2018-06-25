@@ -42,14 +42,14 @@ public class OfertaHoteleraServicioRest {
 		}
 	}
 	@GET
-	@Path("buscarotros/{codigoDestino}/{tipoHabitacionExcluir}/{codigo_Hotel}/{fDesde}/{fHasta}")
+	@Path("buscarotros/{codigoDestino}/{tipoHabitacionExcluir}/{id_Hotel}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarOtrasOfertasMismoHotel(@PathParam("codigoDestino") int codigoDestino,
-			@PathParam("tipoHabitacionExcluir") String tipoHabitacionExcluir, @PathParam("codigo_Hotel") int codigo_Hotel,
+			@PathParam("tipoHabitacionExcluir") String tipoHabitacionExcluir, @PathParam("id_Hotel") int id_hotel,
 			@PathParam("fDesde") String fDesde,
 			@PathParam("fHasta") String fHasta){
 		try {
-			List<OfertaDTO> ofertas = facade.buscarOtrasOfertasMismoHotel(codigoDestino, tipoHabitacionExcluir, codigo_Hotel, fDesde, fHasta);
+			List<OfertaDTO> ofertas = facade.buscarOtrasOfertasMismoHotel(codigoDestino, tipoHabitacionExcluir, id_hotel, fDesde, fHasta);
 			//this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_HOTELERA);
 			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON "+ofertas.size()+" OFERTAS HOTELERAS PARA MISMO HOTEL y DISTINTO TIPO DE HABITACION")).build();
 		} catch (Exception e) {

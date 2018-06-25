@@ -29,7 +29,6 @@ public class ReservaDAO{
 			Oferta oferta=ofertaDAO.buscarPorIdOferta(oferta_id);
 			Reserva reserva = new Reserva();
 			reserva.setOferta(oferta);
-			reserva.setUsuario_id(usuario_id);
 			reserva.setMedioPago(medioPagoDAO.buscarPorIdMedioPago(id_medio_pago));
 			reserva.setNombre(nombre);
 			reserva.setApellido(apellido);
@@ -51,7 +50,6 @@ public class ReservaDAO{
 			Oferta oferta = ofertaDAO.buscarPorIdOferta(oferta_id);
 			Reserva reserva = buscarPorIdReserva(reserva_id);
 			reserva.setOferta(oferta);
-			reserva.setUsuario_id(usuario_id);
 			reserva.setMedioPago(medioPagoDAO.buscarPorIdMedioPago(medio_de_pago_id));
 			reserva.setNombre(nombre);
 			reserva.setEmail(email);

@@ -38,14 +38,14 @@ public class OfertaPaqueteServicioRest {
 	}
 	
 	@GET
-	@Path("buscarotros/{codigoPaqueteExcluir}/{codigoDestino}/{cantPersonas}/{fDesde}/{fHasta}")
+	@Path("buscarotros/{idPaqueteExcluir}/{codigoDestino}/{cantPersonas}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Response buscarOfertaPaquete(@PathParam("codigoPaqueteExcluir") int codigoPaqueteExcluir,
+	public Response buscarOtrosPaquetes(@PathParam("idPaqueteExcluir") int idPaqueteExcluir,
 			@PathParam("codigoDestino") int codigoDestino,
 			@PathParam("cantPersonas") int cantPersonas, @PathParam("fDesde") String fDesde,
 			@PathParam("fHasta") String fHasta) {
 		try {
-			List<OfertaDTO> ofertas = facade.buscarOtrosPaquetesMismoDestino(codigoPaqueteExcluir, codigoDestino, cantPersonas, fDesde, fHasta);
+			List<OfertaDTO> ofertas = facade.buscarOtrosPaquetesMismoDestino(idPaqueteExcluir, codigoDestino, cantPersonas, fDesde, fHasta);
 			return Response.ok(new WebResponse(ofertas, "ENCONTRADOS: " + ofertas.size() + " - DISTINTOS PAQUETES MISMO DESTINO")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());

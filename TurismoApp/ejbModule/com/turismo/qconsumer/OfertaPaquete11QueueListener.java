@@ -12,7 +12,7 @@ import com.turismo.qconsumer.mensajes.OfertaPaqueteMensaje;
 /**
  * Message-Driven Bean implementation class for: OfertaQueueListener
  */
-
+/*
  // GRUPO 11 jona.medina@gmail.com
 @MessageDriven(
 		activationConfig = { 
@@ -32,16 +32,15 @@ import com.turismo.qconsumer.mensajes.OfertaPaqueteMensaje;
         		propertyValue = "org.hornetq.core.remoting.impl.netty.NettyConnectorFactory")
 		}, 
 		mappedName = "myJmsTest/MyQueue")
+*/
 
-/*
 //COLA LOCAL SOLO TESTING (BORRAR ANTES DE ENTREGAR TP)
 @MessageDriven(
 		activationConfig = { @ActivationConfigProperty(
 				propertyName = "destination", propertyValue = "java:/jms/queue/OfertaPaqueteQueue"), @ActivationConfigProperty(
 				propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 		}, 
-		mappedName = "java:/jms/queue/OfertaPaqueteQueue")
-		*/
+		mappedName = "java:/jms/queue/OfertaPaqueteQueue")	
 public class OfertaPaquete11QueueListener implements MessageListener {
 @EJB
 private OfertaService ofertaService;

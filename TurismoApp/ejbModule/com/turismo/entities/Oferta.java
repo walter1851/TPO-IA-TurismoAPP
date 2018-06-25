@@ -32,7 +32,6 @@ public class Oferta {
 	@ManyToOne
 	@JoinColumn(name="destino_id")
 	private Destino destino;
-	@Column(length=10000000)
 	private String descriptionPaquete;
 	@Column(length=10000000)
 	private String foto_paquete;

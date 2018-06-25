@@ -26,7 +26,6 @@ public class ProducerOfertaPaqueteQ {
 			AgenciaMensaje agenciaMensaje=new AgenciaMensaje();
 			agenciaMensaje.setId(idAgencia);
 			agenciaMensaje.setDireccion(direccionAgencia);
-			//El estado no va
 			//agenciaMensaje.setEstado(estadoAgencia);
 			agenciaMensaje.setNombre(nombreAgencia);
 			

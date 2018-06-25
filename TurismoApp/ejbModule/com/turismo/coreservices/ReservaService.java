@@ -7,12 +7,10 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.inject.Inject;
 import javax.xml.rpc.ServiceException;
 
 import com.backoffice.servicios.SOAPService;
-//import com.backoffice.servicios.SOAPService;
-//import com.backoffice.servicios.SOAPService;
+
 import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.OfertaDAO;
 import com.turismo.dao.ReservaDAO;
@@ -24,6 +22,8 @@ import com.turismo.exceptions.ConversionFechaException;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
 import com.turismo.exceptions.ReservaException;
+
+//import services.SOAPService;
 
 @Stateless
 @LocalBean
@@ -150,7 +150,7 @@ public class ReservaService {
 					"No hay disponibilidad desde la fecha: " + fDesdeConverted.toString() + " hasta: "
 							+ fHastaConverted.toString() + " para la cantidad de habitaciones: " + cantHabitaciones);
 		if (!estaAutorizado)
-			throw new ReservaException("El codigo de prestador (codigo del establecimiento al ser hotel) " + codigo_establecimiento
+			throw new ReservaException("El codigo de prestador (codigo del establecimiento) " + codigo_establecimiento
 					+ " no se encuentra autorizado por el backoffice. ");
 		if (!ofertaExistente)
 			throw new ReservaException(

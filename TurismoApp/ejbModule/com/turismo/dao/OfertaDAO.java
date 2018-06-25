@@ -135,21 +135,21 @@ public class OfertaDAO {
 	}
 	//Otras habitaciones disponibles del mismo hotel.
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOtrasOfertasMismoHotel(int codigo_destino, String tipo_Habitacion_a_excluir,int codigo_hotel,LocalDate fDesde,
+	public List<Oferta> buscarOtrasOfertasMismoHotel(int codigo_destino, String tipo_Habitacion_a_excluir,int id_hotel,LocalDate fDesde,
 			LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
 				+ " INNER JOIN o.establecimiento e INNER JOIN e.hotel h" 
 				+ " WHERE d.codigo_destino = :codigo_destino" 
 				+ " AND TipoHabitacion != :tipo_Habitacion_a_excluir"
 				+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" +
-				" AND OfertaTipo = :tipoDeOferta AND h.codigo_hotel = :codigo_hotel"
+				" AND OfertaTipo = :tipoDeOferta AND h.hotel_id = :id_hotel"
 				+ " AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("tipo_Habitacion_a_excluir", TipoHabitacion.valueOf(tipo_Habitacion_a_excluir).name());
 		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
 		ofertasHotelerasQuery.setParameter("fHasta", fHasta);
 		ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_HOTELERA.name());
-		ofertasHotelerasQuery.setParameter("codigo_hotel", codigo_hotel);
+		ofertasHotelerasQuery.setParameter("id_hotel", id_hotel);
 		return ofertasHotelerasQuery.getResultList();
 	}
 	@SuppressWarnings("unchecked")
@@ -168,19 +168,19 @@ public class OfertaDAO {
 	}
 	//Otras paquetes del mismo destino
 	@SuppressWarnings("unchecked")
-	public List<Oferta> buscarOtrosPaquetesMismoDestino(int codigo_paquete_a_excluir,int codigo_destino, int cantPersonas, LocalDate fDesde, LocalDate fHasta) {
+	public List<Oferta> buscarOtrosPaquetesMismoDestino(int id_paquete_a_excluir,int codigo_destino, int cantPersonas, LocalDate fDesde, LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery(
 				"SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.codigo_destino = :codigo_destino"
 						+ " AND o.cant_personas <= :cantPersonas" + " AND o.fecha_desde >= :fDesde"
 						+ " AND o.fecha_hasta <= :fHasta" + " AND OfertaTipo = :tipoDeOferta"
-						+" AND o.codigo_oferta != :codigo_paquete_a_excluir"+
+						+" AND o.oferta_id != :id_paquete_a_excluir"+
 						" AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
 		ofertasHotelerasQuery.setParameter("fDesde", fDesde);
 		ofertasHotelerasQuery.setParameter("fHasta", fHasta);
 		ofertasHotelerasQuery.setParameter("tipoDeOferta", OfertaTipo.OFERTA_PAQUETE.name());
-		ofertasHotelerasQuery.setParameter("codigo_paquete_a_excluir", codigo_paquete_a_excluir);
+		ofertasHotelerasQuery.setParameter("id_paquete_a_excluir", id_paquete_a_excluir);
 		return ofertasHotelerasQuery.getResultList();
 	}
 }

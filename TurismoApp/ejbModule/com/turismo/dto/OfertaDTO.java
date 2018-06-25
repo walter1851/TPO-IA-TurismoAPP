@@ -6,16 +6,10 @@ import java.time.LocalDate;
 public class OfertaDTO {
 	private int oferta_id;
 	private int codigo_oferta;
-	public int getCodigo_oferta() {
-		return codigo_oferta;
-	}
-	public void setCodigo_oferta(int codigo_oferta) {
-		this.codigo_oferta = codigo_oferta;
-	}
 	private String nombre;
 	private int cupo;
-	private LocalDate fecha_desde;
-	private LocalDate fecha_hasta;
+	private String fecha_desde;
+	private String fecha_hasta;
 	private float precio;
 	private TipoHabitacionDTO tipo_habitacion;
 	private String politicas;
@@ -23,18 +17,24 @@ public class OfertaDTO {
 	private DestinoDTO destinoDTO;
 	private String foto_paquete;
 	private String descripcionPaquete;
+	private MedioPagoDTO medioPagoDTO;
+	private int cant_personas;
+	private EstablecimientoDTO establecimientoDTO;
+	private AgenciaDTO agenciaDTO;
+	private OfertaTipoDTO ofertaTipoDTO;
 	
+	public int getCodigo_oferta() {
+		return codigo_oferta;
+	}
+	public void setCodigo_oferta(int codigo_oferta) {
+		this.codigo_oferta = codigo_oferta;
+	}
 	public String getDescripcionPaquete() {
 		return descripcionPaquete;
 	}
 	public void setDescripcionPaquete(String descripcionPaquete) {
 		this.descripcionPaquete = descripcionPaquete;
 	}
-	private MedioPagoDTO medioPagoDTO;
-	private int cant_personas;
-	private EstablecimientoDTO establecimientoDTO;
-	private AgenciaDTO agenciaDTO;
-	private OfertaTipoDTO ofertaTipoDTO;
 	public int getOferta_id() {
 		return oferta_id;
 	}
@@ -53,16 +53,16 @@ public class OfertaDTO {
 	public void setCupo(int cupo) {
 		this.cupo = cupo;
 	}
-	public LocalDate getFecha_desde() {
+	public String getFecha_desde() {
 		return fecha_desde;
 	}
-	public void setFecha_desde(LocalDate fecha_desde) {
+	public void setFecha_desde(String fecha_desde) {
 		this.fecha_desde = fecha_desde;
 	}
-	public LocalDate getFecha_hasta() {
+	public String getFecha_hasta() {
 		return fecha_hasta;
 	}
-	public void setFecha_hasta(LocalDate fecha_hasta) {
+	public void setFecha_hasta(String fecha_hasta) {
 		this.fecha_hasta = fecha_hasta;
 	}
 	public float getPrecio() {

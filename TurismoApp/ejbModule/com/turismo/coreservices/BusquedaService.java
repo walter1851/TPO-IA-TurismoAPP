@@ -107,14 +107,14 @@ public class BusquedaService {
 			return mapperService.obtenerListaOfertaPaqueteDTO(ofertasPaquete);
 	}
 
-	public List<OfertaDTO> buscarOtrosPaquetesMismoDestino(int codigo_paquete_a_excluir, int codigo_destino,
+	public List<OfertaDTO> buscarOtrosPaquetesMismoDestino(int id_paquete_a_excluir, int codigo_destino,
 			int cantPersonas, String fDesdeString, String fHastaString)
 			throws ConversionFechaException, OfertaPaqueteException {
 		List<Oferta> otrosPaquetesMismoDestino = null;
 		LocalDate fDesdeConverted = convertStringToLocalDate(fDesdeString);
 		LocalDate fHastaConverted = convertStringToLocalDate(fHastaString);
 		if (validarRangoFechaPaquete(fDesdeConverted, fHastaConverted)) {
-			otrosPaquetesMismoDestino = ofertaDAO.buscarOtrosPaquetesMismoDestino(codigo_paquete_a_excluir,
+			otrosPaquetesMismoDestino = ofertaDAO.buscarOtrosPaquetesMismoDestino(id_paquete_a_excluir,
 					codigo_destino, cantPersonas, fDesdeConverted, fHastaConverted);
 		}
 		if (otrosPaquetesMismoDestino != null && otrosPaquetesMismoDestino.isEmpty())
@@ -142,13 +142,13 @@ public class BusquedaService {
 	}
 
 	public List<OfertaDTO> buscarOtrasOfertasMismoHotel(int codigo_destino, String tipo_Habitacion_a_excluir,
-			int codigo_Hotel, String fDesde, String fHasta) throws ConversionFechaException, OfertaHoteleraException {
+			int id_hotel, String fDesde, String fHasta) throws ConversionFechaException, OfertaHoteleraException {
 		List<Oferta> ofertasHoteleras = null;
 		LocalDate fDesdeConverted = convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted))
 			ofertasHoteleras = ofertaDAO.buscarOtrasOfertasMismoHotel(codigo_destino, tipo_Habitacion_a_excluir,
-					codigo_Hotel, fDesdeConverted, fHastaConverted);
+					id_hotel, fDesdeConverted, fHastaConverted);
 		if (ofertasHoteleras != null && ofertasHoteleras.isEmpty())
 			throw new OfertaHoteleraException("No se encontraron otras ofertas para el mismo hotel.");
 		else
