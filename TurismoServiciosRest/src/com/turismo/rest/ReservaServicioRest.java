@@ -22,7 +22,6 @@ public class ReservaServicioRest {
 	//@EJB
 	//private BackOfficeLogging loggingBackOffice;
 	
-	//CAMBIAR POR METODO POST
 	@POST
 	@Path("reservarhotel")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -39,7 +38,6 @@ public class ReservaServicioRest {
 			return Response.ok(new WebResponse(e.getMessage(),"ERROR")).build();
 		}
 	}
-	//CAMBIAR POR METODO POST
 	@POST
 	@Path("reservarpaquete")
 	@Produces(MediaType.APPLICATION_JSON)
