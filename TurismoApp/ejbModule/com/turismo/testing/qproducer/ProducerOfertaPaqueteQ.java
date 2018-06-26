@@ -5,10 +5,8 @@ import javax.inject.Inject;
 import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.Queue;
-
 import com.turismo.qconsumer.JsonConverter;
 import com.turismo.qconsumer.mensajes.AgenciaMensaje;
-import com.turismo.qconsumer.mensajes.CiudadMensaje;
 import com.turismo.qconsumer.mensajes.OfertaPaqueteMensaje;
 
 @Stateless

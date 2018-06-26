@@ -1,17 +1,38 @@
 package com.turismo.backoffice.logging;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class LoggingMensaje implements Serializable {
 	private static final long serialVersionUID = 1L;
-	private String modulo = "MODULO_PORTAL_WEB";
+	private int id_modulo = 3;//portal web
 	private int id_accion;
-	private Date fecha = new Date();
+	private String fecha= LocalDate.now().toString();
 	private String descripcion;
 
-	public String getModulo() {
-		return modulo;
+	
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
+	public int getId_modulo() {
+		return id_modulo;
+	}
+
+	public void setId_modulo(int id_modulo) {
+		this.id_modulo = id_modulo;
+	}
+
+	public int getId_accion() {
+		return id_accion;
+	}
+
+	public void setId_accion(int id_accion) {
+		this.id_accion = id_accion;
 	}
 
 	public int getAccion() {
@@ -21,11 +42,6 @@ public class LoggingMensaje implements Serializable {
 	public void setAccion(int id_accion) {
 		this.id_accion = id_accion;
 	}
-
-	public Date getFecha() {
-		return fecha;
-	}
-
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}

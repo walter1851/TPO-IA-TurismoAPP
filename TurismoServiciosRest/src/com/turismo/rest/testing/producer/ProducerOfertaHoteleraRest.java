@@ -41,8 +41,8 @@ public class ProducerOfertaHoteleraRest {
 	public Response buscarOfertaHotelera(@PathParam("idOfertaHotelera") int idOfertaHotelera,
 			@PathParam("nombreOfertaHotelera") String nombreOfertaHotelera, @PathParam("precio") float precio,
 			@PathParam("cupo") int cupo, @PathParam("medioDePago") String medioDePago,
-			@PathParam("tipoHabitacion") String tipoHabitacion, @PathParam("idEstablecimiento") String idEstablecimiento,
-			@PathParam("uidBackOffice") String uidBackOffice,
+			@PathParam("tipoHabitacion") String tipoHabitacion,
+			@PathParam("idEstablecimiento") String idEstablecimiento, @PathParam("uidBackOffice") String uidBackOffice,
 			@PathParam("nombreEstablecimiento") String nombreEstablecimiento,
 			@PathParam("direccionEstablecimiento") String direccionEstablecimiento, @PathParam("idCiudad") int idCiudad,
 			@PathParam("idHotel") String idHotel, @PathParam("nombreHotel") String nombreHotel,
@@ -60,8 +60,7 @@ public class ProducerOfertaHoteleraRest {
 					urlFotoEstablecimiento, cantEstrellas, fechaDesde, fechaHasta, politicaCancelacion, servicios);
 			return Response.ok(new WebResponse(true, "Se grabo en la cola la oferta hotelera")).build();
 		} catch (Exception e) {
-			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(false, e.getMessage())).build();
+			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
 		}
 	}
 }

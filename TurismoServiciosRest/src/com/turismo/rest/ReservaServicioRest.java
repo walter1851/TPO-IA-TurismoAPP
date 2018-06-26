@@ -9,6 +9,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.turismo.backoffice.logging.BackOfficeLogging;
+import com.turismo.backoffice.logging.LoggingAccion;
 import com.turismo.controller.ControllerService;
 import com.turismo.dto.ReservaDTO;
 import com.turismo.rest.mensajes.SolicitudReservaHotelera;
@@ -20,8 +22,8 @@ import com.turismo.rest.mensajes.WebResponse;
 public class ReservaServicioRest {
 	@EJB
 	private ControllerService facade;
-	// @EJB
-	// private BackOfficeLogging loggingBackOffice;
+	@EJB
+	private BackOfficeLogging loggingBackOffice;
 
 	@POST
 	@Path("reservarhotel")
@@ -35,10 +37,11 @@ public class ReservaServicioRest {
 					SolicitudReservaHotelera.getNombre(), SolicitudReservaHotelera.getApellido(),
 					SolicitudReservaHotelera.getDni(), SolicitudReservaHotelera.getMedioPagoId(),
 					SolicitudReservaHotelera.getMailUsuario());
+			this.loggingBackOffice.info(LoggingAccion.RESERVA_DE_HOTEL);
 			return Response.ok(new WebResponse(reservaDTO, "SE REGISTRO UNA RESERVA HOTELERA")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(e.getMessage(), "ERROR")).build();
+			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
 		}
 	}
 
@@ -53,10 +56,11 @@ public class ReservaServicioRest {
 					solicitudReservaPaquete.getCantPersonas(), solicitudReservaPaquete.getNombre(),
 					solicitudReservaPaquete.getApellido(), solicitudReservaPaquete.getDni(),
 					solicitudReservaPaquete.getMedioPagoId(), solicitudReservaPaquete.getMailUsuario());
+			this.loggingBackOffice.info(LoggingAccion.RESERVA_DE_PAQUETE);
 			return Response.ok(new WebResponse(reservaDTO, "SE REGISTRO UNA RESERVA DE PAQUETE")).build();
 		} catch (Exception e) {
 			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(e.getMessage(), "ERROR")).build();
+			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
 		}
 	}
 }

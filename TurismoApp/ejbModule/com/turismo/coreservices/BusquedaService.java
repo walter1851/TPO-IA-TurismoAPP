@@ -18,7 +18,6 @@ import com.turismo.entities.TipoHabitacion;
 import com.turismo.exceptions.ConversionFechaException;
 import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
-import com.turismo.exceptions.ReservaException;
 
 /**
  * Session Bean implementation class BusquedaOfertaPaqueteService
@@ -79,15 +78,17 @@ public class BusquedaService {
 		return montoTotal;
 	}
 
-	public float calcularPrecioTotalHotel(int ofertaId, int cantidadHabitaciones, String fDesde, String fHasta)
-			throws OfertaHoteleraException, ConversionFechaException, OfertaPaqueteException {
+	public float calcularPrecioTotalHotel(int ofertaId, String tipoHabString, int cantidadTotalPersonas, String fDesde,
+			String fHasta) throws OfertaHoteleraException, ConversionFechaException, OfertaPaqueteException {
 		float montoTotal = -1;
 		LocalDate fDesdeConverted = this.convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = this.convertStringToLocalDate(fHasta);
+		int cantTotalHabitaciones = this.calcularTotalHabitaciones(cantidadTotalPersonas,
+				TipoHabitacion.valueOf(tipoHabString));
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
 			int cantDiasHotel = fHastaConverted.compareTo(fDesdeConverted);
 			if (existeOfertaHotelera(ofertaId))
-				montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantidadHabitaciones * cantDiasHotel;
+				montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantTotalHabitaciones * cantDiasHotel;
 			if (montoTotal < 0)
 				throw new OfertaHoteleraException(
 						"Se produjo un error grave en el calculo del hospedaje. El monto total es menor a cero ");
@@ -99,16 +100,23 @@ public class BusquedaService {
 			String fHastaString) throws OfertaPaqueteException, ConversionFechaException {
 		LocalDate fDesdeConverted = convertStringToLocalDate(fDesdeString);
 		LocalDate fHastaConverted = convertStringToLocalDate(fHastaString);
-
 		List<Oferta> ofertasPaquete = null;
-		if (validarRangoFechaPaquete(fDesdeConverted, fHastaConverted))
+		if (validarRangoFechaPaquete(fDesdeConverted, fHastaConverted)) {
 			ofertasPaquete = ofertaDAO.buscarOfertasPaquete(codigoDestino, cantPersonas, fDesdeConverted,
 					fHastaConverted);
-
+			boolean hayDisponibilidad;
+			for (Oferta oferta : ofertasPaquete) {
+				List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(oferta.getOferta_id(),
+						fDesdeConverted, fHastaConverted, cantPersonas);
+				hayDisponibilidad = this.validarDisponibilidadPaquete(bloques);
+				if (!hayDisponibilidad)
+					ofertasPaquete.remove(oferta);
+			}
+		}
 		if (ofertasPaquete != null && ofertasPaquete.isEmpty())
 			throw new OfertaPaqueteException(
-					"No se encontraron paquetes para el destino id: " + codigoDestino + " desde el " + fDesdeConverted
-							+ " Hasta el " + fHastaConverted + " cant personas: " + cantPersonas);
+					"No se encontraron paquetes para el destino id " + codigoDestino + " desde el " + fDesdeConverted
+							+ " hasta el " + fHastaConverted + " cant. personas " + cantPersonas);
 		else
 			return mapperService.obtenerListaOfertaPaqueteDTO(ofertasPaquete);
 	}
@@ -125,8 +133,8 @@ public class BusquedaService {
 		}
 		if (otrosPaquetesMismoDestino != null && otrosPaquetesMismoDestino.isEmpty())
 			throw new OfertaPaqueteException(
-					"No se encontraron paquetes para mismo destino. Codigo destino " + codigo_destino + " desde el "
-							+ fDesdeConverted + " Hasta el " + fHastaConverted + " cant personas: " + cantPersonas);
+					"No se encontraron paquetes para mismo codigo destino " + codigo_destino + " desde el "
+							+ fDesdeConverted + " Hasta el " + fHastaConverted + " cant. personas " + cantPersonas);
 		else
 			return mapperService.obtenerListaOfertaPaqueteDTO(otrosPaquetesMismoDestino);
 	}
@@ -137,10 +145,11 @@ public class BusquedaService {
 		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
 		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(tipoHabString);
 		List<Oferta> ofertasHoteleras = null;
-		boolean hayDisponibilidad = false;
+
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
 			ofertasHoteleras = ofertaDAO.buscarOfertasHotelera(codigoDestino, tipoHabitacion, fDesdeConverted,
 					fHastaConverted);
+			boolean hayDisponibilidad = false;
 			for (Oferta oferta : ofertasHoteleras) {
 				List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(oferta.getOferta_id(),
 						fDesdeConverted, fHastaConverted, tipoHabitacion);
@@ -152,8 +161,8 @@ public class BusquedaService {
 		}
 		if (ofertasHoteleras != null && ofertasHoteleras.isEmpty())
 			throw new OfertaHoteleraException(
-					"No se encontraron hoteles para el destino id: " + codigoDestino + " desde el " + fDesde
-							+ " Hasta el " + fHasta + " tipo habitacion: " + tipoHabitacion.getTipoHabitacion());
+					"No se encontraron hoteles para el destino id " + codigoDestino + " desde el " + fDesde
+							+ " hasta el " + fHasta + " tipo habitacion " + tipoHabitacion.getTipoHabitacion());
 		else
 			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}
@@ -243,5 +252,19 @@ public class BusquedaService {
 		float calculoAuxiliar = (float) cantTotalPersonas / tipoHabitacion.getMaxCantPersonas();
 		int cantHabitaciones = (int) Math.ceil(calculoAuxiliar);
 		return cantHabitaciones;
+	}
+
+	public boolean validarDisponibilidadPaquete(List<OfertaBloque> bloques) {
+		if (bloques.isEmpty())
+			return false;
+		else {
+			boolean disponibilidad = true;
+			for (OfertaBloque ofertaBloque : bloques) {
+				if ((ofertaBloque.getCupo() - 1) < 0) {
+					disponibilidad = false;
+				}
+			}
+			return disponibilidad;
+		}
 	}
 }

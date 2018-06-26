@@ -27,8 +27,8 @@ public class ControllerService{
 	public List<OfertaDTO> buscarOfertaPaquete(int codigoDestino,int cantPersonas,String fDesde, String fHasta) throws OfertaPaqueteException, ConversionFechaException{
 		return busquedaOfertaService.buscarOfertaPaquete(codigoDestino, cantPersonas, fDesde, fHasta);
 	}
-	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino,String fDesde, String fHasta, String tipoHabitacion,int cantPersonas) throws OfertaHoteleraException, ConversionFechaException {
-		return busquedaOfertaService.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion,cantPersonas);
+	public List<OfertaDTO> buscarOfertaHotelera(int codigoDestino,String fDesde, String fHasta, String tipoHabitacion,int cantTotalPersonas) throws OfertaHoteleraException, ConversionFechaException {
+		return busquedaOfertaService.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion,cantTotalPersonas);
 	}
 	public ReservaDTO reservarHotel(int ofertaid,String fDesde,String fHasta,String tipoHabitacion,int cantTotalPersonas,String nombre,String apellido,String dni,int medioPagoId,String mailUsuario) throws ReservaException, ConversionFechaException, OfertaHoteleraException, OfertaPaqueteException {
 		return reservaService.reservarHotel(ofertaid, fDesde, fHasta, tipoHabitacion, cantTotalPersonas, nombre, apellido, dni, medioPagoId,mailUsuario);
@@ -39,8 +39,8 @@ public class ControllerService{
 	public float calcularPrecioTotalPaquete(int ofertaId, int cantidadPersonas) throws OfertaPaqueteException {
 		return busquedaOfertaService.calcularPrecioTotalPaquete(ofertaId, cantidadPersonas);
 	}
-	public float calcularPrecioTotalHotel(int ofertaId, int cantidadHabitaciones,String fDesde, String fHasta) throws OfertaHoteleraException, ConversionFechaException, OfertaPaqueteException {
-		return busquedaOfertaService.calcularPrecioTotalHotel(ofertaId, cantidadHabitaciones, fDesde, fHasta);
+	public float calcularPrecioTotalHotel(int ofertaId, String tipoHabitacion, int cantidadTotalPersonas,String fDesde, String fHasta) throws OfertaHoteleraException, ConversionFechaException, OfertaPaqueteException {
+		return busquedaOfertaService.calcularPrecioTotalHotel(ofertaId, tipoHabitacion,cantidadTotalPersonas, fDesde, fHasta);
 	}
 	public List<OfertaDTO> buscarOtrosPaquetesMismoDestino(int id_paquete_a_excluir, int codigo_destino,
 			int cantPersonas, String fDesdeString, String fHastaString) throws ConversionFechaException, OfertaPaqueteException{

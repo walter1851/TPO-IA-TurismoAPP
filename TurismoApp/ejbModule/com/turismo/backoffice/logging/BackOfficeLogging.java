@@ -1,46 +1,41 @@
 package com.turismo.backoffice.logging;
+import javax.annotation.Resource;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
+import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
-import javax.jms.ObjectMessage;
 import javax.jms.Queue;
+import com.turismo.exceptions.LoggingException;
+import com.turismo.qconsumer.JsonConverter;
 
-import org.jboss.logging.Logger;
 @Stateless
 public class BackOfficeLogging {
-	private static Logger LOGGER = Logger.getLogger(BackOfficeLogging.class);
+	//private static Logger LOGGER = Logger.getLogger(BackOfficeLogging.class);
 
 	//Modificar por la dirección de la cola remota
-	//@Resource(lookup = "java:/jms/queue/TurismoQueue")
-	private Queue remoteQueue;
+	@Resource(lookup = "java:/jms/queue/BackOfficeLoggingQueue")
+	private Queue queue;
 
-	@Inject	
-	//@JMSConnectionFactory("java:/ConnectionFactory")
+	@Inject
+	@JMSConnectionFactory("java:/ConnectionFactory") //Comentar si no funciona con cola remota
 	JMSContext context;
+	
 	public BackOfficeLogging() {
 	}
-	public void error(String desc) {
+	public void info(LoggingAccion accion) throws LoggingException {
 		try {
-			if (this.remoteQueue == null) return;
+			if (this.queue == null) return;
 			LoggingMensaje loggingMensaje = new LoggingMensaje();
-			loggingMensaje.setAccion(LoggingAccion.ERROR.getId());
-			loggingMensaje.setDescripcion(desc);
-			ObjectMessage message = this.context.createObjectMessage(loggingMensaje);
-			this.context.createProducer().send(this.remoteQueue, message);
+			loggingMensaje.setAccion(accion.getId());
+			loggingMensaje.setDescripcion(accion.getDescription());
+			String jsonMensaje = JsonConverter.convertToJson(loggingMensaje);
+			//ObjectMessage message = this.context.createObjectMessage(loggingMensaje); ESTO ES EN CASO MENSAJE COMUN
+			//this.context.createProducer().send(this.queue, message); ESTO ES EN CASO MENSAJE COMUN
+			context.createProducer().send(queue, jsonMensaje);
 		} catch (Exception e) {
-			BackOfficeLogging.LOGGER.error(e.getMessage(), e);
-		}
-	}
-
-	public void info(LoggingAccion action) {
-		try {
-			if (this.remoteQueue == null) return;
-			LoggingMensaje loggingMensaje = new LoggingMensaje();
-			loggingMensaje.setAccion(action.getId());
-			ObjectMessage message = this.context.createObjectMessage(loggingMensaje);
-			this.context.createProducer().send(this.remoteQueue, message);
-		} catch (Exception e) {
-			BackOfficeLogging.LOGGER.error(e.getMessage(), e);
+			//BackOfficeLogging.LOGGER.error(e.getMessage(), e);
+			throw new LoggingException(
+					"HUBO UN PROBLEMA PARA REGISTRAR LA ACCION EN EL LOG BACKOFFICE. DETALLE: "+e.getMessage());
 		}
 	}
 }

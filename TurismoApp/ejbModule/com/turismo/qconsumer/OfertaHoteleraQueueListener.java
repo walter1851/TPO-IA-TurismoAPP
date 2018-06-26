@@ -49,9 +49,7 @@ public class OfertaHoteleraQueueListener implements MessageListener {
     public OfertaHoteleraQueueListener() {
         // TODO Auto-generated constructor stub
     }
-	/**
-     * @see MessageListener#onMessage(Message)
-     */
+
     public void onMessage(Message message) {
     	try {
 			String jsonString = ((TextMessage) message).getText();
@@ -59,7 +57,6 @@ public class OfertaHoteleraQueueListener implements MessageListener {
 					OfertaHoteleraMensaje.class);
 			ofertaService.guardarOfertaHotelera(ofertaHoteleraMensaje);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

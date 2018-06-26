@@ -39,8 +39,6 @@ public class ReservaService {
 	BusquedaService busquedaService;
 	@EJB
 	private OfertaDAO ofertaDAO;
-	// @Inject
-	// private SOAPService soap;
 
 	private boolean prestadorEstaAutorizado(String codigo_prestador) {
 		SOAPService service = new SOAPService();
@@ -67,7 +65,7 @@ public class ReservaService {
 			estaAutorizado = prestadorEstaAutorizado(codigo_agencia);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted,
 					fHastaConverted, cantPersonas);
-			hayDisponibilidad = this.validarDisponibilidadPaquete(bloques);
+			hayDisponibilidad = busquedaService.validarDisponibilidadPaquete(bloques);
 			if (estaAutorizado && formatoFechaOK && hayDisponibilidad) {
 				cupoActualizado = actualizarCupoBloquesPaquete(bloques);
 				if (cupoActualizado) {
@@ -129,8 +127,7 @@ public class ReservaService {
 		boolean ofertaExistente = busquedaService.existeOfertaHotelera(ofertaid);
 		String codigo_establecimiento = "";
 		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(tipoHabString);
-		float calculoAuxiliar = (float) cantTotalPersonas / tipoHabitacion.getMaxCantPersonas();
-		int cantHabitaciones = (int) Math.ceil(calculoAuxiliar);
+		int cantHabitaciones=busquedaService.calcularTotalHabitaciones(cantTotalPersonas,tipoHabitacion);
 		if (ofertaExistente) {
 			// consulto al backoffice, le paso el codigo externo del establecimiento (al ser
 			// hotel)
@@ -145,7 +142,7 @@ public class ReservaService {
 			if (formatoFechaOK && hayDisponibilidad && estaAutorizado)
 				cupoActualizado = actualizarCupoBloquesHotelero(bloques, cantHabitaciones);
 			if (cupoActualizado) {
-				float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid, cantHabitaciones, fDesde, fHasta);
+				float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid,tipoHabitacion.getTipoHabitacion(),cantTotalPersonas, fDesde, fHasta);
 				nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, fDesdeConverted, fHastaConverted, medioPagoID,
 						nombre, apellido, emailUsuario, dni, montoTotal);
 				nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaHotelera);
@@ -189,19 +186,5 @@ public class ReservaService {
 			throw new ReservaException(
 					"NO SE ACTUALIZARON LOS BLOQUES. ERROR GRAVE DE CONSISTENCIA. NO COINCIDE EL ID DE LA OFERTA HOTELERA CON EL TIPO DE OFERTA ASOCIADO EN LA BASE DE DATOS.");
 		return cupoActualizado && hayConsistencia;
-	}
-
-	private boolean validarDisponibilidadPaquete(List<OfertaBloque> bloques) {
-		if (bloques.isEmpty())
-			return false;
-		else {
-			boolean disponibilidad = true;
-			for (OfertaBloque ofertaBloque : bloques) {
-				if ((ofertaBloque.getCupo() - 1) < 0) {
-					disponibilidad = false;
-				}
-			}
-			return disponibilidad;
-		}
 	}
 }

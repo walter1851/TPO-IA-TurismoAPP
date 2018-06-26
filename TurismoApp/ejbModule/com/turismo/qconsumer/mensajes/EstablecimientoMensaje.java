@@ -1,7 +1,5 @@
 package com.turismo.qconsumer.mensajes;
 
-import java.util.List;
-
 public class EstablecimientoMensaje {
 	private String id;
 	private String uid; // Id recibido del backoffice

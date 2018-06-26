@@ -52,13 +52,10 @@ private OfertaService ofertaService;
     	try {
 
 			String jsonString = ((TextMessage) message).getText();
-			System.out.println(jsonString);
-			
 			OfertaPaqueteMensaje ofertaPaqueteMensaje = (OfertaPaqueteMensaje) JsonConverter.convertToObject(jsonString,
 					OfertaPaqueteMensaje.class);
 			ofertaService.guardarOfertaPaquete(ofertaPaqueteMensaje);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
