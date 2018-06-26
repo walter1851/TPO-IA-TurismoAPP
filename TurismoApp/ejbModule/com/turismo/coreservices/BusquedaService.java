@@ -138,7 +138,7 @@ public class BusquedaService {
 				if (!hayDisponibilidad)
 					otrosPaquetesMismoDestino.remove(oferta);
 			}
-			
+
 		}
 		if (otrosPaquetesMismoDestino != null && otrosPaquetesMismoDestino.isEmpty())
 			throw new OfertaPaqueteException(
@@ -175,8 +175,10 @@ public class BusquedaService {
 			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}
 
+	// Otras habitaciones disponibles del mismo hotel.
 	public List<OfertaDTO> buscarOtrasOfertasMismoHotel(int codigo_destino, String tipo_Habitacion_a_excluir,
-			int id_hotel, String fDesde, String fHasta, int cantTotalPersonas) throws ConversionFechaException, OfertaHoteleraException {
+			int id_hotel, String fDesde, String fHasta, int cantTotalPersonas)
+			throws ConversionFechaException, OfertaHoteleraException {
 		List<Oferta> ofertasHoteleras = null;
 		LocalDate fDesdeConverted = convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
@@ -194,7 +196,7 @@ public class BusquedaService {
 			}
 		}
 		if (ofertasHoteleras != null && ofertasHoteleras.isEmpty())
-			throw new OfertaHoteleraException("No se encontraron otras ofertas para el mismo hotel.");
+			throw new OfertaHoteleraException("No se encontraron otras habitaciones para el mismo id hotel "+id_hotel+ " desde "+fDesde+" hasta "+fHasta+" cantidad total de personas " +cantTotalPersonas);
 		else
 			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}
@@ -211,8 +213,8 @@ public class BusquedaService {
 		if (!rangoValido)
 			throw new OfertaPaqueteException(
 					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio "
-							+ localDateDesde.toString() + " es menor o igual que la fecha de salida "
-							+ localDateHasta.toString() + " , y que dicho rango sea posterior a la fecha actual "
+							+ localDateDesde.toString() + " es menor que la fecha de salida "
+							+ localDateHasta.toString() + " y que dicho rango se encuentre dentro de la fecha actual "
 							+ LocalDate.now().toString());
 		return rangoValido;
 	}
@@ -225,15 +227,15 @@ public class BusquedaService {
 		 */
 		boolean rangoValido;
 		LocalDate localDateFechaActual = LocalDate.now();
-		if (localDateHasta.compareTo(localDateFechaActual) > 0 && localDateHasta.compareTo(localDateDesde) > 0)
+		if (localDateDesde.compareTo(localDateFechaActual) >= 0 && localDateHasta.compareTo(localDateFechaActual) > 0 && localDateHasta.compareTo(localDateDesde) > 0)
 			rangoValido = true;
 		else
 			rangoValido = false;
 		if (!rangoValido)
 			throw new OfertaHoteleraException(
 					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio "
-							+ localDateDesde.toString() + " es menor o igual que la fecha de salida "
-							+ localDateHasta.toString() + " , y que dicho rango se encuentre dentro de la fecha actual "
+							+ localDateDesde.toString() + " es menor que la fecha de salida "
+							+ localDateHasta.toString() + " y que dicho rango se encuentre dentro de la fecha actual "
 							+ LocalDate.now().toString());
 		return rangoValido;
 	}

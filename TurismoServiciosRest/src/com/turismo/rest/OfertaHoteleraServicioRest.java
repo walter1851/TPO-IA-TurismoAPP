@@ -42,6 +42,7 @@ public class OfertaHoteleraServicioRest {
 	@GET
 	@Path("buscarotros/{codigoDestino}/{CantTotalPersonas}/{tipoHabitacionExcluir}/{id_Hotel}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
+	//Otras habitaciones disponibles del mismo hotel
 	public Response buscarOtrasOfertasMismoHotel(@PathParam("codigoDestino") int codigoDestino,
 			@PathParam("CantTotalPersonas") int CantTotalPersonas,
 			@PathParam("tipoHabitacionExcluir") String tipoHabitacionExcluir, @PathParam("id_Hotel") int id_hotel,

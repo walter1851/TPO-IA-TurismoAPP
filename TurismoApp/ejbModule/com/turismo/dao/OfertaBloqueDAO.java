@@ -15,26 +15,27 @@ import com.turismo.entities.TipoHabitacion;
 
 @Stateless
 @LocalBean
-public class OfertaBloqueDAO{
+public class OfertaBloqueDAO {
 	@PersistenceContext(unitName = "MyPU")
 	private EntityManager entityManager;
 
 	public boolean nuevoBloque(Oferta oferta, LocalDate fecha, int cupo) {
 		try {
-		OfertaBloque ofertaBloque = new OfertaBloque();
-		ofertaBloque.setOferta(oferta);
-		ofertaBloque.setFecha_Bloque(fecha);
-		ofertaBloque.setCupo(cupo);
-		entityManager.persist(ofertaBloque);
-		return true;
+			OfertaBloque ofertaBloque = new OfertaBloque();
+			ofertaBloque.setOferta(oferta);
+			ofertaBloque.setFecha_Bloque(fecha);
+			ofertaBloque.setCupo(cupo);
+			entityManager.persist(ofertaBloque);
+			return true;
 		} catch (PersistenceException e) {
 			return false;
 		}
 	}
+
 	public boolean actualizarBloque(OfertaBloque ofertaBloque) {
 		try {
 			entityManager.merge(ofertaBloque);
-		return true;
+			return true;
 		} catch (PersistenceException e) {
 			return false;
 		}
@@ -47,38 +48,39 @@ public class OfertaBloqueDAO{
 			return null;
 		}
 	}
+
 	@SuppressWarnings("unchecked")
-	/*Entiendo que esta validacion no hace falta hacerla:
+	/*
+	 * Entiendo que esta validacion no hace falta hacerla:
 	 * 
 	 * " AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta"
 	 * 
-	 * */
-	public List<OfertaBloque> buscarBloquesDePaquetes(int ofertaId,LocalDate fDesde, LocalDate fHasta, int cantPersonas) {
-		Query bloqueQuery = entityManager
-				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + " WHERE o.cant_personas = :cantPersonas "
-						+ "AND o.oferta_id = :ofertaId "+" AND o.fecha_desde >= :fDesde AND o.fecha_hasta <= :fHasta"
-						+ " AND o.fecha_desde = :fDesde"
-						+ " AND o.fecha_hasta = :fHasta"
-						+ " AND o.cupo > 0");
+	 */
+	public List<OfertaBloque> buscarBloquesDePaquetes(int ofertaId, LocalDate fDesde, LocalDate fHasta,
+			int cantPersonas) {
+		Query bloqueQuery = entityManager.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o "
+				+ " WHERE o.cant_personas = :cantPersonas " + "AND o.oferta_id = :ofertaId "
+				+ " AND o.fecha_desde = :fDesde" + " AND o.fecha_hasta = :fHasta" + " AND o.cupo > 0");
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);
 		bloqueQuery.setParameter("cantPersonas", cantPersonas);
 		bloqueQuery.setParameter("ofertaId", ofertaId);
 		return bloqueQuery.getResultList();
-		
-		
+
 	}
+
 	@SuppressWarnings("unchecked")
 
-	public List<OfertaBloque> buscarBloquesDeHoteleria(int ofertaId,LocalDate fDesde, LocalDate fHasta,TipoHabitacion tipoHabitacion) {
-		Query bloqueQuery = entityManager
-				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + "WHERE o.oferta_id = :ofertaId " + 
-		"AND TipoHabitacion=:tipoHabitacion "+" AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta"
-		+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" + " AND o.cupo > 0");
+	public List<OfertaBloque> buscarBloquesDeHoteleria(int ofertaId, LocalDate fDesde, LocalDate fHasta,
+			TipoHabitacion tipoHabitacion) {
+		Query bloqueQuery = entityManager.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o "
+				+ "WHERE o.oferta_id = :ofertaId " + "AND TipoHabitacion=:tipoHabitacion "
+				+ " AND ob.fecha_bloque >= :fDesde AND ob.fecha_bloque <= :fHasta" + " AND o.fecha_desde <= :fDesde"
+				+ " AND o.fecha_hasta >= :fHasta" + " AND o.cupo > 0");
 		bloqueQuery.setParameter("fDesde", fDesde);
 		bloqueQuery.setParameter("fHasta", fHasta);
 		bloqueQuery.setParameter("ofertaId", ofertaId);
-		bloqueQuery.setParameter("tipoHabitacion",  tipoHabitacion.getTipoHabitacion());
+		bloqueQuery.setParameter("tipoHabitacion", tipoHabitacion.getTipoHabitacion());
 		return bloqueQuery.getResultList();
 	}
 }

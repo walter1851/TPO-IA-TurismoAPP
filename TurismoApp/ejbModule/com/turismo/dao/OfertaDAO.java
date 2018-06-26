@@ -118,7 +118,6 @@ public class OfertaDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	//OJO esta faltando la cantidad total de personas para compararlo con el cupo. 
 	public List<Oferta> buscarOfertasHotelera(int codigo_destino, TipoHabitacion tipo_Habitacion, LocalDate fDesde,
 			LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
@@ -155,8 +154,8 @@ public class OfertaDAO {
 	public List<Oferta> buscarOfertasPaquete(int codigo_destino, int cantPersonas, LocalDate fDesde, LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery(
 				"SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.codigo_destino = :codigo_destino"
-						+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde >= :fDesde"
-						+ " AND o.fecha_hasta <= :fHasta" + " AND OfertaTipo = :tipoDeOferta"
+						+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde = :fDesde"
+						+ " AND o.fecha_hasta = :fHasta" + " AND OfertaTipo = :tipoDeOferta"
 						+ " AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("cantPersonas", cantPersonas);
@@ -170,8 +169,8 @@ public class OfertaDAO {
 	public List<Oferta> buscarOtrosPaquetesMismoDestino(int id_paquete_a_excluir,int codigo_destino, int cantPersonas, LocalDate fDesde, LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery(
 				"SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.codigo_destino = :codigo_destino"
-						+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde >= :fDesde"
-						+ " AND o.fecha_hasta <= :fHasta" + " AND OfertaTipo = :tipoDeOferta"
+						+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde = :fDesde"
+						+ " AND o.fecha_hasta = :fHasta" + " AND OfertaTipo = :tipoDeOferta"
 						+" AND o.oferta_id != :id_paquete_a_excluir"+
 						" AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);

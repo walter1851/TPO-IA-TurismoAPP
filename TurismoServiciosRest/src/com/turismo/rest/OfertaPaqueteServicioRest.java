@@ -39,10 +39,10 @@ public class OfertaPaqueteServicioRest {
 			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
 		}
 	}
-
 	@GET
 	@Path("buscarotros/{idPaqueteExcluir}/{codigoDestino}/{cantPersonas}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
+	//Otras paquetes del mismo destino
 	public Response buscarOtrosPaquetes(@PathParam("idPaqueteExcluir") int idPaqueteExcluir,
 			@PathParam("codigoDestino") int codigoDestino, @PathParam("cantPersonas") int cantPersonas,
 			@PathParam("fDesde") String fDesde, @PathParam("fHasta") String fHasta) {
