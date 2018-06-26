@@ -1,5 +1,7 @@
 package com.turismo.dao;
 
+import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -37,6 +39,7 @@ public class ImagenDAO {
 			return null;
 		}
 	}
+
 	public boolean actualizarImagen(int imagen_id, String imagenBase64, Establecimiento establecimiento, Hotel hotel) {
 		try {
 			Imagen imagen = buscarPorIdImagen(imagen_id);
@@ -49,28 +52,52 @@ public class ImagenDAO {
 			return false;
 		}
 	}
-	public Imagen buscarImagenEstablecimiento(int establecimiento_id,String imagenBase64) {
+
+	@SuppressWarnings("unchecked")
+	public List<Imagen> buscarImagenesEstablecimiento(int establecimiento_id) {
+		Query imagenesQuery = entityManager.createQuery("SELECT i FROM Imagen i INNER JOIN i.establecimiento e "
+				+ "WHERE e.establecimiento_id = :establecimiento_id");
+		imagenesQuery.setParameter("establecimiento_id", establecimiento_id);
+		return imagenesQuery.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Imagen> buscarImagenesHotel(int hotel_id) {
+		Query imagenesQuery = entityManager
+				.createQuery("SELECT i FROM Imagen i INNER JOIN i.hotel h " + "WHERE h.hotel_id = :hotel_id");
+		imagenesQuery.setParameter("hotel_id", hotel_id);
+		return imagenesQuery.getResultList();
+	}
+
+	public boolean existeImagenEstablecimiento(int establecimiento_id, String imagenBase64) {
 		try {
-			Query imagenQuery = entityManager
-					.createQuery("SELECT i FROM Imagen i INNER JOIN i.establecimiento e " + "WHERE e.establecimiento_id = :establecimiento_id "
-			+" AND i.imagenBase64 = :imagenBase64 ");
+			Query imagenQuery = entityManager.createQuery("SELECT i FROM Imagen i INNER JOIN i.establecimiento e "
+					+ "WHERE e.establecimiento_id = :establecimiento_id " + " AND i.imagenBase64 = :imagenBase64 ");
 			imagenQuery.setParameter("establecimiento_id", establecimiento_id);
 			imagenQuery.setParameter("imagenBase64", imagenBase64);
-			return (Imagen) imagenQuery.getSingleResult();
+			Imagen imagen = (Imagen) imagenQuery.getSingleResult();
+			if (imagen != null)
+				return true;
+			else
+				return false;
 		} catch (NoResultException nre) {
-			return null;
+			return false;
 		}
 	}
-	public Imagen buscarImagenHotel(int hotel_id,String imagenBase64) {
+
+	public boolean existeImagenHotel(int hotel_id, String imagenBase64) {
 		try {
-			Query imagenQuery = entityManager
-					.createQuery("SELECT i FROM Imagen i INNER JOIN i.hotel h " + "WHERE h.hotel_id = :hotel_id"
-			+" AND i.imagenBase64 = :imagenBase64 ");
+			Query imagenQuery = entityManager.createQuery("SELECT i FROM Imagen i INNER JOIN i.hotel h "
+					+ "WHERE h.hotel_id = :hotel_id" + " AND i.imagenBase64 = :imagenBase64 ");
 			imagenQuery.setParameter("hotel_id", hotel_id);
 			imagenQuery.setParameter("imagenBase64", imagenBase64);
-			return (Imagen) imagenQuery.getSingleResult();
+			Imagen imagen = (Imagen) imagenQuery.getSingleResult();
+			if (imagen != null)
+				return true;
+			else
+				return false;
 		} catch (NoResultException nre) {
-			return null;
+			return false;
 		}
 	}
 }

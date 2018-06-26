@@ -7,7 +7,6 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-
 import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.OfertaDAO;
 import com.turismo.dto.OfertaDTO;
@@ -86,7 +85,7 @@ public class BusquedaService {
 		int cantTotalHabitaciones = this.calcularTotalHabitaciones(cantidadTotalPersonas,
 				TipoHabitacion.valueOf(tipoHabString));
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
-			int cantDiasHotel = fHastaConverted.compareTo(fDesdeConverted);
+			int cantDiasHotel = (int)java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted, fHastaConverted);
 			if (existeOfertaHotelera(ofertaId))
 				montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantTotalHabitaciones * cantDiasHotel;
 			if (montoTotal < 0)

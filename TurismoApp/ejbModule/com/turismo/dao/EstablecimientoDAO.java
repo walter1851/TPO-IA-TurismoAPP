@@ -46,7 +46,6 @@ public class EstablecimientoDAO {
 			return null;
 		}
 	}
-
 	public Establecimiento buscarPorCodigoEstablecimiento(String codigo_establecimiento) {
 		try {
 			Query establecimientoQuery = entityManager.createQuery(
