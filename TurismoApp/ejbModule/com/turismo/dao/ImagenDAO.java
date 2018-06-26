@@ -24,6 +24,7 @@ public class ImagenDAO {
 			return null;
 		}
 	}
+
 	public Imagen nuevaImagen(String imagenBase64, Establecimiento establecimiento, Hotel hotel) {
 		try {
 			Imagen imagen = new Imagen();
@@ -48,34 +49,25 @@ public class ImagenDAO {
 			return false;
 		}
 	}
-
-	public Imagen buscarImagenPorBase64(int imagen_id,String imagenBase64) {
+	public Imagen buscarImagenEstablecimiento(int establecimiento_id,String imagenBase64) {
 		try {
 			Query imagenQuery = entityManager
-					.createQuery("SELECT i FROM Imagen i " + "WHERE i.imagenBase64 = :imagenBase64 "+
-			" AND i.imagen_id = :imagen_id");
-			imagenQuery.setParameter("imagenBase64", imagenBase64);
-			imagenQuery.setParameter("imagen_id", imagen_id);
-			return (Imagen) imagenQuery.getSingleResult();
-		} catch (NoResultException nre) {
-			return null;
-		}
-	}
-	public Imagen buscarImagenPorIdEstablecimiento(int establecimiento_id) {
-		try {
-			Query imagenQuery = entityManager
-					.createQuery("SELECT i FROM Imagen i INNER JOIN i.Establecimiento e " + "WHERE e.establecimiento_id = :establecimiento_id ");
+					.createQuery("SELECT i FROM Imagen i INNER JOIN i.establecimiento e " + "WHERE e.establecimiento_id = :establecimiento_id "
+			+" AND i.imagenBase64 = :imagenBase64 ");
 			imagenQuery.setParameter("establecimiento_id", establecimiento_id);
+			imagenQuery.setParameter("imagenBase64", imagenBase64);
 			return (Imagen) imagenQuery.getSingleResult();
 		} catch (NoResultException nre) {
 			return null;
 		}
 	}
-	public Imagen buscarImagenPorIdHotel(int hotel_id) {
+	public Imagen buscarImagenHotel(int hotel_id,String imagenBase64) {
 		try {
 			Query imagenQuery = entityManager
-					.createQuery("SELECT i FROM Imagen i INNER JOIN i.Hotel h " + "WHERE h.hotel_id = :hotel_id ");
+					.createQuery("SELECT i FROM Imagen i INNER JOIN i.hotel h " + "WHERE h.hotel_id = :hotel_id"
+			+" AND i.imagenBase64 = :imagenBase64 ");
 			imagenQuery.setParameter("hotel_id", hotel_id);
+			imagenQuery.setParameter("imagenBase64", imagenBase64);
 			return (Imagen) imagenQuery.getSingleResult();
 		} catch (NoResultException nre) {
 			return null;

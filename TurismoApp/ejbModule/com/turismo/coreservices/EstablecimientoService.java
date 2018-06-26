@@ -24,22 +24,18 @@ public class EstablecimientoService {
 	public Establecimiento guardarEstablecimiento(String nombre, String direccion, String ciudad, String descripcion, int estrellas, String latitud, String longitud, String codigo_establecimiento, String codigo_hotel,
 			String nombreHotel, String fotoHotel, List<String> fotosEstablecimiento) {
 		Hotel hotel = hotelDAO.buscarPorCodigoHotel(codigo_hotel);
-		Establecimiento establecimiento = establecimientoDAO.buscarPorCodigoEstablecimiento(codigo_establecimiento);
-		Imagen imagenHotel =  imagenDAO.buscarImagenPorBase64(0,fotoHotel);
-		Imagen imagenEstablecimiento =  imagenDAO.buscarImagenPorBase64(0,fotosEstablecimiento.get(0));
-		
 		if (hotel == null)
 			hotel = hotelDAO.nuevoHotel(nombreHotel, codigo_hotel);
-
+		Establecimiento establecimiento = establecimientoDAO.buscarPorCodigoEstablecimiento(codigo_establecimiento);
 		if (establecimiento == null)
 			establecimiento = establecimientoDAO.nuevoEstablecimiento(nombre, direccion, ciudad, descripcion,
 					estrellas, latitud,longitud, codigo_establecimiento, hotel);
-
+		Imagen imagenHotel =  imagenDAO.buscarImagenHotel(hotel.getHotel_id(),fotoHotel);
 		if (imagenHotel == null)
 			imagenHotel = imagenDAO.nuevaImagen(fotoHotel, null, hotel);
-		
+		Imagen imagenEstablecimiento =  imagenDAO.buscarImagenEstablecimiento(establecimiento.getEstablecimiento_id(),fotosEstablecimiento.get(0));
 		if (imagenEstablecimiento == null)
-			imagenEstablecimiento = imagenDAO.nuevaImagen(fotoHotel, establecimiento, null);
+			imagenEstablecimiento = imagenDAO.nuevaImagen(fotosEstablecimiento.get(0), establecimiento, null);
 
 		return establecimiento;
 	}

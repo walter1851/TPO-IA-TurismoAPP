@@ -26,8 +26,8 @@ public class MapperService {
 		reservaDTO.setApellido(reserva.getApellido());
 		reservaDTO.setMontoTotal(reserva.getMontoTotal());
 		reservaDTO.setNombre(reserva.getNombre());
-		reservaDTO.setFechaCheckIn(reserva.getFechaCheckIn().toString());
-		reservaDTO.setFechaCheckOut(reserva.getFechaCheckOut().toString());
+		reservaDTO.setFechaInicio(reserva.getFechaInicio().toString());
+		reservaDTO.setFechaFin(reserva.getFechaFin().toString());
 		return reservaDTO;
 	}
 	public List<OfertaDTO> obtenerListaOfertaPaqueteDTO(List<Oferta> ofertas){
@@ -52,6 +52,7 @@ public class MapperService {
 			destinoDTO.setNombre(oferta.getDestino().getNombre());
 
 			ofertaDTO.setOferta_id(oferta.getOferta_id());
+			ofertaDTO.setCodigo_oferta(oferta.getCodigo_oferta());
 			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);
 			ofertaDTO.setDestinoDTO(destinoDTO);
 			ofertaDTO.setMedioPagoDTO(medioPagoDTO);
@@ -113,6 +114,7 @@ public class MapperService {
 			//establecimientoDTO.setFotosEstablecimiento(fotosEstablecimiento);
 			
 			ofertaDTO.setOferta_id(oferta.getOferta_id());
+			ofertaDTO.setCodigo_oferta(oferta.getCodigo_oferta());
 			ofertaDTO.setDestinoDTO(destinoDTO);
 			ofertaDTO.setEstablecimientoDTO(establecimientoDTO);
 			ofertaDTO.setOfertaTipoDTO(ofertaTipoDTO);

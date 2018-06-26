@@ -15,8 +15,8 @@ public class Reserva {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int reserva_id;
-	private LocalDate fechaCheckIn;
-	private LocalDate fechaCheckOut;
+	private LocalDate fechaInicio;
+	private LocalDate fechaFin;
 	private float montoTotal;
 	@ManyToOne
 	@JoinColumn(name = "oferta_id")
@@ -29,17 +29,18 @@ public class Reserva {
 	private String dni;	
 	private String apellido;
 	
-	public LocalDate getFechaCheckIn() {
-		return fechaCheckIn;
+	
+	public LocalDate getFechaInicio() {
+		return fechaInicio;
 	}
-	public void setFechaCheckIn(LocalDate fechaCheckIn) {
-		this.fechaCheckIn = fechaCheckIn;
+	public void setFechaInicio(LocalDate fechaInicio) {
+		this.fechaInicio = fechaInicio;
 	}
-	public LocalDate getFechaCheckOut() {
-		return fechaCheckOut;
+	public LocalDate getFechaFin() {
+		return fechaFin;
 	}
-	public void setFechaCheckOut(LocalDate fechaCheckOut) {
-		this.fechaCheckOut = fechaCheckOut;
+	public void setFechaFin(LocalDate fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 	public String getApellido() {
 		return apellido;

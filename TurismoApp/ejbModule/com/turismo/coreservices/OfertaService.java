@@ -147,7 +147,7 @@ public class OfertaService {
 		String politicaCancelacion = ofertaHoteleraMensaje.getPoliticas();// Texto con las politicas
 		String servicios = ofertaHoteleraMensaje.getServicios();
 		Destino destino = destinoDAO.buscarDestinoPorCodigo(codigo_ciudad);
-		Oferta oferta = null;//ofertaDAO.buscarPorCodigoOferta(codigoOfertaHotelera);
+		Oferta oferta = null;
 		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(ofertaHoteleraMensaje.getTipoHabitacion()); // SIMPLE, DOBLE, TRIPLE
 		if (destino != null && oferta == null && tipoHabitacion!=null) {
 			Establecimiento establecimiento = establecimientoService.guardarEstablecimiento(nombreEstablecimiento,
@@ -169,7 +169,7 @@ public class OfertaService {
 				// igual a cero significa q son iguales
 				// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias
 				int count = 0; // contador para prevenir que procese eternamente
-				int limiteDias = 5000; // limites de dias a procesar para que no procese eternamente
+				int limiteDias = 10000; // limites de dias a procesar para que no procese eternamente
 				while (nuevaOferta != null && fechaPivote.compareTo(fHastaConverted) <= 0 && count < limiteDias) {
 					ofertaBloqueDAO.nuevoBloque(nuevaOferta, fechaPivote, cupo);
 					fechaPivote = fechaPivote.plusDays(1);

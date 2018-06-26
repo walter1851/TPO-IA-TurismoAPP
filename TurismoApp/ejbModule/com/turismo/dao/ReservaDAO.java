@@ -23,7 +23,7 @@ public class ReservaDAO{
 	@EJB
 	private MedioPagoDAO medioPagoDAO;
 
-	public Reserva crearReserva(int oferta_id, LocalDate fCheckIN, LocalDate fChechOUT,int id_medio_pago, String nombre, String apellido, String email,
+	public Reserva crearReserva(int oferta_id, LocalDate fechaInicio, LocalDate fechaFin,int id_medio_pago, String nombre, String apellido, String email,
 			String dni,float montoTotal) {
 		try {
 			Oferta oferta=ofertaDAO.buscarPorIdOferta(oferta_id);
@@ -35,8 +35,8 @@ public class ReservaDAO{
 			reserva.setEmail(email);
 			reserva.setDni(dni);
 			reserva.setMontoTotal(montoTotal);
-			reserva.setFechaCheckIn(fCheckIN);
-			reserva.setFechaCheckOut(fChechOUT);
+			reserva.setFechaInicio(fechaInicio);
+			reserva.setFechaFin(fechaFin);
 			entityManager.persist(reserva);
 			return reserva;
 		} catch (PersistenceException e) {
@@ -44,7 +44,7 @@ public class ReservaDAO{
 		}
 	}
 
-	public boolean actualizarReserva(int reserva_id, LocalDate fCheckIN, LocalDate fChechOUT,int oferta_id, int usuario_id, int medio_de_pago_id, String nombre,
+	public boolean actualizarReserva(int reserva_id, LocalDate fechaInicio, LocalDate fechaFin,int oferta_id, int usuario_id, int medio_de_pago_id, String nombre,
 			String email, String dni, float montoTotal) {
 		try {
 			Oferta oferta = ofertaDAO.buscarPorIdOferta(oferta_id);
@@ -54,8 +54,8 @@ public class ReservaDAO{
 			reserva.setNombre(nombre);
 			reserva.setEmail(email);
 			reserva.setMontoTotal(montoTotal);
-			reserva.setFechaCheckIn(fCheckIN);
-			reserva.setFechaCheckOut(fChechOUT);
+			reserva.setFechaInicio(fechaInicio);
+			reserva.setFechaFin(fechaFin);
 			entityManager.merge(reserva);
 			return true;
 		} catch (PersistenceException e) {
