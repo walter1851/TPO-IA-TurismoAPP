@@ -10,7 +10,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-
 import com.turismo.backoffice.logging.BackOfficeLogging;
 import com.turismo.backoffice.logging.LoggingAccion;
 import com.turismo.controller.ControllerService;
@@ -41,14 +40,15 @@ public class OfertaHoteleraServicioRest {
 		}
 	}
 	@GET
-	@Path("buscarotros/{codigoDestino}/{tipoHabitacionExcluir}/{id_Hotel}/{fDesde}/{fHasta}")
+	@Path("buscarotros/{codigoDestino}/{CantTotalPersonas}/{tipoHabitacionExcluir}/{id_Hotel}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarOtrasOfertasMismoHotel(@PathParam("codigoDestino") int codigoDestino,
+			@PathParam("CantTotalPersonas") int CantTotalPersonas,
 			@PathParam("tipoHabitacionExcluir") String tipoHabitacionExcluir, @PathParam("id_Hotel") int id_hotel,
 			@PathParam("fDesde") String fDesde,
 			@PathParam("fHasta") String fHasta){
 		try {
-			List<OfertaDTO> ofertas = facade.buscarOtrasOfertasMismoHotel(codigoDestino, tipoHabitacionExcluir, id_hotel, fDesde, fHasta);
+			List<OfertaDTO> ofertas = facade.buscarOtrasOfertasMismoHotel(codigoDestino, tipoHabitacionExcluir, id_hotel, fDesde, fHasta,CantTotalPersonas);
 			//this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_HOTELERA);
 			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON "+ofertas.size()+" OFERTAS HOTELERAS PARA MISMO HOTEL y DISTINTO TIPO DE HABITACION")).build();
 		} catch (Exception e) {

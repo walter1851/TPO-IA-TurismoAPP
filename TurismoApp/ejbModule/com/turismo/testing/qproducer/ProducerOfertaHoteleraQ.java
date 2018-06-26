@@ -23,51 +23,7 @@ public class ProducerOfertaHoteleraQ {
 	@JMSConnectionFactory("java:/ConnectionFactory")
 	JMSContext context;
 
-	public void sendMessage(int idOfertaHotelera, String nombreOfertaHotelera,float precio,int cupo
-			, String mediosDePago,String tipoHabitacion,String idEstablecimiento,String uidBackOffice,String nombreEstablecimiento,String direccionEstablecimiento,
-			int codigo_ciudad,String idHotel,String nombreHotel,String urlFotoHotel,
-			String descripcionEstablecimiento,String mapaLatitud,String mapaLongitud,String urlFotoEstablecimiento,int cantEstrellas,
-			String fechaDesde,String fechaHasta,String politicaCancelacion,String servicios) {
-			OfertaHoteleraMensaje ofertaHoteleraMensaje=new OfertaHoteleraMensaje();
-			
-			MapaMensaje mapaMensaje=new MapaMensaje();
-			mapaMensaje.setLat(mapaLatitud);
-			mapaMensaje.setLon(mapaLongitud);
-			
-			HotelMensaje hotelMensaje=new HotelMensaje();
-			hotelMensaje.setId(idHotel);
-			hotelMensaje.setNombre(nombreHotel);
-			hotelMensaje.setFotoHotel(urlFotoHotel);
-			
-			EstablecimientoMensaje establecimientoMensaje=new EstablecimientoMensaje();
-			establecimientoMensaje.setId(idEstablecimiento);
-			establecimientoMensaje.setNombre(nombreEstablecimiento);
-			establecimientoMensaje.setEstrellas(cantEstrellas);
-			establecimientoMensaje.setDescripcion(descripcionEstablecimiento);
-			establecimientoMensaje.setDireccion(direccionEstablecimiento);
-			establecimientoMensaje.setFotoestablecimiento(urlFotoEstablecimiento);
-			establecimientoMensaje.setUid(uidBackOffice);
-			establecimientoMensaje.setHotel(hotelMensaje);
-			establecimientoMensaje.setMapa(mapaMensaje);
-			
-			CiudadMensaje ciudadMensaje=new CiudadMensaje();
-			ciudadMensaje.setCodigo_ciudad(codigo_ciudad);
-			//ciudadMensaje.setNombre(nombreCiudad);
-			establecimientoMensaje.setCiudad(ciudadMensaje);
-			
-			ofertaHoteleraMensaje.setIdOfertaHotelera(idOfertaHotelera);
-			ofertaHoteleraMensaje.setNombre(nombreOfertaHotelera);
-			ofertaHoteleraMensaje.setIdOfertaHotelera(idOfertaHotelera);
-			ofertaHoteleraMensaje.setEstablecimiento(establecimientoMensaje);
-			ofertaHoteleraMensaje.setCupo(cupo);
-			ofertaHoteleraMensaje.setFechaDesde(fechaDesde);
-			ofertaHoteleraMensaje.setFechaHasta(fechaHasta);
-			ofertaHoteleraMensaje.setMediosDePago(mediosDePago);
-			ofertaHoteleraMensaje.setPoliticas(politicaCancelacion);
-			ofertaHoteleraMensaje.setPrecio(precio);
-			ofertaHoteleraMensaje.setServicios(servicios);
-			ofertaHoteleraMensaje.setTipoHabitacion(tipoHabitacion);
-			
+	public void sendMessage(OfertaHoteleraMensaje ofertaHoteleraMensaje) {
 		try {
 			String jsonMensaje = JsonConverter.convertToJson(ofertaHoteleraMensaje);
 			context.createProducer().send(testQueue, jsonMensaje);

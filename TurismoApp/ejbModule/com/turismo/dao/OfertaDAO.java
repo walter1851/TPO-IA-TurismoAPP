@@ -170,7 +170,7 @@ public class OfertaDAO {
 	public List<Oferta> buscarOtrosPaquetesMismoDestino(int id_paquete_a_excluir,int codigo_destino, int cantPersonas, LocalDate fDesde, LocalDate fHasta) {
 		Query ofertasHotelerasQuery = entityManager.createQuery(
 				"SELECT o FROM Oferta o " + " INNER JOIN o.destino d" + " WHERE d.codigo_destino = :codigo_destino"
-						+ " AND o.cant_personas <= :cantPersonas" + " AND o.fecha_desde >= :fDesde"
+						+ " AND o.cant_personas = :cantPersonas" + " AND o.fecha_desde >= :fDesde"
 						+ " AND o.fecha_hasta <= :fHasta" + " AND OfertaTipo = :tipoDeOferta"
 						+" AND o.oferta_id != :id_paquete_a_excluir"+
 						" AND o.cupo > 0");

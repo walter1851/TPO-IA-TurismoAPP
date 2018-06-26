@@ -130,6 +130,15 @@ public class BusquedaService {
 		if (validarRangoFechaPaquete(fDesdeConverted, fHastaConverted)) {
 			otrosPaquetesMismoDestino = ofertaDAO.buscarOtrosPaquetesMismoDestino(id_paquete_a_excluir, codigo_destino,
 					cantPersonas, fDesdeConverted, fHastaConverted);
+			boolean hayDisponibilidad;
+			for (Oferta oferta : otrosPaquetesMismoDestino) {
+				List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(oferta.getOferta_id(),
+						fDesdeConverted, fHastaConverted, cantPersonas);
+				hayDisponibilidad = this.validarDisponibilidadPaquete(bloques);
+				if (!hayDisponibilidad)
+					otrosPaquetesMismoDestino.remove(oferta);
+			}
+			
 		}
 		if (otrosPaquetesMismoDestino != null && otrosPaquetesMismoDestino.isEmpty())
 			throw new OfertaPaqueteException(
@@ -145,7 +154,6 @@ public class BusquedaService {
 		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
 		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(tipoHabString);
 		List<Oferta> ofertasHoteleras = null;
-
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
 			ofertasHoteleras = ofertaDAO.buscarOfertasHotelera(codigoDestino, tipoHabitacion, fDesdeConverted,
 					fHastaConverted);
@@ -168,13 +176,23 @@ public class BusquedaService {
 	}
 
 	public List<OfertaDTO> buscarOtrasOfertasMismoHotel(int codigo_destino, String tipo_Habitacion_a_excluir,
-			int id_hotel, String fDesde, String fHasta) throws ConversionFechaException, OfertaHoteleraException {
+			int id_hotel, String fDesde, String fHasta, int cantTotalPersonas) throws ConversionFechaException, OfertaHoteleraException {
 		List<Oferta> ofertasHoteleras = null;
 		LocalDate fDesdeConverted = convertStringToLocalDate(fDesde);
 		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
-		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted))
+		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
 			ofertasHoteleras = ofertaDAO.buscarOtrasOfertasMismoHotel(codigo_destino, tipo_Habitacion_a_excluir,
 					id_hotel, fDesdeConverted, fHastaConverted);
+			boolean hayDisponibilidad = false;
+			for (Oferta oferta : ofertasHoteleras) {
+				List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(oferta.getOferta_id(),
+						fDesdeConverted, fHastaConverted, oferta.getTipo_habitacion());
+				int cantHabitaciones = calcularTotalHabitaciones(cantTotalPersonas, oferta.getTipo_habitacion());
+				hayDisponibilidad = this.validarDisponibilidadHotelera(bloques, cantHabitaciones);
+				if (!hayDisponibilidad)
+					ofertasHoteleras.remove(oferta);
+			}
+		}
 		if (ofertasHoteleras != null && ofertasHoteleras.isEmpty())
 			throw new OfertaHoteleraException("No se encontraron otras ofertas para el mismo hotel.");
 		else

@@ -55,7 +55,7 @@ public class OfertaBloqueDAO{
 	 * */
 	public List<OfertaBloque> buscarBloquesDePaquetes(int ofertaId,LocalDate fDesde, LocalDate fHasta, int cantPersonas) {
 		Query bloqueQuery = entityManager
-				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + " WHERE o.cant_personas >= :cantPersonas "
+				.createQuery("SELECT ob FROM OfertaBloque ob INNER JOIN ob.oferta o " + " WHERE o.cant_personas = :cantPersonas "
 						+ "AND o.oferta_id = :ofertaId "+" AND o.fecha_desde >= :fDesde AND o.fecha_hasta <= :fHasta"
 						+ " AND o.fecha_desde = :fDesde"
 						+ " AND o.fecha_hasta = :fHasta"
