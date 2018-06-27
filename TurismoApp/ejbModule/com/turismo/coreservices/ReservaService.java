@@ -3,10 +3,18 @@ package com.turismo.coreservices;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
 import java.util.List;
-
+import javax.ejb.TransactionManagementType;
+import javax.transaction.HeuristicMixedException;
+import javax.transaction.HeuristicRollbackException;
+import javax.transaction.NotSupportedException;
+import javax.transaction.RollbackException;
+import javax.transaction.SystemException;
+import javax.transaction.UserTransaction;
+import javax.annotation.Resource;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.ejb.TransactionManagement;
 import javax.xml.rpc.ServiceException;
 
 import com.backoffice.servicios.SOAPService;
@@ -24,10 +32,9 @@ import com.turismo.exceptions.OfertaHoteleraException;
 import com.turismo.exceptions.OfertaPaqueteException;
 import com.turismo.exceptions.ReservaException;
 
-//import services.SOAPService;
-
 @Stateless
 @LocalBean
+@TransactionManagement(value = TransactionManagementType.BEAN)
 public class ReservaService {
 	@EJB
 	private ReservaDAO reservaDAO;
@@ -39,6 +46,8 @@ public class ReservaService {
 	BusquedaService busquedaService;
 	@EJB
 	private OfertaDAO ofertaDAO;
+	@Resource
+	private UserTransaction userTransaction;
 
 	private boolean prestadorEstaAutorizado(String codigo_prestador) {
 		SOAPService service = new SOAPService();
@@ -66,14 +75,21 @@ public class ReservaService {
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted,
 					fHastaConverted, cantPersonas);
 			hayDisponibilidad = busquedaService.validarDisponibilidadPaquete(bloques);
-			if (estaAutorizado && formatoFechaOK && hayDisponibilidad) {
-				cupoActualizado = actualizarCupoBloquesPaquete(bloques);
-				if (cupoActualizado) {
-					float montoTotal = busquedaService.calcularPrecioTotalPaquete(ofertaid, cantPersonas);
-					nuevaReservaPaquete = reservaDAO.crearReserva(ofertaid, fDesdeConverted, fHastaConverted,
-							medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
-					nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaPaquete);
+			try {
+				userTransaction.begin();
+				if (estaAutorizado && formatoFechaOK && hayDisponibilidad) {
+					cupoActualizado = actualizarCupoBloquesPaquete(bloques);
+					if (cupoActualizado) {
+						float montoTotal = busquedaService.calcularPrecioTotalPaquete(ofertaid, cantPersonas);
+						nuevaReservaPaquete = reservaDAO.crearReserva(ofertaid, fDesdeConverted, fHastaConverted,
+								medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
+						nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaPaquete);
+					}
 				}
+				userTransaction.commit();
+			} catch (NotSupportedException | SystemException | HeuristicRollbackException | HeuristicMixedException
+					| RollbackException e) {
+				e.printStackTrace();
 			}
 		}
 		if (!estaAutorizado)
@@ -86,8 +102,15 @@ public class ReservaService {
 		if (!ofertaExistente)
 			throw new ReservaException(
 					"El id de oferta (id interno): " + ofertaid + " no existe en la base de datos. ");
-		if (cupoActualizado && nuevaReservaPaquete == null)
-			throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
+		try {
+			if (!cupoActualizado || nuevaReservaPaquete == null) {
+				userTransaction.rollback();
+				throw new ReservaException(
+						"No se pudo completar la transacción. La reserva no fue grabada en la base de datos.");
+			}
+		} catch (IllegalStateException | SecurityException | SystemException e) {
+			e.printStackTrace();
+		}
 
 		return nuevaReservaDTO;
 	}
@@ -101,7 +124,6 @@ public class ReservaService {
 				throw new ReservaException(
 						"NO SE ACTUALIZARON LOS BLOQUES. ERROR GRAVE DE CONSISTENCIA. NO COINCIDE EL ID DE LA OFERTA PAQUETE CON EL TIPO DE OFERTA ASOCIADO EN LA BASE DE DATOS.");
 			} else {
-				// Descontamos uno al cupo
 				ofertaBloque.setCupo(ofertaBloque.getCupo() - 1);
 				if (!ofertaBloqueDAO.actualizarBloque(ofertaBloque)) {
 					cupoActualizado = false;
@@ -127,7 +149,7 @@ public class ReservaService {
 		boolean ofertaExistente = busquedaService.existeOfertaHotelera(ofertaid);
 		String codigo_establecimiento = "";
 		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(tipoHabString);
-		int cantHabitaciones=busquedaService.calcularTotalHabitaciones(cantTotalPersonas,tipoHabitacion);
+		int cantHabitaciones = busquedaService.calcularTotalHabitaciones(cantTotalPersonas, tipoHabitacion);
 		if (ofertaExistente) {
 			// consulto al backoffice, le paso el codigo externo del establecimiento (al ser
 			// hotel)
@@ -136,16 +158,22 @@ public class ReservaService {
 			estaAutorizado = prestadorEstaAutorizado(codigo_establecimiento);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(ofertaid, fDesdeConverted,
 					fHastaConverted, tipoHabitacion);
-			// Ojo que aca falta la cantidad total de personas, hay que validar que (cant
-			// total personas) / (cant corresp a tipo hab) < cupo
 			hayDisponibilidad = busquedaService.validarDisponibilidadHotelera(bloques, cantHabitaciones);
-			if (formatoFechaOK && hayDisponibilidad && estaAutorizado)
-				cupoActualizado = actualizarCupoBloquesHotelero(bloques, cantHabitaciones);
-			if (cupoActualizado) {
-				float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid,tipoHabitacion.getTipoHabitacion(),cantTotalPersonas, fDesde, fHasta);
-				nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, fDesdeConverted, fHastaConverted, medioPagoID,
-						nombre, apellido, emailUsuario, dni, montoTotal);
-				nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaHotelera);
+			try {
+				userTransaction.begin();
+				if (formatoFechaOK && hayDisponibilidad && estaAutorizado)
+					cupoActualizado = actualizarCupoBloquesHotelero(bloques, cantHabitaciones);
+				if (cupoActualizado) {
+					float montoTotal = busquedaService.calcularPrecioTotalHotel(ofertaid,
+							tipoHabitacion.getTipoHabitacion(), cantTotalPersonas, fDesde, fHasta);
+					nuevaReservaHotelera = reservaDAO.crearReserva(ofertaid, fDesdeConverted, fHastaConverted,
+							medioPagoID, nombre, apellido, emailUsuario, dni, montoTotal);
+					nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaHotelera);
+				}
+				userTransaction.commit();
+			} catch (NotSupportedException | SystemException | HeuristicRollbackException | HeuristicMixedException
+					| RollbackException e) {
+				e.printStackTrace();
 			}
 		}
 		if (!hayDisponibilidad)
@@ -158,8 +186,16 @@ public class ReservaService {
 		if (!ofertaExistente)
 			throw new ReservaException(
 					"El id de oferta (id interno): " + ofertaid + " no existe en la base de datos. ");
-		if (cupoActualizado && nuevaReservaHotelera == null)
-			throw new ReservaException("No se puedo grabar la reserva en la base de datos.");
+		try {
+			if (!cupoActualizado || nuevaReservaHotelera == null) {
+				userTransaction.rollback();
+				throw new ReservaException(
+						"No se pudo completar la transacción. La reserva no fue grabada en la base de datos.");
+			}
+		} catch (IllegalStateException | SecurityException | SystemException e) {
+			e.printStackTrace();
+		}
+
 		return nuevaReservaDTO;
 	}
 
