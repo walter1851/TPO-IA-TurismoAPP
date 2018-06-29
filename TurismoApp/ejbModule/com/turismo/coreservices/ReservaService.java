@@ -151,8 +151,9 @@ public class ReservaService {
 			String codigo_establecimiento = ofertaDAO.buscarPorIdOferta(ofertaid).getEstablecimiento()
 					.getCodigo_establecimiento();
 			estaAutorizado = prestadorEstaAutorizado(codigo_establecimiento);
+			//Aca me traigo todos los bloques menos el ultimo. Ya que se reserva por noche.
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(ofertaid, fDesdeConverted,
-					fHastaConverted, tipoHabitacion);
+					fHastaConverted.minusDays(1), tipoHabitacion);
 			hayDisponibilidad = busquedaService.validarDisponibilidadHotelera(bloques, cantHabitaciones);
 			try {
 				userTransaction.begin();

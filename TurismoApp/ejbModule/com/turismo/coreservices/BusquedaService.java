@@ -158,8 +158,9 @@ public class BusquedaService {
 					fHastaConverted);
 			boolean hayDisponibilidad = false;
 			for (Oferta oferta : ofertasHoteleras) {
+				//Me traigo todos los bloques menos el ultimo porque la reserva es por cada noche.
 				List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(oferta.getOferta_id(),
-						fDesdeConverted, fHastaConverted, tipoHabitacion);
+						fDesdeConverted, fHastaConverted.minusDays(1), tipoHabitacion);
 				int cantHabitaciones = calcularTotalHabitaciones(cantTotalPersonas, tipoHabitacion);
 				hayDisponibilidad = this.validarDisponibilidadHotelera(bloques, cantHabitaciones);
 				if (!hayDisponibilidad)
