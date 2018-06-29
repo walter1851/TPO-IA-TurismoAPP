@@ -19,7 +19,6 @@ public class AgenciaService{
 		else
 			return agenciaFromDatabase;
 	}
-
 	private Agencia buscarAgencia(String codigo_agencia) {
 		return agenciaDao.buscarPorCodigoAgencia(codigo_agencia);
 

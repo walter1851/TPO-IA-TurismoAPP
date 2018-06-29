@@ -56,6 +56,13 @@ public class OfertaService {
 	@Resource
 	private UserTransaction userTransaction;
 
+	private void generarBloques(Oferta nuevaOferta, LocalDate fDesdeConverted, LocalDate fHastaConverted, int cupo) {
+		LocalDate fechaPivote = fDesdeConverted;
+		while (nuevaOferta != null && fechaPivote.compareTo(fHastaConverted) <= 0) {
+			ofertaBloqueDAO.nuevoBloque(nuevaOferta, fechaPivote, cupo);
+			fechaPivote = fechaPivote.plusDays(1);
+		}
+	}
 	public void guardarOfertaPaquete(OfertaPaqueteMensaje ofertaPaqueteMensaje)
 			throws OfertaPaqueteException, ConversionFechaException {
 		int codigo_paquete = ofertaPaqueteMensaje.getId();
@@ -70,9 +77,6 @@ public class OfertaService {
 		String codigo_agencia = ofertaPaqueteMensaje.getAgencia().getId();
 		String nombreAgencia = ofertaPaqueteMensaje.getAgencia().getNombre();
 		String direccionAgencia = ofertaPaqueteMensaje.getAgencia().getDireccion();
-		// Preguntar si es necesario guardar, entiendo que no.
-		// String estadoAgencia=ofertaPaqueteMensaje.getEstadoAgencia(); // INACTIVO,
-		// ACTIVO
 		String foto = ofertaPaqueteMensaje.getFoto();
 		String fechaDesde = ofertaPaqueteMensaje.getFechaDesde(); // Ej: 2007-04-05T12:30-02:00
 		String fechaHasta = ofertaPaqueteMensaje.getFechaHasta(); // Ej: 2007-04-05T12:30-02:00
@@ -85,46 +89,37 @@ public class OfertaService {
 		String mediosDePago = ofertaPaqueteMensaje.getMediosDePago();
 		Destino destino = destinoDAO.buscarDestinoPorCodigo(codigo_ciudadDestino);
 		Oferta oferta = null;// ofertaDAO.buscarPorCodigoOferta(codigo_paquete);
-
-		if (destino != null && oferta == null) {
+		int limiteDias = 10000; // limites de dias a procesar para que no procese eternamente
+		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fechaDesde);
+		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fechaHasta);
+		boolean validarRangoFechaPaquete = true;// busquedaService.validarRangoFechaPaquete(fDesdeConverted,fHastaConverted);
+		int cantDiasPaquete = (int) java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted, fHastaConverted);
+		if (destino != null && oferta == null && cantDiasPaquete < limiteDias && validarRangoFechaPaquete) {
 			try {
 				userTransaction.begin();
 				Agencia agencia = agenciaService.guardarAgencia(nombreAgencia, direccionAgencia, codigo_agencia);
-				// convierto la fecha a localdate
-				LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fechaDesde);
-				LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fechaHasta);
-				boolean validarRangoFechaPaquete = true;// busquedaService.validarRangoFechaPaquete(fDesdeConverted,fHastaConverted);
-				int cantDiasPaquete = (int) java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted,
-						fHastaConverted);
-				int limiteDias = 10000; // limites de dias a procesar para que no procese eternamente
-				if (validarRangoFechaPaquete && cantDiasPaquete < limiteDias) {
-					MedioPago medioPagoObject = medioPagoDAO.nuevoMedioPago(mediosDePago);
-					OfertaTipo ofertaTipo = OfertaTipo.OFERTA_PAQUETE;
-					Oferta nuevaOferta = ofertaDAO.nuevaOfertaPaquete(codigo_paquete, nombrePaquete, cupo,
-							fDesdeConverted, fHastaConverted, precio, politicaCancelacion, servicios, destino, foto,
-							descripcionPaquete, medioPagoObject, cantPersonas, agencia, ofertaTipo);
-					LocalDate fechaPivote = fDesdeConverted;
-					while (fechaPivote.compareTo(fHastaConverted) <= 0) {
-						ofertaBloqueDAO.nuevoBloque(nuevaOferta, fechaPivote, cupo);
-						fechaPivote = fechaPivote.plusDays(1);
-					}
-					if (nuevaOferta == null)
-						throw new OfertaPaqueteException(
-								"No se pudo grabar la oferta paquete en nuestra base, desde la cola.");
-				}
+				MedioPago medioPagoObject = medioPagoDAO.nuevoMedioPago(mediosDePago);
+				OfertaTipo ofertaTipo = OfertaTipo.OFERTA_PAQUETE;
+				Oferta nuevaOferta = ofertaDAO.nuevaOfertaPaquete(codigo_paquete, nombrePaquete, cupo, fDesdeConverted,
+						fHastaConverted, precio, politicaCancelacion, servicios, destino, foto, descripcionPaquete,
+						medioPagoObject, cantPersonas, agencia, ofertaTipo);
+				this.generarBloques(nuevaOferta, fDesdeConverted, fHastaConverted, cupo);
+				if (nuevaOferta == null)
+					throw new OfertaPaqueteException(
+							"No se pudo grabar la oferta paquete en nuestra base, desde la cola.");
 				userTransaction.commit();
-				if (cantDiasPaquete >= limiteDias)
-					throw new OfertaPaqueteException(
-							"No se guardo la oferta paquete. Desde la cola se recibe un paquete que supera el limite de "
-									+ limiteDias + " dias");
-				if (!validarRangoFechaPaquete)
-					throw new OfertaPaqueteException(
-							"No se pudo guardar la oferta paquete en nuestra base, desde la cola oferta hotelera. La fecha de inicio y fin tiene que se mayor que la fecha actual. Y la fecha de inicio no puede ser mayor a la final.");
 			} catch (NotSupportedException | SystemException | HeuristicRollbackException | HeuristicMixedException
 					| RollbackException e) {
 				e.printStackTrace();
 			}
 		}
+		if (cantDiasPaquete >= limiteDias)
+			throw new OfertaPaqueteException(
+					"No se guardo la oferta paquete. Desde la cola se recibe un paquete que supera el limite de "
+							+ limiteDias + " dias");
+		if (!validarRangoFechaPaquete)
+			throw new OfertaPaqueteException(
+					"No se pudo guardar la oferta paquete en nuestra base, desde la cola oferta hotelera. La fecha de inicio y fin tiene que se mayor que la fecha actual. Y la fecha de inicio no puede ser mayor a la final.");
 		if (destino == null)
 			throw new OfertaPaqueteException("No se guardo la oferta paquete id:" + codigo_paquete
 					+ " desde la cola porque no existe el destino con el id externo: " + codigo_ciudadDestino);
@@ -166,54 +161,43 @@ public class OfertaService {
 		String servicios = ofertaHoteleraMensaje.getServicios();
 		Destino destino = destinoDAO.buscarDestinoPorCodigo(codigo_ciudad);
 		Oferta oferta = null;
-		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(ofertaHoteleraMensaje.getTipoHabitacion()); // SIMPLE,
-																											// DOBLE,
-																											// TRIPLE
-		if (destino != null && oferta == null && tipoHabitacion != null) {
+		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fechaDesde);
+		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fechaHasta);
+		boolean validarRangoFechaHotelera = true;// busquedaService.validarRangoFechaHotelera(fDesdeConverted,
+		// fHastaConverted);
+		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(ofertaHoteleraMensaje.getTipoHabitacion());
+		int cantDiasHotel = (int) java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted, fHastaConverted);
+		int limiteDias = 10000; // limites de dias a procesar para que no procese eternamente
+		if (destino != null && oferta == null && tipoHabitacion != null && cantDiasHotel < limiteDias
+				&& validarRangoFechaHotelera) {
 			try {
 				userTransaction.begin();
 				Establecimiento establecimiento = establecimientoService.guardarEstablecimiento(nombreEstablecimiento,
 						direccionEstablecimiento, destino.getNombre(), descripcionEstablecimiento, cantEstrellas,
 						mapaLatitud, mapaLongitud, codigo_Establecimiento, codigo_hotel, nombreHotel, fotoHotel,
 						fotosEstablecimiento);
-				LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fechaDesde);
-				LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fechaHasta);
-				boolean validarRangoFechaHotelera = true;// busquedaService.validarRangoFechaHotelera(fDesdeConverted,
-				// fHastaConverted);
-				int cantDiasHotel = (int) java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted, fHastaConverted);
-				int limiteDias = 10000; // limites de dias a procesar para que no procese eternamente
-				if (validarRangoFechaHotelera && cantDiasHotel < limiteDias) {
-					// Genero medios de pago
-					MedioPago medioPagoObject = medioPagoDAO.nuevoMedioPago(mediosDePago);
-					OfertaTipo ofertaTipo = OfertaTipo.OFERTA_HOTELERA;
-					Oferta nuevaOferta = ofertaDAO.nuevaOfertaHotelera(codigoOfertaHotelera, nombreOfertaHotelera, cupo,
-							fDesdeConverted, fHastaConverted, precio, tipoHabitacion, politicaCancelacion, servicios,
-							destino, medioPagoObject, establecimiento, ofertaTipo, tipoHabitacion.getMaxCantPersonas());
-					LocalDate fechaPivote = fDesdeConverted;
-					// igual a cero significa q son iguales
-					// Lo que estoy haciendo es generar los bloques de acuerdo a la cantidad de dias
-					while (nuevaOferta != null && fechaPivote.compareTo(fHastaConverted) <= 0) {
-						ofertaBloqueDAO.nuevoBloque(nuevaOferta, fechaPivote, cupo);
-						fechaPivote = fechaPivote.plusDays(1);
-					}
-					if (nuevaOferta == null)
-						throw new OfertaHoteleraException(
-								"No se pudo grabar la oferta hotelera en nuestra base desde la cola.");
-					if (!validarRangoFechaHotelera)
-						throw new OfertaHoteleraException(
-								"No se pudo guardar la oferta hotelera en nuestra base, desde la cola oferta hotelera. La fecha de fin tiene que se mayor que la fecha actual. Y la fecha de inicio no puede ser mayor a la final.");
-				}
-				userTransaction.commit();
-				if (cantDiasHotel >= limiteDias)
+				MedioPago medioPagoObject = medioPagoDAO.nuevoMedioPago(mediosDePago);
+				OfertaTipo ofertaTipo = OfertaTipo.OFERTA_HOTELERA;
+				Oferta nuevaOferta = ofertaDAO.nuevaOfertaHotelera(codigoOfertaHotelera, nombreOfertaHotelera, cupo,
+						fDesdeConverted, fHastaConverted, precio, tipoHabitacion, politicaCancelacion, servicios,
+						destino, medioPagoObject, establecimiento, ofertaTipo, tipoHabitacion.getMaxCantPersonas());
+				this.generarBloques(nuevaOferta, fDesdeConverted, fHastaConverted, cupo);
+				if (nuevaOferta == null)
 					throw new OfertaHoteleraException(
-							"No se guardo la oferta hotelera. Desde la cola recibimos un rango de fechas que supera el limite de "
-									+ limiteDias + " dias).");
+							"No se pudo grabar la oferta hotelera en nuestra base desde la cola.");
+				userTransaction.commit();
 			} catch (NotSupportedException | SystemException | HeuristicRollbackException | HeuristicMixedException
 					| RollbackException e) {
 				e.printStackTrace();
 			}
-
 		}
+		if (!validarRangoFechaHotelera)
+			throw new OfertaHoteleraException(
+					"No se pudo guardar la oferta hotelera en nuestra base, desde la cola oferta hotelera. La fecha de fin tiene que se mayor que la fecha actual. Y la fecha de inicio no puede ser mayor a la final.");
+		if (cantDiasHotel >= limiteDias)
+			throw new OfertaHoteleraException(
+					"No se guardo la oferta hotelera. Desde la cola recibimos un rango de fechas que supera el limite de "
+							+ limiteDias + " dias).");
 		if (destino == null)
 			throw new OfertaHoteleraException("No se guardo la oferta hotelera id:" + codigoOfertaHotelera
 					+ " desde la cola porque no existe el destino con el id externo: " + codigo_ciudad);

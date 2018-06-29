@@ -3,8 +3,10 @@ package com.turismo.rest;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -59,7 +61,18 @@ public class ReservaServicioRest {
 			this.loggingBackOffice.info(LoggingAccion.RESERVA_DE_PAQUETE);
 			return Response.ok(new WebResponse(reservaDTO, "SE REGISTRO UNA RESERVA DE PAQUETE")).build();
 		} catch (Exception e) {
-			// logearerror(e.getMessage());
+			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+		}
+	}
+	
+	@GET
+	@Path("prestadorautorizado/{codigo_prestador}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response prestadorEstaAutorizado(@PathParam("codigo_prestador") String codigo_prestador) {
+		try {
+			boolean estaAutorizado = facade.prestadorEstaAutorizado(codigo_prestador);
+			return Response.ok(new WebResponse(estaAutorizado, "prestador autorizado?")).build();
+		} catch (Exception e) {
 			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
 		}
 	}

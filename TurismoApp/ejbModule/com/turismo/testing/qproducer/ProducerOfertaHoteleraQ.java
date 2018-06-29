@@ -7,10 +7,6 @@ import javax.jms.JMSConnectionFactory;
 import javax.jms.JMSContext;
 import javax.jms.Queue;
 import com.turismo.qconsumer.JsonConverter;
-import com.turismo.qconsumer.mensajes.CiudadMensaje;
-import com.turismo.qconsumer.mensajes.EstablecimientoMensaje;
-import com.turismo.qconsumer.mensajes.HotelMensaje;
-import com.turismo.qconsumer.mensajes.MapaMensaje;
 import com.turismo.qconsumer.mensajes.OfertaHoteleraMensaje;
 
 @Stateless

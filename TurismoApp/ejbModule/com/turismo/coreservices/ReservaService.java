@@ -49,7 +49,7 @@ public class ReservaService {
 	@Resource
 	private UserTransaction userTransaction;
 
-	private boolean prestadorEstaAutorizado(String codigo_prestador) {
+	public boolean prestadorEstaAutorizado(String codigo_prestador) {
 		SOAPService service = new SOAPService();
 		return service.getSOAPPort().estaAutorizado(codigo_prestador);
 	}
@@ -66,11 +66,8 @@ public class ReservaService {
 		boolean ofertaExistente = busquedaService.existeOfertaPaquete(ofertaid);
 		boolean cupoActualizado = false;
 		boolean estaAutorizado = false;
-		String codigo_agencia = "";
 		if (ofertaExistente) {
-			// consulto al backoffice le paso el codigo externo de la agencia (al ser
-			// paquete)
-			codigo_agencia = ofertaDAO.buscarPorIdOferta(ofertaid).getAgencia().getCodigo_agencia();
+			String codigo_agencia = ofertaDAO.buscarPorIdOferta(ofertaid).getAgencia().getCodigo_agencia();
 			estaAutorizado = prestadorEstaAutorizado(codigo_agencia);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDePaquetes(ofertaid, fDesdeConverted,
 					fHastaConverted, cantPersonas);
@@ -87,18 +84,19 @@ public class ReservaService {
 					}
 				}
 				userTransaction.commit();
+				if (!estaAutorizado)
+					throw new ReservaException("El codigo de prestador (codigo agencia) " + codigo_agencia
+							+ " no se encuentra autorizado por el backoffice. ");
 			} catch (NotSupportedException | SystemException | HeuristicRollbackException | HeuristicMixedException
 					| RollbackException e) {
 				e.printStackTrace();
 			}
+			if (bloques.isEmpty())
+				throw new ReservaException(
+						"No se encontraron bloques de paquete que cumplan con fecha desde "
+								+ fDesdeConverted.toString() + " hasta " + fHastaConverted.toString() + " cantidad "
+								+ cantPersonas + " persona/s.");
 		}
-		if (!estaAutorizado)
-			throw new ReservaException("El codigo de prestador (codigo agencia) " + codigo_agencia
-					+ " no se encuentra autorizado por el backoffice. ");
-		if (!hayDisponibilidad)
-			throw new ReservaException("No hay disponibilidad desde la fecha " + fDesdeConverted.toString() + " hasta "
-					+ fHastaConverted.toString() + " para la cantidad " + cantPersonas
-					+ " persona/s. Tenga en cuenta que el rango de fechas involucrado en el paquete debe estar contenido en las fechas ingresadas.");
 		if (!ofertaExistente)
 			throw new ReservaException(
 					"El id de oferta (id interno): " + ofertaid + " no existe en la base de datos. ");
@@ -147,13 +145,10 @@ public class ReservaService {
 		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaHotelera(fDesdeConverted, fHastaConverted);
 		boolean ofertaExistente = busquedaService.existeOfertaHotelera(ofertaid);
-		String codigo_establecimiento = "";
 		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(tipoHabString);
 		int cantHabitaciones = busquedaService.calcularTotalHabitaciones(cantTotalPersonas, tipoHabitacion);
 		if (ofertaExistente) {
-			// consulto al backoffice, le paso el codigo externo del establecimiento (al ser
-			// hotel)
-			codigo_establecimiento = ofertaDAO.buscarPorIdOferta(ofertaid).getEstablecimiento()
+			String codigo_establecimiento = ofertaDAO.buscarPorIdOferta(ofertaid).getEstablecimiento()
 					.getCodigo_establecimiento();
 			estaAutorizado = prestadorEstaAutorizado(codigo_establecimiento);
 			List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(ofertaid, fDesdeConverted,
@@ -171,18 +166,18 @@ public class ReservaService {
 					nuevaReservaDTO = mapperService.obtenerReservaDTO(nuevaReservaHotelera);
 				}
 				userTransaction.commit();
+				if (!estaAutorizado)
+					throw new ReservaException("El codigo de prestador (codigo del establecimiento) "
+							+ codigo_establecimiento + " no se encuentra autorizado por el backoffice. ");
 			} catch (NotSupportedException | SystemException | HeuristicRollbackException | HeuristicMixedException
 					| RollbackException e) {
 				e.printStackTrace();
 			}
+			if (bloques.isEmpty())
+				throw new ReservaException(
+						"No se encontraron bloques de paquete que cumplan con fecha desde " + fDesdeConverted.toString() + " hasta "
+								+ fHastaConverted.toString() + " cantidad de habitaciones " + cantHabitaciones);
 		}
-		if (!hayDisponibilidad)
-			throw new ReservaException(
-					"No hay disponibilidad desde la fecha: " + fDesdeConverted.toString() + " hasta: "
-							+ fHastaConverted.toString() + " para la cantidad de habitaciones: " + cantHabitaciones);
-		if (!estaAutorizado)
-			throw new ReservaException("El codigo de prestador (codigo del establecimiento) " + codigo_establecimiento
-					+ " no se encuentra autorizado por el backoffice. ");
 		if (!ofertaExistente)
 			throw new ReservaException(
 					"El id de oferta (id interno): " + ofertaid + " no existe en la base de datos. ");

@@ -85,7 +85,7 @@ public class BusquedaService {
 		int cantTotalHabitaciones = this.calcularTotalHabitaciones(cantidadTotalPersonas,
 				TipoHabitacion.valueOf(tipoHabString));
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
-			int cantDiasHotel = (int)java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted, fHastaConverted);
+			int cantDiasHotel = (int) java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted, fHastaConverted);
 			if (existeOfertaHotelera(ofertaId))
 				montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantTotalHabitaciones * cantDiasHotel;
 			if (montoTotal < 0)
@@ -114,8 +114,8 @@ public class BusquedaService {
 		}
 		if (ofertasPaquete != null && ofertasPaquete.isEmpty())
 			throw new OfertaPaqueteException(
-					"No se encontraron paquetes para el destino id " + codigoDestino + " desde el " + fDesdeConverted
-							+ " hasta el " + fHastaConverted + " cant. personas " + cantPersonas);
+					"No se encontraron paquetes para el criterio de busqueda destino id " + codigoDestino + " desde " + fDesdeConverted
+							+ " hasta " + fHastaConverted + " cant. personas " + cantPersonas);
 		else
 			return mapperService.obtenerListaOfertaPaqueteDTO(ofertasPaquete);
 	}
@@ -168,8 +168,8 @@ public class BusquedaService {
 		}
 		if (ofertasHoteleras != null && ofertasHoteleras.isEmpty())
 			throw new OfertaHoteleraException(
-					"No se encontraron hoteles para el destino id " + codigoDestino + " desde el " + fDesde
-							+ " hasta el " + fHasta + " tipo habitacion " + tipoHabitacion.getTipoHabitacion());
+					"No se encontraron hoteles para el criterio de busqueda destino id " + codigoDestino + " desde " + fDesde
+							+ " hasta " + fHasta + " tipo habitacion " + tipoHabitacion.getTipoHabitacion());
 		else
 			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}
@@ -195,7 +195,8 @@ public class BusquedaService {
 			}
 		}
 		if (ofertasHoteleras != null && ofertasHoteleras.isEmpty())
-			throw new OfertaHoteleraException("No se encontraron otras habitaciones para el mismo id hotel "+id_hotel+ " desde "+fDesde+" hasta "+fHasta+" cantidad total de personas " +cantTotalPersonas);
+			throw new OfertaHoteleraException("No se encontraron otras habitaciones para el mismo id hotel " + id_hotel
+					+ " desde " + fDesde + " hasta " + fHasta + " cantidad total de personas " + cantTotalPersonas);
 		else
 			return mapperService.obtenerListaOfertaHoteleraDTO(ofertasHoteleras);
 	}
@@ -211,8 +212,8 @@ public class BusquedaService {
 			rangoValido = false;
 		if (!rangoValido)
 			throw new OfertaPaqueteException(
-					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio "
-							+ localDateDesde.toString() + " es menor que la fecha de salida "
+					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio ingresada "
+							+ localDateDesde.toString() + " es menor que la fecha de salida ingresada "
 							+ localDateHasta.toString() + " y que dicho rango se encuentre dentro de la fecha actual "
 							+ LocalDate.now().toString());
 		return rangoValido;
@@ -226,14 +227,15 @@ public class BusquedaService {
 		 */
 		boolean rangoValido;
 		LocalDate localDateFechaActual = LocalDate.now();
-		if (localDateDesde.compareTo(localDateFechaActual) >= 0 && localDateHasta.compareTo(localDateFechaActual) > 0 && localDateHasta.compareTo(localDateDesde) > 0)
+		if (localDateDesde.compareTo(localDateFechaActual) >= 0 && localDateHasta.compareTo(localDateFechaActual) > 0
+				&& localDateHasta.compareTo(localDateDesde) > 0)
 			rangoValido = true;
 		else
 			rangoValido = false;
 		if (!rangoValido)
 			throw new OfertaHoteleraException(
-					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio "
-							+ localDateDesde.toString() + " es menor que la fecha de salida "
+					"La fechas ingresadas no se encuentran dentro del rango esperado. Verifique que la fecha de inicio ingresada "
+							+ localDateDesde.toString() + " es menor que la fecha de salida ingresada "
 							+ localDateHasta.toString() + " y que dicho rango se encuentre dentro de la fecha actual "
 							+ LocalDate.now().toString());
 		return rangoValido;
@@ -253,7 +255,8 @@ public class BusquedaService {
 		}
 	}
 
-	public boolean validarDisponibilidadHotelera(List<OfertaBloque> bloques, int cantHabitaciones) {
+	public boolean validarDisponibilidadHotelera(List<OfertaBloque> bloques, int cantHabitaciones)
+			throws OfertaHoteleraException {
 		if (bloques.isEmpty())
 			return false;
 		else {
@@ -263,6 +266,10 @@ public class BusquedaService {
 					disponibilidad = false;
 				}
 			}
+			if (!disponibilidad)
+				throw new OfertaHoteleraException("No hay cupo disponible para la oferta hotelera id  "
+						+ bloques.get(0).getOferta().getOferta_id() + " cantidad de habitaciones " + cantHabitaciones
+						+ " cantidad de dias " + bloques.size());
 			return disponibilidad;
 		}
 	}
@@ -273,7 +280,7 @@ public class BusquedaService {
 		return cantHabitaciones;
 	}
 
-	public boolean validarDisponibilidadPaquete(List<OfertaBloque> bloques) {
+	public boolean validarDisponibilidadPaquete(List<OfertaBloque> bloques) throws OfertaPaqueteException {
 		if (bloques.isEmpty())
 			return false;
 		else {
@@ -283,6 +290,9 @@ public class BusquedaService {
 					disponibilidad = false;
 				}
 			}
+			if (!disponibilidad)
+				throw new OfertaPaqueteException("No hay cupo disponible para la oferta paquete id "
+						+ bloques.get(0).getOferta().getOferta_id());
 			return disponibilidad;
 		}
 	}

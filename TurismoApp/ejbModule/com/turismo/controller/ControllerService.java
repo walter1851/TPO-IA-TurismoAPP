@@ -51,4 +51,7 @@ public class ControllerService{
 			int id_hotel, String fDesde, String fHasta,int cantTotalPersonas) throws ConversionFechaException, OfertaHoteleraException{
 		return busquedaOfertaService.buscarOtrasOfertasMismoHotel(codigo_destino, tipo_Habitacion_a_excluir, id_hotel, fDesde, fHasta,cantTotalPersonas);
 	}
+	public boolean prestadorEstaAutorizado(String codigo_prestador){
+		return reservaService.prestadorEstaAutorizado(codigo_prestador);
+	}
 }
