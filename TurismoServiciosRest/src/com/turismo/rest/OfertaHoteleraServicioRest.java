@@ -29,46 +29,54 @@ public class OfertaHoteleraServicioRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response buscarOfertaHotelera(@PathParam("codigoDestino") int codigoDestino,
 			@PathParam("tipoHabitacion") String tipoHabitacion, @PathParam("cantPersonas") int cantTotalPersonas,
-			@PathParam("fDesde") String fDesde,@PathParam("fHasta") String fHasta
-			){
+			@PathParam("fDesde") String fDesde, @PathParam("fHasta") String fHasta) {
 		try {
-			List<OfertaDTO> ofertas = facade.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion,cantTotalPersonas);
+			List<OfertaDTO> ofertas = facade.buscarOfertaHotelera(codigoDestino, fDesde, fHasta, tipoHabitacion,
+					cantTotalPersonas);
 			this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_HOTELERA);
-			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON: "+ofertas.size()+" OFERTAS HOTELERAS")).build();
+			return Response.ok(new WebResponse(ofertas, "SE ENCONTRARON: " + ofertas.size() + " OFERTAS HOTELERAS"))
+					.build();
 		} catch (Exception e) {
-			return Response.ok(new WebResponse(e.getMessage(),"EXCEPTION")).build();
+			// return Response.ok(new WebResponse(e.getMessage(),"EXCEPTION")).build();
+			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
+
 	@GET
 	@Path("buscarotros/{codigoDestino}/{CantTotalPersonas}/{tipoHabitacionExcluir}/{id_Hotel}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
-	//Otras habitaciones disponibles del mismo hotel
+	// Otras habitaciones disponibles del mismo hotel
 	public Response buscarOtrasOfertasMismoHotel(@PathParam("codigoDestino") int codigoDestino,
 			@PathParam("CantTotalPersonas") int CantTotalPersonas,
 			@PathParam("tipoHabitacionExcluir") String tipoHabitacionExcluir, @PathParam("id_Hotel") int id_hotel,
-			@PathParam("fDesde") String fDesde,
-			@PathParam("fHasta") String fHasta){
+			@PathParam("fDesde") String fDesde, @PathParam("fHasta") String fHasta) {
 		try {
-			List<OfertaDTO> ofertas = facade.buscarOtrasOfertasMismoHotel(codigoDestino, tipoHabitacionExcluir, id_hotel, fDesde, fHasta,CantTotalPersonas);
-			//this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_HOTELERA);
-			return Response.ok(new WebResponse(ofertas,"SE ENCONTRARON "+ofertas.size()+" OFERTAS HOTELERAS PARA MISMO HOTEL y DISTINTO TIPO DE HABITACION")).build();
+			List<OfertaDTO> ofertas = facade.buscarOtrasOfertasMismoHotel(codigoDestino, tipoHabitacionExcluir,
+					id_hotel, fDesde, fHasta, CantTotalPersonas);
+			// this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_HOTELERA);
+			return Response.ok(new WebResponse(ofertas, "SE ENCONTRARON " + ofertas.size()
+					+ " OFERTAS HOTELERAS PARA MISMO HOTEL y DISTINTO TIPO DE HABITACION")).build();
 		} catch (Exception e) {
-			return Response.ok(new WebResponse(e.getMessage(),"EXCEPTION")).build();
+			// return Response.ok(new WebResponse(e.getMessage(),"EXCEPTION")).build();			
+			//return Response.status(404).entity(e.getMessage()).type("Application/json").build();
+			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
+
 	@GET
 	@Path("calculartotal/{ofertaId}/{tipoHabitacion}/{cantTotalPersonas}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response calcularTotalEstadia(@PathParam("ofertaId") int ofertaId,
-			@PathParam("tipoHabitacion") String tipoHabitacion,
-		    @PathParam("cantTotalPersonas") int cantTotalPersonas,
-			@PathParam("fDesde") String fDesde,@PathParam("fHasta") String fHasta){
+			@PathParam("tipoHabitacion") String tipoHabitacion, @PathParam("cantTotalPersonas") int cantTotalPersonas,
+			@PathParam("fDesde") String fDesde, @PathParam("fHasta") String fHasta) {
 		try {
-			float total= facade.calcularPrecioTotalHotel(ofertaId, tipoHabitacion, cantTotalPersonas, fDesde, fHasta);
-			return Response.ok(new WebResponse(Float.toString(total),"Se calculo el total")).build();
+			float total = facade.calcularPrecioTotalHotel(ofertaId, tipoHabitacion, cantTotalPersonas, fDesde, fHasta);
+			return Response.ok(new WebResponse(Float.toString(total), "Se calculo el total")).build();
 		} catch (Exception e) {
-			return Response.ok(new WebResponse(e.getMessage(),"EXCEPTION")).build();
+			//return Response.status(404).entity(yourMessage).type( getAcceptType()).build();
+			// return Response.ok(new WebResponse(e.getMessage(),"EXCEPTION")).build();
+			//return Response.status(404).entity(e.getMessage()).type("Application/json").build();
+			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
 }
-

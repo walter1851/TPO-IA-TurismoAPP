@@ -36,25 +36,29 @@ public class OfertaPaqueteServicioRest {
 			this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_PAQUETE);
 			return Response.ok(new WebResponse(ofertas, "SE ENCONTRARON: " + ofertas.size() + " PAQUETES")).build();
 		} catch (Exception e) {
-			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			// return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
+
 	@GET
 	@Path("buscarotros/{idPaqueteExcluir}/{codigoDestino}/{cantPersonas}/{fDesde}/{fHasta}")
 	@Produces(MediaType.APPLICATION_JSON)
-	//Otras paquetes del mismo destino
+	// Otras paquetes del mismo destino
 	public Response buscarOtrosPaquetes(@PathParam("idPaqueteExcluir") int idPaqueteExcluir,
 			@PathParam("codigoDestino") int codigoDestino, @PathParam("cantPersonas") int cantPersonas,
 			@PathParam("fDesde") String fDesde, @PathParam("fHasta") String fHasta) {
 		try {
 			List<OfertaDTO> ofertas = facade.buscarOtrosPaquetesMismoDestino(idPaqueteExcluir, codigoDestino,
 					cantPersonas, fDesde, fHasta);
-			//this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_PAQUETE);
+			// this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_PAQUETE);
 			return Response.ok(
 					new WebResponse(ofertas, "ENCONTRADOS: " + ofertas.size() + " - DISTINTOS PAQUETES MISMO DESTINO"))
 					.build();
 		} catch (Exception e) {
-			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			// return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			//return Response.status(404).entity(e.getMessage()).type("Application/json").build();
+			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
 
@@ -67,7 +71,8 @@ public class OfertaPaqueteServicioRest {
 			float total = facade.calcularPrecioTotalPaquete(ofertaId, cantidadPersonas);
 			return Response.ok(new WebResponse(Float.toString(total), "Se calculo el total")).build();
 		} catch (Exception e) {
-			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			// return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
 }

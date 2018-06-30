@@ -60,8 +60,8 @@ public class ReservaService {
 		Reserva nuevaReservaPaquete = null;
 		ReservaDTO nuevaReservaDTO = null;
 		boolean hayDisponibilidad = true;
-		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fDesde);
-		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
+		LocalDate fDesdeConverted = busquedaService.convertStringFReservaToLocalDate(fDesde);
+		LocalDate fHastaConverted = busquedaService.convertStringFReservaToLocalDate(fHasta);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaPaquete(fDesdeConverted, fHastaConverted);
 		boolean ofertaExistente = busquedaService.existeOfertaPaquete(ofertaid);
 		boolean cupoActualizado = false;
@@ -141,8 +141,8 @@ public class ReservaService {
 		boolean hayDisponibilidad = true;
 		boolean cupoActualizado = false;
 		// valido el formato de las fechas
-		LocalDate fDesdeConverted = busquedaService.convertStringToLocalDate(fDesde);
-		LocalDate fHastaConverted = busquedaService.convertStringToLocalDate(fHasta);
+		LocalDate fDesdeConverted = busquedaService.convertStringFReservaToLocalDate(fDesde);
+		LocalDate fHastaConverted = busquedaService.convertStringFReservaToLocalDate(fHasta);
 		boolean formatoFechaOK = busquedaService.validarRangoFechaHotelera(fDesdeConverted, fHastaConverted);
 		boolean ofertaExistente = busquedaService.existeOfertaHotelera(ofertaid);
 		TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(tipoHabString);

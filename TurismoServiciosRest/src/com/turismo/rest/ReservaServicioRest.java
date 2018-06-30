@@ -42,8 +42,8 @@ public class ReservaServicioRest {
 			this.loggingBackOffice.info(LoggingAccion.RESERVA_DE_HOTEL);
 			return Response.ok(new WebResponse(reservaDTO, "SE REGISTRO UNA RESERVA HOTELERA")).build();
 		} catch (Exception e) {
-			// logearerror(e.getMessage());
-			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			//return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
 
@@ -61,7 +61,9 @@ public class ReservaServicioRest {
 			this.loggingBackOffice.info(LoggingAccion.RESERVA_DE_PAQUETE);
 			return Response.ok(new WebResponse(reservaDTO, "SE REGISTRO UNA RESERVA DE PAQUETE")).build();
 		} catch (Exception e) {
-			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			// Response.status(404).entity(yourMessage).type( getAcceptType()).build();
+			//(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
 	
@@ -73,7 +75,8 @@ public class ReservaServicioRest {
 			boolean estaAutorizado = facade.prestadorEstaAutorizado(codigo_prestador);
 			return Response.ok(new WebResponse(estaAutorizado, "prestador autorizado?")).build();
 		} catch (Exception e) {
-			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			//return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			return Response.status(404).entity(e.getMessage()).build();
 		}
 	}
 }

@@ -80,8 +80,8 @@ public class BusquedaService {
 	public float calcularPrecioTotalHotel(int ofertaId, String tipoHabString, int cantidadTotalPersonas, String fDesde,
 			String fHasta) throws OfertaHoteleraException, ConversionFechaException, OfertaPaqueteException {
 		float montoTotal = -1;
-		LocalDate fDesdeConverted = this.convertStringToLocalDate(fDesde);
-		LocalDate fHastaConverted = this.convertStringToLocalDate(fHasta);
+		LocalDate fDesdeConverted = this.convertStringFReservaToLocalDate(fDesde);
+		LocalDate fHastaConverted = this.convertStringFReservaToLocalDate(fHasta);
 		int cantTotalHabitaciones = this.calcularTotalHabitaciones(cantidadTotalPersonas,
 				TipoHabitacion.valueOf(tipoHabString));
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
@@ -255,7 +255,17 @@ public class BusquedaService {
 					"El formato de la fechas ingresadas no es valido. Ejemplo fecha valida: 2018-04-05T12:30-02:00");
 		}
 	}
-
+	public LocalDate convertStringFReservaToLocalDate(String stringFechaReserva) throws ConversionFechaException {
+		try {
+			// Ejemplo 2018-06-20
+			DateTimeFormatter formatter = DateTimeFormatter.ISO_LOCAL_DATE;
+			LocalDate localDate = LocalDate.parse(stringFechaReserva, formatter);
+			return localDate;
+		} catch (DateTimeParseException e) {
+			throw new ConversionFechaException(
+					"El formato de la fechas ingresadas no es valido. Ejemplo fecha valida: 2018-12-05");
+		}
+	}
 	public boolean validarDisponibilidadHotelera(List<OfertaBloque> bloques, int cantHabitaciones)
 			throws OfertaHoteleraException {
 		if (bloques.isEmpty())
