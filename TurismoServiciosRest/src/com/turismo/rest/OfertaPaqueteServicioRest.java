@@ -36,8 +36,11 @@ public class OfertaPaqueteServicioRest {
 			this.loggingBackOffice.info(LoggingAccion.BUSQUEDA_OFERTA_PAQUETE);
 			return Response.ok(new WebResponse(ofertas, "SE ENCONTRARON: " + ofertas.size() + " PAQUETES")).build();
 		} catch (Exception e) {
-			// return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
-			return Response.status(404).entity(e.getMessage()).build();
+			String nombreException=e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			//return Response.status(404).entity(webResponse).build();
+			return Response.ok(webResponse).build();
 		}
 	}
 
@@ -56,9 +59,12 @@ public class OfertaPaqueteServicioRest {
 					new WebResponse(ofertas, "ENCONTRADOS: " + ofertas.size() + " - DISTINTOS PAQUETES MISMO DESTINO"))
 					.build();
 		} catch (Exception e) {
-			// return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
-			//return Response.status(404).entity(e.getMessage()).type("Application/json").build();
-			return Response.status(404).entity(e.getMessage()).build();
+			// Response.status(404).entity(e.getMessage()).type("Application/json").build();
+			String nombreException=e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			//return Response.status(404).entity(webResponse).build();
+			return Response.ok(webResponse).build();
 		}
 	}
 
@@ -71,8 +77,11 @@ public class OfertaPaqueteServicioRest {
 			float total = facade.calcularPrecioTotalPaquete(ofertaId, cantidadPersonas);
 			return Response.ok(new WebResponse(Float.toString(total), "Se calculo el total")).build();
 		} catch (Exception e) {
-			// return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
-			return Response.status(404).entity(e.getMessage()).build();
+			String nombreException=e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			//return Response.status(404).entity(webResponse).build();
+			return Response.ok(webResponse).build();
 		}
 	}
 }

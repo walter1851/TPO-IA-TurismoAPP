@@ -27,11 +27,14 @@ public class Oferta {
 	private float precio;
 	@Enumerated(EnumType.STRING)
 	private TipoHabitacion tipoHabitacion;
+	@Column(length=10000000)
 	private String politicas;
+	@Column(length=10000000)
 	private String servicios;
 	@ManyToOne
 	@JoinColumn(name="destino_id")
 	private Destino destino;
+	@Column(length=10000000)
 	private String descriptionPaquete;
 	@Column(length=10000000)
 	private String foto_paquete;

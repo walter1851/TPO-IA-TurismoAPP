@@ -33,9 +33,13 @@ public class BackOfficeProducer {
 			return Response.ok(new WebResponse(ofertaHoteleraMensaje, "Se grabo en la cola la oferta hotelera"))
 					.build();
 		} catch (Exception e) {
-			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			String nombreException = e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			return Response.status(404).entity(webResponse).build();
 		}
 	}
+
 	@POST
 	@Path("ofertapaquete/grabar")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -45,7 +49,10 @@ public class BackOfficeProducer {
 			testingQueuePaquete.sendMessage(ofertaPaqueteMensaje);
 			return Response.ok(new WebResponse(ofertaPaqueteMensaje, "Se grabo en la cola la oferta paquete")).build();
 		} catch (Exception e) {
-			return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			String nombreException = e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			return Response.status(404).entity(webResponse).build();
 		}
 	}
 }

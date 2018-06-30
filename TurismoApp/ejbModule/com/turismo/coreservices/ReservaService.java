@@ -85,7 +85,7 @@ public class ReservaService {
 				}
 				userTransaction.commit();
 				if (!estaAutorizado)
-					throw new ReservaException("El codigo de prestador (codigo agencia) " + codigo_agencia
+					throw new ReservaException("El codigo de prestador (codigo agencia) "
 							+ " no se encuentra autorizado por el backoffice. ");
 			} catch (NotSupportedException | SystemException | HeuristicRollbackException | HeuristicMixedException
 					| RollbackException e) {
@@ -168,8 +168,7 @@ public class ReservaService {
 				}
 				userTransaction.commit();
 				if (!estaAutorizado)
-					throw new ReservaException("El codigo de prestador (codigo del establecimiento) "
-							+ codigo_establecimiento + " no se encuentra autorizado por el backoffice. ");
+					throw new ReservaException("El codigo de prestador (codigo del establecimiento) no se encuentra autorizado por el backoffice. ");
 			} catch (NotSupportedException | SystemException | HeuristicRollbackException | HeuristicMixedException
 					| RollbackException e) {
 				e.printStackTrace();

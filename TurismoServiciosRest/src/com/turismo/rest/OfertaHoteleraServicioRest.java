@@ -37,8 +37,11 @@ public class OfertaHoteleraServicioRest {
 			return Response.ok(new WebResponse(ofertas, "SE ENCONTRARON: " + ofertas.size() + " OFERTAS HOTELERAS"))
 					.build();
 		} catch (Exception e) {
-			// return Response.ok(new WebResponse(e.getMessage(),"EXCEPTION")).build();
-			return Response.status(404).entity(e.getMessage()).build();
+			String nombreException=e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			//return Response.status(404).entity(webResponse).build();
+			return Response.ok(webResponse).build();
 		}
 	}
 
@@ -57,9 +60,12 @@ public class OfertaHoteleraServicioRest {
 			return Response.ok(new WebResponse(ofertas, "SE ENCONTRARON " + ofertas.size()
 					+ " OFERTAS HOTELERAS PARA MISMO HOTEL y DISTINTO TIPO DE HABITACION")).build();
 		} catch (Exception e) {
-			// return Response.ok(new WebResponse(e.getMessage(),"EXCEPTION")).build();			
-			//return Response.status(404).entity(e.getMessage()).type("Application/json").build();
-			return Response.status(404).entity(e.getMessage()).build();
+			// Response.status(404).entity(e.getMessage()).type("Application/json").build();
+			String nombreException=e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			//return Response.status(404).entity(webResponse).build();
+			return Response.ok(webResponse).build();
 		}
 	}
 
@@ -73,10 +79,12 @@ public class OfertaHoteleraServicioRest {
 			float total = facade.calcularPrecioTotalHotel(ofertaId, tipoHabitacion, cantTotalPersonas, fDesde, fHasta);
 			return Response.ok(new WebResponse(Float.toString(total), "Se calculo el total")).build();
 		} catch (Exception e) {
-			//return Response.status(404).entity(yourMessage).type( getAcceptType()).build();
-			// return Response.ok(new WebResponse(e.getMessage(),"EXCEPTION")).build();
-			//return Response.status(404).entity(e.getMessage()).type("Application/json").build();
-			return Response.status(404).entity(e.getMessage()).build();
+			// getAcceptType()).build();
+			//return Response.status(404).entity(webResponse).build();
+			String nombreException=e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			return Response.ok(webResponse).build();
 		}
 	}
 }

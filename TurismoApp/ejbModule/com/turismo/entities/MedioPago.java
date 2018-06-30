@@ -1,4 +1,5 @@
 package com.turismo.entities;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class MedioPago {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int medio_de_pago_id;
+	@Column(length=10000000)
 	private String nombre;
 	public int getMedio_de_pago_id() {
 		return medio_de_pago_id;

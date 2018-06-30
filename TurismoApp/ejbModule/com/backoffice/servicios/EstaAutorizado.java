@@ -3,6 +3,7 @@ package com.backoffice.servicios;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
 
@@ -16,7 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *   &lt;complexContent&gt;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType"&gt;
  *       &lt;sequence&gt;
- *         &lt;element name="arg0" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/&gt;
+ *         &lt;element name="codEntidad" type="{http://www.w3.org/2001/XMLSchema}string"/&gt;
  *       &lt;/sequence&gt;
  *     &lt;/restriction&gt;
  *   &lt;/complexContent&gt;
@@ -27,34 +28,35 @@ import javax.xml.bind.annotation.XmlType;
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "estaAutorizado", propOrder = {
-    "arg0"
+    "codEntidad"
 })
 public class EstaAutorizado {
 
-    protected String arg0;
+    @XmlElement(required = true)
+    protected String codEntidad;
 
     /**
-     * Obtiene el valor de la propiedad arg0.
+     * Obtiene el valor de la propiedad codEntidad.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg0() {
-        return arg0;
+    public String getCodEntidad() {
+        return codEntidad;
     }
 
     /**
-     * Define el valor de la propiedad arg0.
+     * Define el valor de la propiedad codEntidad.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg0(String value) {
-        this.arg0 = value;
+    public void setCodEntidad(String value) {
+        this.codEntidad = value;
     }
 
 }

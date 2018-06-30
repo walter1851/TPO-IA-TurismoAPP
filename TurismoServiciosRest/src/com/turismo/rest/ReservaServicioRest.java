@@ -42,8 +42,11 @@ public class ReservaServicioRest {
 			this.loggingBackOffice.info(LoggingAccion.RESERVA_DE_HOTEL);
 			return Response.ok(new WebResponse(reservaDTO, "SE REGISTRO UNA RESERVA HOTELERA")).build();
 		} catch (Exception e) {
-			//return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
-			return Response.status(404).entity(e.getMessage()).build();
+			String nombreException=e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			//return Response.status(404).entity(webResponse).build();
+			return Response.ok(webResponse).build();
 		}
 	}
 
@@ -61,12 +64,16 @@ public class ReservaServicioRest {
 			this.loggingBackOffice.info(LoggingAccion.RESERVA_DE_PAQUETE);
 			return Response.ok(new WebResponse(reservaDTO, "SE REGISTRO UNA RESERVA DE PAQUETE")).build();
 		} catch (Exception e) {
-			// Response.status(404).entity(yourMessage).type( getAcceptType()).build();
-			//(new WebResponse(e.getMessage(), "EXCEPTION")).build();
-			return Response.status(404).entity(e.getMessage()).build();
+			//Response.status(404).entity(yourMessage).type( getAcceptType()).build();
+			// (new WebResponse(e.getMessage(), "EXCEPTION")).build();
+			String nombreException=e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			//return Response.status(404).entity(webResponse).build();
+			return Response.ok(webResponse).build();
 		}
 	}
-	
+
 	@GET
 	@Path("prestadorautorizado/{codigo_prestador}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -75,8 +82,11 @@ public class ReservaServicioRest {
 			boolean estaAutorizado = facade.prestadorEstaAutorizado(codigo_prestador);
 			return Response.ok(new WebResponse(estaAutorizado, "prestador autorizado?")).build();
 		} catch (Exception e) {
-			//return Response.ok(new WebResponse(e.getMessage(), "EXCEPTION")).build();
-			return Response.status(404).entity(e.getMessage()).build();
+			String nombreException=e.getClass().getName();
+			System.out.println(nombreException + " -> " + e.getMessage());
+			WebResponse webResponse = new WebResponse(e.getMessage(), nombreException);
+			//return Response.status(404).entity(webResponse).build();
+			return Response.ok(webResponse).build();
 		}
 	}
 }
