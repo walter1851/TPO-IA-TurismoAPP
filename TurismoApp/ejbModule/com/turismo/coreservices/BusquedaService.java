@@ -81,11 +81,12 @@ public class BusquedaService {
 			String fHasta) throws OfertaHoteleraException, ConversionFechaException, OfertaPaqueteException {
 		float montoTotal = -1;
 		LocalDate fDesdeConverted = this.convertStringFReservaToLocalDate(fDesde);
-		LocalDate fHastaConverted = this.convertStringFReservaToLocalDate(fHasta);
+		LocalDate fHastaConverted = this.convertStringFReservaToLocalDate(fHasta).minusDays(1);
 		int cantTotalHabitaciones = this.calcularTotalHabitaciones(cantidadTotalPersonas,
 				TipoHabitacion.valueOf(tipoHabString));
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
-			int cantDiasHotel = (int) java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted, fHastaConverted);
+			//Sumamos un dia mas porque sino no lo calcula bien
+			int cantDiasHotel = (int) java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted, fHastaConverted.plusDays(1));
 			if (existeOfertaHotelera(ofertaId))
 				montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantTotalHabitaciones * cantDiasHotel;
 			if (montoTotal < 0)
@@ -155,7 +156,7 @@ public class BusquedaService {
 		List<Oferta> ofertasHoteleras = null;
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
 			ofertasHoteleras = ofertaDAO.buscarOfertasHotelera(codigoDestino, tipoHabitacion, fDesdeConverted,
-					fHastaConverted);
+					fHastaConverted.minusDays(1));
 			boolean hayDisponibilidad = false;
 			for (Oferta oferta : ofertasHoteleras) {
 				//Me traigo todos los bloques menos el ultimo porque la reserva es por cada noche.
@@ -184,11 +185,11 @@ public class BusquedaService {
 		LocalDate fHastaConverted = convertStringToLocalDate(fHasta);
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
 			ofertasHoteleras = ofertaDAO.buscarOtrasOfertasMismoHotel(codigo_destino, tipo_Habitacion_a_excluir,
-					id_hotel, fDesdeConverted, fHastaConverted);
+					id_hotel, fDesdeConverted, fHastaConverted.minusDays(1));
 			boolean hayDisponibilidad = false;
 			for (Oferta oferta : ofertasHoteleras) {
 				List<OfertaBloque> bloques = ofertaBloqueDAO.buscarBloquesDeHoteleria(oferta.getOferta_id(),
-						fDesdeConverted, fHastaConverted, oferta.getTipo_habitacion());
+						fDesdeConverted, fHastaConverted.minusDays(1), oferta.getTipo_habitacion());
 				int cantHabitaciones = calcularTotalHabitaciones(cantTotalPersonas, oferta.getTipo_habitacion());
 				hayDisponibilidad = this.validarDisponibilidadHotelera(bloques, cantHabitaciones);
 				if (!hayDisponibilidad)
