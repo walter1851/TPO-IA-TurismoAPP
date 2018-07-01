@@ -18,7 +18,6 @@ import javax.ejb.TransactionManagement;
 import javax.xml.rpc.ServiceException;
 
 import com.backoffice.servicios.SOAPService;
-
 import com.turismo.dao.OfertaBloqueDAO;
 import com.turismo.dao.OfertaDAO;
 import com.turismo.dao.ReservaDAO;
@@ -50,9 +49,8 @@ public class ReservaService {
 	private UserTransaction userTransaction;
 
 	public boolean prestadorEstaAutorizado(String codigo_prestador) {
-		//SOAPService service = new SOAPService();
-		//return service.getSOAPPort().estaAutorizado(codigo_prestador);
-		return true;
+		SOAPService service = new SOAPService();
+		return service.getSOAPPort().estaAutorizado(codigo_prestador);
 	}
 
 	public ReservaDTO reservarPaquete(int ofertaid, String fDesde, String fHasta, int cantPersonas, String nombre,

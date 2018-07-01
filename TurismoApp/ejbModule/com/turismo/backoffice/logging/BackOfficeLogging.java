@@ -10,9 +10,6 @@ import com.turismo.qconsumer.JsonConverter;
 
 @Stateless
 public class BackOfficeLogging {
-	//private static Logger LOGGER = Logger.getLogger(BackOfficeLogging.class);
-
-	//Modificar por la dirección de la cola remota
 	@Resource(lookup = "java:/jms/queue/BackOfficeLoggingQueue")
 	private Queue queue;
 

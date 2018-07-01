@@ -13,7 +13,7 @@ import com.turismo.qconsumer.mensajes.OfertaHoteleraMensaje;
 /**
  * Message-Driven Bean implementation class for: OfertaHoteleraQueueListener
  */
-/*
+
 //COLA LOCAL (SOLO TESTING) BORRAR
 @MessageDriven(
 		activationConfig = { @ActivationConfigProperty(
@@ -21,7 +21,8 @@ import com.turismo.qconsumer.mensajes.OfertaHoteleraMensaje;
 				propertyName = "destinationType", propertyValue = "javax.jms.Queue")
 		}, 
 		mappedName = "java:/jms/queue/OfertaHoteleraQueue")
- */
+ 
+/*
 //COLA REMOTA GRUPO DEL SABADO GRUPO 6
 @MessageDriven(
 		activationConfig = { 
@@ -40,7 +41,7 @@ import com.turismo.qconsumer.mensajes.OfertaHoteleraMensaje;
 				@ActivationConfigProperty(propertyName = "connectorClassName",
         		propertyValue = "org.hornetq.core.remoting.impl.netty.NettyConnectorFactory")
 		}, 
-		mappedName = "jms/queue/ofertaHotelera")
+		mappedName = "jms/queue/ofertaHotelera")*/
 public class OfertaHoteleraQueueListener implements MessageListener {
 	@EJB
 	private OfertaService ofertaService;
