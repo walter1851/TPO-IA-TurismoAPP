@@ -120,9 +120,10 @@ public class OfertaDAO {
 	@SuppressWarnings("unchecked")
 	public List<Oferta> buscarOfertasHotelera(int codigo_destino, TipoHabitacion tipo_Habitacion, LocalDate fDesde,
 			LocalDate fHasta) {
+		//comparo fecha_hasta > fHasta porque ESTOY CONSIDERANDO NOCHES DE HOTEL (DEL OTRO LADO ME PASAN TODOS LOS DIAS)
 		Query ofertasHotelerasQuery = entityManager.createQuery("SELECT o FROM Oferta o " + " INNER JOIN o.destino d"
 				+ " WHERE d.codigo_destino = :codigo_destino" + " AND TipoHabitacion = :tipo_Habitacion"
-				+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" + " AND OfertaTipo = :tipoDeOferta"
+				+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta > :fHasta" + " AND OfertaTipo = :tipoDeOferta"
 				+ " AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);
 		ofertasHotelerasQuery.setParameter("tipo_Habitacion", tipo_Habitacion.getTipoHabitacion());
@@ -139,7 +140,7 @@ public class OfertaDAO {
 				+ " INNER JOIN o.establecimiento e INNER JOIN e.hotel h" 
 				+ " WHERE d.codigo_destino = :codigo_destino" 
 				+ " AND TipoHabitacion != :tipo_Habitacion_a_excluir"
-				+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta >= :fHasta" +
+				+ " AND o.fecha_desde <= :fDesde" + " AND o.fecha_hasta > :fHasta" +
 				" AND OfertaTipo = :tipoDeOferta AND h.hotel_id = :id_hotel"
 				+ " AND o.cupo > 0");
 		ofertasHotelerasQuery.setParameter("codigo_destino", codigo_destino);

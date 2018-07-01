@@ -81,12 +81,12 @@ public class BusquedaService {
 			String fHasta) throws OfertaHoteleraException, ConversionFechaException, OfertaPaqueteException {
 		float montoTotal = -1;
 		LocalDate fDesdeConverted = this.convertStringFReservaToLocalDate(fDesde);
-		LocalDate fHastaConverted = this.convertStringFReservaToLocalDate(fHasta).minusDays(1);
+		LocalDate fHastaConverted = this.convertStringFReservaToLocalDate(fHasta);
 		int cantTotalHabitaciones = this.calcularTotalHabitaciones(cantidadTotalPersonas,
 				TipoHabitacion.valueOf(tipoHabString));
 		if (validarRangoFechaHotelera(fDesdeConverted, fHastaConverted)) {
 			//Sumamos un dia mas porque sino no lo calcula bien
-			int cantDiasHotel = (int) java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted, fHastaConverted.plusDays(1));
+			int cantDiasHotel = (int) java.time.temporal.ChronoUnit.DAYS.between(fDesdeConverted, fHastaConverted);
 			if (existeOfertaHotelera(ofertaId))
 				montoTotal = ofertaDAO.buscarPorIdOferta(ofertaId).getPrecio() * cantTotalHabitaciones * cantDiasHotel;
 			if (montoTotal < 0)
@@ -278,9 +278,7 @@ public class BusquedaService {
 				}
 			}
 			if (!disponibilidad)
-				throw new OfertaHoteleraException("No hay cupo disponible para la oferta hotelera id  "
-						+ bloques.get(0).getOferta().getOferta_id() + " cantidad de habitaciones " + cantHabitaciones
-						+ " cantidad de dias " + bloques.size());
+				throw new OfertaHoteleraException("No hay cupo disponible para la oferta hotelera");
 			return disponibilidad;
 		}
 	}
@@ -302,8 +300,7 @@ public class BusquedaService {
 				}
 			}
 			if (!disponibilidad)
-				throw new OfertaPaqueteException("No hay cupo disponible para la oferta paquete id "
-						+ bloques.get(0).getOferta().getOferta_id());
+				throw new OfertaPaqueteException("No hay cupo disponible para la oferta paquete");
 			return disponibilidad;
 		}
 	}
