@@ -244,8 +244,7 @@ public class BusquedaService {
 	}
 
 	public LocalDate convertStringToLocalDate(String stringFecha) throws ConversionFechaException {
-		// Estamos validando que la fecha tenga el formato correcto
-		// ejemplo 2018-06-20T12:30-02:00
+		// 2011-12-20T10:15:30+01:00
 		try {
 			DateTimeFormatter formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME;
 			// ISO_OFFSET_DATE_TIME Date Time with Offset 2011-12-03T10:15:30+01:00'
@@ -253,7 +252,7 @@ public class BusquedaService {
 			return localDate;
 		} catch (DateTimeParseException e) {
 			throw new ConversionFechaException(
-					"El formato de la fechas ingresadas no es valido. Ejemplo fecha valida: 2018-04-05T12:30-02:00");
+					"El formato de la fechas ingresadas no es valido. Ejemplo fecha valida: 2018-04-20T12:30-02:00");
 		}
 	}
 	public LocalDate convertStringFReservaToLocalDate(String stringFechaReserva) throws ConversionFechaException {
