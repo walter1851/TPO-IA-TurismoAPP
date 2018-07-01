@@ -58,7 +58,7 @@ public class OfertaService {
 
 	private void generarBloques(Oferta nuevaOferta, LocalDate fDesdeConverted, LocalDate fHastaConverted, int cupo) {
 		LocalDate fechaPivote = fDesdeConverted;
-		while (nuevaOferta != null && fechaPivote.compareTo(fHastaConverted) <= 0) {
+		while (nuevaOferta != null && fechaPivote.compareTo(fHastaConverted.minusDays(1)) <= 0) {
 			ofertaBloqueDAO.nuevoBloque(nuevaOferta, fechaPivote, cupo);
 			fechaPivote = fechaPivote.plusDays(1);
 		}
@@ -137,10 +137,9 @@ public class OfertaService {
 		int cupo = ofertaHoteleraMensaje.getCupo();
 		String mediosDePago = ofertaHoteleraMensaje.getMediosDePago();
 		// Establecimiento
-		String codigo_Establecimiento = ofertaHoteleraMensaje.getEstablecimiento().getId();
-		// Entiendo que no hace falta guardarlo
+		//ES EL UID AUTORIZACION BACKOFFICE
+		String codigo_Establecimiento = ofertaHoteleraMensaje.getEstablecimiento().getUid();
 		// String uidBackOffice = ofertaHoteleraMensaje.getEstablecimiento().getUid();
-		// // Id recibido del backoffice
 		String nombreEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getNombre();
 		String direccionEstablecimiento = ofertaHoteleraMensaje.getEstablecimiento().getDireccion();
 		int codigo_ciudad = ofertaHoteleraMensaje.getEstablecimiento().getCiudad().getCodigo_ciudad();
