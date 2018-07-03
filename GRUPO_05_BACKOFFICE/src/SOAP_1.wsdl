@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="SOAPService" targetNamespace="http://servicios.backoffice.com/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:tns="http://servicios.backoffice.com/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http">
+  <wsdl:types>
+    <xs:schema elementFormDefault="unqualified" targetNamespace="http://servicios.backoffice.com/" version="1.0" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+      <xs:element name="estaAutorizado" type="tns:estaAutorizado"/>
+      <xs:element name="estaAutorizadoResponse" type="tns:estaAutorizadoResponse"/>
+      <xs:complexType name="estaAutorizado">
+        <xs:sequence>
+          <xs:element name="codEntidad" type="xs:string"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="estaAutorizadoResponse">
+        <xs:sequence>
+          <xs:element name="return" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:complexType>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="estaAutorizado">
+    <wsdl:part element="tns:estaAutorizado" name="parameters"/>
+  </wsdl:message>
+  <wsdl:message name="estaAutorizadoResponse">
+    <wsdl:part element="tns:estaAutorizadoResponse" name="parameters"/>
+  </wsdl:message>
+  <wsdl:portType name="SOAP">
+    <wsdl:operation name="estaAutorizado">
+      <wsdl:input message="tns:estaAutorizado" name="estaAutorizado"/>
+      <wsdl:output message="tns:estaAutorizadoResponse" name="estaAutorizadoResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="SOAPServiceSoapBinding" type="tns:SOAP">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="estaAutorizado">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="estaAutorizado">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="estaAutorizadoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="SOAPService">
+    <wsdl:port binding="tns:SOAPServiceSoapBinding" name="SOAPPort">
+      <soap:address location="http://192.168.0.154:8080/BackOffice/SOAP"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>
