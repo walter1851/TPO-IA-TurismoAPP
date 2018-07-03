@@ -26,7 +26,7 @@ import com.turismo.qconsumer.mensajes.OfertaPaqueteMensaje;
 				@ActivationConfigProperty(propertyName = "password", 
 				propertyValue = "integracion"),
 				@ActivationConfigProperty(propertyName = "connectionParameters", 
-				propertyValue = "host=192.168.0.161;port=8080; http-upgrade-enabled=true"),
+				propertyValue = "host=192.168.0.152;port=8080; http-upgrade-enabled=true"),
 				@ActivationConfigProperty(propertyName = "connectorClassName",
         		propertyValue = "org.hornetq.core.remoting.impl.netty.NettyConnectorFactory")
 		}, 
